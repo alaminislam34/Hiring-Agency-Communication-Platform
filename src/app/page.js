@@ -1,4 +1,5 @@
 import Alamin from "./components/Alamin";
+import FindJob from "./components/FindJob";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
           Button Color
         </button>
       </div>
+      <FindJob></FindJob>
       <Alamin />
     </div>
   );

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import JobCandidate from "./components/JobCandidate";
 
 export default function Home() {
   return (

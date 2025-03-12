@@ -17,6 +17,9 @@ export default function Home() {
           Button Color
         </button>
       </div>
+      <h1 className="text-2xl lg:text-4xl font-bold text-center py-6">
+        MD Al Amin Islam
+      </h1>
     </div>
   );
 }

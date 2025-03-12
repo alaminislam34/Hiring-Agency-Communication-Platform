@@ -17,9 +17,6 @@ export default function Home() {
           Button Color
         </button>
       </div>
-      <h1 className="text-2xl lg:text-4xl font-bold text-center py-6">
-        Hello Quantum Warriors
-      </h1>
     </div>
   );
 }

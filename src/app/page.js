@@ -20,7 +20,7 @@ export default function Home() {
           </button>
         </div>
         <h1 className="text-2xl lg:text-4xl font-bold text-center py-6">
-          Hello Quantum Warriors
+          Hello Quantum Warriors || hey bangladesh
         </h1>
       </div>
       <SearchJob></SearchJob>

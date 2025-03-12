@@ -1,5 +1,6 @@
 import Image from "next/image";
 import JobCandidate from "./components/JobCandidate";
+import Alamin from "./components/Alamin";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
           Button Color
         </button>
       </div>
+      <Alamin />
     </div>
   );
 }

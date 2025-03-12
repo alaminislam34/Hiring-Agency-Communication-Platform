@@ -18,7 +18,7 @@ export default function Home() {
         </button>
       </div>
       <h1 className="text-2xl lg:text-4xl font-bold text-center py-6">
-        MD Al Amin Islam Frontend Developer
+        Hello Quantum Warriors
       </h1>
     </div>
   );

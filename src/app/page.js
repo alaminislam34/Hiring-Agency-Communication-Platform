@@ -1,13 +1,16 @@
-import Image from "next/image";
-import JobCandidate from "./components/JobCandidate";
+// import Image from "next/image";
+import Alamin from "./components/Alamin";
+import Banner from "./components/Banner";
+import FindJob from "./components/FindJob";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="pt-10">
+      <Banner></Banner>
       <h1 className="text-3xl lg:text-5xl text-center py-6 font-bold">
         JobHive Agency
       </h1>
-      <div className=" space-x-4">
+      <div className=" flex flex-col items-center justify-center space-x-4">
         <button className="px-4 py-2 rounded-lg bg-[#E52020] hover:bg-[#A60029] border cursor-pointer text-white">
           Button Color
         </button>
@@ -18,7 +21,9 @@ export default function Home() {
           Button Color
         </button>
       </div>
-      <JobCandidate />
+
+      <FindJob></FindJob>
+      <Alamin />
     </div>
   );
 }

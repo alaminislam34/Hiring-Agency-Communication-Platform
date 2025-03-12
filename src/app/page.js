@@ -1,4 +1,5 @@
 import Image from "next/image";
+import JobCandidate from "./components/JobCandidate";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
           Button Color
         </button>
       </div>
+      <JobCandidate />
     </div>
   );
 }

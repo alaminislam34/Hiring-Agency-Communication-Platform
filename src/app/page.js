@@ -18,7 +18,6 @@ export default function Home() {
           Button Color
         </button>
       </div>
-      <JobCandidate />
     </div>
   );
 }

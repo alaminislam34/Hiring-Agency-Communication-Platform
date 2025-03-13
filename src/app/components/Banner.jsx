@@ -58,7 +58,7 @@ const Banner = () => {
             className="flex-1 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
           />
           {/* Search Button */}
-          <button className="btn bg-[#E52020] text-white px-8 py-3 rounded-lg">
+          <button className="btn bg-[#d61f1f] text-white px-8 py-3 rounded-lg">
             Search Jobs
           </button>
         </div>

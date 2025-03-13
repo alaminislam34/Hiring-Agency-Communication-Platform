@@ -99,6 +99,11 @@ const SeekKit = () => {
           </div>
         </div>
       </div>
+      <div className="flex justify-center items-center mt-8 lg:mt-12">
+        <button className="text-lg md:text-xl font-medium py-2 px-4 lg:py-3 lg:px-6 rounded-md bg-green-950 text-white hover:-translate-y-2 duration-300 cursor-pointer">
+          Explore our tool kit
+        </button>
+      </div>
     </div>
   );
 };

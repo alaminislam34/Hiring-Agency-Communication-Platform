@@ -3,7 +3,7 @@ import image from "../../../public/image.webp";
 import { FaLocationDot, FaSearchengin } from "react-icons/fa6";
 export default function FindJob() {
   return (
-    <div className="flex max-w-6xl mx-auto items-center justify-center">
+    <div className="flex max-w-6xl mx-auto flex-col gap-6 w-11/12 md:flex-row items-center justify-center">
       {/* text  */}
       <div>
         <h2 className="text-4xl text-blue-500 font-bold">

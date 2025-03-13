@@ -4,33 +4,40 @@ const Banner = () => {
   return (
     <div className="">
       <div
-        className="hero min-h-screen"
+        className="hero min-h-[600px] bg-cover object-cover"
         style={{
           backgroundImage:
             "url(https://i.ibb.co.com/dwNS7Mt5/bussiness-people-working-team-office-1303-22863.jpg)",
-        }}>
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      >
         <div className="hero-overlay"></div>
-        <div className="hero-content text-neutral-content text-start">
-          <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-semibold">
+        <div className="">
+          <div className="max-w-4xl w-11/12 pl-4">
+            <h1 className="mb-5 text-2xl md:text-3xl lg:text-5xl font-medium text-white">
               Everything's Possible When You Have The Talent.
             </h1>
-            <p className="mb-5">
+            <p className="mb-5 text-gray-300">
               Find skilled candidates, in-demand jobs and the solutions you need
               to help you do best work yet.
             </p>
             {/* buttons for jobs related */}
-            <div className="flex justify-between py-8">
-              <div>
-                <button className="btn rounded-full">Find Your Next Job</button>
+            <div className="flex flex-col items-center md:flex-row gap-4 md:gap-6 py-8 w-full">
+              <button className="rounded-full flex justify-center items-center border cursor-pointer lg:text-xl py-2 md:py-3 px-4 lg:px-6 bg-white text-black hover:text-green-950 relative overflow-hidden z-[1] group">
+                Find Your Next Job
+                <div className="w-full h-full bg-white absolute top-0 left-0 z-[-1] group-hover:bg-[#084049]/10 "></div>
+              </button>
+
+              <div className="border-1 h-16 lg:block hidden border-white"></div>
+              <div className="flex flex-row gap-4 md:gap-6">
+                <button className="rounded-full flex justify-center items-center bg-[#084049]/50 hover:bg-transparent border cursor-pointer  text-white lg:text-xl py-2 md:py-3 px-4 lg:px-6">
+                  Preview Candidates
+                </button>
+                <button className="rounded-full flex justify-center items-center bg-[#084049]/50 hover:bg-transparent border cursor-pointer  text-white lg:text-xl py-2 md:py-3 px-4 lg:px-6">
+                  Hire Now
+                </button>
               </div>
-              <div className="border-1 h-16  text-center border-white"></div>
-              <button className="btn rounded-full bg-[#084049]/50 hover:bg-transparent border cursor-pointer hover:text-[#02282E] text-white">
-                Preview Candidates
-              </button>
-              <button className="btn rounded-full bg-[#084049]/50 hover:bg-transparent border cursor-pointer hover:text-[#02282E] text-white">
-                Hire Now
-              </button>
             </div>
           </div>
         </div>

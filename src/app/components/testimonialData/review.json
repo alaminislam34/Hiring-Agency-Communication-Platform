@@ -1,0 +1,52 @@
+[
+  {
+    "name": "John Doe",
+    "testimonial": "This hiring agency helped me land my dream job. Highly recommended!",
+    "image": "https://randomuser.me/api/portraits/men/1.jpg"
+  },
+  {
+    "name": "Jane Smith",
+    "testimonial": "Amazing experience! The process was smooth and efficient.",
+    "image": "https://randomuser.me/api/portraits/women/2.jpg"
+  },
+  {
+    "name": "Michael Johnson",
+    "testimonial": "Great platform! I found the perfect opportunity in no time.",
+    "image": "https://randomuser.me/api/portraits/men/3.jpg"
+  },
+  {
+    "name": "Emily Davis",
+    "testimonial": "Professional and reliable service. They really understand job seekers.",
+    "image": "https://randomuser.me/api/portraits/women/4.jpg"
+  },
+  {
+    "name": "Robert Wilson",
+    "testimonial": "The best hiring agency I’ve worked with! Very supportive.",
+    "image": "https://randomuser.me/api/portraits/men/5.jpg"
+  },
+  {
+    "name": "Sophia Martinez",
+    "testimonial": "Super easy process! They matched me with the right job.",
+    "image": "https://randomuser.me/api/portraits/women/6.jpg"
+  },
+  {
+    "name": "Daniel Brown",
+    "testimonial": "Highly efficient platform. I got hired faster than I expected.",
+    "image": "https://randomuser.me/api/portraits/men/7.jpg"
+  },
+  {
+    "name": "Olivia Taylor",
+    "testimonial": "I love how simple and effective this service is. Thank you!",
+    "image": "https://randomuser.me/api/portraits/women/8.jpg"
+  },
+  {
+    "name": "William Anderson",
+    "testimonial": "Very helpful team. They guided me through every step.",
+    "image": "https://randomuser.me/api/portraits/men/9.jpg"
+  },
+  {
+    "name": "Emma Robinson",
+    "testimonial": "Best recruitment platform out there. I’m truly grateful!",
+    "image": "https://randomuser.me/api/portraits/women/10.jpg"
+  }
+]

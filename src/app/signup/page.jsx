@@ -11,7 +11,7 @@ const SignUP = () => {
             <button
               className={`${
                 !employer
-                  ? "border-t -translate-y-1 bg-white border-r underline underline-offset-8 rounded-t-xl"
+                  ? "border-t shadow-[-5px_-4px_15px_0px_rgb(0,0,0,0.1)] bg-white border-r underline underline-offset-8 rounded-tl-xl"
                   : "border-b"
               } py-2 px-4 md:px-6 border-gray-300 cursor-pointer text-lg lg:text-xl`}
               onClick={() => setEmployer(false)}
@@ -21,7 +21,7 @@ const SignUP = () => {
             <button
               className={`${
                 employer
-                  ? "border-t -translate-y-1 bg-white border-l underline underline-offset-8 rounded-t-xl"
+                  ? "border-t shadow-[5px_-4px_15px_0px_rgb(0,0,0,0.1)] bg-white border-l underline underline-offset-8 rounded-tr-xl"
                   : "border-b"
               } py-2 px-4 md:px-6 border-gray-300 cursor-pointer text-lg lg:text-xl`}
               onClick={() => setEmployer(true)}
@@ -37,7 +37,7 @@ const SignUP = () => {
                 name="email"
                 placeholder="Email"
               />
-              <button className="py-2 md:py-3 rounded-full w-2/3 text-white bg-green-900 hover:bg-green-950 duration-300 cursor-pointer">
+              <button className="py-2 md:py-3 rounded-full w-2/3 text-white bg-[#084049] hover:bg-[#02282E] duration-300 cursor-pointer">
                 {" "}
                 {employer
                   ? "Continue to employer"

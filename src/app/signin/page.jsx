@@ -30,7 +30,7 @@ const SignIn = () => {
           </label>
           <button
             type="submit"
-            className="w-full py-2 bg-green-900 rounded-full cursor-pointer duration-300 hover:bg-green-950 text-white"
+            className="w-full py-2 lg:py-3 bg-[#084049] hover:bg-[#02282E] rounded-full cursor-pointer duration-300 text-white"
           >
             Sign in
           </button>

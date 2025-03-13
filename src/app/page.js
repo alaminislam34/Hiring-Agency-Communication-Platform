@@ -6,7 +6,7 @@ import SeekKit from "./components/SeekKit";
 
 export default function Home() {
   return (
-    <div className="pt-10">
+    <div>
       <Banner></Banner>
       <FindJob></FindJob>
       <SeekKit />

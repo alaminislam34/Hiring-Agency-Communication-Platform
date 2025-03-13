@@ -3,7 +3,7 @@ import image from "../../../public/image.webp";
 import { FaLocationDot, FaSearchengin } from "react-icons/fa6";
 export default function FindJob() {
   return (
-    <div className="flex container items-center justify-center">
+    <div className="flex max-w-6xl mx-auto items-center justify-center">
       {/* text  */}
       <div>
         <h2 className="text-4xl text-blue-500 font-bold">
@@ -32,6 +32,9 @@ export default function FindJob() {
               <input type="search" required placeholder="Location" />
             </label>
           </div>
+          <button className="px-4 max-w-md mt-3  py-2 rounded-lg bg-[#084049] hover:bg-[#02282E] border cursor-pointer text-white">
+            Button Color From Rony
+          </button>
         </div>
       </div>
 

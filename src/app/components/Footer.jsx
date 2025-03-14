@@ -7,8 +7,9 @@ const Footer = () => {
     <footer className="footer bg-[#27323a] text-neutral-content p-10 grid grid-cols-1 sm:grid-cols-4 gap-4 items-start">
       {/* Logo Section */}
       <div id="img" className="sm:col-span-4 text-left mb-4 sm:mb-0">
-        <Link href="/">
-          <img src="/logo.png" alt="Logo" className="h-12 w-auto" />
+        <Link href="/" className="flex flex-row gap-2 items-center">
+          <img src="/logo.png" alt="Logo" className="h-12 w-auto" />{" "}
+          <p className="text-xl md:text-2xl font-semibold">JobHive</p>
         </Link>
       </div>
 
@@ -75,10 +76,10 @@ const Footer = () => {
       </nav>
 
       {/* Region Selector */}
-      <nav className="flex flex-col ml-auto text-end">
+      <nav className="flex flex-col justify-end ml-auto text-end">
         <h6 className="text-xl self-end">Canada (English)</h6>
-        <button className="cursor-pointer bg-[#1d2a2e] hover:bg-[#27323a] border border-white py-3 px-5 rounded-4xl flex items-center text-xl mt-4">
-          <span>Select a region and language</span>
+        <button className="cursor-pointer bg-[#1d2a2e] hover:bg-[#27323a] border border-white py-2 lg:py-3 px-5 rounded-4xl flex items-center text-lg lg:text-xl mt-4">
+          <span className="">Select a region and language</span>
           <span className="ml-1">
             <FaArrowRight />
           </span>

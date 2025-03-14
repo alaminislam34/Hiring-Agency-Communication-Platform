@@ -5,14 +5,13 @@ import interview from "../../../public/interview.png";
 import resignationL from "../../../public/resignationL.png";
 import notification from "../../../public/notification.png";
 import Link from "next/link";
+import SectionTitle from "./SectionTitle";
 
 const SeekKit = () => {
   return (
     <div className="max-w-6xl mx-auto w-11/12">
       {/* section title */}
-      <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-blue-950 text-center py-6">
-        Job seeker tool kit.
-      </h1>
+      <SectionTitle title={"Job seeker tool kit."} />
       {/* section description */}
       <p className="max-w-2xl mx-auto text-center">
         If you’re considering changing jobs or switching careers but don’t know
@@ -25,7 +24,7 @@ const SeekKit = () => {
           href={
             "https://drive.google.com/file/d/1EiWWwW5o5C0eTdt8q26wezTOiEzGW7SV/view?usp=sharing"
           }
-          className="flex flex-col items-center justify-center gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center shadow-[0px_0px_10px_0px_rgb(0,0,0,0.5)]"
+          className="flex flex-col items-center justify-start gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center hover:shadow-[0px_0px_25px_0px_rgb(0,0,0,0.3)] shadow-[0px_0px_20px_0px_rgb(0,0,0,0.2)]"
         >
           <div className="p-3 rounded-full border-4 border-blue-400">
             <Image src={cv} alt="CV Template" width={50} height={50} />
@@ -40,7 +39,7 @@ const SeekKit = () => {
           href={
             "https://drive.google.com/file/d/1HoFlIpyR2b8xgGOeDqpD2-_Lpwmu_bJJ/view?usp=sharing"
           }
-          className="flex flex-col items-center justify-center gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center shadow-[0px_0px_10px_0px_rgb(0,0,0,0.5)]"
+          className="flex flex-col items-center justify-start gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center hover:shadow-[0px_0px_25px_0px_rgb(0,0,0,0.3)] shadow-[0px_0px_20px_0px_rgb(0,0,0,0.2)]"
         >
           <div className="p-3 rounded-full border-4 border-blue-400">
             <Image src={coverLetter} alt="CV Template" width={50} height={50} />
@@ -55,7 +54,7 @@ const SeekKit = () => {
           href={
             "https://drive.google.com/file/d/1vs5ScG_Eqxxq2sVy6lBco2VRr7UaM4ZT/view?usp=sharing"
           }
-          className="flex flex-col items-center justify-center gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center shadow-[0px_0px_10px_0px_rgb(0,0,0,0.5)]"
+          className="flex flex-col items-center justify-start gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center hover:shadow-[0px_0px_25px_0px_rgb(0,0,0,0.3)] shadow-[0px_0px_20px_0px_rgb(0,0,0,0.2)]"
         >
           <div className="p-3 rounded-full border-4 border-blue-400">
             <Image
@@ -75,7 +74,7 @@ const SeekKit = () => {
           href={
             "https://drive.google.com/file/d/1Gm28igpIkwlvgezOl8P9r86WSjA2ofmP/view?usp=sharing"
           }
-          className="flex flex-col items-center justify-center gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center shadow-[0px_0px_10px_0px_rgb(0,0,0,0.5)]"
+          className="flex flex-col items-center justify-start gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center hover:shadow-[0px_0px_25px_0px_rgb(0,0,0,0.3)] shadow-[0px_0px_20px_0px_rgb(0,0,0,0.2)]"
         >
           <div className="p-3 rounded-full border-4 border-blue-400">
             <Image src={interview} alt="CV Template" width={50} height={50} />
@@ -86,7 +85,7 @@ const SeekKit = () => {
             </p>
           </div>
         </Link>
-        <div className="flex flex-col items-center justify-center gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center shadow-[0px_0px_10px_0px_rgb(0,0,0,0.5)]">
+        <div className="flex flex-col items-center justify-start gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center hover:shadow-[0px_0px_25px_0px_rgb(0,0,0,0.3)] shadow-[0px_0px_20px_0px_rgb(0,0,0,0.2)]">
           <div className="p-3 rounded-full border-4 border-blue-400">
             <Image
               src={notification}
@@ -104,7 +103,7 @@ const SeekKit = () => {
       </div>
       <div className="flex justify-center items-center mt-8 lg:mt-12">
         {/* This is a tool kit explore button */}
-        <button className="text-lg md:text-xl font-medium py-2 px-4 lg:py-3 lg:px-6 rounded-md bg-[#084049] hover:bg-[#02282E] text-white hover:-translate-y-2 duration-300 cursor-pointer">
+        <button className="text-lg md:text-xl font-medium py-2 px-4 lg:py-3 lg:px-6 rounded-full bg-[#084049] hover:bg-[#02282E] text-white duration-300 cursor-pointer">
           Explore our tool kit
         </button>
       </div>

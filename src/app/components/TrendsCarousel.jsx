@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import Slider from "react-slick"; // Importing React Slick Slider
-import reviews from "./testimonialData/review.json"; // Your reviews JSON
-import SectionTitle from "./SectionTitle"; // Assuming SectionTitle is your custom component
+import Slider from "react-slick";
+// import Image from "next/image";
+import reviews from "./testimonialData/review.json";
+import SectionTitle from "./SectionTitle";
 
-const Testimonials = () => {
+const TrendsCarousel = () => {
   const settings = {
     dots: false,
     infinite: true,
@@ -40,30 +41,26 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="py-10">
-      {/* Section Title */}
-      <div className="text-center mb-8">
-        <SectionTitle title={"Explore Testimonials"} />
-      </div>
-
-      {/* Testimonials Slider */}
-      <div className="max-w-6xl mx-auto px-4">
+    <div className="max-w-6xl mx-auto w-11/12">
+      <SectionTitle title={"Hiring trends and insights"} />
+      <div className="">
         <Slider {...settings}>
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-6 bg-base-100 shadow-2xl rounded-lg my-4">
-              {/* User Image */}
-              <div className="w-20 h-20 relative mb-4">
+              className="flex flex-col items-center text-center p-6 shadow-lg rounded-lg h-[280px]"
+            >
+              {/* Image centered properly */}
+              <div className="w-20 h-20 relative mb-4 flex justify-center mx-auto ">
                 <img
                   src={review.image}
                   alt={review.name}
-                  className="rounded-full object-cover w-full h-full"
+                  width={80}
+                  height={80}
+                  className="rounded-full object-cover"
                 />
               </div>
-
-              {/* Testimonial Text */}
-              <p className="text-lg italic mb-4">"{review.testimonial}"</p>
+              <p className="text-base lg:text-lg">"{review.testimonial}"</p>
               <h3 className="font-bold text-lg">{review.name}</h3>
             </div>
           ))}
@@ -73,4 +70,4 @@ const Testimonials = () => {
   );
 };
 
-export default Testimonials;
+export default TrendsCarousel;

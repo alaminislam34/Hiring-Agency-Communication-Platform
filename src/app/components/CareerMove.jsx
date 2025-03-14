@@ -29,7 +29,7 @@ export default function CareerMove() {
               <CheckCircleIcon className="w-6 h-6 text-green-500" />
               <span>
                 Gain exposure to a range of companies and job types: fully
-                remote, hybrid or on-site, and contract or permanent
+                remote, hybrid or on-site, and contract or permanent.
               </span>
             </li>
             <li className="flex items-start gap-3">

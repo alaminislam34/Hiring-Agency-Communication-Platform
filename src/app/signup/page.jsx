@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 const SignUP = () => {
@@ -37,11 +38,16 @@ const SignUP = () => {
                 name="email"
                 placeholder="Email"
               />
-              <button className="py-2 md:py-3 rounded-full w-2/3 text-white bg-[#084049] hover:bg-[#02282E] duration-300 cursor-pointer">
-                {" "}
-                {employer
-                  ? "Continue to employer"
-                  : "Continue to job seeker"}{" "}
+              <button type="submit" className="w-3/4">
+                <Link
+                  href={employer ? "" : "/resumeDropZone"}
+                  className="py-2 md:py-3 inline-block w-full rounded-full text-white bg-[#084049] hover:bg-[#02282E] duration-300 cursor-pointer"
+                >
+                  {" "}
+                  {employer
+                    ? "Continue to employer"
+                    : "Continue to job seeker"}{" "}
+                </Link>
               </button>
             </form>
           </div>

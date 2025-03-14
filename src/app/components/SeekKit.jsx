@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const SeekKit = () => {
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto w-11/12">
       {/* section title */}
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-blue-950 text-center py-6">
         Job seeker tool kit.
@@ -20,7 +20,7 @@ const SeekKit = () => {
         essential job-seeking tools below.
       </p>
       {/* cv, cover letter, resignation letter or interview guide template */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8 mt-8 lg:mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8 mt-8 lg:mt-12">
         <Link
           href={
             "https://drive.google.com/file/d/1EiWWwW5o5C0eTdt8q26wezTOiEzGW7SV/view?usp=sharing"
@@ -104,7 +104,7 @@ const SeekKit = () => {
       </div>
       <div className="flex justify-center items-center mt-8 lg:mt-12">
         {/* This is a tool kit explore button */}
-        <button className="text-lg md:text-xl font-medium py-2 px-4 lg:py-3 lg:px-6 rounded-md bg-green-950 text-white hover:-translate-y-2 duration-300 cursor-pointer">
+        <button className="text-lg md:text-xl font-medium py-2 px-4 lg:py-3 lg:px-6 rounded-md bg-[#084049] hover:bg-[#02282E] text-white hover:-translate-y-2 duration-300 cursor-pointer">
           Explore our tool kit
         </button>
       </div>

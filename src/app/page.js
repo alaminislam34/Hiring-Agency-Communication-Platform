@@ -1,3 +1,5 @@
+// import Image from "next/image";
+
 import Accordion from "./components/Accordion";
 import Banner from "./components/Banner";
 import CareerMove from "./components/CareerMove";
@@ -10,14 +12,16 @@ import Testimonials from "./components/Testimonials";
 export default function Home() {
   return (
     <div>
-      <Banner />
-      <FindJob />
+      <Banner></Banner>
+      <FindJob></FindJob>
       <SeekKit />
       <FindTalent />
       <ConsultingSolutions />
       <CareerMove />
       <Testimonials />
       <Accordion />
+      <Testimonials></Testimonials>
+      <Accordion></Accordion>
     </div>
   );
 }

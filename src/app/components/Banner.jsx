@@ -1,36 +1,44 @@
 import React from "react";
+import { FaLocationArrow, FaSearchengin } from "react-icons/fa6";
 
 const Banner = () => {
   return (
     <div className="">
       <div
-        className="hero min-h-screen"
+        className="hero min-h-[600px] bg-cover object-cover"
         style={{
           backgroundImage:
             "url(https://i.ibb.co.com/dwNS7Mt5/bussiness-people-working-team-office-1303-22863.jpg)",
-        }}>
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      >
         <div className="hero-overlay"></div>
-        <div className="hero-content text-neutral-content text-start">
-          <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-semibold">
+        <div className="">
+          <div className="max-w-4xl w-11/12 pl-4">
+            <h1 className="mb-5 text-2xl md:text-3xl lg:text-5xl font-medium text-white">
               Everything's Possible When You Have The Talent.
             </h1>
-            <p className="mb-5">
+            <p className="mb-5 text-gray-300">
               Find skilled candidates, in-demand jobs and the solutions you need
               to help you do best work yet.
             </p>
             {/* buttons for jobs related */}
-            <div className="flex justify-between py-8">
-              <div>
-                <button className="btn rounded-full">Find Your Next Job</button>
+            <div className="flex flex-col items-center md:flex-row gap-4 md:gap-6 py-8 w-full">
+              <button className="rounded-full flex justify-center items-center border cursor-pointer lg:text-xl py-2 md:py-3 px-4 lg:px-6 bg-white text-black hover:text-green-950 relative overflow-hidden z-[1] group">
+                Find Your Next Job
+                <div className="w-full h-full bg-white absolute top-0 left-0 z-[-1] group-hover:bg-[#084049]/10 "></div>
+              </button>
+
+              <div className="border-1 h-16 lg:block hidden border-white"></div>
+              <div className="flex flex-row gap-4 md:gap-6">
+                <button className="rounded-full flex justify-center items-center bg-[#084049]/50 hover:bg-transparent border cursor-pointer  text-white lg:text-xl py-2 md:py-3 px-4 lg:px-6">
+                  Preview Candidates
+                </button>
+                <button className="rounded-full flex justify-center items-center bg-[#084049]/50 hover:bg-transparent border cursor-pointer  text-white lg:text-xl py-2 md:py-3 px-4 lg:px-6">
+                  Hire Now
+                </button>
               </div>
-              <div className="border-1 h-16  text-center border-white"></div>
-              <button className="btn rounded-full bg-[#084049]/50 hover:bg-transparent border cursor-pointer hover:text-[#02282E] text-white">
-                Preview Candidates
-              </button>
-              <button className="btn rounded-full bg-[#084049]/50 hover:bg-transparent border cursor-pointer hover:text-[#02282E] text-white">
-                Hire Now
-              </button>
             </div>
           </div>
         </div>
@@ -38,20 +46,28 @@ const Banner = () => {
 
       <div className="container mx-auto relative bottom-20 px-4">
         <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row items-center gap-4">
-          {/* Job Title Input */}
-          <input
-            type="text"
-            placeholder="Job Title, Skills, or Keywords"
-            className="flex-1 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
-          {/* Location Input */}
-          <input
-            type="text"
-            placeholder="City, Province, or Postal Code"
-            className="flex-1 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
+          {/* Job Title Input with Icon */}
+          <div className="flex-1 relative">
+            <FaSearchengin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+            <input
+              type="text"
+              placeholder="Job Title, Skills, or Keywords"
+              className="w-full pl-10 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+
+          {/* Location Input with Icon */}
+          <div className="flex-1 relative">
+            <FaLocationArrow className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+            <input
+              type="text"
+              placeholder="City, Province, or Postal Code"
+              className="w-full pl-10 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+
           {/* Search Button */}
-          <button className="btn bg-[#E52020] text-white px-8 py-3 rounded-lg">
+          <button className="btn bg-[#d61f1f] text-white px-8 py-3 rounded-lg">
             Search Jobs
           </button>
         </div>

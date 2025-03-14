@@ -1,5 +1,6 @@
 // import Image from "next/image";
 
+import Accordion from "./components/Accordion";
 import Banner from "./components/Banner";
 import FindJob from "./components/FindJob";
 import SeekKit from "./components/SeekKit";
@@ -12,6 +13,7 @@ export default function Home() {
       <FindJob></FindJob>
       <SeekKit />
       <Testimonials></Testimonials>
+      <Accordion></Accordion>
     </div>
   );
 }

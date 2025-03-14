@@ -13,7 +13,7 @@ export default function CareerMove() {
           className="rounded-lg shadow-md"
         />
 
-        <div className="w-1/2 pl-4">
+        <div className="lg:w-1/2 pl-4">
           <h2 className="text-3xl font-semibold text-gray-900 leading-snug">
             Make the career move you want
           </h2>

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import SectionTitle from "./SectionTitle";
 
 export default function Accordion() {
   const faqs = [
@@ -38,9 +39,7 @@ export default function Accordion() {
 
   return (
     <div className="mx-auto p-6 max-w-6xl w-11/12">
-      <h2 className="text-3xl font-bold text-center mb-6">
-        Frequently Asked Questions
-      </h2>
+      <SectionTitle title={"Frequently Asked Questions"} />
       <div className="space-y-4">
         {faqs.map((faq, index) => (
           <motion.div

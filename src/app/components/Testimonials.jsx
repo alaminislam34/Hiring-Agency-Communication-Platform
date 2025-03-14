@@ -3,10 +3,11 @@ import React from "react";
 import Slider from "react-slick";
 // import Image from "next/image";
 import reviews from "./testimonialData/review.json";
+import SectionTitle from "./SectionTitle";
 
 const Testimonials = () => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
@@ -40,22 +41,20 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="bg-base-200 py-8 lg:py-12 max-w-6xl mx-auto w-11/12">
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-blue-950 text-center py-6">
-        Explore Testimonials
-      </h2>
+    <div className="py-8 max-w-6xl mx-auto w-11/12">
+      <SectionTitle title={"Explore Testimonials"} />
       <div className="px-4 py-4 lg:py-6">
         <Slider
           {...settings}
-          className="space-x-4 p-12 flex justify-center items-center"
+          className="space-x-4 lg:p-8 flex justify-center items-center"
         >
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="text-center h-[150px] flex items-center justify-center"
+              className="text-center h-[150px] flex items-center justify-center  border border-gray-300 rounded-xl"
             >
               {/* client review */}
-              <p className="text-lg h-full flex items-center justify-center px-3">
+              <p className="text-lg h-full flex items-center justify-center lg:px-3">
                 "{review.testimonial}"
               </p>
             </div>

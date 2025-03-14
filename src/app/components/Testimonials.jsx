@@ -13,23 +13,21 @@ const Testimonials = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    arrows: false, // Remove navigation arrows
+    arrows: false,
   };
 
   return (
-    <div className="bg-base-300 my-10">
-      <div className="flex justify-center items-center w-full relative top-6">
-        <img src="/logo.png" alt="" />
-      </div>
-      <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-center my-8">
+    <div className="bg-base-200 py-8 lg:py-12">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-blue-950 text-center py-6">
         Explore Testimonials
       </h2>
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="max-w-4xl mx-auto px-4 py-4 lg:py-6">
         <Slider {...settings}>
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-6 bg-base-100 shadow-lg rounded-lg">
+              className="flex flex-col items-center text-center p-6 shadow-lg rounded-lg"
+            >
               {/* Image centered properly */}
               <div className="w-20 h-20 relative mb-4 flex justify-center mx-auto">
                 <img

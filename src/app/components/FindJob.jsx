@@ -6,7 +6,7 @@ export default function FindJob() {
     <div className="flex max-w-6xl mx-auto flex-col gap-6 w-11/12 md:flex-row items-center justify-center">
       {/* text  */}
       <div>
-        <h2 className="text-4xl text-blue-500 font-bold">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-blue-950 py-6">
           Find top candidates to <br /> get the job done
         </h2>
         <p className="text-base text-gray-400 font-sm">

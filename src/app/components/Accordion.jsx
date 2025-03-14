@@ -45,7 +45,7 @@ export default function Accordion() {
         {faqs.map((faq, index) => (
           <motion.div
             key={index}
-            className="collapse collapse-plus border border-gray-300 bg-gray-100 rounded-lg"
+            className="collapse collapse-plus border border-gray-300 rounded-lg"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.8 }}

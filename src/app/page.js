@@ -20,8 +20,6 @@ export default function Home() {
       <CareerMove />
       <Testimonials />
       <Accordion />
-      <Testimonials></Testimonials>
-      <Accordion></Accordion>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { FaLocationArrow, FaSearchengin } from "react-icons/fa6";
 
 const Banner = () => {
   return (
@@ -45,18 +46,26 @@ const Banner = () => {
 
       <div className="container mx-auto relative bottom-20 px-4">
         <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row items-center gap-4">
-          {/* Job Title Input */}
-          <input
-            type="text"
-            placeholder="Job Title, Skills, or Keywords"
-            className="flex-1 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
-          {/* Location Input */}
-          <input
-            type="text"
-            placeholder="City, Province, or Postal Code"
-            className="flex-1 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
+          {/* Job Title Input with Icon */}
+          <div className="flex-1 relative">
+            <FaSearchengin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+            <input
+              type="text"
+              placeholder="Job Title, Skills, or Keywords"
+              className="w-full pl-10 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+
+          {/* Location Input with Icon */}
+          <div className="flex-1 relative">
+            <FaLocationArrow className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+            <input
+              type="text"
+              placeholder="City, Province, or Postal Code"
+              className="w-full pl-10 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+
           {/* Search Button */}
           <button className="btn bg-[#d61f1f] text-white px-8 py-3 rounded-lg">
             Search Jobs

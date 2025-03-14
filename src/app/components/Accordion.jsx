@@ -37,7 +37,7 @@ export default function Accordion() {
   };
 
   return (
-    <div className="mx-auto p-6">
+    <div className="mx-auto p-6 max-w-6xl w-11/12">
       <h2 className="text-3xl font-bold text-center mb-6">
         Frequently Asked Questions
       </h2>

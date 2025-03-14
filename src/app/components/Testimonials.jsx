@@ -17,7 +17,7 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="bg-base-300 my-10">
+    <div className=" my-10">
       <div className="flex justify-center items-center w-full relative top-6">
         <img src="/logo.png" alt="" />
       </div>
@@ -29,7 +29,7 @@ const Testimonials = () => {
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-6 bg-base-100 shadow-lg rounded-lg">
+              className="flex flex-col items-center text-center p-6 bg-base-100 shadow-2xl rounded-lg my-4">
               {/* Image centered properly */}
               <div className="w-20 h-20 relative mb-4 flex justify-center mx-auto">
                 <img

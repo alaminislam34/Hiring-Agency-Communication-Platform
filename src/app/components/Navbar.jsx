@@ -15,8 +15,12 @@ const Navbar = () => {
       <li>
         <Link href="#">Insights</Link>
       </li>
+      <li>
+        <Link href="/about">About Us</Link>
+      </li>
     </>
   );
+
   return (
     <div className="bg-base-100 shadow-md fixed top-0 left-0 w-full z-50">
       <div className="navbar max-w-6xl mx-auto w-full">
@@ -27,15 +31,13 @@ const Navbar = () => {
             <button
               tabIndex={0}
               className="btn btn-ghost"
-              aria-label="Open menu"
-            >
+              aria-label="Open menu">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+                stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -47,8 +49,7 @@ const Navbar = () => {
             {/* Mobile Dropdown Menu */}
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 w-52 rounded-box bg-base-100 p-2 shadow-md"
-            >
+              className="menu menu-sm dropdown-content mt-3 w-52 rounded-box bg-base-100 p-2 shadow-md">
               {navLinks}
             </ul>
           </div>
@@ -75,8 +76,7 @@ const Navbar = () => {
               className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+              stroke="currentColor">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -89,8 +89,7 @@ const Navbar = () => {
           {/* Sign In Button */}
           <Link
             href="/signin"
-            className="relative text-blue-600 font-medium transition-all duration-200 ease-in-out before:absolute before:-bottom-1 before:left-0 before:h-[2px] before:w-0 before:bg-blue-600 before:transition-all before:duration-300 before:ease-in-out hover:before:w-full"
-          >
+            className="relative text-blue-600 font-medium transition-all duration-200 ease-in-out before:absolute before:-bottom-1 before:left-0 before:h-[2px] before:w-0 before:bg-blue-600 before:transition-all before:duration-300 before:ease-in-out hover:before:w-full">
             Sign in
           </Link>
         </div>

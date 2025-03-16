@@ -28,7 +28,7 @@ export default function Accordion() {
     {
       question: "Is there a way to track my job applications?",
       answer:
-        "Yes, you can track all your job applications from the 'My Applications' section in your dashboard.",
+        "Yes, you can track all your job applications from the 'My Applications' section in your dashboard. solve the git conflict.",
     },
   ];
 
@@ -48,8 +48,7 @@ export default function Accordion() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.8 }}
-            variants={containerVariants}
-          >
+            variants={containerVariants}>
             <input type="checkbox" />
             <div className="collapse-title text-gray-700 text-lg font-medium">
               {faq.question}

@@ -10,6 +10,7 @@ import { SlEnergy } from "react-icons/sl";
 import { MdOutlineManageHistory } from "react-icons/md";
 import { RiChatSmileAiLine, RiTwitterXFill } from "react-icons/ri";
 import Link from "next/link";
+import TabJob from "./TabJob/TabJob";
 
 const Page = () => {
   return (
@@ -360,20 +361,9 @@ const Page = () => {
       </div>
 
       {/* Jobs section-4 */}
+      <TabJob></TabJob>
     </div>
   );
 };
 
 export default Page;
-
-// 1:Our Mission & Vision – Clearly define the agency’s purpose, long-term goals, and how it aims to bridge the gap between hiring and communication.
-
-// 2:Who We Are – A brief introduction to the company, its founding story, and what makes it unique in the hiring industry.
-
-// 3:How It Works – Explain the core process of your platform, such as job posting, candidate shortlisting, and employer-employee communication.
-
-// 4:Meet Our Team – Showcase key members with their roles and expertise to build trust and credibility.
-
-// 5:Success Stories & Testimonials – Highlight real or mock success stories from job seekers and employers who benefited from your platform.
-
-// 6:Join Us – Encourage users to sign up, partner with you, or explore job opportunities within the agency.

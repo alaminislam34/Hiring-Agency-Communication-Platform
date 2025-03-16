@@ -37,7 +37,7 @@ export default function Accordion() {
   };
 
   return (
-    <div className="mx-auto p-6">
+    <div className="mx-auto p-6 max-w-6xl w-11/12">
       <h2 className="text-3xl font-bold text-center mb-6">
         Frequently Asked Questions
       </h2>
@@ -45,7 +45,7 @@ export default function Accordion() {
         {faqs.map((faq, index) => (
           <motion.div
             key={index}
-            className="collapse collapse-plus border border-gray-300 bg-gray-100 rounded-lg"
+            className="collapse collapse-plus border border-gray-300 rounded-lg"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.8 }}

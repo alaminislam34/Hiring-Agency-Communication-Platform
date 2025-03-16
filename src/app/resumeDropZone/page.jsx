@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 import { FaArrowRight } from "react-icons/fa6";
 
 const ResumeDropZone = () => {
@@ -19,7 +18,7 @@ const ResumeDropZone = () => {
           <div className="space-y-4">
             <p className="text-gray-400">Don’t have a resume file ready?</p>
             <button className="text-[#084049] relative cursor-pointer flex items-center gap-2 hover:text-[#0b5f6b] group text-lg md:text-xl">
-              Continue with resume
+              <Link href={"/addResume"}>Continue with resume</Link>
               <FaArrowRight className="absolute -right-6 top-1/2 -translate-y-1/2 group-hover:-right-10 duration-500" />
             </button>
           </div>

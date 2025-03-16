@@ -15,8 +15,15 @@ const Navbar = () => {
       <li>
         <Link href="#">Insights</Link>
       </li>
+      <li>
+        <Link href="/about">About Us</Link>
+      </li>
+      <li>
+        <Link href="/dashboard">Dashboard</Link>
+      </li>
     </>
   );
+
   return (
     <div className="bg-base-100 shadow-md fixed top-0 left-0 w-full z-50">
       <div className="navbar max-w-6xl mx-auto w-full">

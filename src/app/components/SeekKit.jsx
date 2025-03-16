@@ -5,14 +5,13 @@ import interview from "../../../public/interview.png";
 import resignationL from "../../../public/resignationL.png";
 import notification from "../../../public/notification.png";
 import Link from "next/link";
+import SectionTitle from "./SectionTitle";
 
 const SeekKit = () => {
   return (
     <div className="max-w-6xl mx-auto w-11/12">
       {/* section title */}
-      <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-blue-950 text-center py-6">
-        Job seeker tool kit.
-      </h1>
+      <SectionTitle title={"Job seeker tool kit."} />
       {/* section description */}
       <p className="max-w-2xl mx-auto text-center">
         If you’re considering changing jobs or switching careers but don’t know
@@ -104,7 +103,7 @@ const SeekKit = () => {
       </div>
       <div className="flex justify-center items-center mt-8 lg:mt-12">
         {/* This is a tool kit explore button */}
-        <button className="text-lg md:text-xl font-medium py-2 px-4 lg:py-3 lg:px-6 rounded-md bg-[#084049] hover:bg-[#02282E] text-white duration-300 cursor-pointer">
+        <button className="text-lg md:text-xl font-medium py-2 px-4 lg:py-3 lg:px-6 rounded-full bg-[#084049] hover:bg-[#02282E] text-white duration-300 cursor-pointer">
           Explore our tool kit
         </button>
       </div>

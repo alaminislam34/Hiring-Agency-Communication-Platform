@@ -4,8 +4,8 @@ import { CheckCircleIcon } from "@heroicons/react/24/solid";
 export default function ConsultingSolutions() {
   return (
     <div className="flex items-center justify-center max-w-6xl mx-auto w-11/12">
-      <div className="flex items-center justify-between gap-10">
-        <div className="w-1/2 pl-4">
+      <div className="flex items-center flex-col lg:flex-row justify-between gap-10">
+        <div className="lg:w-1/2 pl-4">
           <h2 className="text-3xl font-semibold text-gray-900 leading-snug">
             Consulting solutions to drive business impact
           </h2>

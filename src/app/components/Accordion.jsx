@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import SectionTitle from "./SectionTitle";
 
 export default function Accordion() {
   const faqs = [
@@ -27,7 +28,7 @@ export default function Accordion() {
     {
       question: "Is there a way to track my job applications?",
       answer:
-        "Yes, you can track all your job applications from the 'My Applications' section in your dashboard.",
+        "Yes, you can track all your job applications from the 'My Applications' section in your dashboard. solve the git conflict.",
     },
   ];
 
@@ -38,9 +39,7 @@ export default function Accordion() {
 
   return (
     <div className="mx-auto p-6 max-w-6xl w-11/12">
-      <h2 className="text-3xl font-bold text-center mb-6">
-        Frequently Asked Questions
-      </h2>
+      <SectionTitle title={"Frequently Asked Questions"} />
       <div className="space-y-4">
         {faqs.map((faq, index) => (
           <motion.div
@@ -49,8 +48,7 @@ export default function Accordion() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.8 }}
-            variants={containerVariants}
-          >
+            variants={containerVariants}>
             <input type="checkbox" />
             <div className="collapse-title text-gray-700 text-lg font-medium">
               {faq.question}

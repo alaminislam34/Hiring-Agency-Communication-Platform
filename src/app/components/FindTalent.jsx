@@ -4,7 +4,7 @@ import { CheckCircleIcon } from "@heroicons/react/24/solid";
 export default function FindTalent() {
   return (
     <div className="flex items-center justify-center max-w-6xl mx-auto w-11/12">
-      <div className="flex items-center gap-10">
+      <div className="flex items-center flex-col lg:flex-row gap-10">
         <Image
           src="/talent-1.webp"
           alt="Team working"
@@ -13,7 +13,7 @@ export default function FindTalent() {
           className="rounded-lg shadow-md"
         />
 
-        <div className="w-1/2 pl-4">
+        <div className="lg:w-1/2 pl-4">
           <h2 className="text-3xl font-semibold text-gray-900 leading-snug">
             Find talent to get more done
           </h2>

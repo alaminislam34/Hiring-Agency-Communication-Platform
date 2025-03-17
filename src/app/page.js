@@ -10,7 +10,7 @@ import SeekKit from "./components/SeekKit";
 import Testimonials from "./components/Testimonials";
 import TrendsCarousel from "./components/TrendsCarousel";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="space-y-8 lg:space-y-12 mb-8 lg:mb-12">
       <Banner></Banner>

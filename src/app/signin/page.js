@@ -1,11 +1,14 @@
+import LoginButton from "@/components/LoginButton";
+import UserInfo from "@/components/UserInfo";
 import Link from "next/link";
 
-const SignIn = () => {
+const SignIn = async () => {
   return (
     <div className="flex justify-center items-center min-h-[550px]">
       <div className="space-y-6 max-w-sm w-full">
+        <UserInfo />
         <h1 className="text-2xl md:text-3xl font-semibold text-center">
-          Sign in{" "}
+          Sign in
         </h1>
         <form className="flex flex-col gap-4">
           <input
@@ -35,8 +38,9 @@ const SignIn = () => {
             Sign in
           </button>
         </form>
+        <LoginButton />
         <p>
-          Don't have an account{" "}
+          Don`t have an account{" "}
           <Link href={"/signup"} className="underline underline-offset-2">
             Sign up
           </Link>

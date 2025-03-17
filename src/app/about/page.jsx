@@ -11,6 +11,7 @@ import { MdOutlineManageHistory } from "react-icons/md";
 import { RiChatSmileAiLine, RiTwitterXFill } from "react-icons/ri";
 import Link from "next/link";
 import TabJob from "./TabJob/TabJob";
+import EmployeeReview from "./employeeReview/EmployeeReview";
 
 const Page = () => {
   return (
@@ -362,6 +363,49 @@ const Page = () => {
 
       {/* Jobs section-4 */}
       <TabJob></TabJob>
+      {/* Employee Review Slider- section-5 */}
+      <EmployeeReview></EmployeeReview>
+
+      {/* newsletter section-6 */}
+
+      <section className="my-10 bg-base-200 py-10 px-4 md:px-10 lg:px-20 rounded-lg">
+        <div className="text-center max-w-xl mx-auto">
+          {/* Heading */}
+          <h2 className="text-2xl md:text-3xl font-bold">
+            Join our careers newsletter.
+          </h2>
+
+          {/* Subheading */}
+          <p className="text-gray-600 mt-2">
+            Be the first to know when new jobs are posted!
+          </p>
+
+          {/* Input Field and Button */}
+          <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="input input-bordered w-full sm:w-auto max-w-sm"
+            />
+            <button className="btn btn-primary w-full sm:w-auto">
+              Subscribe
+            </button>
+          </div>
+
+          {/* Privacy Policy Link */}
+          <p className="text-sm text-gray-500 mt-3">
+            We care about your data in our{" "}
+            <a
+              href="/privacy-policy"
+              className="text-primary hover:underline"
+              target="_blank"
+              rel="noopener noreferrer">
+              privacy policy
+            </a>
+            .
+          </p>
+        </div>
+      </section>
     </div>
   );
 };

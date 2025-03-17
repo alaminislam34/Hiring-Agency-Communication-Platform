@@ -1,10 +1,11 @@
 "use client";
 import { doSocialLogin } from "@/app/actions";
+import { register } from "@/app/actions/auth/registerUser";
 import React from "react";
 
 const Register = () => {
   const [showPassword, setShowPassword] = React.useState(false);
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.fullName.value;
@@ -13,7 +14,8 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
     const user = { name, userName, phone, email, password };
-    console.table(user);
+    const result = await register(user);
+    console.log(result);
   };
 
   return (
@@ -45,7 +47,6 @@ const Register = () => {
               name="username"
               id="username"
               className="input border-[#084049]/30 w-full focus:shadow-[0px_0px_15px_0px_rgb(0,0,0,0.2)] focus:outline-none"
-              autoComplete="username"
             />
           </label>
         </div>

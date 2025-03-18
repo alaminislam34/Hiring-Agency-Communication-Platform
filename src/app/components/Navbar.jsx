@@ -106,9 +106,6 @@ const Navbar = () => {
                   className="w-12 h-12 rounded-full bg-accent border"
                   alt=""
                 />
-                <h1 className="text-xs md:text-sm">
-                  {session.data?.user?.name}
-                </h1>
               </div>
               <LogoutButton />
             </div>

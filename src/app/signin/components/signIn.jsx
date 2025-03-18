@@ -1,11 +1,13 @@
+"use client";
 import Link from "next/link";
+import React from "react";
 
-const SignIn = () => {
+const SignInComponent = () => {
   return (
-    <div className="flex justify-center items-center min-h-[550px]">
-      <div className="space-y-6 max-w-sm w-full">
+    <div>
+      <div className="space-y-6 max-w-sm w-full p-4 lg:p-6">
         <h1 className="text-2xl md:text-3xl font-semibold text-center">
-          Sign in{" "}
+          Sign in
         </h1>
         <form className="flex flex-col gap-4">
           <input
@@ -36,7 +38,7 @@ const SignIn = () => {
           </button>
         </form>
         <p>
-          Don't have an account{" "}
+          Don`t have an account
           <Link href={"/signup"} className="underline underline-offset-2">
             Sign up
           </Link>
@@ -46,4 +48,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignInComponent;

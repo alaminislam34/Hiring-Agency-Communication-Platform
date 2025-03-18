@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
-import Slider from "react-slick";
-// import Image from "next/image";
-import reviews from "./testimonialData/review.json";
-import SectionTitle from "./SectionTitle";
+import Slider from "react-slick"; // Importing React Slick Slider
+import reviews from "./testimonialData/review.json"; // Your reviews JSON
+import SectionTitle from "./SectionTitle"; // Assuming SectionTitle is your custom component
 
 const Testimonials = () => {
   const settings = {
@@ -41,22 +40,31 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="py-8 max-w-6xl mx-auto w-11/12">
-      <SectionTitle title={"Explore Testimonials"} />
-      <div className="px-4 py-4 lg:py-6">
-        <Slider
-          {...settings}
-          className="space-x-4 lg:p-8 flex justify-center items-center"
-        >
+    <div className="py-10">
+      {/* Section Title */}
+      <div className="text-center mb-8">
+        <SectionTitle title={"Explore Testimonials"} />
+      </div>
+
+      {/* Testimonials Slider */}
+      <div className="max-w-6xl mx-auto px-4">
+        <Slider {...settings}>
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="text-center h-[150px] flex items-center justify-center  border border-gray-300 rounded-xl"
-            >
-              {/* client review */}
-              <p className="text-lg h-full flex items-center justify-center lg:px-3">
-                "{review.testimonial}"
-              </p>
+              className="flex flex-col items-center text-center p-6 bg-base-100 shadow-2xl rounded-lg my-4">
+              {/* User Image */}
+              <div className="w-20 h-20 relative mb-4">
+                <img
+                  src={review.image}
+                  alt={review.name}
+                  className="rounded-full object-cover w-full h-full"
+                />
+              </div>
+
+              {/* Testimonial Text */}
+              <p className="text-lg italic mb-4">"{review.testimonial}"</p>
+              <h3 className="font-bold text-lg">{review.name}</h3>
             </div>
           ))}
         </Slider>

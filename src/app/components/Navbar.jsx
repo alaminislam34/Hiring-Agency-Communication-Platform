@@ -1,6 +1,12 @@
+"use client";
+import LoginButton from "@/components/LoginButton";
+import LogoutButton from "@/components/LogoutButton";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
 const Navbar = () => {
+  const session = useSession();
+  console.log(session);
   const navLinks = (
     <>
       <li>
@@ -15,8 +21,15 @@ const Navbar = () => {
       <li>
         <Link href="#">Insights</Link>
       </li>
+      <li>
+        <Link href="/about">About Us</Link>
+      </li>
+      <li>
+        <Link href="/dashboard">Dashboard</Link>
+      </li>
     </>
   );
+
   return (
     <div className="bg-base-100 shadow-md fixed top-0 left-0 w-full z-50">
       <div className="navbar max-w-6xl mx-auto w-full">
@@ -85,14 +98,31 @@ const Navbar = () => {
               />
             </svg>
           </button>
-
-          {/* Sign In Button */}
-          <Link
-            href="/signin"
-            className="relative text-blue-600 font-medium transition-all duration-200 ease-in-out before:absolute before:-bottom-1 before:left-0 before:h-[2px] before:w-0 before:bg-blue-600 before:transition-all before:duration-300 before:ease-in-out hover:before:w-full"
-          >
-            Sign in
-          </Link>
+          {session.data?.user?.name ? (
+            <div className="flex items-center">
+              <div>
+                <img
+                  src="/logo.png"
+                  className="w-12 h-12 rounded-full bg-accent border"
+                  alt=""
+                />
+                <h1 className="text-xs md:text-sm">
+                  {session.data?.user?.name}
+                </h1>
+              </div>
+              <LogoutButton />
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <LoginButton />
+              <Link
+                href="/signup"
+                className="btn btn-outline btn-accent btn-sm md:btn-md"
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -51,17 +51,36 @@ const Register = () => {
           </label>
         </div>
 
-        {/* Email & Username */}
-        <label htmlFor="email" className="flex flex-col gap-2">
-          <span className="text-gray-500 text-sm md:text-base">Email</span>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="input border-[#084049]/30 focus:shadow-[0px_0px_15px_0px_rgb(0,0,0,0.2)] focus:outline-none w-full"
-            autoComplete="email"
-          />
-        </label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+          {/* Email & Username */}
+          <label htmlFor="email" className="flex flex-col gap-2">
+            <span className="text-gray-500 text-sm md:text-base">Email</span>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              className="input border-[#084049]/30 focus:shadow-[0px_0px_15px_0px_rgb(0,0,0,0.2)] focus:outline-none w-full"
+              autoComplete="email"
+            />
+          </label>
+          {/* role */}
+          <label htmlFor="email" className="flex flex-col gap-2">
+            <span className="text-gray-500 text-sm md:text-base">
+              Select Role
+            </span>
+            <select
+              name="role"
+              defaultValue={""}
+              className="border-[#084049]/30 p-2 rounded-lg border"
+            >
+              <option value="" disabled>
+                Select Role
+              </option>
+              <option value="jobSeeker">Job Seeker</option>
+              <option value="employer">Employer</option>
+            </select>
+          </label>
+        </div>
 
         {/* Phone (Optional) */}
         <label htmlFor="phone" className="flex flex-col gap-2">

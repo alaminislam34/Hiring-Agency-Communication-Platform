@@ -1,4 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import dbConnect from "./dbConnect";
 
 export const authOptions = {
   providers: [
@@ -15,9 +16,11 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
+        const { username, password } = credentials;
+        const user = await dbConnect("users").findOne({ userName: username });
+        const isPasswordOk = password == user.password;
 
-        if (user) {
+        if (isPasswordOk) {
           // Any object returned will be saved in `user` property of the JWT
           return user;
         } else {
@@ -29,4 +32,22 @@ export const authOptions = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token, user }) {
+      console.log(session);
+      // if (token) {
+      //   session.user.userName = token.userName;
+      //   session.user.role = token?.role || "seeker";
+      // }
+      return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      console.log(token);
+      // if (user) {
+      //   token.user.userName = user.userName;
+      //   token.user.role = user?.role || "seeker";
+      // }
+      return token;
+    },
+  },
 };

@@ -24,6 +24,7 @@ const RegisterForm = () => {
     const res = await register(user);
     if (res.success) {
       router.push("/");
+      form.reset();
       toast.success("Registration Successful! 🎉");
     } else if (!res.message.includes("Username")) {
       toast.error(res.message);

@@ -1,16 +1,28 @@
 "use client";
-import { login } from "@/app/actions/auth/loginUser";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
+// import { toast } from "react-toastify";
 
 const SignInComponent = () => {
+  const route = useRouter();
   const handleSingIn = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    await signIn("credentials", { email, password, callbackUrl: "/" });
+    const res = await signIn("credentials", {
+      email,
+      password,
+    });
+    console.log(res);
+    // if (res.ok) {
+    //   route.push("/");
+    //   form.reset();
+    // } else {
+    //   toast.error(res.error);
+    // }
   };
   return (
     <div>

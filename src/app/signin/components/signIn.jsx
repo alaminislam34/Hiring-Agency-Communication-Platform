@@ -1,32 +1,44 @@
 "use client";
+import { login } from "@/app/actions/auth/loginUser";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
 const SignInComponent = () => {
+  const handleSingIn = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    await signIn("credentials", { email, password, callbackUrl: "/" });
+  };
   return (
     <div>
       <div className="space-y-6 max-w-sm w-full p-4 lg:p-6">
         <h1 className="text-2xl md:text-3xl font-semibold text-center">
           Sign in
         </h1>
-        <form className="flex flex-col gap-4">
+        <form onSubmit={handleSingIn} className="flex flex-col gap-4">
           <input
             className="py-2 px-4 md:py-3 rounded-xl focus:outline-green-900 focus:ring-green-700 bg-gray-100"
-            type="username"
-            name="username"
-            placeholder="Enter your username"
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            required
           />
           <input
             className="py-2 px-4 md:py-3 rounded-xl focus:outline-green-900 focus:ring-green-700 bg-gray-100"
             type="password"
             name="password"
             placeholder="Enter your password"
+            required
           />
           <label className="flex flex-row items-center gap-2">
             <input
               type="checkbox"
               name="checkbox"
               className="checkbox checkbox-success"
+              required
             />
             Remember me
           </label>

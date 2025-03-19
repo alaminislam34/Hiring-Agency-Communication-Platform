@@ -1,21 +1,37 @@
 "use client";
-import { doSocialLogin } from "@/app/actions";
 import { register } from "@/app/actions/auth/registerUser";
-import React from "react";
+import { useRouter } from "next/navigation";
 
-const Register = () => {
+// import { register } from "@/app/actions/auth/registerUser";
+// import { doSocialLogin } from "@/app/actions";
+import React from "react";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+
+const RegisterForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [error, setError] = React.useState(null);
+  const router = useRouter();
   const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.fullName.value;
     const userName = form.username.value;
-    const phone = form.phone.value;
     const email = form.email.value;
     const password = form.password.value;
-    const user = { name, userName, phone, email, password };
-    const result = await register(user);
-    console.log(result);
+    const role = form.role.value;
+    const user = { name, userName, email, password, role };
+    const res = await register(user);
+    if (res.success) {
+      router.push("/");
+      form.reset();
+      toast.success("Registration Successful! 🎉");
+    } else if (!res.message.includes("Username")) {
+      toast.error(res.message);
+    }
+    if (res.message.includes("Username")) {
+      setError(res.message);
+    }
   };
 
   return (
@@ -38,21 +54,21 @@ const Register = () => {
               autoComplete="name"
             />
           </label>
+          {/* Username */}
           <label htmlFor="username" className="flex flex-col gap-2">
-            <span className="text-gray-500 text-sm md:text-base">
-              Username (Optional)
-            </span>
+            <span className="text-gray-500 text-sm md:text-base">Username</span>
             <input
               type="text"
               name="username"
               id="username"
               className="input border-[#084049]/30 w-full focus:shadow-[0px_0px_15px_0px_rgb(0,0,0,0.2)] focus:outline-none"
             />
+            {error && <p className="text-red-500 text-xs">{error}</p>}
           </label>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
-          {/* Email & Username */}
+          {/* Email & role */}
           <label htmlFor="email" className="flex flex-col gap-2">
             <span className="text-gray-500 text-sm md:text-base">Email</span>
             <input
@@ -81,41 +97,6 @@ const Register = () => {
             </select>
           </label>
         </div>
-
-        {/* Phone (Optional) */}
-        <label htmlFor="phone" className="flex flex-col gap-2">
-          <span className="text-gray-500 text-sm md:text-base">
-            Phone Number (Optional)
-          </span>
-          <div className="grid grid-cols-3 gap-4 md:gap-6">
-            {/* Country Code Dropdown */}
-            <select
-              name="countryCode"
-              className="select border-[#084049]/30 p-2 rounded-lg border col-span-1"
-            >
-              <option value="+880">+880 (Ban)</option>
-              <option value="+91">+91 (Ind)</option>
-              <option value="+92">+92 (Pak)</option>
-              <option value="+93">+93 (Afg)</option>
-              <option value="+94">+94 (Sri)</option>
-              <option value="+95">+95 (Mya)</option>
-              <option value="+966">+966 (Saudi)</option>
-              <option value="+971">+971 (UAE)</option>
-              <option value="+974">+974 (Qatar)</option>
-              <option value="+1">+1 (USA)</option>
-            </select>
-
-            {/* Phone Number Input */}
-            <input
-              type="tel"
-              name="phone"
-              id="phone"
-              className="input border-[#084049]/30 w-full flex-1 focus:shadow-[0px_0px_15px_0px_rgb(0,0,0,0.2)] focus:outline-none col-span-2"
-              autoComplete="tel"
-              placeholder="Enter phone number"
-            />
-          </div>
-        </label>
 
         {/* Password with Show/Hide Toggle */}
         <label htmlFor="password" className="flex flex-col gap-2 relative">
@@ -146,8 +127,9 @@ const Register = () => {
           </button>
         </div>
         <div className="divider">or</div>
+        <ToastContainer position="top-center" />
       </form>
-      <form
+      {/* <form
         action={doSocialLogin}
         className="flex justify-center items-center gap-4 text-white"
       >
@@ -167,9 +149,9 @@ const Register = () => {
         >
           Linkedin
         </button>
-      </form>
+      </form> */}
     </div>
   );
 };
 
-export default Register;
+export default RegisterForm;

@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 
 export const login = async (user) => {
   try {
-    console.log(user);
+    console.log("user data", user);
     await dbConnect(); // Ensure DB is connected
     const userCollection = collection.user_collection;
 

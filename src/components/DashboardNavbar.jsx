@@ -15,7 +15,7 @@ const DashboardNavbar = () => {
         </li>
         <li>
           <img
-            src=""
+            src="#"
             alt="user"
             className="w-12 h-12 rounded-full border bg-[#084049]"
           />

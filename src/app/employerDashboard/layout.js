@@ -1,50 +1,22 @@
-import Link from "next/link";
+"use client";
+
+import SideBar from "./components/sideBar";
+import { useAppContext } from "../../Providers/AppProviders";
+import DashboardNavbar from "@/components/DashboardNavbar";
 
 export default function DashboardLayout({ children }) {
+  const { showSidebar, setShowSidebar } = useAppContext();
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden overflow-y-auto">
       {/* Sidebar for Dashboard */}
-      <aside className="w-52 bg-gray-800 text-white p-4">
-        <Link href={"/"} className="text-xl font-bold">
-          JobHive
-        </Link>
-        <nav>
-          <ul>
-            <li>
-              <Link href="/dashboard" className="block p-2">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="block p-2">
-                Jobs
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="block p-2">
-                Applications
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="block p-2">
-                Subscriptions
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="block p-2">
-                Messages
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="block p-2">
-                Settings
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+      <div className="hidden lg:block">
+        <SideBar />
+      </div>
       {/* Main Dashboard Content */}
-      <main className="flex-1 bg-gray-100">{children}</main>
+      <main className={`w-full ${showSidebar ? "lg:ml-64" : "lg:ml-64"}`}>
+        <DashboardNavbar />
+        {children}
+      </main>
     </div>
   );
 }

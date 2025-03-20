@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import SideBar from "./components/sideBar";
-import Content from "./components/content";
-import DashboardNavbar from "@/components/DashboardNavbar";
+import React from "react";
+import Homepage from "./homepage/page";
 
 const EmployerDashboard = () => {
   return (
-    <div className="">
-      <DashboardNavbar />
-      <div>Dashboard</div>
+    <div>
+      <section className="p-4 lg:p-6">
+        <Homepage />
+      </section>
     </div>
   );
 };

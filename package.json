@@ -12,7 +12,9 @@
     "@auth/mongodb-adapter": "^3.8.0",
     "@heroicons/react": "^2.2.0",
     "bcryptjs": "^3.0.2",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.5.0",
+    "lucide-react": "^0.483.0",
     "mongodb": "^6.14.2",
     "next": "15.2.2",
     "next-auth": "^4.24.11",
@@ -22,7 +24,9 @@
     "react-icons": "^5.5.0",
     "react-slick": "^0.30.3",
     "react-toastify": "^11.0.5",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "tailwind-merge": "^3.0.2",
+    "tw-animate-css": "^1.2.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

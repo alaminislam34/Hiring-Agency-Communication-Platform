@@ -1,6 +1,11 @@
+"use client";
+import LogoutButton from "@/components/LogoutButton";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 const Navbar = () => {
+  const session = useSession();
+  console.log(session);
   const navLinks = (
     <>
       <li>
@@ -9,11 +14,11 @@ const Navbar = () => {
       <li>
         <Link href="#">Hire Talent</Link>
       </li>
-      <li>
+      <li className="hidden">
         <Link href="#">Consulting Solutions</Link>
       </li>
       <li>
-        <Link href="#">Insights</Link>
+        <Link href="/jobtoolkit">Insights</Link>
       </li>
       <li>
         <Link href="/about">About Us</Link>
@@ -21,11 +26,14 @@ const Navbar = () => {
       <li>
         <Link href="/dashboard">Dashboard</Link>
       </li>
+      <li>
+        <Link href="/employerDashboard">Dashboard</Link>
+      </li>
     </>
   );
 
   return (
-    <div className="bg-base-100 shadow-md fixed top-0 left-0 w-full z-50">
+    <div className="bg-base-100 shadow-md fixed top-0 left-0 w-full z-50 mb-[64px]">
       <div className="navbar max-w-6xl mx-auto w-full">
         {/* Navbar Start (Logo & Mobile Menu) */}
         <div className="navbar-start">
@@ -92,14 +100,33 @@ const Navbar = () => {
               />
             </svg>
           </button>
-
-          {/* Sign In Button */}
-          <Link
-            href="/signin"
-            className="relative text-blue-600 font-medium transition-all duration-200 ease-in-out before:absolute before:-bottom-1 before:left-0 before:h-[2px] before:w-0 before:bg-blue-600 before:transition-all before:duration-300 before:ease-in-out hover:before:w-full"
-          >
-            Sign in
-          </Link>
+          {session.data?.user?.name ? (
+            <div className="flex items-center gap-2">
+              <div>
+                <img
+                  src="/logo.png"
+                  className="w-12 h-12 rounded-full bg-accent border"
+                  alt=""
+                />
+              </div>
+              <LogoutButton />
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Link
+                href="/signin"
+                className="btn btn-outline btn-accent btn-sm md:btn-md"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                className="btn btn-outline btn-accent btn-sm md:btn-md"
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

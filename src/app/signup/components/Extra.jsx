@@ -5,7 +5,7 @@ import { useState } from "react";
 const SignUP = () => {
   const [employer, setEmployer] = useState(false);
   return (
-    <div className="flex justify-center items-center min-h-[550px] ">
+    <div className="flex justify-center items-center min-h-[550px] w-11/12 mx-auto">
       <div className="shadow-2xl max-w-xl w-full rounded-xl">
         <div className="pb-4 border border-gray-300 rounded-xl space-y-4 md:space-y-6 w-full min-h-[300px] ">
           <div className="grid grid-cols-2">
@@ -14,7 +14,7 @@ const SignUP = () => {
                 !employer
                   ? "border-t shadow-[-5px_-4px_15px_0px_rgb(0,0,0,0.1)] bg-white border-r underline underline-offset-8 rounded-tl-xl"
                   : "border-b"
-              } py-2 px-4 md:px-6 border-gray-300 cursor-pointer text-lg lg:text-xl`}
+              } py-2 px-4 md:px-6 border-gray-300 cursor-pointer text-sm lg:text-base`}
               onClick={() => setEmployer(false)}
             >
               I'm a job seeker
@@ -24,7 +24,7 @@ const SignUP = () => {
                 employer
                   ? "border-t shadow-[5px_-4px_15px_0px_rgb(0,0,0,0.1)] bg-white border-l underline underline-offset-8 rounded-tr-xl"
                   : "border-b"
-              } py-2 px-4 md:px-6 border-gray-300 cursor-pointer text-lg lg:text-xl`}
+              } py-2 px-4 md:px-6 border-gray-300 cursor-pointer text-sm lg:text-base`}
               onClick={() => setEmployer(true)}
             >
               I'm an employer

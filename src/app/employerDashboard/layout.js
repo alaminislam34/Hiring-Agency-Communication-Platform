@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function DashboardLayout({ children }) {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar for Dashboard */}
       <aside className="w-52 bg-gray-800 text-white p-4">
         <Link href={"/"} className="text-xl font-bold">

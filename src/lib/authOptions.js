@@ -1,5 +1,5 @@
+import { loginUser } from "@/app/actions/auth/loginUser";
 import CredentialsProvider from "next-auth/providers/credentials";
-import dbConnect from "./dbConnect";
 
 export const authOptions = {
   providers: [
@@ -11,16 +11,16 @@ export const authOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        username: { label: "Email", type: "email", placeholder: "Enter email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
+        console.log("Credentials data", credentials);
         // Add logic here to look up the user from the credentials supplied
-        const { username, password } = credentials;
-        const user = await dbConnect("users").findOne({ userName: username });
-        const isPasswordOk = password == user.password;
+        const user = await loginUser(credentials);
+        console.log(user);
 
-        if (isPasswordOk) {
+        if (user) {
           // Any object returned will be saved in `user` property of the JWT
           return user;
         } else {
@@ -32,22 +32,7 @@ export const authOptions = {
       },
     }),
   ],
-  callbacks: {
-    async session({ session, token, user }) {
-      console.log(session);
-      // if (token) {
-      //   session.user.userName = token.userName;
-      //   session.user.role = token?.role || "seeker";
-      // }
-      return session;
-    },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      console.log(token);
-      // if (user) {
-      //   token.user.userName = user.userName;
-      //   token.user.role = user?.role || "seeker";
-      // }
-      return token;
-    },
+  pages: {
+    signIn: "/signin",
   },
 };

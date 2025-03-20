@@ -1,7 +1,6 @@
 "use client";
-import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -15,11 +14,11 @@ const Navbar = () => {
       <li>
         <Link href="#">Hire Talent</Link>
       </li>
-      <li>
+      <li className="hidden">
         <Link href="#">Consulting Solutions</Link>
       </li>
       <li>
-        <Link href="#">Insights</Link>
+        <Link href="/jobtoolkit">Insights</Link>
       </li>
       <li>
         <Link href="/about">About Us</Link>
@@ -27,11 +26,14 @@ const Navbar = () => {
       <li>
         <Link href="/dashboard">Dashboard</Link>
       </li>
+      <li>
+        <Link href="/employerDashboard">Dashboard</Link>
+      </li>
     </>
   );
 
   return (
-    <div className="bg-base-100 shadow-md fixed top-0 left-0 w-full z-50">
+    <div className="bg-base-100 shadow-md fixed top-0 left-0 w-full z-50 mb-[64px]">
       <div className="navbar max-w-6xl mx-auto w-full">
         {/* Navbar Start (Logo & Mobile Menu) */}
         <div className="navbar-start">
@@ -99,7 +101,7 @@ const Navbar = () => {
             </svg>
           </button>
           {session.data?.user?.name ? (
-            <div className="flex items-center">
+            <div className="flex items-center gap-2">
               <div>
                 <img
                   src="/logo.png"
@@ -111,7 +113,12 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <LoginButton />
+              <Link
+                href="/signin"
+                className="btn btn-outline btn-accent btn-sm md:btn-md"
+              >
+                Sign In
+              </Link>
               <Link
                 href="/signup"
                 className="btn btn-outline btn-accent btn-sm md:btn-md"

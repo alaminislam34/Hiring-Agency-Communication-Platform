@@ -1,10 +1,10 @@
 import React from "react";
-import Register from "./components/Register";
+import RegisterForm from "./components/RegisterForm";
 
 const Registration = () => {
   return (
-    <div className="flex items-center justify-center min-h-[500px]">
-      <Register />
+    <div className="flex items-center justify-center min-h-[500px] mt-12">
+      <RegisterForm />
     </div>
   );
 };

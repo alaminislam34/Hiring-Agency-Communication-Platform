@@ -27,5 +27,3 @@ export default async function Home() {
     </div>
   );
 }
-
-//added a commnt

@@ -1,5 +1,6 @@
 // import Image from "next/image";
 
+import Chat from "./chatbox/components/chat";
 import Accordion from "./components/Accordion";
 import Banner from "./components/Banner";
 import CareerMove from "./components/CareerMove";
@@ -22,6 +23,7 @@ export default async function Home() {
       <CareerMove />
       <Testimonials />
       <Accordion />
+      <Chat></Chat>
     </div>
   );
 }

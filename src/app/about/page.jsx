@@ -11,6 +11,7 @@ import { MdOutlineManageHistory } from "react-icons/md";
 import { RiChatSmileAiLine, RiTwitterXFill } from "react-icons/ri";
 import Link from "next/link";
 import TabJob from "./TabJob/TabJob";
+import EmployeeReview from "./employeeReview/EmployeeReview";
 
 const Page = () => {
   return (
@@ -168,8 +169,8 @@ const Page = () => {
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
-                className="w-12 h-12 object-cover"
-                src="logo.png"
+                className=" object-cover rounded-full"
+                src="/teamImg/al-amin.jpg"
                 alt="Logo"
               />
             </div>
@@ -185,13 +186,15 @@ const Page = () => {
             </p>
             {/* links-(socials) */}
             <div className="flex justify-around mt-4 bg-gray-300 w-full rounded-2xl p-2">
-              <Link href={"/#"}>
+              <Link href={"https://x.com/MDAlAmin0412"} target="_blank">
                 <RiTwitterXFill className="text-xl" />
               </Link>
-              <Link href={"/#"}>
+              <Link
+                href={"https://www.linkedin.com/in/alamin34/"}
+                target="_blank">
                 <FaLinkedin className="text-xl" />
               </Link>
-              <Link href={"/#"}>
+              <Link href={"https://alamin4.netlify.app/"} target="_blank">
                 <FaConnectdevelop className="text-xl"></FaConnectdevelop>
               </Link>
             </div>
@@ -201,8 +204,8 @@ const Page = () => {
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
-                className="w-12 h-12 object-cover"
-                src="logo.png"
+                className=" object-cover rounded-full"
+                src="/teamImg/akash.PNG"
                 alt="Logo"
               />
             </div>
@@ -218,13 +221,19 @@ const Page = () => {
             </p>
             {/* links-(socials) */}
             <div className="flex justify-around mt-4 bg-gray-300 w-full rounded-2xl p-2">
-              <Link href={"/#"}>
+              <Link href={"https://x.com/akash_madbor9"} target="_blank">
                 <RiTwitterXFill className="text-xl" />
               </Link>
-              <Link href={"/#"}>
+              <Link
+                href={
+                  "https://www.linkedin.com/in/akash-muhammad-abrrar-764275228/"
+                }
+                target="_blank">
                 <FaLinkedin className="text-xl" />
               </Link>
-              <Link href={"/#"}>
+              <Link
+                href={"https://akashmabrrarnxtportfolio.netlify.app/"}
+                target="_blank">
                 <FaConnectdevelop className="text-xl"></FaConnectdevelop>
               </Link>
             </div>
@@ -234,8 +243,8 @@ const Page = () => {
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
-                className="w-12 h-12 object-cover"
-                src="logo.png"
+                className="rounded-full object-cover"
+                src="/teamImg/rony.jpeg"
                 alt="Logo"
               />
             </div>
@@ -251,13 +260,19 @@ const Page = () => {
             </p>
             {/* links-(socials) */}
             <div className="flex justify-around mt-4 bg-gray-300 w-full rounded-2xl p-2">
-              <Link href={"/#"}>
+              <Link href={"https://x.com/RoknujjamanRon2"} target="_blank">
                 <RiTwitterXFill className="text-xl" />
               </Link>
-              <Link href={"/#"}>
+              <Link
+                href={
+                  "https://www.linkedin.com/in/md-roknujjaman-rony-906780210/"
+                }
+                target="_blank">
                 <FaLinkedin className="text-xl" />
               </Link>
-              <Link href={"/#"}>
+              <Link
+                href={"https://courageous-llama-711917.netlify.app/"}
+                target="_blank">
                 <FaConnectdevelop className="text-xl"></FaConnectdevelop>
               </Link>
             </div>
@@ -267,8 +282,8 @@ const Page = () => {
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
-                className="w-12 h-12 object-cover"
-                src="logo.png"
+                className="rounded-full object-cover"
+                src="/teamImg/rakib.jpg"
                 alt="Logo"
               />
             </div>
@@ -285,10 +300,12 @@ const Page = () => {
               <Link href={"/#"}>
                 <RiTwitterXFill className="text-xl" />
               </Link>
-              <Link href={"/#"}>
+              <Link
+                href={"https://www.linkedin.com/in/mohammed-rakib-gazi/"}
+                target="_blank">
                 <FaLinkedin className="text-xl" />
               </Link>
-              <Link href={"/#"}>
+              <Link href={"https://rakibgazi.netlify.app/"} target="_blank">
                 <FaConnectdevelop className="text-xl"></FaConnectdevelop>
               </Link>
             </div>
@@ -298,8 +315,8 @@ const Page = () => {
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
-                className="w-12 h-12 object-cover"
-                src="logo.png"
+                className="rounded-full object-cover"
+                src="/teamImg/mahedi.jpg"
                 alt="Logo"
               />
             </div>
@@ -313,13 +330,17 @@ const Page = () => {
             </p>
             {/* links-(socials) */}
             <div className="flex justify-around mt-4 bg-gray-300 w-full rounded-2xl p-2">
-              <Link href={"/#"}>
+              <Link href={"https://x.com/Dev_Hasan1"} target="_blank">
                 <RiTwitterXFill className="text-xl" />
               </Link>
-              <Link href={"/#"}>
+              <Link
+                href={"https://www.linkedin.com/in/web-developer-mehedihasan/"}
+                target="_blank">
                 <FaLinkedin className="text-xl" />
               </Link>
-              <Link href={"/#"}>
+              <Link
+                href={"https://portfolio-gules-beta-59.vercel.app/"}
+                target="_blank">
                 <FaConnectdevelop className="text-xl"></FaConnectdevelop>
               </Link>
             </div>
@@ -362,6 +383,49 @@ const Page = () => {
 
       {/* Jobs section-4 */}
       <TabJob></TabJob>
+      {/* Employee Review Slider- section-5 */}
+      <EmployeeReview></EmployeeReview>
+
+      {/* newsletter section-6 */}
+
+      <section className="my-10 bg-base-200 py-10 px-4 md:px-10 lg:px-20 rounded-lg">
+        <div className="text-center max-w-xl mx-auto">
+          {/* Heading */}
+          <h2 className="text-2xl md:text-3xl font-bold">
+            Join our careers newsletter.
+          </h2>
+
+          {/* Subheading */}
+          <p className="text-gray-600 mt-2">
+            Be the first to know when new jobs are posted!
+          </p>
+
+          {/* Input Field and Button */}
+          <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="input input-bordered w-full sm:w-auto max-w-sm"
+            />
+            <button className="btn btn-primary w-full sm:w-auto">
+              Subscribe
+            </button>
+          </div>
+
+          {/* Privacy Policy Link */}
+          <p className="text-sm text-gray-500 mt-3">
+            We care about your data in our{" "}
+            <a
+              href="/privacy-policy"
+              className="text-primary hover:underline"
+              target="_blank"
+              rel="noopener noreferrer">
+              privacy policy
+            </a>
+            .
+          </p>
+        </div>
+      </section>
     </div>
   );
 };

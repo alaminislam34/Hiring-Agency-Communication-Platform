@@ -1,18 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NextAuthSessionProvider from "@/Providers/nextAuthProviders";
 import ClientNavbar from "@/components/ClientNavbar";
 import ClientFooter from "@/components/ClientFooter";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { AppProvider } from "@/Providers/AppProviders";
 
 export const metadata = {
   title: "JobHive Agency",
@@ -22,15 +12,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
-      <NextAuthSessionProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <ClientNavbar />
-          <section className="min-h-[550px]">{children}</section>
-          <ClientFooter />
-        </body>
-      </NextAuthSessionProvider>
+      <AppProvider>
+        <NextAuthSessionProvider>
+          <body>
+            <ClientNavbar />
+            <section className="min-h-[550px]">{children}</section>
+            <ClientFooter />
+          </body>
+        </NextAuthSessionProvider>
+      </AppProvider>
     </html>
   );
 }

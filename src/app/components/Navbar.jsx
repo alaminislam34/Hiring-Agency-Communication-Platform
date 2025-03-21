@@ -6,6 +6,7 @@ import Link from "next/link";
 const Navbar = () => {
   const session = useSession();
   console.log(session);
+
   const navLinks = (
     <>
       <li>
@@ -29,6 +30,9 @@ const Navbar = () => {
       <li>
         <Link href="/employerDashboard">Dashboard</Link>
       </li>
+      <li>
+        <Link href="/blogs">Blogs</Link>
+      </li>
     </>
   );
 
@@ -39,10 +43,9 @@ const Navbar = () => {
         <div className="navbar-start">
           {/* Mobile Dropdown Button */}
           <div className="dropdown lg:hidden">
-            <button
+            <label
               tabIndex={0}
-              className="btn btn-ghost"
-              aria-label="Open menu"
+              className="btn btn-ghost flex items-center gap-2"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -58,11 +61,11 @@ const Navbar = () => {
                   d="M4 6h16M4 12h8m-8 6h16"
                 />
               </svg>
-            </button>
+            </label>
             {/* Mobile Dropdown Menu */}
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 w-52 rounded-box bg-base-100 p-2 shadow-md"
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               {navLinks}
             </ul>
@@ -84,7 +87,7 @@ const Navbar = () => {
         {/* Navbar End (Search & Sign In) */}
         <div className="navbar-end space-x-4">
           {/* Search Icon */}
-          <button className="btn btn-ghost">
+          <button className="btn btn-ghost" aria-label="Search">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -100,6 +103,7 @@ const Navbar = () => {
               />
             </svg>
           </button>
+
           {session.data?.user?.name ? (
             <div className="flex items-center gap-2">
               <div>

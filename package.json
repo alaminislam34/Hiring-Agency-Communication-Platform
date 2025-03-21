@@ -15,10 +15,12 @@
     "@heroui/react": "^2.7.5",
     "autoprefixer": "^10.4.21",
     "bcryptjs": "^3.0.2",
+    "clsx": "^2.1.1",
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "framer-motion": "^12.5.0",
+    "lucide-react": "^0.483.0",
     "mongodb": "^6.14.2",
     "next": "15.2.2",
     "next-auth": "^4.24.11",
@@ -31,9 +33,10 @@
     "react-table": "^7.8.0",
     "react-toastify": "^11.0.5",
     "slick-carousel": "^1.8.1",
-    "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
-    "swiper": "^11.2.6"
+    "swiper": "^11.2.6",
+    "tailwind-merge": "^3.0.2",
+    "tw-animate-css": "^1.2.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

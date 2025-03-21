@@ -1,9 +1,7 @@
 {
   "name": "jobhive-hiring-agency-platform",
   "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
+  "private": true,  "scripts": {
     "dev": "concurrently \"next dev --turbopack -p 3000\" \"nodemon server.js\"",
     "build": "next build",
     "start": "node server.js",

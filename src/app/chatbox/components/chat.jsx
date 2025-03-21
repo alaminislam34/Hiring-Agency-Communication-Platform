@@ -3,12 +3,17 @@
 import { useEffect, useState } from "react";
 import { socket } from "../socket";
 
-export default function Chat() {
+export default function Chat({ roomId, userType }) {
+  // userType should be "jobSeeker" or "employer"
+
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    // Listen for new messages
+    if (roomId) {
+      socket.emit("join room", roomId);
+    }
+
     const handleReceiveMessage = (newMessage) => {
       setMessages((prev) => [...prev, newMessage]);
     };
@@ -18,19 +23,17 @@ export default function Chat() {
     return () => {
       socket.off("chat message", handleReceiveMessage);
     };
-  }, []);
+  }, [roomId]); // Re-run when roomId changes
 
   const sendMessage = () => {
     if (message.trim()) {
-      const newMessage = { text: message, sender: "You" };
+      const newMessage = {
+        text: message,
+        sender: userType, // "jobSeeker" or "employer"
+      };
 
-      // Update UI immediately for sender
       setMessages((prev) => [...prev, newMessage]);
-
-      // Send message to the server
-      socket.emit("chat message", newMessage);
-
-      // Clear input field
+      socket.emit("chat message", { roomId, message: newMessage });
       setMessage("");
     }
   };
@@ -39,21 +42,26 @@ export default function Chat() {
     <div className="max-w-lg mx-auto mt-10 p-4 bg-gray-100 shadow-lg rounded-lg">
       <h2 className="text-xl font-semibold mb-3 text-center">Live Chat</h2>
 
-      <div className="h-64 overflow-y-auto bg-white p-3 border rounded">
+      {/* Message Box */}
+      <div className="h-64 overflow-y-auto bg-white p-3 border rounded flex flex-col">
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`p-2 my-1 rounded ${
-              msg.sender === "You"
-                ? "bg-blue-500 text-white self-end"
-                : "bg-gray-300 text-black"
+            className={`p-2 my-1 max-w-[70%] rounded-lg ${
+              msg.sender === "employer"
+                ? "bg-blue-500 text-white self-end" // Employer messages (Right)
+                : "bg-gray-300 text-black self-start" // Job Seeker messages (Left)
             }`}
           >
-            <strong>{msg.sender}: </strong> {msg.text}
+            <strong>
+              {msg.sender === "employer" ? "Employer" : "Job Seeker"}:{" "}
+            </strong>{" "}
+            {msg.text}
           </div>
         ))}
       </div>
 
+      {/* Input Field */}
       <div className="flex mt-3">
         <input
           type="text"

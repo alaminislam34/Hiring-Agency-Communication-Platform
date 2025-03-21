@@ -15,6 +15,9 @@ const Navbar = () => {
       <li>
         <Link href="#">Insights</Link>
       </li>
+      <li>
+        <Link href="/blogs">Blogs</Link>
+      </li>
     </>
   );
   return (

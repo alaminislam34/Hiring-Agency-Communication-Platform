@@ -141,12 +141,15 @@ const DashboardNavbar = () => {
 
               {/* Navigation Links */}
               {[
-                { label: "Profile", href: "/dashboard/profile" },
-                { label: "Settings", href: "/dashboard/settings" },
-                { label: "Applicants", href: "/dashboard/applicants" },
-                { label: "Interviews", href: "/dashboard/interviews" },
-                { label: "Payments & Invoices", href: "/dashboard/payments" },
-                { label: "Help & Support", href: "/dashboard/support" },
+                { label: "Profile", href: "/employerDashboard/profile" },
+                { label: "Settings", href: "/employerDashboard/settings" },
+                { label: "Applicants", href: "/employerDashboard/applicants" },
+                { label: "Interviews", href: "/employerDashboard/interviews" },
+                {
+                  label: "Payments & Invoices",
+                  href: "/employerDashboard/payments",
+                },
+                { label: "Help & Support", href: "/employerDashboard/support" },
               ].map(({ label, href }) => (
                 <li key={label} className="py-1 px-3">
                   <Link

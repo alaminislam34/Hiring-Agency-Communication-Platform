@@ -1,45 +1,19 @@
 "use client";
+import { navLinks } from "@/lib/utils";
+import { useAppContext } from "@/Providers/AppProviders";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import {
-  FaTachometerAlt,
-  FaBriefcase,
-  FaUsers,
-  FaCog,
-  FaQuestionCircle,
-  FaSignOutAlt,
-  FaTimes,
-} from "react-icons/fa";
+import { FaSignOutAlt, FaTimes } from "react-icons/fa";
 
-const SideBar = ({ setShow }) => {
+const SideBar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(true);
-
-  // Sidebar Navigation Links
-  const navLinks = [
-    {
-      name: "Dashboard",
-      href: "/employerDashboard",
-      icon: <FaTachometerAlt />,
-    },
-    { name: "Jobs", href: "/employerDashboard/jobs", icon: <FaBriefcase /> },
-    {
-      name: "Candidates",
-      href: "/employerDashboard/candidates",
-      icon: <FaUsers />,
-    },
-    { name: "Settings", href: "/employerDashboard/settings", icon: <FaCog /> },
-    {
-      name: "Help",
-      href: "/employerDashboard/help",
-      icon: <FaQuestionCircle />,
-    },
-  ];
+  const { showName } = useAppContext();
 
   return (
     <div
-      className={`fixed h-screen bg-gray-900 text-white w-64 p-4 shadow-lg transition-all duration-300 ${
+      className={`transition-all duration-300 ${
         isOpen ? "left-0" : "-left-64"
       } lg:left-0`}
     >
@@ -47,7 +21,7 @@ const SideBar = ({ setShow }) => {
       <div className="flex items-center justify-between mb-6">
         <Link href="/" className="flex items-center text-xl font-bold">
           <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
-          JobHive
+          {showName ? "JobHive" : ""}
         </Link>
         <button
           onClick={() => setIsOpen(false)}
@@ -58,14 +32,27 @@ const SideBar = ({ setShow }) => {
       </div>
 
       {/* Profile Section */}
-      <div className="flex flex-col items-center mb-6">
+      <div
+        className={`flex flex-col ${
+          showName ? "items-center" : "items-start"
+        } mb-6`}
+      >
         <img
           src="/user-avatar.png"
           alt="User"
-          className="w-20 h-20 rounded-full border-2 border-gray-500"
+          className={`${
+            showName ? "w-20 h-20" : "w-12 h-12"
+          } rounded-full border-2 border-gray-500`}
         />
-        <h3 className="mt-2 text-lg font-medium">John Doe</h3>
-        <p className="text-sm text-gray-400">Employer</p>
+        {showName ? (
+          <>
+            {" "}
+            <h3 className="mt-2 text-lg font-medium">John Doe</h3>
+            <p className="text-sm text-gray-400">Employer</p>
+          </>
+        ) : (
+          " "
+        )}
       </div>
 
       {/* Navigation Links */}
@@ -74,13 +61,14 @@ const SideBar = ({ setShow }) => {
           <li key={name}>
             <Link
               href={href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-md transition ${
+              className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
                 pathname === href
-                  ? "bg-blue-600 text-white"
-                  : "hover:bg-gray-700"
+                  ? "text-white"
+                  : "hover:text-white text-gray-500"
               }`}
             >
-              {icon} <span>{name}</span>
+              {icon}
+              {showName ? name : ""}
             </Link>
           </li>
         ))}

@@ -1,15 +1,21 @@
+import { navLinks } from "@/lib/utils";
+import { useAppContext } from "@/Providers/AppProviders";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { FaChildReaching } from "react-icons/fa6";
-import { RiNotificationLine } from "react-icons/ri";
+import { FaRightLeft } from "react-icons/fa6";
+import { MdClose } from "react-icons/md";
+import { RiMenu2Line, RiNotificationLine } from "react-icons/ri";
 
 const DashboardNavbar = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const pathname = usePathname();
   const dropdownRef = useRef(null);
   const notificationDropdown = useRef(null);
+  const { setShowName, showName } = useAppContext();
 
   // Click Outside to Close Dropdown
   useEffect(() => {
@@ -39,9 +45,66 @@ const DashboardNavbar = () => {
   return (
     <div className="flex justify-between px-4 py-3 items-center w-full bg-white shadow-xl">
       {/* Left Icon */}
-      <button className="text-xl text-gray-600 hover:text-gray-800">
-        <FaChildReaching />
+      <button
+        onClick={() => setShowName(!showName)}
+        className="text-xl text-gray-600 hover:text-gray-800 cursor-pointer hidden lg:block"
+      >
+        <FaRightLeft />
       </button>
+      <div className="lg:hidden block">
+        {/* Mobile Navigation */}
+        <div className="drawer">
+          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content">
+            {/* Page content here */}
+            <label htmlFor="my-drawer" className="btn drawer-button">
+              <RiMenu2Line />
+            </label>
+          </div>
+          <div className="drawer-side">
+            <label
+              htmlFor="my-drawer"
+              aria-label="close sidebar"
+              className="drawer-overlay"
+            ></label>
+
+            <ul className="menu  bg-gray-900 text-base-content min-h-full w-80 p-4">
+              <div className="p-2">
+                <button
+                  onClick={() =>
+                    (document.getElementById("my-drawer").checked = false)
+                  }
+                  className="absolute top-2 right-2"
+                >
+                  <MdClose className="text-xl text-white" />
+                </button>
+              </div>
+              {/* Sidebar content here */}
+              <li>
+                <Link href={"/"} className="text-white text-lg md:text-xl">
+                  JobHive
+                </Link>
+              </li>
+              {navLinks.map(({ href, name, icon }) => (
+                <li key={href}>
+                  {" "}
+                  <Link
+                    href={href}
+                    className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
+                      pathname === href
+                        ? "text-white"
+                        : "hover:text-white text-gray-500"
+                    }`}
+                  >
+                    {icon}
+                    {name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
 
       {/* Right Section */}
       <ul className="flex items-center gap-4">
@@ -53,11 +116,11 @@ const DashboardNavbar = () => {
             <RiNotificationLine className="text-2xl text-gray-600" />
           </button>
           <div
-            className={`absolute z-20 ${
+            className={`absolute ${
               showNotification
                 ? "top-12 opacity-100"
-                : "top-0 opacity-0 pointer-events-none"
-            } duration-300 right-2 w-72 max-w-xs h-48 rounded-xl bg-white shadow-lg p-4`}
+                : "-top-20 opacity-0 pointer-events-none"
+            } duration-300 right-2 w-52 h-56 rounded-xl bg-white z-20 shadow-lg p-4`}
           >
             {showNotification && (
               <div ref={notificationDropdown}>

@@ -30,6 +30,9 @@ const Navbar = () => {
       <li>
         <Link href="/employerDashboard">Dashboard</Link>
       </li>
+      <li>
+        <Link href="/blogs">Blogs</Link>
+      </li>
     </>
   );
 

@@ -4,7 +4,7 @@ import JobsPage from "./components/JobsCard";
 const Jobs = () => {
   return (
     <div>
-      <JobsPage />{" "}
+      <JobsPage />
     </div>
   );
 };

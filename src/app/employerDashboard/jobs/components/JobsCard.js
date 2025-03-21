@@ -1,8 +1,10 @@
+import dbConnect, { collection } from "@/lib/dbConnect";
+
 const JobsPage = async () => {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/jobs`);
-  const jobs = await res.json();
+  const jobsCollection = dbConnect(collection.jobsCollection);
+  const jobs = await jobsCollection.find().toArray();
   return (
-    <div className="container mx-auto p-4">
+    <div className="p-4">
       <h1 className="text-3xl font-semibold mb-4">Job Listings</h1>
       <div className="overflow-x-auto">
         <table className="table table-auto w-full">

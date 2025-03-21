@@ -7,7 +7,8 @@ const AppContext = createContext();
 // 2️⃣ Provider Component তৈরি করা
 export const AppProvider = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
-  const info = { showSidebar, setShowSidebar };
+  const [showName, setShowName] = useState(false);
+  const info = { showSidebar, setShowSidebar, showName, setShowName };
   return <AppContext.Provider value={info}>{children}</AppContext.Provider>;
 };
 

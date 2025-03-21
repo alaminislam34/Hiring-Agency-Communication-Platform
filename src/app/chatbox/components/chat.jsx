@@ -1,30 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { socket } from "../socket";
 
 export default function Chat({ roomId, userType }) {
-  // userType should be "jobSeeker" or "employer"
-
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (roomId) {
-      socket.emit("join room", roomId);
+      socket.emit("joinRoom", roomId);
     }
 
+    // Listen for incoming messages
     const handleReceiveMessage = (newMessage) => {
       setMessages((prev) => [...prev, newMessage]);
     };
 
-    socket.on("chat message", handleReceiveMessage);
+    socket.on("receiveMessage", handleReceiveMessage);
 
     return () => {
-      socket.off("chat message", handleReceiveMessage);
+      socket.off("receiveMessage", handleReceiveMessage);
     };
-  }, [roomId]); // Re-run when roomId changes
+  }, [roomId]);
 
+  // Send a message
   const sendMessage = () => {
     if (message.trim()) {
       const newMessage = {
@@ -33,7 +33,9 @@ export default function Chat({ roomId, userType }) {
       };
 
       setMessages((prev) => [...prev, newMessage]);
-      socket.emit("chat message", { roomId, message: newMessage });
+
+      socket.emit("sendMessage", { roomId, message: newMessage });
+
       setMessage("");
     }
   };
@@ -43,19 +45,19 @@ export default function Chat({ roomId, userType }) {
       <h2 className="text-xl font-semibold mb-3 text-center">Live Chat</h2>
 
       {/* Message Box */}
-      <div className="h-64 overflow-y-auto bg-white p-3 border rounded flex flex-col">
+      <div className="h-64 overflow-y-auto bg-white p-3 border rounded flex flex-col space-y-2">
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`p-2 my-1 max-w-[70%] rounded-lg ${
+            className={`p-3 max-w-[70%] rounded-lg ${
               msg.sender === "employer"
-                ? "bg-blue-500 text-white self-end" // Employer messages (Right)
-                : "bg-gray-300 text-black self-start" // Job Seeker messages (Left)
+                ? "bg-blue-500 text-white self-end" // Right-aligned (Employer)
+                : "bg-gray-300 text-black self-start" // Left-aligned (Job Seeker)
             }`}
           >
             <strong>
               {msg.sender === "employer" ? "Employer" : "Job Seeker"}:{" "}
-            </strong>{" "}
+            </strong>
             {msg.text}
           </div>
         ))}

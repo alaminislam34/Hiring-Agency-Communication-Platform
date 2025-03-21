@@ -1,39 +1,58 @@
+// Import dependencies
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 
+// Initialize Express app
 const app = express();
-app.use(cors()); // Allow frontend requests
-
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // Update this with your frontend URL
+    origin: "http://localhost:3000", // Allow Next.js frontend
     methods: ["GET", "POST"],
   },
 });
 
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Root Route
+app.get("/", (req, res) => {
+  res.send("Real-time Chat Server is running!");
+});
+
+// Handle WebSocket connections
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
-  // User joins a room
-  socket.on("join room", (roomId) => {
-    socket.join(roomId);
-    console.log(`User joined room: ${roomId}`);
+  // User joins a chat room
+  socket.on("joinRoom", (roomId) => {
+    if (roomId) {
+      socket.join(roomId);
+      console.log(`User ${socket.id} joined room: ${roomId}`);
+    }
   });
 
-  // Handle chat messages in specific rooms
-  socket.on("chat message", ({ roomId, message }) => {
-    console.log(`Message in room ${roomId}:`, message);
-    io.to(roomId).emit("chat message", message); // Send message only to that room
+  // Handle sending messages
+  socket.on("sendMessage", ({ roomId, message }) => {
+    if (roomId && message) {
+      console.log(`Message in ${roomId}:`, message);
+
+      // Broadcast the message to the room
+      io.to(roomId).emit("receiveMessage", message);
+    }
   });
 
+  // Handle disconnection
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
   });
 });
 
-server.listen(3001, () => {
-  console.log("Server running on port 3001");
+// Start server
+const PORT = process.env.PORT || 3002;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

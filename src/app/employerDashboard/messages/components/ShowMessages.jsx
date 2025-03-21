@@ -28,8 +28,8 @@ export default function Notifications() {
             </button>
           </div>
 
-          <div className="mt-4">
-            <table className="bg-white table overflow-x-auto">
+          <div className="mt-4 ">
+            <table className="bg-white table overflow-x-auto table-auto">
               <thead>
                 <tr>
                   <th className="border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">

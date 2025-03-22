@@ -53,8 +53,8 @@ const page = () => {
             </p>
           </h1>
           {/* Posts */}
-          <div className="grid grid-cols-3">
-            <div className="card bg-base-100 w-96 shadow-sm mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className="card bg-base-100 md:w-96 shadow-sm mt-8">
               <figure>
                 <img
                   className="w-full h-52"
@@ -89,7 +89,7 @@ const page = () => {
                 </button>
               </div>
             </div>
-            <div className="card bg-base-100 w-96 shadow-sm mt-8">
+            <div className="card bg-base-100 md:w-96 shadow-sm mt-8">
               <figure>
                 <img
                   className="w-full h-52"
@@ -124,7 +124,7 @@ const page = () => {
                 </button>
               </div>
             </div>
-            <div className="card bg-base-100 w-96 shadow-sm mt-8">
+            <div className="card bg-base-100 md:w-96 shadow-sm mt-8">
               <figure>
                 <img
                   className="w-full h-52"
@@ -161,10 +161,10 @@ const page = () => {
             </div>
           </div>
         </div>
-        <div className="max-w-7xl w-11/12 mx-auto mt-16">
+        <div className="max-w-7xl w-11/12 mx-auto mt-8 md:mt-16">
           <h1 className="text-5xl mb-8 font-semibold flex items-center">
             <p>Latest Update</p>{" "}
-            <p className="ml-3 text-4xl">
+            <p className="ml-3 text-4xl hidden md:flex">
               <MdOutlineTipsAndUpdates />
             </p>
           </h1>
@@ -232,7 +232,7 @@ const page = () => {
           <div className="mt-8">
             <h1 className="text-5xl font-semibold">Our Services</h1>
             {/* Image Container */}
-            <div className="grid grid-cols-3 gap-5 my-5">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 my-5">
               <div>
                 <img
                   className="rounded-md"
@@ -283,66 +283,38 @@ const page = () => {
             <h1 className="text-4xl font-semibold text-white p-4">
               Our Impact
             </h1>
-            <div className="p-5">
-              <div className="join p-5">
-                <div>
-                  <label className="input validator join-item">
-                    <svg
-                      className="h-[1em] opacity-50"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                    >
-                      <g
-                        strokeLinejoin="round"
-                        strokeLinecap="round"
-                        strokeWidth="2.5"
-                        fill="none"
-                        stroke="currentColor"
-                      >
-                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                      </g>
-                    </svg>
-                    <input type="email" placeholder="write email" required />
-                  </label>
-                  <div className="validator-hint hidden">
-                    Enter valid email address
-                  </div>
-                </div>
-                <button className="btn btn-success join-item">Subscribe</button>
-                {/* Cards */}
-                <div className="grid grid-cols-3">
-                  <div className=" ml-2.5 p-1.5 rounded-md">
-                    {/* <h2 className="text-white ml-8 text-2xl">245</h2> */}
-                    <h2 className="text-white flex items-center text-2xl">
-                      <span className="mr-2">
-                        <IoHappyOutline />
-                      </span>{" "}
-                      <span>Happy Client</span>
-                      <span className="ml-1.5">: 245</span>
-                    </h2>
-                  </div>
-                  <div className=" ml-2.5 p-1.5 rounded-md">
-                    {/* <h2 className="text-white ml-8 text-2xl">245</h2> */}
-                    <h2 className="text-white flex items-center text-2xl">
-                      <span className="mr-2">
-                        <IoBagAddSharp />
-                      </span>{" "}
-                      <span>Job Posting</span>
-                      <span className="ml-1.5">: 315</span>
-                    </h2>
-                  </div>
-                  <div className=" ml-2.5 p-1.5 rounded-md">
-                    {/* <h2 className="text-white ml-8 text-2xl">245</h2> */}
-                    <h2 className="text-white flex items-center text-2xl">
-                      <span className="mr-2">
-                        <FaRegUser />
-                      </span>{" "}
-                      <span>Resume Post</span>
-                      <span className="ml-1.5">: 850</span>
-                    </h2>
-                  </div>
-                </div>
+
+            {/* Cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 md:pb-6">
+              <div className=" ml-2.5 p-1.5 rounded-md">
+                {/* <h2 className="text-white ml-8 text-2xl">245</h2> */}
+                <h2 className="text-white flex items-center text-2xl">
+                  <span className="mr-2">
+                    <IoHappyOutline />
+                  </span>{" "}
+                  <span>Happy Client</span>
+                  <span className="ml-1.5">: 245</span>
+                </h2>
+              </div>
+              <div className=" ml-2.5 p-1.5 rounded-md">
+                {/* <h2 className="text-white ml-8 text-2xl">245</h2> */}
+                <h2 className="text-white flex items-center text-2xl">
+                  <span className="mr-2">
+                    <IoBagAddSharp />
+                  </span>{" "}
+                  <span>Job Posting</span>
+                  <span className="ml-1.5">: 315</span>
+                </h2>
+              </div>
+              <div className=" ml-2.5 p-1.5 rounded-md">
+                {/* <h2 className="text-white ml-8 text-2xl">245</h2> */}
+                <h2 className="text-white flex items-center text-2xl">
+                  <span className="mr-2">
+                    <FaRegUser />
+                  </span>{" "}
+                  <span>Resume Post</span>
+                  <span className="ml-1.5">: 850</span>
+                </h2>
               </div>
             </div>
           </div>

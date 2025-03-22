@@ -1,5 +1,6 @@
 // import Image from "next/image";
 
+import { ToastContainer } from "react-toastify";
 import Chat from "./chatbox/components/chat";
 import Accordion from "./components/Accordion";
 import Banner from "./components/Banner";
@@ -24,6 +25,8 @@ export default async function Home() {
       <Testimonials />
       <Accordion />
       <Chat></Chat>
+
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 }

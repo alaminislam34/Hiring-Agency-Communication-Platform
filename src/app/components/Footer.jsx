@@ -77,7 +77,7 @@ const Footer = () => {
 
       {/* Region Selector */}
       <nav className="flex flex-col justify-end ml-auto text-end">
-        <h6 className="text-xl self-end">Canada (English)</h6>
+        <h6 className="text-xl md:self-end">Canada (English)</h6>
         <button className="cursor-pointer bg-[#1d2a2e] hover:bg-[#27323a] border border-white py-2 lg:py-3 px-5 rounded-4xl flex items-center text-lg lg:text-xl mt-4">
           <span className="">Select a region and language</span>
           <span className="ml-1">

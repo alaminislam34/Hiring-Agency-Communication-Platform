@@ -1,5 +1,9 @@
 import { loginUser } from "@/app/actions/auth/loginUser";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
+import { signIn } from "next-auth/react";
+import dbConnect, { collection } from "./dbConnect";
 
 export const authOptions = {
   providers: [
@@ -31,8 +35,48 @@ export const authOptions = {
         }
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
   ],
   pages: {
     signIn: "/signin",
+  },
+  callbacks: {
+    async signIn({ user, account, profile, credentials }) {
+      console.log(user);
+      const { name, email, image } = user;
+      if (user) {
+        const newUser = {
+          name,
+          email,
+          image,
+          role: "jobSeeker",
+          createdAt: new Date(),
+        };
+        const userCollection = dbConnect(collection.user_collection);
+        const userExist = await userCollection.findOne({ email: email });
+        if (!userExist) {
+          const result = await userCollection.insertOne(newUser);
+          console.log(result);
+        }
+      }
+
+      return true;
+    },
+    // async redirect({ url, baseUrl }) {
+    //   return baseUrl;
+    // },
+    // async session({ session, token, user }) {
+    //   return session;
+    // },
+    // async jwt({ token, user, account, profile, isNewUser }) {
+    //   return token;
+    // },
   },
 };

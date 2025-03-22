@@ -1,3 +1,4 @@
+import Notifications from "./components/notifications";
 import DashboardLayout from "./DashboardLayout";
 
 export default function Dashboard() {
@@ -98,6 +99,9 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <Notifications></Notifications>
       </div>
     </DashboardLayout>
   );

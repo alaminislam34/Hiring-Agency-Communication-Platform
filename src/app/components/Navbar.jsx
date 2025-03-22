@@ -16,31 +16,6 @@ const Navbar = () => {
     { href: "/employerDashboard", name: "Dashboard" },
     { href: "/blogs", name: "Blogs" },
   ];
-  const navLinks = (
-    <>
-      <li>
-        <Link href="#">Find Jobs</Link>
-      </li>
-      <li>
-        <Link href="#">Hire Talent</Link>
-      </li>
-      <li className="hidden">
-        <Link href="#">Consulting Solutions</Link>
-      </li>
-      <li>
-        <Link href="/about">About Us</Link>
-      </li>
-      <li>
-        <Link href="/dashboard">Dashboard</Link>
-      </li>
-      <li>
-        <Link href="/employerDashboard">Dashboard</Link>
-      </li>
-      <li>
-        <Link href="/blogs">Blogs</Link>
-      </li>
-    </>
-  );
 
   return (
     <div className="bg-base-100 shadow-md h-[68px]">

@@ -36,7 +36,9 @@ const page = () => {
         <div className="hero-overlay"></div>
         <div className="hero-content text-neutral-content text-center">
           <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-bold">Blogs</h1>
+            <h1 className="mb-3 md:mb-5 text-4xl md:text-5xl font-bold">
+              Blogs
+            </h1>
             <p className="mb-5">
               Our Team Moves Faster, Keeping you Current on What's Hot
             </p>
@@ -46,7 +48,7 @@ const page = () => {
       <div className="mt-8">
         {/* Post Card Container */}
         <div className="max-w-7xl w-11/12 mx-auto">
-          <h1 className="text-4xl font-semibold flex items-center">
+          <h1 className="text-3xl lg:text-4xl font-semibold flex items-center">
             <p>Recent Posts</p>{" "}
             <p className="text-xl ml-3">
               <FaArrowDown />
@@ -54,7 +56,7 @@ const page = () => {
           </h1>
           {/* Posts */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            <div className="card bg-base-100 md:w-96 shadow-sm mt-8">
+            <div className="card bg-base-100 md:w-96 shadow-sm mt-5 lg:mt-8">
               <figure>
                 <img
                   className="w-full h-52"
@@ -162,7 +164,7 @@ const page = () => {
           </div>
         </div>
         <div className="max-w-7xl w-11/12 mx-auto mt-8 md:mt-16">
-          <h1 className="text-5xl mb-8 font-semibold flex items-center">
+          <h1 className="text-3xl lg:text-5xl mb-5 lg:mb-8 font-semibold flex items-center">
             <p>Latest Update</p>{" "}
             <p className="ml-3 text-4xl hidden md:flex">
               <MdOutlineTipsAndUpdates />
@@ -179,7 +181,7 @@ const page = () => {
                 />
               </div>
               <div>
-                <h2 className="my-4 text-4xl font-semibold">
+                <h2 className="my-4 text-2xl lg:text-4xl font-semibold">
                   Every man try to reach the top but why not be?
                 </h2>
                 <p>
@@ -190,7 +192,7 @@ const page = () => {
                   but how you choose to conquer your path and rise above
                   challenges.
                 </p>
-                <button className="flex items-center bg-[#084049] text-white py-3 px-5 rounded-md my-2 border border-[#084049] hover:bg-transparent hover:text-black cursor-pointer">
+                <button className="flex items-center bg-[#084049] text-white lg:py-3 py-2 px-3 lg:px-5 rounded-md my-2 border border-[#084049] hover:bg-transparent hover:text-black cursor-pointer">
                   <p> Read Full Article</p>{" "}
                   <p className="text-xl ml-2">
                     <LiaReadme />
@@ -207,7 +209,7 @@ const page = () => {
                 />
               </div>
               <div>
-                <h2 className="my-4 text-4xl font-semibold">
+                <h2 className="my-4 text-2xl lg:text-4xl font-semibold">
                   Business are the most important way to success.
                 </h2>
                 <p>
@@ -219,7 +221,7 @@ const page = () => {
                   business also builds leadership skills and fosters long-term
                   personal and professional growth.
                 </p>
-                <button className="flex items-center bg-[#084049] text-white py-3 px-5 rounded-md my-2 border border-[#084049] hover:bg-transparent hover:text-black cursor-pointer">
+                <button className="flex items-center bg-[#084049] text-white lg:py-3 py-2 px-3 lg:px-5 rounded-md my-2 border border-[#084049] hover:bg-transparent hover:text-black cursor-pointer">
                   <p> Read Full Article</p>{" "}
                   <p className="text-xl ml-2">
                     <LiaReadme />
@@ -230,7 +232,7 @@ const page = () => {
           </div>
           {/* Our Services */}
           <div className="mt-8">
-            <h1 className="text-5xl font-semibold">Our Services</h1>
+            <h1 className="text-3xl lg:text-5xl font-semibold">Our Services</h1>
             {/* Image Container */}
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 my-5">
               <div>
@@ -280,7 +282,7 @@ const page = () => {
           </div>
           {/* Our Impact */}
           <div className="bg-black rounded-tl-md rounded-tr-md mb-0.5">
-            <h1 className="text-4xl font-semibold text-white p-4">
+            <h1 className="text-3xl lg:text-4xl font-semibold text-white p-4">
               Our Impact
             </h1>
 
@@ -288,7 +290,7 @@ const page = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 md:pb-6">
               <div className=" ml-2.5 p-1.5 rounded-md">
                 {/* <h2 className="text-white ml-8 text-2xl">245</h2> */}
-                <h2 className="text-white flex items-center text-2xl">
+                <h2 className="text-white flex items-center text-xl md:text-2xl">
                   <span className="mr-2">
                     <IoHappyOutline />
                   </span>{" "}
@@ -298,7 +300,7 @@ const page = () => {
               </div>
               <div className=" ml-2.5 p-1.5 rounded-md">
                 {/* <h2 className="text-white ml-8 text-2xl">245</h2> */}
-                <h2 className="text-white flex items-center text-2xl">
+                <h2 className="text-white flex items-center text-xl md:text-2xl">
                   <span className="mr-2">
                     <IoBagAddSharp />
                   </span>{" "}
@@ -308,7 +310,7 @@ const page = () => {
               </div>
               <div className=" ml-2.5 p-1.5 rounded-md">
                 {/* <h2 className="text-white ml-8 text-2xl">245</h2> */}
-                <h2 className="text-white flex items-center text-2xl">
+                <h2 className="text-white flex items-center text-xl md:text-2xl">
                   <span className="mr-2">
                     <FaRegUser />
                   </span>{" "}

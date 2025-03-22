@@ -103,9 +103,12 @@ const SeekKit = () => {
       </div>
       <div className="flex justify-center items-center mt-8 lg:mt-12">
         {/* This is a tool kit explore button */}
-        <button className="text-lg md:text-xl font-medium py-2 px-4 lg:py-3 lg:px-6 rounded-full bg-[#084049] hover:bg-[#02282E] text-white duration-300 cursor-pointer">
+        <Link
+          href={"/jobtoolkit"}
+          className="text-lg md:text-xl font-medium py-2 px-4 lg:py-3 lg:px-6 rounded-full bg-[#084049] hover:bg-[#02282E] text-white duration-300 cursor-pointer"
+        >
           Explore our tool kit
-        </button>
+        </Link>
       </div>
     </div>
   );

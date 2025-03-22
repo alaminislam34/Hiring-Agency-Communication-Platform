@@ -1,3 +1,5 @@
+"use client";
+import ResumeForm from "../components/ResumeForm";
 import DashboardLayout from "../DashboardLayout";
 
 export default function Resume() {
@@ -5,6 +7,7 @@ export default function Resume() {
     <DashboardLayout>
       <div>
         <h3>im from resume</h3>
+        <ResumeForm></ResumeForm>
       </div>
     </DashboardLayout>
   );

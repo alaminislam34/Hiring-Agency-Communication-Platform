@@ -1,4 +1,5 @@
 "use client";
+import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
 import { useAppContext } from "@/Providers/AppProviders";
 import { useSession } from "next-auth/react";
@@ -133,7 +134,7 @@ const Navbar = () => {
                     </li>
                     <hr />
                     {/* Job Seeker Menu */}
-                    {currentUser?.role === "jobseeker" && (
+                    {currentUser?.role === "jobSeeker" && (
                       <>
                         <li>
                           <Link
@@ -242,7 +243,9 @@ const Navbar = () => {
                   </ul>
                 </div>
               </div>
-            ) : null}
+            ) : (
+              <LoginButton />
+            )}
           </div>
         </nav>
       </div>

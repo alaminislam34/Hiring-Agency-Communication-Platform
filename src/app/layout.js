@@ -12,15 +12,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
-      <AppProvider>
-        <NextAuthSessionProvider>
+      <NextAuthSessionProvider>
+        <AppProvider>
           <body>
             <ClientNavbar />
             <section className="min-h-[550px]">{children}</section>
             <ClientFooter />
           </body>
-        </NextAuthSessionProvider>
-      </AppProvider>
+        </AppProvider>
+      </NextAuthSessionProvider>
     </html>
   );
 }

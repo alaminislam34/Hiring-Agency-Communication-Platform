@@ -10,12 +10,13 @@ export const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [showName, setShowName] = useState(false);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await fetch("/api/currentUser");
         const data = await res.json();
-        console.log(data);
+        console.log("user data", data);
         if (data.error) {
           setCurrentUser(null);
         } else {

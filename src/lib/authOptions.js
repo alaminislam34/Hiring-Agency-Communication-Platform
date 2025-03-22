@@ -2,8 +2,8 @@ import { loginUser } from "@/app/actions/auth/loginUser";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-import dbConnect, { collection } from "./dbConnect";
 import { signIn } from "next-auth/react";
+import dbConnect, { collection } from "./dbConnect";
 
 export const authOptions = {
   providers: [
@@ -48,20 +48,22 @@ export const authOptions = {
     signIn: "/signin",
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      if (account) {
-        console.log(user);
-        const { providerAccountId } = account;
+    async signIn({ user, account, profile, credentials }) {
+      console.log(user);
+      const { name, email, image } = user;
+      if (user) {
+        const newUser = {
+          name,
+          email,
+          image,
+          role: "jobSeeker",
+          createdAt: new Date(),
+        };
         const userCollection = dbConnect(collection.user_collection);
-        const { name, email: user_email, image } = user;
-        const isExisted = userCollection.findOne({
-          providerAccountId,
-        });
-        if (!isExisted) {
-          const payload = { name, email: user_email, image, role: "jobSeeker" };
-          await userCollection.insertOne({
-            payload,
-          });
+        const userExist = await userCollection.findOne({ email: email });
+        if (!userExist) {
+          const result = await userCollection.insertOne(newUser);
+          console.log(result);
         }
       }
 

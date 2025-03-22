@@ -1,12 +1,12 @@
 "use client";
 import { register } from "@/app/actions/auth/registerUser";
+import SocialsLogin from "@/app/signin/components/SocialsLogin";
 import { useRouter } from "next/navigation";
 
 // import { register } from "@/app/actions/auth/registerUser";
 // import { doSocialLogin } from "@/app/actions";
 import React from "react";
 import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -127,8 +127,11 @@ const RegisterForm = () => {
           </button>
         </div>
         <div className="divider">or</div>
-        <ToastContainer position="top-center" />
       </form>
+      <div>
+        <h1>Continue with</h1>
+        <SocialsLogin />
+      </div>
       {/* <form
         action={doSocialLogin}
         className="flex justify-center items-center gap-4 text-white"

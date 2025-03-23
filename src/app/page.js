@@ -1,9 +1,8 @@
 import { ToastContainer } from "react-toastify";
 // import Image from "next/image";
 
-import { ToastContainer } from "react-toastify";
-import Chat from "./chatbox/components/chat";
-import ChatPage from "./chatbox/components/ChatPage";
+// import Chat from "./chatbox/components/chat";
+// import ChatPage from "./chatbox/components/ChatPage";
 import Accordion from "./components/Accordion";
 import Banner from "./components/Banner";
 import CareerMove from "./components/CareerMove";

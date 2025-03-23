@@ -15,14 +15,17 @@ const Navbar = () => {
   const searchRef = useRef(null);
   const { currentUser } = useAppContext();
   console.log(currentUser);
-  const navLink = [
+
+  // Correctly define navLinks array
+  const navLinks = [
     { href: "/", name: "Home" },
     { href: "/jobs", name: "Jobs" },
     { href: "/about", name: "About Us" },
     { href: "/dashboard", name: "Dashboard" },
-    { href: "/employerDashboard", name: "Dashboard" },
+    { href: "/employerDashboard", name: "Employer Dashboard" },
     { href: "/blogs", name: "Blogs" },
   ];
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -45,15 +48,13 @@ const Navbar = () => {
             <div className="dropdown lg:hidden">
               <label
                 tabIndex={0}
-                className="btn btn-ghost flex items-center gap-2"
-              >
+                className="btn btn-ghost flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
+                  stroke="currentColor">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -62,6 +63,16 @@ const Navbar = () => {
                   />
                 </svg>
               </label>
+              {/* Mobile Dropdown Menu */}
+              <ul
+                tabIndex={0}
+                className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                {navLinks.map(({ href, name }) => (
+                  <li key={href}>
+                    <Link href={href}>{name}</Link>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             {/* Logo */}
@@ -73,16 +84,13 @@ const Navbar = () => {
           {/* Navbar Center (Desktop Menu) */}
           <div className="navbar-center hidden lg:flex">
             <ul className="flex flex-row gap-6 text-md">
-              {navLink.map(({ href, name }) => (
+              {navLinks.map(({ href, name }) => (
                 <li
                   key={href}
                   className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
                     pathname === href ? "after:w-full" : ""
-                  } py-1 px-2`}
-                >
-                  <Link href={href} className="">
-                    {name}
-                  </Link>
+                  } py-1 px-2`}>
+                  <Link href={href}>{name}</Link>
                 </li>
               ))}
             </ul>
@@ -94,15 +102,13 @@ const Navbar = () => {
             <button
               onClick={() => setIsOpen(true)}
               className="btn btn-ghost"
-              aria-label="Search"
-            >
+              aria-label="Search">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+                stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -112,6 +118,7 @@ const Navbar = () => {
               </svg>
             </button>
 
+            {/* Profile Dropdown */}
             {session?.data?.user?.name ? (
               <div className="flex items-center gap-2">
                 <img
@@ -125,88 +132,24 @@ const Navbar = () => {
                     isDropdownOpen
                       ? "opacity-100 scale-100"
                       : "opacity-0 scale-95 pointer-events-none"
-                  }`}
-                >
+                  }`}>
+                  {/* Dropdown Menu */}
                   <ul className="space-y-3 text-gray-700">
                     <li className="font-semibold">{session.data.user.name}</li>
                     <li className="text-sm text-gray-500">
                       {session.data.user.email}
                     </li>
                     <hr />
-                    {/* Job Seeker Menu */}
                     {currentUser?.role === "jobSeeker" && (
                       <>
                         <li>
                           <Link
                             href="employerDashboard/profile"
-                            className="block hover:text-primary"
-                          >
+                            className="block hover:text-primary">
                             Profile
                           </Link>
                         </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Saved Jobs
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Applied Jobs
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Notifications
-                          </Link>
-                        </li>
-                      </>
-                    )}
-                    {/* Employer Menu */}
-                    {currentUser?.role === "employer" && (
-                      <>
-                        <li>
-                          <Link
-                            href="/employerDashboard"
-                            className="block hover:text-primary"
-                          >
-                            Dashboard
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            My Jobs
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Applications
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Billing & Payments
-                          </Link>
-                        </li>
-                      </>
-                    )}
-                    {/* Admin Menu */}
-                    {currentUser?.role === "admin" && (
-                      <>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Admin Panel
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Manage Users
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Reports
-                          </Link>
-                        </li>
+                        {/* Additional menu items here */}
                       </>
                     )}
                     <hr />
@@ -221,27 +164,6 @@ const Navbar = () => {
             )}
           </div>
         </nav>
-      </div>
-      <div
-        ref={searchRef}
-        className={`items-center fixed top-6 left-0 w-full z-50 ${
-          isOpen ? "flex" : "hidden"
-        }`}
-      >
-        <form className="flex flex-grow max-w-5xl mx-auto w-11/12 bg-white rounded-md border border-gray-300 shadow-xl p-2">
-          <input
-            type="text"
-            name="search"
-            placeholder="Search..."
-            className="w-full py-2 lg:py-4 px-4 lg:px-6 border border-gray-300 focus:outline-none rounded-l-xl"
-          />
-          <button
-            type="submit"
-            className="py-2 lg:py-4 px-4 lg:px-6 border border-gray-300 rounded-r-xl"
-          >
-            Search
-          </button>
-        </form>
       </div>
     </div>
   );

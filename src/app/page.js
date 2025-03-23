@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify";
 // import Image from "next/image";
 
 import { ToastContainer } from "react-toastify";
@@ -25,9 +26,9 @@ export default async function Home() {
       <CareerMove />
       <Testimonials />
       <Accordion />
-      <Chat></Chat>
+
       <ToastContainer position="top-center" autoClose={3000} />
-      <ChatPage></ChatPage>
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 }

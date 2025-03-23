@@ -3,8 +3,8 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
+import SocialsLogin from "./SocialsLogin";
 
 const SignInComponent = () => {
   const [error, setError] = useState("");
@@ -32,7 +32,8 @@ const SignInComponent = () => {
   };
   return (
     <div>
-      <div className="space-y-6 max-w-sm w-full p-4 lg:p-6">
+      <div className="space-y-6 max-w-sm w-full p-4 lg:p-6 border border-gray-300 rounded-xl">
+        <SocialsLogin />
         <h1 className="text-2xl md:text-3xl font-semibold text-center">
           Sign in
         </h1>
@@ -73,13 +74,12 @@ const SignInComponent = () => {
           </button>
         </form>
         <p>
-          Don`t have an account
-          <Link href={"/signup"} className="underline underline-offset-2">
+          Don`t have an account?
+          <Link href={"/signup"} className="underline underline-offset-2 pl-1">
             Sign up
           </Link>
         </p>
       </div>
-      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };

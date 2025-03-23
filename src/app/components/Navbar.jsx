@@ -1,4 +1,5 @@
 "use client";
+import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
 import { useAppContext } from "@/Providers/AppProviders";
 import { useSession } from "next-auth/react";
@@ -133,37 +134,28 @@ const Navbar = () => {
                     </li>
                     <hr />
                     {/* Job Seeker Menu */}
-                    {currentUser?.role === "jobseeker" && (
+                    {currentUser?.role === "jobSeeker" && (
                       <>
                         <li>
                           <Link
-                            href="/profile"
+                            href="employerDashboard/profile"
                             className="block hover:text-primary"
                           >
                             Profile
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            href="/saved-jobs"
-                            className="block hover:text-primary"
-                          >
+                          <Link href="#" className="block hover:text-primary">
                             Saved Jobs
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            href="/applied-jobs"
-                            className="block hover:text-primary"
-                          >
+                          <Link href="#" className="block hover:text-primary">
                             Applied Jobs
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            href="/notifications"
-                            className="block hover:text-primary"
-                          >
+                          <Link href="#" className="block hover:text-primary">
                             Notifications
                           </Link>
                         </li>
@@ -181,26 +173,17 @@ const Navbar = () => {
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            href="/employerDashboard/my-jobs"
-                            className="block hover:text-primary"
-                          >
+                          <Link href="#" className="block hover:text-primary">
                             My Jobs
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            href="/employerDashboard/applications"
-                            className="block hover:text-primary"
-                          >
+                          <Link href="#" className="block hover:text-primary">
                             Applications
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            href="/employerDashboard/billing"
-                            className="block hover:text-primary"
-                          >
+                          <Link href="#" className="block hover:text-primary">
                             Billing & Payments
                           </Link>
                         </li>
@@ -210,26 +193,17 @@ const Navbar = () => {
                     {currentUser?.role === "admin" && (
                       <>
                         <li>
-                          <Link
-                            href="/admin/dashboard"
-                            className="block hover:text-primary"
-                          >
+                          <Link href="#" className="block hover:text-primary">
                             Admin Panel
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            href="/admin/manage-users"
-                            className="block hover:text-primary"
-                          >
+                          <Link href="#" className="block hover:text-primary">
                             Manage Users
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            href="/admin/reports"
-                            className="block hover:text-primary"
-                          >
+                          <Link href="#" className="block hover:text-primary">
                             Reports
                           </Link>
                         </li>
@@ -242,7 +216,9 @@ const Navbar = () => {
                   </ul>
                 </div>
               </div>
-            ) : null}
+            ) : (
+              <LoginButton />
+            )}
           </div>
         </nav>
       </div>

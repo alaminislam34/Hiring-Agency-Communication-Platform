@@ -1,9 +1,4 @@
 import { ToastContainer } from "react-toastify";
-// import Image from "next/image";
-
-import { ToastContainer } from "react-toastify";
-import Chat from "./chatbox/components/chat";
-import ChatPage from "./chatbox/components/ChatPage";
 import Accordion from "./components/Accordion";
 import Banner from "./components/Banner";
 import CareerMove from "./components/CareerMove";
@@ -26,8 +21,6 @@ export default async function Home() {
       <CareerMove />
       <Testimonials />
       <Accordion />
-
-      <ToastContainer position="top-center" autoClose={3000} />
       <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );

@@ -2,15 +2,11 @@
 import React, { useEffect, useState } from "react";
 import SectionTitle from "@/app/components/SectionTitle";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const TabJob = () => {
   const [activeTab, setActiveTab] = useState("Design");
   const [jobs, setJobs] = useState([]);
-  const router = useRouter();
-
-  const handleApplyClick = (jobId) => {
-    router.push(`/jobs/${jobId}`);
-  };
 
   useEffect(() => {
     const allJobs = async () => {
@@ -82,11 +78,11 @@ const TabJob = () => {
                 {" "}
                 <span className="font-bold">Location:</span>: {job.location}
               </p>
-              <button
-                className="btn btn-primary btn-sm mt-4"
-                onClick={() => handleApplyClick(job._id)}>
-                View Job
-              </button>
+              <Link href={`/jobs/${job._id}`}>
+                <button className="btn btn-primary btn-sm mt-4">
+                  View Job
+                </button>
+              </Link>
             </div>
           ))
         ) : (

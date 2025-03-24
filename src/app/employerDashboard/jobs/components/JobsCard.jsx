@@ -1,39 +1,68 @@
-// import dbConnect, { collection } from "@/lib/dbConnect";
 "use client";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import JobDetailsModal from "./JobDetailsModal";
-import ModalShowButton from "./ModalShowButton";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+// import { useQuery } from "@tanstack/react-query";
+// import Swal from "sweetalert2";
+// import "sweetalert2/src/sweetalert2.scss";
 
 const JobsPage = () => {
   const [jobs, setJobs] = useState([]);
-  // const jobsCollection = dbConnect(collection.jobsCollection);
-  // const jobs = await jobsCollection.find({}).toArray();
+
   useEffect(() => {
-    const getJobs = async () => {
-      const res = await fetch(`/api/jobs`);
-      const data = await res.json();
-      console.log(data);
-      setJobs(data);
+    const jobs = async () => {
+      const res = await axios.get(`/api/jobs`);
+      setJobs(res.data);
     };
-    getJobs();
+    jobs();
   }, []);
+
+  // // ✅ Delete job using useQuery (trigger manually)
+  // const { refetch: deleteRefetch } = useQuery({
+  //   queryKey: ["deleteJob"],
+  //   queryFn: handleDelete,
+  //   enabled: false,
+  // });
+
+  // // ✅ Handle Delete
+  // const handleDelete = (id) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Delete it!",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       const res = axios.delete(`/api/jobDelete/${id}`);
+  //       console.log(res.data);
+  //       deleteRefetch();
+  //       Swal.fire({
+  //         title: "Deleted!",
+  //         text: "Your job has been deleted.",
+  //         icon: "success",
+  //       });
+  //     }
+  //   });
+  // };
 
   return (
     <div className="p-4">
       <h1 className="text-3xl font-semibold mb-4">Job Listings</h1>
-      {/* Jobs Table */}
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        <table className="w-full border-collapse text-sm table ">
+        <table className="w-full border-collapse text-sm table">
           <thead className="bg-gray-100 text-gray-700 uppercase text-left">
             <tr>
-              <th className="">Job Title</th>
-              <th className="">Company</th>
-              <th className="">Location</th>
-              <th className="">Salary</th>
-              <th className="">Job Type</th>
-              <th className="">Posted</th>
-              <th className="">Deadline</th>
+              <th>Job Title</th>
+              <th>Company</th>
+              <th>Location</th>
+              <th>Salary</th>
+              <th>Job Type</th>
+              <th>Posted</th>
+              <th>Deadline</th>
               <th className=" text-center">Actions</th>
             </tr>
           </thead>
@@ -41,21 +70,16 @@ const JobsPage = () => {
           <tbody className="divide-y divide-gray-200">
             {jobs.map((job) => (
               <tr key={job._id} className="hover:bg-gray-50">
-                <td className=" font-medium">{job.jobTitle}</td>
-                <td className="">{job.companyName}</td>
-                <td className="">{job.location}</td>
-                <td className="">
+                <td className="font-medium">{job.jobTitle}</td>
+                <td>{job.companyName}</td>
+                <td>{job.location}</td>
+                <td>
                   {job.minSalary} - {job.maxSalary} {job.currency}
                 </td>
-                <td className="">{job.jobType}</td>
-                <td className="">
-                  {new Date(job.postDate).toLocaleDateString()}
-                </td>
-                <td className="">
-                  {new Date(job.deadline).toLocaleDateString()}
-                </td>
+                <td>{job.jobType}</td>
+                <td>{new Date(job.postDate).toISOString().split("T")[0]}</td>
+                <td>{new Date(job.deadline).toISOString().split("T")[0]}</td>
                 <td className="text-center flex flex-row gap-1">
-                  {/* <ModalShowButton id={"my_modal_5"} /> */}
                   <button
                     onClick={() =>
                       document.getElementById(`my_modal_${job._id}`).showModal()
@@ -71,14 +95,16 @@ const JobsPage = () => {
                     <div className="modal-box relative max-w-5xl w-11/12">
                       <div className="modal-action absolute top-0 right-5">
                         <form method="dialog">
-                          {/* if there is a button in form, it will close the modal */}
                           <button className="btn">Close</button>
                         </form>
                       </div>
                       <JobDetailsModal id={job._id} />
                     </div>
                   </dialog>
-                  <button className="p-2 bg-red-400 hover:bg-red-500 text-white rounded-md cursor-pointer">
+                  <button
+                    className="p-2 bg-red-400 hover:bg-red-500 text-white rounded-md cursor-pointer"
+                    // onClick={() => handleDelete(job._id)}
+                  >
                     <RiDeleteBin6Line />
                   </button>
                 </td>

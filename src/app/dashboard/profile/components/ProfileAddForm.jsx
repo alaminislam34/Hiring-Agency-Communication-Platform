@@ -1,110 +1,62 @@
-export default function ProfileAddForm() {
+"use client";
+
+import { useAppContext } from "@/Providers/AppProviders";
+import { useSession } from "next-auth/react";
+
+export default function Profile() {
+  const session = useSession();
+  console.log(session);
+  const { currentUser } = useAppContext();
+  console.log(currentUser);
   return (
-    <div className="p-6 bg-white rounded-lg shadow">
-      <h1 className="text-2xl font-bold mb-6">Full Name</h1>
+    <div className="flex justify-center items-center h-screen">
+      <div className="bg-white shadow-lg rounded-2xl md:w-4/5 lg:w-3/5">
+        <img
+          alt="cover photo"
+          src={currentUser?.image}
+          className="w-full mb-4 rounded-t-lg h-56"
+        />
+        <div className="flex flex-col items-center justify-center p-4 -mt-16">
+          <a href="#" className="relative block">
+            <img
+              alt="profile"
+              src={currentUser?.image}
+              className="mx-auto object-cover rounded-full h-24 w-24  border-2 border-white "
+            />
+          </a>
 
-      <div className="space-y-5">
-        {/* Form Fields in Two Columns */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text">Full Name</span>
-            </label>
-            <input type="text" className="input input-bordered" />
-          </div>
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text">Job Title</span>
-            </label>
-            <input type="text" className="input input-bordered" />
-          </div>
+          <p className="p-2 px-4 text-xs text-white bg-lime-500 rounded-full">
+            {currentUser?.role}
+          </p>
+          <p className="mt-2 text-xl font-medium text-gray-800 ">
+            User Id: {currentUser?._id}
+          </p>
+          <div className="w-full p-2 mt-4 rounded-lg">
+            <div className="flex flex-wrap items-center justify-between text-sm text-gray-600 ">
+              <p className="flex flex-col">
+                Name
+                <span className="font-bold text-black ">
+                  {currentUser?.name}
+                </span>
+              </p>
+              <p className="flex flex-col">
+                Email
+                <span className="font-bold text-black ">
+                  {" "}
+                  {currentUser?.email}
+                </span>
+              </p>
 
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text font-semibold">Phone</span>
-            </label>
-            <input type="tel" className="input input-bordered" />
+              <div>
+                <button className="bg-lime-500 px-10 py-1 rounded-lg text-black cursor-pointer hover:bg-lime-800 block mb-1">
+                  Update Profile
+                </button>
+                <button className="bg-lime-500 px-7 py-1 rounded-lg text-black cursor-pointer hover:bg-lime-800">
+                  Change Password
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text font-semibold">Email address</span>
-            </label>
-            <input type="email" className="input input-bordered" />
-          </div>
-
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text font-semibold">Website</span>
-            </label>
-            <input type="url" className="input input-bordered" />
-          </div>
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text font-semibold">
-                Current Salary($)
-              </span>
-            </label>
-            <select className="select select-bordered">
-              <option>40-70 K</option>
-              <option>70-100 K</option>
-              <option>100-150 K</option>
-            </select>
-          </div>
-
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text font-semibold">
-                Expected Salary($)
-              </span>
-            </label>
-            <select className="select select-bordered">
-              <option>120-150 K</option>
-              <option>150-200 K</option>
-              <option>200-350 K</option>
-            </select>
-          </div>
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text font-semibold">Experience</span>
-            </label>
-            <input type="text" className="input input-bordered" />
-          </div>
-
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text font-semibold">Age</span>
-            </label>
-            <input type="text" className="input input-bordered" />
-          </div>
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text font-semibold">Education Levels</span>
-            </label>
-            <input type="text" className="input input-bordered" />
-          </div>
-
-          <div className="form-control flex flex-col">
-            <label className="label">
-              <span className="label-text font-semibold">Languages</span>
-            </label>
-            <input type="text" className="input input-bordered" />
-          </div>
-        </div>
-
-        {/* Description Field Full Width */}
-        <div className="form-control flex flex-col">
-          <label className="label">
-            <span className="label-text font-semibold">Description</span>
-          </label>
-          <textarea
-            className="textarea textarea-bordered w-full"
-            rows="4"
-          ></textarea>
-        </div>
-
-        {/* Save Button */}
-        <div className="flex justify-end">
-          <button className="btn btn-primary">Save</button>
         </div>
       </div>
     </div>

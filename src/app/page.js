@@ -23,8 +23,6 @@ export default async function Home() {
       <CareerMove />
       <Testimonials />
       <Accordion />
-
-      <ToastContainer position="top-center" autoClose={3000} />
       <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );

@@ -1,3 +1,5 @@
+// import Image from "next/image";
+
 import { ToastContainer } from "react-toastify";
 import Accordion from "./components/Accordion";
 import Banner from "./components/Banner";

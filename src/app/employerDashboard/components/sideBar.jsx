@@ -73,14 +73,6 @@ const SideBar = () => {
           </li>
         ))}
       </ul>
-
-      {/* Logout Button */}
-      <div className="absolute bottom-6 w-full">
-        <button className="flex items-center gap-3 px-4 py-3 w-full text-left text-red-400 hover:text-red-300">
-          <FaSignOutAlt />
-          Logout
-        </button>
-      </div>
     </div>
   );
 };

@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 
 // import { register } from "@/app/actions/auth/registerUser";
 // import { doSocialLogin } from "@/app/actions";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [isOk, setIsOk] = useState("");
   const [error, setError] = React.useState(null);
   const router = useRouter();
   const handleRegister = async (e) => {
@@ -21,6 +22,17 @@ const RegisterForm = () => {
     const password = form.password.value;
     const role = form.role.value;
     const user = { name, userName, email, password, role };
+    const passEasy = /^(?=.*[A-Za-z])/;
+    const passGood = /^(?=.*[A-Za-z])(?=.*\d)/;
+    const passDigit = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (password.includes(passEasy)) {
+      setIsOk("Easy");
+    } else if (password.includes(passGood)) {
+      setIsOk("Good");
+    } else if (password.includes(passDigit)) {
+      setIsOk("Strong");
+    }
+
     const res = await register(user);
     if (res.success) {
       router.push("/");
@@ -116,6 +128,7 @@ const RegisterForm = () => {
             {showPassword ? "Hide" : "Show"}
           </button>
         </label>
+        {isOk && <p className="text-red-500 text-xs">{isOk}</p>}
 
         {/* Submit Button */}
         <div className="flex justify-center">

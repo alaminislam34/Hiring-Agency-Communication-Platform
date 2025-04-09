@@ -1,6 +1,7 @@
 "use client";
 import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
+import { navLinks } from "@/lib/utils";
 import { useAppContext } from "@/Providers/AppProviders";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -14,10 +15,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchRef = useRef(null);
   const { currentUser } = useAppContext();
-  console.log(currentUser);
-
-  // Correctly define navLinks array
-  const navLinks = [
+  const navLink = [
     { href: "/", name: "Home" },
     { href: "/jobs", name: "Jobs" },
     { href: "/about", name: "About Us" },
@@ -150,6 +148,80 @@ const Navbar = () => {
                           </Link>
                         </li>
                         {/* Additional menu items here */}
+                        <li>
+                          <Link
+                            href="/employerDashboard"
+                            className="block hover:text-primary"
+                          >
+                            Dashboard
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="block hover:text-primary">
+                            Saved Jobs
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="block hover:text-primary">
+                            Applied Jobs
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="block hover:text-primary">
+                            Notifications
+                          </Link>
+                        </li>
+                      </>
+                    )}
+                    {/* Employer Menu */}
+                    {currentUser?.role === "employer" && (
+                      <>
+                        <li>
+                          <Link
+                            href="/employerDashboard"
+                            className="block hover:text-primary"
+                          >
+                            Dashboard
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="block hover:text-primary">
+                            My Jobs
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="block hover:text-primary">
+                            Applications
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="block hover:text-primary">
+                            Billing & Payments
+                          </Link>
+                        </li>
+                      </>
+                    )}
+                    {/* Admin Menu */}
+                    {currentUser?.role === "admin" && (
+                      <>
+                        <li>
+                          <Link
+                            href="employerDashboard"
+                            className="block hover:text-primary"
+                          >
+                            Admin Panel
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="block hover:text-primary">
+                            Manage Users
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="block hover:text-primary">
+                            Reports
+                          </Link>
+                        </li>
                       </>
                     )}
                     <hr />

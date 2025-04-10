@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const [passError, setPassError] = useState("");
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -22,6 +23,13 @@ const RegisterForm = () => {
     const password = form.password.value;
     const role = form.role.value;
     const user = { name, userName, email, password, role };
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setPassError(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
+      );
+      return;
+    }
     const res = await register(user);
     if (res.success) {
       router.push("/");
@@ -36,7 +44,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="max-w-lg my-6 md:my-10 mx-auto w-full border border-gray-300 shadow-2xl p-6 md:p-12 rounded-xl">
+    <div className="max-w-lg my-6 md:my-10 mx-auto w-full border border-gray-300 shadow-2xl p-6 md:p-8 rounded-xl">
       <div>
         <SocialsLogin />
       </div>
@@ -44,28 +52,24 @@ const RegisterForm = () => {
       <h1 className="text-2xl md:text-3xl font-medium text-center pb-4 md:pb-6">
         Register
       </h1>
-      <form onSubmit={handleRegister} className="space-y-4 md:space-y-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
-          <label className="flex flex-col gap-2">
-            <span className="text-gray-500 text-sm md:text-base">
-              Full Name
-            </span>
-            <input
-              type="text"
-              name="fullName"
-              className="input border-[#084049]/30 w-full"
-            />
-          </label>
-          <label className="flex flex-col gap-2">
-            <span className="text-gray-500 text-sm md:text-base">Username</span>
-            <input
-              type="text"
-              name="username"
-              className="input border-[#084049]/30 w-full"
-            />
-            {error && <p className="text-red-500 text-xs">{error}</p>}
-          </label>
-        </div>
+      <form onSubmit={handleRegister} className="space-y-4 md:space-y-6">
+        <label className="flex flex-col gap-2">
+          <span className="text-gray-500 text-sm md:text-base">Full Name</span>
+          <input
+            type="text"
+            name="fullName"
+            className="input border-[#084049]/30 w-full"
+          />
+        </label>
+        <label className="flex flex-col gap-2">
+          <span className="text-gray-500 text-sm md:text-base">Username</span>
+          <input
+            type="text"
+            name="username"
+            className="input border-[#084049]/30 w-full"
+          />
+          {error && <p className="text-red-500 text-xs">{error}</p>}
+        </label>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
           <label className="flex flex-col gap-2">
@@ -97,18 +101,20 @@ const RegisterForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
           <label className="flex flex-col gap-2 relative">
             <span className="text-gray-500 text-sm md:text-base">Password</span>
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              className="input border-[#084049]/30 w-full pr-8"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-10 text-gray-500 text-sm"
-            >
-              {showPassword ? <LuEyeClosed /> : <LuEye />}
-            </button>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                className="input border-[#084049]/30 w-full pr-8"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-lg lg:text-xl"
+              >
+                {showPassword ? <LuEyeClosed /> : <LuEye />}
+              </button>
+            </div>
           </label>
           <label
             htmlFor="confirmPassword"
@@ -117,18 +123,20 @@ const RegisterForm = () => {
             <span className="text-gray-500 text-sm md:text-base">
               Confirm Password
             </span>
-            <input
-              type={showPass ? "text" : "password"}
-              name="confirmPassword"
-              className="input border-[#084049]/30 w-full pr-8"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPass(!showPass)}
-              className="absolute right-3 top-10 text-gray-500 text-sm"
-            >
-              {showPass ? <LuEyeClosed /> : <LuEye />}
-            </button>
+            <div className="relative">
+              <input
+                type={showPass ? "text" : "password"}
+                name="confirmPassword"
+                className="input border-[#084049]/30 w-full pr-8"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPass(!showPass)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-lg lg:text-xl"
+              >
+                {showPass ? <LuEyeClosed /> : <LuEye />}
+              </button>
+            </div>
           </label>
         </div>
 

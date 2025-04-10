@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.8.0",
+    "@google/genai": "^0.6.1",
+    "@google/generative-ai": "0.24.0",
     "@heroicons/react": "^2.2.0",
     "@heroui/react": "^2.7.5",
     "@hookform/resolvers": "^4.1.3",

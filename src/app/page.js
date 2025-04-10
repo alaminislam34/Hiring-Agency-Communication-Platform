@@ -1,3 +1,5 @@
+// import Image from "next/image";
+
 import { ToastContainer } from "react-toastify";
 import Accordion from "./components/Accordion";
 import Banner from "./components/Banner";
@@ -8,6 +10,7 @@ import FindTalent from "./components/FindTalent";
 import SeekKit from "./components/SeekKit";
 import Testimonials from "./components/Testimonials";
 import TrendsCarousel from "./components/TrendsCarousel";
+import GeminiComponent from "./components/GeminiComponent";
 
 export default async function Home() {
   return (
@@ -15,6 +18,9 @@ export default async function Home() {
       <Banner></Banner>
       <TrendsCarousel />
       <FindJob></FindJob>
+      <div className="">
+        <GeminiComponent></GeminiComponent>
+      </div>
       <SeekKit />
       <FindTalent />
       <ConsultingSolutions />

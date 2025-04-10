@@ -23,9 +23,9 @@ const SignInComponent = () => {
     });
 
     if (res.ok) {
-      route.push("/");
-      form.reset();
       toast.success("Login Successful! 🎉");
+      form.reset();
+      route.push("/");
     } else {
       setError("Invalid email or password");
     }

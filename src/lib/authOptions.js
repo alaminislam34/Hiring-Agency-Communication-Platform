@@ -2,7 +2,6 @@ import { loginUser } from "@/app/actions/auth/loginUser";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-import { signIn } from "next-auth/react";
 import dbConnect, { collection } from "./dbConnect";
 
 export const authOptions = {
@@ -19,10 +18,8 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        console.log("Credentials data", credentials);
         // Add logic here to look up the user from the credentials supplied
         const user = await loginUser(credentials);
-        console.log(user);
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT

@@ -21,15 +21,20 @@ const RegisterForm = () => {
     const userName = form.username.value;
     const email = form.email.value;
     const password = form.password.value;
+    const confirmPassword = form.confirmPassword.value;
     const role = form.role.value;
     const user = { name, userName, email, password, role };
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      setPassError(
-        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
-      );
-      return;
-    }
+    // if (password != confirmPassword) {
+    //   setPassError("Password does not match");
+    //   return;
+    // }
+    // if (!passwordRegex.test(password)) {
+    //   setPassError(
+    //     "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
+    //   );
+    //   return;
+    // }
     const res = await register(user);
     if (res.success) {
       router.push("/");
@@ -98,6 +103,7 @@ const RegisterForm = () => {
           </label>
         </div>
 
+        {passError && <p className="text-red-500 text-xs">{passError}</p>}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
           <label className="flex flex-col gap-2 relative">
             <span className="text-gray-500 text-sm md:text-base">Password</span>

@@ -23,16 +23,16 @@ const SignInComponent = () => {
     });
 
     if (res.ok) {
-      route.push("/");
-      form.reset();
       toast.success("Login Successful! 🎉");
+      form.reset();
+      route.push("/");
     } else {
       setError("Invalid email or password");
     }
   };
   return (
     <div>
-      <div className="space-y-6 max-w-sm w-full p-4 lg:p-6 border border-gray-300 rounded-xl">
+      <div className="space-y-6 max-w-md w-full p-4 lg:p-6 border border-gray-300 rounded-xl">
         <SocialsLogin />
         <h1 className="text-2xl md:text-3xl font-semibold text-center">
           Sign in

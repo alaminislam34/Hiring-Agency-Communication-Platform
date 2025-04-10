@@ -14,7 +14,6 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchRef = useRef(null);
   const { currentUser } = useAppContext();
-  console.log(currentUser);
   const navLink = [
     { href: "/", name: "Home" },
     { href: "/jobs", name: "Jobs" },
@@ -145,6 +144,14 @@ const Navbar = () => {
                           </Link>
                         </li>
                         <li>
+                          <Link
+                            href="/employerDashboard"
+                            className="block hover:text-primary"
+                          >
+                            Dashboard
+                          </Link>
+                        </li>
+                        <li>
                           <Link href="#" className="block hover:text-primary">
                             Saved Jobs
                           </Link>
@@ -193,7 +200,10 @@ const Navbar = () => {
                     {currentUser?.role === "admin" && (
                       <>
                         <li>
-                          <Link href="#" className="block hover:text-primary">
+                          <Link
+                            href="employerDashboard"
+                            className="block hover:text-primary"
+                          >
                             Admin Panel
                           </Link>
                         </li>

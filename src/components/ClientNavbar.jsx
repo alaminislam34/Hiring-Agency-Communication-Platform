@@ -5,7 +5,7 @@ import React from "react";
 
 const ClientNavbar = () => {
   const pathname = usePathname();
-  const isDashboard = pathname.startsWith("/Dashboard");
+  const isDashboard = pathname.startsWith("/dashboard");
   return !isDashboard && <Navbar />;
 };
 

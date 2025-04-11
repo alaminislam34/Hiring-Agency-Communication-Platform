@@ -10,19 +10,19 @@ export function cn(...inputs) {
 export const employerNavLinks = [
   {
     name: "Dashboard",
-    href: "/Dashboard",
+    href: "/dashboard",
     icon: <FaTachometerAlt />,
   },
-  { name: "Jobs", href: "/Dashboard/jobs", icon: <FaBriefcase /> },
+  { name: "Jobs", href: "/dashboard/jobs", icon: <FaBriefcase /> },
   {
     name: "Candidates",
-    href: "/Dashboard/candidates",
+    href: "/dashboard/candidates",
     icon: <FaUsers />,
   },
-  { name: "Settings", href: "/Dashboard/settings", icon: <FaCog /> },
+  { name: "Settings", href: "/dashboard/settings", icon: <FaCog /> },
   {
     name: "Help",
-    href: "/Dashboard/help",
+    href: "/dashboard/help",
     icon: <FaQuestionCircle />,
   },
 ];
@@ -30,51 +30,51 @@ export const employerNavLinks = [
 export const jobSeekerNavLinks = [
   {
     name: "Home",
-    href: "/Dashboard",
+    href: "/dashboard",
     icon: <FaTachometerAlt />,
   },
   {
     name: "Applied-Jobs",
-    href: "/Dashboard/applied-jobs",
+    href: "/dashboard/applied-jobs",
     icon: <FaTachometerAlt />,
   },
   {
     name: "Profile",
-    href: "/Dashboard/profile",
+    href: "/dashboard/profile",
     icon: <FaTachometerAlt />,
   },
   {
     name: "Notification",
-    href: "/Dashboard/notification",
+    href: "/dashboard/notification",
     icon: <FaTachometerAlt />,
   },
   {
     name: "My Resume",
-    href: "/Dashboard/myresume",
+    href: "/dashboard/myresume",
     icon: <FaTachometerAlt />,
   },
   {
     name: "Chatting",
-    href: "/Dashboard/chatbox",
+    href: "/dashboard/chatbox",
     icon: <FaTachometerAlt />,
   },
 ];
 export const adminNavLinks = [
   {
     name: "Dashboard",
-    href: "/Dashboard",
+    href: "/dashboard",
     icon: <FaTachometerAlt />,
   },
   {
     name: "Users",
-    href: "/Dashboard/users",
+    href: "/dashboard/users",
     icon: <FaTachometerAlt />,
   },
-  { name: "Jobs", href: "/Dashboard/allJobs", icon: <FaBriefcase /> },
+  { name: "Jobs", href: "/dashboard/allJobs", icon: <FaBriefcase /> },
   {
     name: "Candidates",
-    href: "/Dashboard/candidates",
+    href: "/dashboard/candidates",
     icon: <FaUsers />,
   },
-  { name: "Settings", href: "/Dashboard/settings", icon: <FaCog /> },
+  { name: "Settings", href: "/dashboard/settings", icon: <FaCog /> },
 ];

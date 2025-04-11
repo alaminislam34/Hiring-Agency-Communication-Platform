@@ -5,6 +5,7 @@ export async function GET() {
   try {
     const jobsCollection = dbConnect(collection.jobsCollection);
     const jobs = await jobsCollection.find({}).toArray();
+    console.log(jobs);
     return NextResponse.json(jobs);
   } catch (error) {
     console.error(error);

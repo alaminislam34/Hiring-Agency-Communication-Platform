@@ -6,7 +6,7 @@ import React from "react";
 
 const ClientFooter = () => {
   const pathname = usePathname();
-  const isDashboard = pathname.startsWith("/employerDashboard");
+  const isDashboard = pathname.startsWith("/dashboard");
   return !isDashboard && <Footer />;
 };
 

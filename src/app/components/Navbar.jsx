@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 
 const Navbar = () => {
   const session = useSession();
+  console.log(session);
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -18,8 +19,6 @@ const Navbar = () => {
     { href: "/", name: "Home" },
     { href: "/jobs", name: "Jobs" },
     { href: "/about", name: "About Us" },
-    { href: "/dashboard", name: "Dashboard" },
-    { href: "/employerDashboard", name: "Dashboard" },
     { href: "/blogs", name: "Blogs" },
   ];
   useEffect(() => {
@@ -111,11 +110,11 @@ const Navbar = () => {
               </svg>
             </button>
 
-            {session?.data?.user?.name ? (
+            {currentUser ? (
               <div className="flex items-center gap-2">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  src={session.data.user.image || "/logo.png"}
+                  src={currentUser?.image || "/logo.png"}
                   className="w-12 h-12 rounded-full bg-accent border cursor-pointer"
                   alt="User Profile"
                 />
@@ -127,9 +126,9 @@ const Navbar = () => {
                   }`}
                 >
                   <ul className="space-y-3 text-gray-700">
-                    <li className="font-semibold">{session.data.user.name}</li>
+                    <li className="font-semibold">{currentUser?.name}</li>
                     <li className="text-sm text-gray-500">
-                      {session.data.user.email}
+                      {currentUser?.email}
                     </li>
                     <hr />
                     {/* Job Seeker Menu */}
@@ -137,7 +136,7 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link
-                            href="employerDashboard/profile"
+                            href="Dashboard/profile"
                             className="block hover:text-primary"
                           >
                             Profile
@@ -145,7 +144,7 @@ const Navbar = () => {
                         </li>
                         <li>
                           <Link
-                            href="/employerDashboard"
+                            href="/dashboard"
                             className="block hover:text-primary"
                           >
                             Dashboard
@@ -173,7 +172,7 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link
-                            href="/employerDashboard"
+                            href="/dashboard"
                             className="block hover:text-primary"
                           >
                             Dashboard
@@ -201,7 +200,7 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link
-                            href="employerDashboard"
+                            href="dashboard"
                             className="block hover:text-primary"
                           >
                             Admin Panel

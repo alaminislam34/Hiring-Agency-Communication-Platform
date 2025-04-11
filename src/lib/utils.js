@@ -7,22 +7,69 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-export const navLinks = [
+export const employerNavLinks = [
   {
     name: "Dashboard",
-    href: "/employerDashboard",
+    href: "/dashboard",
     icon: <FaTachometerAlt />,
   },
-  { name: "Jobs", href: "/employerDashboard/jobs", icon: <FaBriefcase /> },
+  { name: "Jobs", href: "/dashboard/jobs", icon: <FaBriefcase /> },
   {
     name: "Candidates",
-    href: "/employerDashboard/candidates",
+    href: "/dashboard/candidates",
     icon: <FaUsers />,
   },
-  { name: "Settings", href: "/employerDashboard/settings", icon: <FaCog /> },
+  { name: "Settings", href: "/dashboard/settings", icon: <FaCog /> },
   {
     name: "Help",
-    href: "/employerDashboard/help",
+    href: "/dashboard/help",
     icon: <FaQuestionCircle />,
   },
+];
+
+export const jobSeekerNavLinks = [
+  {
+    name: "Home",
+    href: "/dashboard",
+    icon: <FaTachometerAlt />,
+  },
+  {
+    name: "Applied-Jobs",
+    href: "/dashboard/applied-jobs",
+    icon: <FaTachometerAlt />,
+  },
+  {
+    name: "Profile",
+    href: "/dashboard/profile",
+    icon: <FaTachometerAlt />,
+  },
+  {
+    name: "Notification",
+    href: "/dashboard/notification",
+    icon: <FaTachometerAlt />,
+  },
+  {
+    name: "My Resume",
+    href: "/dashboard/myresume",
+    icon: <FaTachometerAlt />,
+  },
+  {
+    name: "Chatting",
+    href: "/dashboard/chatbox",
+    icon: <FaTachometerAlt />,
+  },
+];
+export const adminNavLinks = [
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    icon: <FaTachometerAlt />,
+  },
+  {
+    name: "Users",
+    href: "/dashboard/users",
+    icon: <FaTachometerAlt />,
+  },
+  { name: "Jobs", href: "/dashboard/allJobs", icon: <FaBriefcase /> },
+  { name: "Settings", href: "/dashboard/settings", icon: <FaCog /> },
 ];

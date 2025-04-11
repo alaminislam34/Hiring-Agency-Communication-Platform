@@ -8,6 +8,7 @@ import {
   AiOutlineClockCircle,
   AiOutlineUser,
 } from "react-icons/ai";
+import { useAppContext } from "@/Providers/AppProviders";
 
 const stats = [
   { title: "Total Jobs", value: 24, icon: <AiOutlineAppstore size={24} /> },
@@ -28,19 +29,34 @@ const notifications = [
   "Your job UI/UX Designer is under review",
 ];
 
+/**
+ * The main component for the employer dashboard page.
+ *
+ * This component displays statistics about the employer's jobs and
+ * applicants, as well as recent job listings and notifications.
+ *
+ * @returns A React component that renders the employer dashboard page.
+ */
 const HomePage = () => {
+  const { currentUser } = useAppContext();
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Employer Dashboard</h1>
+      {/* Title and intro */}
+      <h1 className="text-3xl font-bold mb-6 first-letter:uppercase">
+        {currentUser?.role} Dashboard
+      </h1>
 
+      {/* Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
           <Card
             key={index}
             className="p-4 bg-white shadow-md flex items-center"
           >
-            {stat.icon}
-            <div className="ml-4">
+            {/* Icon */}
+            <div className="ml-4 text-center flex flex-col items-center justify-center">
+              {stat.icon}
+              {/* Title and value */}
               <p className="text-gray-600">{stat.title}</p>
               <h2 className="text-xl font-semibold">{stat.value}</h2>
             </div>
@@ -48,12 +64,16 @@ const HomePage = () => {
         ))}
       </div>
 
+      {/* Recent job listings and notifications */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         <Card className="p-4 bg-white shadow-md">
+          {/* Title */}
           <h2 className="text-xl font-semibold mb-4">Recent Job Listings</h2>
+          {/* List of jobs */}
           <ul>
             {recentJobs.map((job, index) => (
-              <li key={index} className="py-2 border-b">
+              <li key={index} className="py-2 border-b border-b-gray-300">
+                {/* Job title, status, and number of applicants */}
                 {job.title} - {job.status} ({job.applicants} Applicants)
               </li>
             ))}
@@ -61,10 +81,13 @@ const HomePage = () => {
         </Card>
 
         <Card className="p-4 bg-white shadow-md">
+          {/* Title */}
           <h2 className="text-xl font-semibold mb-4">Notifications</h2>
+          {/* List of notifications */}
           <ul>
             {notifications.map((notification, index) => (
-              <li key={index} className="py-2 border-b">
+              <li key={index} className="py-2 border-b border-b-gray-300">
+                {/* Notification message */}
                 {notification}
               </li>
             ))}

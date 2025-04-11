@@ -10,7 +10,7 @@ export const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [showName, setShowName] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  console.log(currentUser);
   useEffect(() => {
     const fetchUser = async () => {
       try {

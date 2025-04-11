@@ -18,8 +18,8 @@ const Page = () => {
     <div className="w-[90%] mx-auto my-10">
       {/* Title Text Section-1 */}
       <div className="text-center py-6">
-        <h2 className="text-2xl">About Us</h2>
-        <h2 className="text-2xl font-semibold">We Do Things Differently...</h2>
+        <h2 className="text-4xl font-bold text-[#084049]">About Us</h2>
+        <h2 className="text-xl font-semibold text-[#084049] py-2">We Do Things Differently...</h2>
         <p className="mt-2 text-center">
           We focus on the details of everything we do. All to help businesses
           around the world focus <br /> on what's most important to them. We
@@ -40,21 +40,24 @@ const Page = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl px-4">
           {/* Box 1 */}
           <div className="p-6 bg-white bg-opacity-80 rounded-lg shadow-md text-center">
-            <h3 className="text-xl font-semibold">400+ Projects Completed</h3>
+            <h3 className="text-3xl font-bold">400+ </h3>
+            <p className="text-xl font-semibold text-[#084049]">Projects Completed</p>
             <p className="mt-2 text-sm">
               We've helped build over 400 projects with great companies.
             </p>
           </div>
           {/* Box 2 */}
           <div className="p-6 bg-white bg-opacity-80 rounded-lg shadow-md text-center">
-            <h3 className="text-xl font-semibold">600% Return on Investment</h3>
+            <h3 className="text-3xl font-bold">600% </h3>
+            <p className="text-xl font-semibold text-[#084049]">Return on Investment</p>
             <p className="mt-2 text-sm">
               Businesses saw a significant return with our expertise.
             </p>
           </div>
           {/* Box 3 */}
           <div className="p-6 bg-white bg-opacity-80 rounded-lg shadow-md text-center">
-            <h3 className="text-xl font-semibold">10k Global Downloads</h3>
+            <h3 className="text-3xl font-bold">10k </h3>
+            <p className="text-xl font-semibold text-[#084049]">Global Downloads</p>
             <p className="mt-2 text-sm">
               Our free UI kit has been downloaded over 10,000 times globally.
             </p>
@@ -62,10 +65,10 @@ const Page = () => {
         </div>
       </div>
       {/* Our values section */}
-      <div>
+      <div className="my-12">
         {/* text-contents */}
         <div className="text-center my-8">
-          <h1 className="text-2xl">Our Values</h1>
+          <h1 className="text-3xl font-bold text-[#084049]">Our Values</h1>
           <p className="mt-2 text-center">
             We are an ambitious Team And. By leveraging these resources, you can
             create <br /> a professional and visually appealing "About Us" page
@@ -75,7 +78,7 @@ const Page = () => {
         {/* contents-info container*/}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 ">
           {/* item-1 */}
-          <div className="text-center border ">
+          <div className="text-center bg-[#084049] rounded-3xl shadow-md p-4 text-white">
             <div className="flex justify-center items-center m-2">
               <FaRegMessage className="text-4xl " />
             </div>
@@ -86,7 +89,7 @@ const Page = () => {
             </p>
           </div>
           {/* item-2 */}
-          <div className="text-center border ">
+          <div className="text-center bg-[#084049] rounded-3xl shadow-md p-4 text-white">
             <div className="flex justify-center items-center m-2">
               <SlEnergy className="text-4xl bg-gray-200 p-2" />
             </div>
@@ -97,7 +100,7 @@ const Page = () => {
             </p>
           </div>
           {/* item-3 */}
-          <div className="text-center border ">
+          <div className="text-center bg-[#084049] rounded-3xl shadow-md p-4 text-white">
             <div className="flex justify-center items-center m-2">
               <MdOutlineManageHistory className="text-4xl " />
             </div>
@@ -110,7 +113,7 @@ const Page = () => {
             </p>
           </div>
           {/* item-4 */}
-          <div className="text-center border ">
+          <div className="text-center bg-[#084049] rounded-3xl shadow-md p-4 text-white">
             <div className="flex justify-center items-center m-2">
               <RiChatSmileAiLine className="text-4xl " />
             </div>
@@ -121,7 +124,7 @@ const Page = () => {
             </p>
           </div>
           {/* item-5 */}
-          <div className="text-center border ">
+          <div className="text-center bg-[#084049] rounded-3xl shadow-md p-4 text-white">
             <div className="flex justify-center items-center m-2">
               <FaConnectdevelop className="text-4xl " />
             </div>
@@ -134,7 +137,7 @@ const Page = () => {
             </p>
           </div>
           {/* item-6 */}
-          <div className="text-center border ">
+          <div className="text-center bg-[#084049] rounded-3xl shadow-md p-4 text-white">
             <div className="flex justify-center items-center m-2">
               <FaPeopleLine className="text-4xl " />
             </div>
@@ -149,24 +152,24 @@ const Page = () => {
 
       {/* hiring section(meet out team section) */}
       {/* section -3 */}
-      <div>
+      <div className="mb-12">
         {/* text-contents-div */}
         <div className="text-center my-10">
-          <h2 className="text-sm md:text-xl lg:text-xl font-semibold text-purple-600">
+          <h2 className="text-sm md:text-xl lg:text-xl font-semibold text-purple-600 my-2">
             We Are Hiring!{" "}
           </h2>
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl  p-2">
-            __Meet Our Team__
+          <h2 className="text-3xl font-bold text-[#084049]">
+            Meet Our Team
           </h2>
-          <p className=" text-center">
-            Our Philosophy is simple__hire a team of diverse, passionate people
+          <p className=" text-center my-2">
+            Our Philosophy is simple hire a team of diverse, passionate people
             and <br /> foster a culture that empowers you do your best work.
           </p>
         </div>
         {/* contents-section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* cards-1 */}
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+          <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
                 className=" object-cover rounded-full"
@@ -174,7 +177,7 @@ const Page = () => {
                 alt="Logo"
               />
             </div>
-            <h3 className="text-lg font-semibold text-center">
+            <h3 className="text-xl font-semibold text-center text-[#084049]">
               MD Al-Amin Ahmed
             </h3>
             <p className="text-lg text-center text-purple-600">
@@ -185,23 +188,23 @@ const Page = () => {
               clearbit
             </p>
             {/* links-(socials) */}
-            <div className="flex justify-around mt-4 bg-gray-300 w-full rounded-2xl p-2">
+            <div className="flex justify-around mt-4 bg-[#084049] w-full rounded-2xl p-2">
               <Link href={"https://x.com/MDAlAmin0412"} target="_blank">
-                <RiTwitterXFill className="text-xl" />
+                <RiTwitterXFill className="text-xl text-white" />
               </Link>
               <Link
                 href={"https://www.linkedin.com/in/alamin34/"}
                 target="_blank">
-                <FaLinkedin className="text-xl" />
+                <FaLinkedin className="text-xl text-white" />
               </Link>
               <Link href={"https://alamin4.netlify.app/"} target="_blank">
-                <FaConnectdevelop className="text-xl"></FaConnectdevelop>
+                <FaConnectdevelop className="text-xl text-white"></FaConnectdevelop>
               </Link>
             </div>
           </div>
 
           {/* Card 2 */}
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+          <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
                 className=" object-cover rounded-full"
@@ -209,7 +212,7 @@ const Page = () => {
                 alt="Logo"
               />
             </div>
-            <h3 className="text-lg font-semibold text-center">
+            <h3 className="text-xl font-semibold text-center text-[#084049]">
               Akash Muhammad Abrrar
             </h3>
             <p className="text-lg text-center text-purple-600">
@@ -220,27 +223,27 @@ const Page = () => {
               Lead engineering teams at Figma,Pitch, And Protocol Labs.
             </p>
             {/* links-(socials) */}
-            <div className="flex justify-around mt-4 bg-gray-300 w-full rounded-2xl p-2">
+            <div className="flex justify-around mt-4 bg-[#084049] w-full rounded-2xl p-2">
               <Link href={"https://x.com/akash_madbor9"} target="_blank">
-                <RiTwitterXFill className="text-xl" />
+                <RiTwitterXFill className="text-xl text-white" />
               </Link>
               <Link
                 href={
                   "https://www.linkedin.com/in/akash-muhammad-abrrar-764275228/"
                 }
                 target="_blank">
-                <FaLinkedin className="text-xl" />
+                <FaLinkedin className="text-xl text-white" />
               </Link>
               <Link
                 href={"https://akashmabrrarnxtportfolio.netlify.app/"}
                 target="_blank">
-                <FaConnectdevelop className="text-xl"></FaConnectdevelop>
+                <FaConnectdevelop className="text-xl text-white"></FaConnectdevelop>
               </Link>
             </div>
           </div>
 
           {/* Card 3 */}
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+          <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
                 className="rounded-full object-cover"
@@ -248,8 +251,8 @@ const Page = () => {
                 alt="Logo"
               />
             </div>
-            <h3 className="text-lg font-semibold text-center">
-              Rokonujjaman Rony(:)
+            <h3 className="text-xl font-semibold text-center text-[#084049]">
+              Rokonujjaman Rony
             </h3>
             <p className="text-lg text-center text-purple-600">
               Product Manager
@@ -259,27 +262,27 @@ const Page = () => {
               working on End-Game Project
             </p>
             {/* links-(socials) */}
-            <div className="flex justify-around mt-4 bg-gray-300 w-full rounded-2xl p-2">
+            <div className="flex justify-around mt-4 bg-[#084049] w-full rounded-2xl p-2">
               <Link href={"https://x.com/RoknujjamanRon2"} target="_blank">
-                <RiTwitterXFill className="text-xl" />
+                <RiTwitterXFill className="text-xl text-white" />
               </Link>
               <Link
                 href={
                   "https://www.linkedin.com/in/md-roknujjaman-rony-906780210/"
                 }
                 target="_blank">
-                <FaLinkedin className="text-xl" />
+                <FaLinkedin className="text-xl text-white" />
               </Link>
               <Link
                 href={"https://courageous-llama-711917.netlify.app/"}
                 target="_blank">
-                <FaConnectdevelop className="text-xl"></FaConnectdevelop>
+                <FaConnectdevelop className="text-xl text-white"></FaConnectdevelop>
               </Link>
             </div>
           </div>
 
           {/* Card 4 */}
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+          <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
                 className="rounded-full object-cover"
@@ -287,7 +290,7 @@ const Page = () => {
                 alt="Logo"
               />
             </div>
-            <h3 className="text-lg font-semibold text-center">Rakib Gazi</h3>
+            <h3 className="text-xl font-semibold text-center text-[#084049]">Rakib Gazi</h3>
             <p className="text-lg text-center text-purple-600">
               Frontend Developer
             </p>
@@ -296,23 +299,23 @@ const Page = () => {
               developer.
             </p>
             {/* links-(socials) */}
-            <div className="flex justify-around mt-4 bg-gray-300 w-full rounded-2xl p-2">
+            <div className="flex justify-around mt-4 bg-[#084049] w-full rounded-2xl p-2">
               <Link href={"/#"}>
-                <RiTwitterXFill className="text-xl" />
+                <RiTwitterXFill className="text-xl text-white" />
               </Link>
               <Link
                 href={"https://www.linkedin.com/in/mohammed-rakib-gazi/"}
                 target="_blank">
-                <FaLinkedin className="text-xl" />
+                <FaLinkedin className="text-xl text-white" />
               </Link>
               <Link href={"https://rakibgazi.netlify.app/"} target="_blank">
-                <FaConnectdevelop className="text-xl"></FaConnectdevelop>
+                <FaConnectdevelop className="text-xl text-white"></FaConnectdevelop>
               </Link>
             </div>
           </div>
 
           {/* Card 5 */}
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+          <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
                 className="rounded-full object-cover"
@@ -320,7 +323,7 @@ const Page = () => {
                 alt="Logo"
               />
             </div>
-            <h3 className="text-lg font-semibold text-center">Alvee Hasan</h3>
+            <h3 className="text-xl font-semibold text-center text-[#084049]">Alvee Hasan</h3>
             <p className="text-lg text-center text-purple-600">
               Backend Developer
             </p>
@@ -329,33 +332,33 @@ const Page = () => {
               working on end-game project
             </p>
             {/* links-(socials) */}
-            <div className="flex justify-around mt-4 bg-gray-300 w-full rounded-2xl p-2">
+            <div className="flex justify-around mt-4 bg-[#084049] w-full rounded-2xl p-2">
               <Link href={"https://x.com/Dev_Hasan1"} target="_blank">
-                <RiTwitterXFill className="text-xl" />
+                <RiTwitterXFill className="text-xl text-white" />
               </Link>
               <Link
                 href={"https://www.linkedin.com/in/web-developer-mehedihasan/"}
                 target="_blank">
-                <FaLinkedin className="text-xl" />
+                <FaLinkedin className="text-xl text-white" />
               </Link>
               <Link
                 href={"https://portfolio-gules-beta-59.vercel.app/"}
                 target="_blank">
-                <FaConnectdevelop className="text-xl"></FaConnectdevelop>
+                <FaConnectdevelop className="text-xl text-white"></FaConnectdevelop>
               </Link>
             </div>
           </div>
 
           {/* Card 6 */}
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+          <div className="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center">
               <img
                 className="w-12 h-12 object-cover"
-                src="logo.png"
+                src="JobHive.png"
                 alt="Logo"
               />
             </div>
-            <h3 className="text-lg font-semibold text-center">I don't know</h3>
+            <h3 className="text-xl font-semibold text-center text-[#084049]">John Doe</h3>
             <p className="text-lg text-center text-purple-600">
               <p className="text-lg text-center text-purple-600">
                 Product Manager
@@ -366,15 +369,15 @@ const Page = () => {
               he's disappear
             </p>
             {/* links-(socials) */}
-            <div className="flex justify-around mt-4 bg-gray-300 w-full rounded-2xl p-2">
+            <div className="flex justify-around mt-4 bg-[#084049] w-full rounded-2xl p-2">
               <Link href={"/#"}>
-                <RiTwitterXFill className="text-xl" />
+                <RiTwitterXFill className="text-xl text-white" />
               </Link>
               <Link href={"/#"}>
-                <FaLinkedin className="text-xl" />
+                <FaLinkedin className="text-xl text-white" />
               </Link>
               <Link href={"/#"}>
-                <FaConnectdevelop className="text-xl"></FaConnectdevelop>
+                <FaConnectdevelop className="text-xl text-white"></FaConnectdevelop>
               </Link>
             </div>
           </div>

@@ -5,7 +5,7 @@ import React from "react";
 const LogoutButton = () => {
   return (
     <div>
-      <button onClick={() => signOut()} className="btn btn-accent">
+      <button onClick={() => signOut()} className="btn btn-accent ">
         Logout
       </button>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
-import { navLinks } from "@/lib/utils";
+
 import { useAppContext } from "@/Providers/AppProviders";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 
 const Navbar = () => {
   const session = useSession();
+  console.log(session);
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -19,8 +20,7 @@ const Navbar = () => {
     { href: "/", name: "Home" },
     { href: "/jobs", name: "Jobs" },
     { href: "/about", name: "About Us" },
-    { href: "/dashboard", name: "Dashboard" },
-    { href: "/employerDashboard", name: "Employer Dashboard" },
+
     { href: "/blogs", name: "Blogs" },
   ];
 
@@ -37,8 +37,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="bg-base-100 shadow-md h-[68px] relative">
-      <div className="w-full fixed top-0 left-0 z-50 bg-white py-2 shadow-xl">
+    <div className="bg-base-100 shadow-md h-[68px] lg:h-[78px] relative">
+      <div className="w-full fixed top-0 left-0 z-50 bg-white py-2 shadow-lg">
         <nav className="navbar max-w-6xl mx-auto">
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">
@@ -65,7 +65,7 @@ const Navbar = () => {
               <ul
                 tabIndex={0}
                 className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                {navLinks.map(({ href, name }) => (
+                {navLink.map(({ href, name }) => (
                   <li key={href}>
                     <Link href={href}>{name}</Link>
                   </li>
@@ -82,7 +82,7 @@ const Navbar = () => {
           {/* Navbar Center (Desktop Menu) */}
           <div className="navbar-center hidden lg:flex">
             <ul className="flex flex-row gap-6 text-md">
-              {navLinks.map(({ href, name }) => (
+              {navLink.map(({ href, name }) => (
                 <li
                   key={href}
                   className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
@@ -117,11 +117,12 @@ const Navbar = () => {
             </button>
 
             {/* Profile Dropdown */}
-            {session?.data?.user?.name ? (
+
+            {currentUser ? (
               <div className="flex items-center gap-2">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  src={session.data.user.image || "/logo.png"}
+                  src={currentUser?.image || "/logo.png"}
                   className="w-12 h-12 rounded-full bg-accent border cursor-pointer"
                   alt="User Profile"
                 />
@@ -133,9 +134,9 @@ const Navbar = () => {
                   }`}>
                   {/* Dropdown Menu */}
                   <ul className="space-y-3 text-gray-700">
-                    <li className="font-semibold">{session.data.user.name}</li>
+                    <li className="font-semibold">{currentUser?.name}</li>
                     <li className="text-sm text-gray-500">
-                      {session.data.user.email}
+                      {currentUser?.email}
                     </li>
                     <hr />
                     {currentUser?.role === "jobSeeker" && (
@@ -150,9 +151,8 @@ const Navbar = () => {
                         {/* Additional menu items here */}
                         <li>
                           <Link
-                            href="/employerDashboard"
-                            className="block hover:text-primary"
-                          >
+                            href="/dashboard"
+                            className="block hover:text-primary">
                             Dashboard
                           </Link>
                         </li>
@@ -178,9 +178,8 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link
-                            href="/employerDashboard"
-                            className="block hover:text-primary"
-                          >
+                            href="/dashboard"
+                            className="block hover:text-primary">
                             Dashboard
                           </Link>
                         </li>
@@ -206,9 +205,8 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link
-                            href="employerDashboard"
-                            className="block hover:text-primary"
-                          >
+                            href="dashboard"
+                            className="block hover:text-primary">
                             Admin Panel
                           </Link>
                         </li>

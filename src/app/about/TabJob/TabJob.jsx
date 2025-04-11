@@ -20,12 +20,14 @@ const TabJob = () => {
 
   // Categorize jobs dynamically (use regX)
   const categories = {
-    Design: jobs.filter((job) => /design/i.test(job.jobTitle)),
+    Design: jobs.filter((job) => /design/i.test(job.jobTitle || "")),
     Engineering: jobs.filter((job) =>
-      /(engineering|engineer|software engineer)/i.test(job.jobTitle)
+      /(engineering|engineer|software engineer)/i.test(job.jobTitle || "")
     ),
-    Customer_Success: jobs.filter((job) => /customer/i.test(job.jobTitle)),
-    Sales: jobs.filter((job) => /sales/i.test(job.jobTitle)),
+    Customer_Success: jobs.filter((job) =>
+      /customer/i.test(job.jobTitle || "")
+    ),
+    Sales: jobs.filter((job) => /sales/i.test(job.jobTitle || "")),
   };
 
   return (

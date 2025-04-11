@@ -9,6 +9,7 @@ const TabJob = () => {
     <div className="my-10">
       <SectionTitle
         title={"Open Positions"}
+        className="text-3xl font-bold text-[#084049]"
         subtitle={
           <span
             dangerouslySetInnerHTML={{

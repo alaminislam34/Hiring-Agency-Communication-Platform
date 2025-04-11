@@ -34,9 +34,9 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="bg-base-100 shadow-md h-[68px] lg:h-[78px] relative">
-      <div className="w-full fixed top-0 left-0 z-50 bg-white py-2 shadow-lg">
-        <nav className="navbar max-w-6xl mx-auto">
+    <div className="bg-base-100 shadow-md h-[68px] relative">
+      <div className="w-full fixed top-0 left-0 z-50 bg-white py-2 shadow-xl">
+        <nav className="navbar w-full md:w-11/12 mx-auto flex justify-center items-center">
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">
             {/* Mobile Dropdown Button */}
@@ -64,7 +64,7 @@ const Navbar = () => {
 
             {/* Logo */}
             <Link href="/" className="text-xl font-bold flex items-center">
-              <img src="logo.png" alt="Logo" className="h-6 mr-2" /> JobHive
+              <img src="JobHive.png" alt="Logo" className="h-6 mr-2" />
             </Link>
           </div>
 

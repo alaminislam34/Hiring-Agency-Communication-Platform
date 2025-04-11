@@ -23,13 +23,13 @@ const RegisterForm = () => {
     const password = form.password.value;
     const role = form.role.value;
     const user = { name, userName, email, password, role };
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      setPassError(
-        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
-      );
-      return;
-    }
+    // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    // if (!passwordRegex.test(password)) {
+    //   setPassError(
+    //     "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
+    //   );
+    //   return;
+    // }
     const res = await register(user);
     if (res.success) {
       router.push("/");

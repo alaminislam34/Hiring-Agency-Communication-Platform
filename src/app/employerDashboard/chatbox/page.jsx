@@ -1,12 +1,11 @@
-import DashboardLayout from "../DashboardLayout";
 import ChatPage from "./components/ChatPage";
 
 export default function ChatHelp() {
   return (
-    <DashboardLayout>
+    <div>
       <div>
         <ChatPage></ChatPage>
       </div>
-    </DashboardLayout>
+    </div>
   );
 }

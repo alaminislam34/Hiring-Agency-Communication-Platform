@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import DashboardLayout from "../DashboardLayout";
 import {
   CheckCircleIcon,
   ClockIcon,
@@ -45,7 +44,7 @@ const AppliedJobs = () => {
   ];
 
   return (
-    <DashboardLayout>
+    <div>
       <div className="p-6 bg-white rounded-lg shadow">
         <h1 className="text-2xl font-bold mb-4">Applied Jobs</h1>
         <div className="border rounded-lg overflow-x-auto">
@@ -115,7 +114,7 @@ const AppliedJobs = () => {
           </table>
         </div>
       </div>
-    </DashboardLayout>
+    </div>
   );
 };
 

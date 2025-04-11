@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 
 const Navbar = () => {
   const session = useSession();
+  console.log(session);
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -35,8 +36,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="bg-base-100 shadow-md h-[68px] relative">
-      <div className="w-full fixed top-0 left-0 z-50 bg-white py-2 shadow-xl">
+    <div className="bg-base-100 shadow-md h-[68px] lg:h-[78px] relative">
+      <div className="w-full fixed top-0 left-0 z-50 bg-white py-2 shadow-lg">
         <nav className="navbar max-w-6xl mx-auto">
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">

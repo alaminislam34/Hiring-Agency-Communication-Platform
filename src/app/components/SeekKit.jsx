@@ -9,7 +9,7 @@ import SectionTitle from "./SectionTitle";
 
 const SeekKit = () => {
   return (
-    <div className="max-w-6xl mx-auto w-11/12">
+    <div className=" mx-auto w-11/12">
       {/* section title */}
       <SectionTitle title={"Job seeker tool kit."} />
       {/* section description */}

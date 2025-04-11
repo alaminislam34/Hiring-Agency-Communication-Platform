@@ -41,14 +41,14 @@ const TrendsCarousel = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto w-11/12">
+    <div className=" mx-auto w-11/12">
       <SectionTitle title={"Hiring trends and insights"} />
-      <div className="">
-        <Slider {...settings}>
+      <div className="mt-12 ">
+        <Slider {...settings} className="">
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-6 shadow-lg rounded-lg h-[280px]"
+              className="flex flex-col items-center text-center p-6 shadow-lg rounded-lg h-[280px] mx-4"
             >
               {/* Image centered properly */}
               <div className="w-20 h-20 relative mb-4 flex justify-center mx-auto ">

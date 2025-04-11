@@ -19,8 +19,6 @@ const Navbar = () => {
     { href: "/", name: "Home" },
     { href: "/jobs", name: "Jobs" },
     { href: "/about", name: "About Us" },
-    { href: "/dashboard", name: "Dashboard" },
-    { href: "/employerDashboard", name: "Dashboard" },
     { href: "/blogs", name: "Blogs" },
   ];
   useEffect(() => {

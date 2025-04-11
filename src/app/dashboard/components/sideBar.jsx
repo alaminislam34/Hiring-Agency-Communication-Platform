@@ -36,28 +36,32 @@ const SideBar = () => {
       </div>
 
       {/* Profile Section */}
-      <div
-        className={`flex flex-col ${
-          showName ? "items-center" : "items-start"
-        } mb-6`}
-      >
-        <img
-          src={currentUser?.image ? currentUser?.image : "/user-avatar.png"}
-          alt="User"
-          className={`${
-            showName ? "w-20 h-20" : "w-12 h-12"
-          } rounded-full border-2 border-gray-500`}
-        />
-        {showName ? (
-          <>
-            {" "}
-            <h3 className="mt-2 text-lg font-medium">John Doe</h3>
-            <p className="text-sm text-gray-400">Employer</p>
-          </>
-        ) : (
-          " "
-        )}
-      </div>
+      {currentUser ? (
+        <div
+          className={`flex flex-col ${
+            showName ? "items-center" : "items-start"
+          } mb-6`}
+        >
+          <img
+            src={currentUser?.image ? currentUser?.image : "/user-avatar.png"}
+            alt="User"
+            className={`${
+              showName ? "w-20 h-20" : "w-12 h-12"
+            } rounded-full border-2 border-gray-500`}
+          />
+          {showName ? (
+            <>
+              {" "}
+              <h3 className="mt-2 text-lg font-medium">{currentUser?.name}</h3>
+              <p className="text-sm text-gray-400">{currentUser?.role}</p>
+            </>
+          ) : (
+            " "
+          )}
+        </div>
+      ) : (
+        ""
+      )}
 
       {/* Navigation Links */}
       <ul className="space-y-2">

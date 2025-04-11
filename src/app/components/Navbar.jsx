@@ -110,11 +110,11 @@ const Navbar = () => {
               </svg>
             </button>
 
-            {session?.data?.user?.name ? (
+            {currentUser ? (
               <div className="flex items-center gap-2">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  src={session.data.user.image || "/logo.png"}
+                  src={currentUser?.image || "/logo.png"}
                   className="w-12 h-12 rounded-full bg-accent border cursor-pointer"
                   alt="User Profile"
                 />
@@ -126,9 +126,9 @@ const Navbar = () => {
                   }`}
                 >
                   <ul className="space-y-3 text-gray-700">
-                    <li className="font-semibold">{session.data.user.name}</li>
+                    <li className="font-semibold">{currentUser?.name}</li>
                     <li className="text-sm text-gray-500">
-                      {session.data.user.email}
+                      {currentUser?.email}
                     </li>
                     <hr />
                     {/* Job Seeker Menu */}

@@ -3,6 +3,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import JobDetailsModal from "./JobDetailsModal";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 // import { useQuery } from "@tanstack/react-query";
 // import Swal from "sweetalert2";
 // import "sweetalert2/src/sweetalert2.scss";
@@ -17,7 +19,26 @@ const JobsPage = () => {
     };
     jobs();
   }, []);
-
+  const handleDeleteJob = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`/api/jobDelete/${id}`);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  };
   // // ✅ Delete job using useQuery (trigger manually)
   // const { refetch: deleteRefetch } = useQuery({
   //   queryKey: ["deleteJob"],
@@ -103,7 +124,7 @@ const JobsPage = () => {
                   </dialog>
                   <button
                     className="p-2 bg-red-400 hover:bg-red-500 text-white rounded-md cursor-pointer"
-                    // onClick={() => handleDelete(job._id)}
+                    onClick={() => handleDeleteJob(job._id)}
                   >
                     <RiDeleteBin6Line />
                   </button>

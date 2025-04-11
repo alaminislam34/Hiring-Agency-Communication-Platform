@@ -136,7 +136,7 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link
-                            href="employerDashboard/profile"
+                            href="Dashboard/profile"
                             className="block hover:text-primary"
                           >
                             Profile
@@ -144,7 +144,7 @@ const Navbar = () => {
                         </li>
                         <li>
                           <Link
-                            href="/employerDashboard"
+                            href="/Dashboard"
                             className="block hover:text-primary"
                           >
                             Dashboard
@@ -172,7 +172,7 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link
-                            href="/employerDashboard"
+                            href="/Dashboard"
                             className="block hover:text-primary"
                           >
                             Dashboard
@@ -200,7 +200,7 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link
-                            href="employerDashboard"
+                            href="Dashboard"
                             className="block hover:text-primary"
                           >
                             Admin Panel

@@ -1,4 +1,8 @@
-import { navLinks } from "@/lib/utils";
+import {
+  adminNavLinks,
+  employerNavLinks,
+  jobSeekerNavLinks,
+} from "@/lib/utils";
 import { useAppContext } from "@/Providers/AppProviders";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
@@ -15,7 +19,7 @@ const DashboardNavbar = () => {
   const pathname = usePathname();
   const dropdownRef = useRef(null);
   const notificationDropdown = useRef(null);
-  const { setShowName, showName } = useAppContext();
+  const { setShowName, showName, currentUser } = useAppContext();
 
   // Click Outside to Close Dropdown
   useEffect(() => {
@@ -85,22 +89,58 @@ const DashboardNavbar = () => {
                   JobHive
                 </Link>
               </li>
-              {navLinks.map(({ href, name, icon }) => (
-                <li key={href}>
-                  {" "}
-                  <Link
-                    href={href}
-                    className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                      pathname === href
-                        ? "text-white"
-                        : "hover:text-white text-gray-500"
-                    }`}
-                  >
-                    {icon}
-                    {name}
-                  </Link>
-                </li>
-              ))}
+              {currentUser?.role === "employer"
+                ? employerNavLinks.map(({ href, name, icon }) => (
+                    <li key={href}>
+                      {" "}
+                      <Link
+                        href={href}
+                        className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
+                          pathname === href
+                            ? "text-white"
+                            : "hover:text-white text-gray-500"
+                        }`}
+                      >
+                        {icon}
+                        {name}
+                      </Link>
+                    </li>
+                  ))
+                : currentUser?.role === "jobSeeker"
+                ? jobSeekerNavLinks.map(({ href, name, icon }) => (
+                    <li key={href}>
+                      {" "}
+                      <Link
+                        href={href}
+                        className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
+                          pathname === href
+                            ? "text-white"
+                            : "hover:text-white text-gray-500"
+                        }`}
+                      >
+                        {icon}
+                        {name}
+                      </Link>
+                    </li>
+                  ))
+                : currentUser?.role === "admin"
+                ? adminNavLinks.map(({ href, name, icon }) => (
+                    <li key={href}>
+                      {" "}
+                      <Link
+                        href={href}
+                        className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
+                          pathname === href
+                            ? "text-white"
+                            : "hover:text-white text-gray-500"
+                        }`}
+                      >
+                        {icon}
+                        {name}
+                      </Link>
+                    </li>
+                  ))
+                : ""}
             </ul>
           </div>
         </div>

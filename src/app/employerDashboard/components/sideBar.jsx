@@ -1,15 +1,19 @@
 "use client";
-import { navLinks } from "@/lib/utils";
+import {
+  adminNavLinks,
+  employerNavLinks,
+  jobSeekerNavLinks,
+} from "@/lib/utils";
 import { useAppContext } from "@/Providers/AppProviders";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaSignOutAlt, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 
 const SideBar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(true);
-  const { showName } = useAppContext();
+  const { showName, currentUser } = useAppContext();
 
   return (
     <div
@@ -57,21 +61,75 @@ const SideBar = () => {
 
       {/* Navigation Links */}
       <ul className="space-y-2">
-        {navLinks.map(({ name, href, icon }) => (
-          <li key={name}>
-            <Link
-              href={href}
-              className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                pathname === href
-                  ? "text-white"
-                  : "hover:text-white text-gray-500"
-              }`}
-            >
-              {icon}
-              {showName ? name : ""}
-            </Link>
-          </li>
-        ))}
+        {currentUser?.role === "employer"
+          ? employerNavLinks.map(({ name, href, icon }) => (
+              <li key={name}>
+                <Link
+                  href={href}
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
+                    pathname === href
+                      ? "text-white"
+                      : "hover:text-white text-gray-500"
+                  }`}
+                >
+                  <span>{icon}</span>
+                  <span
+                    className={`${
+                      showName ? "opacity-100" : "opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    {name}
+                  </span>
+                  {/* {showName ? name : ""} */}
+                </Link>
+              </li>
+            ))
+          : currentUser?.role === "jobSeeker"
+          ? jobSeekerNavLinks.map(({ name, href, icon }) => (
+              <li key={name}>
+                <Link
+                  href={href}
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
+                    pathname === href
+                      ? "text-white"
+                      : "hover:text-white text-gray-500"
+                  }`}
+                >
+                  <span>{icon}</span>
+                  <span
+                    className={`${
+                      showName ? "opacity-100" : "opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    {name}
+                  </span>
+                  {/* {showName ? name : ""} */}
+                </Link>
+              </li>
+            ))
+          : currentUser?.role === "admin"
+          ? adminNavLinks.map(({ name, href, icon }) => (
+              <li key={name}>
+                <Link
+                  href={href}
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
+                    pathname === href
+                      ? "text-white"
+                      : "hover:text-white text-gray-500"
+                  }`}
+                >
+                  <span>{icon}</span>{" "}
+                  <span
+                    className={`${
+                      showName ? "opacity-100" : "opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    {name}
+                  </span>
+                </Link>
+              </li>
+            ))
+          : ""}
       </ul>
     </div>
   );

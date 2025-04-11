@@ -200,7 +200,7 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link
-                            href="Dashboard"
+                            href="dashboard"
                             className="block hover:text-primary"
                           >
                             Admin Panel

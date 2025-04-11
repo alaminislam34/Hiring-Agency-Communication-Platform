@@ -5,7 +5,6 @@ import {
   FaEnvelope,
   FaLinkedin,
   FaGlobe,
-  FaBriefcase,
   FaUserEdit,
 } from "react-icons/fa";
 

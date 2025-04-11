@@ -3,7 +3,6 @@ import dbConnect, { collection } from "@/lib/dbConnect";
 const AllJobs = async () => {
   const jobsCollection = dbConnect(collection.jobsCollection);
   const jobs = await jobsCollection.find({}).toArray();
-
   return (
     <div className="bg-white p-6 mt-10 rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-4">All Jobs</h1>

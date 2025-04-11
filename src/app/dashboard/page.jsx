@@ -1,11 +1,15 @@
+import { useSession } from "next-auth/react";
 import Notifications from "./components/notifications";
 import DashboardLayout from "./DashboardLayout";
+import { useAppContext } from "@/Providers/AppProviders";
 
 export default function Dashboard() {
+  // const session = useSession();
+  // const { currentUser } = useAppContext();
   return (
     <DashboardLayout>
       <div className="p-4">
-        <h1 className="text-2xl font-bold">Howdy, Jerome!!</h1>
+        {/* <h1 className="text-2xl font-bold">Hey {currentUser?.name} !!</h1> */}
         <p>Ready to jump back in?</p>
 
         {/* Responsive Dashboard Cards */}

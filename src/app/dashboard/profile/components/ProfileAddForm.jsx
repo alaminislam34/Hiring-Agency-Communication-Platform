@@ -5,9 +5,7 @@ import { useSession } from "next-auth/react";
 
 export default function Profile() {
   const session = useSession();
-  console.log(session);
   const { currentUser } = useAppContext();
-  console.log(currentUser);
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="bg-white shadow-lg rounded-2xl md:w-4/5 lg:w-3/5">

@@ -17,7 +17,14 @@ const ApplyButton = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    // Submit logic here...
+    const result = fetch(`/api/job_apply`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    console.log(result);
     document.getElementById("my_modal_5").close();
   };
 

@@ -42,7 +42,7 @@ const SideBar = () => {
         } mb-6`}
       >
         <img
-          src="/user-avatar.png"
+          src={currentUser?.image ? currentUser?.image : "/user-avatar.png"}
           alt="User"
           className={`${
             showName ? "w-20 h-20" : "w-12 h-12"

@@ -8,7 +8,7 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [showName, setShowName] = useState(false);
+  const [showName, setShowName] = useState(true);
   const [loading, setLoading] = useState(true);
   console.log(currentUser);
   useEffect(() => {

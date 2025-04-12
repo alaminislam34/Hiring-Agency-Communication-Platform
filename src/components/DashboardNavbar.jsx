@@ -8,7 +8,7 @@ import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { FaRightLeft } from "react-icons/fa6";
+import { FaChevronLeft, FaChevronRight, FaRightLeft } from "react-icons/fa6";
 import { MdClose } from "react-icons/md";
 import { RiMenu2Line, RiNotificationLine } from "react-icons/ri";
 import { HiOutlineUserCircle } from "react-icons/hi2";
@@ -19,7 +19,11 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaCog, FaQuestionCircle } from "react-icons/fa";
 import { FaBriefcase, FaUsers } from "react-icons/fa6";
 import { FiFileText } from "react-icons/fi";
-import { LuCalendarDays } from "react-icons/lu";
+import {
+  LuBookmarkCheck,
+  LuCalendarDays,
+  LuSquareUserRound,
+} from "react-icons/lu";
 import { SiReaddotcv } from "react-icons/si";
 import { IoHelp, IoSettingsOutline } from "react-icons/io5";
 
@@ -36,7 +40,7 @@ const DashboardNavbar = () => {
     {
       label: "My Profile",
       href: "/dashboard/profile",
-      icon: <HiOutlineUserCircle />,
+      icon: <LuSquareUserRound />,
     },
     {
       label: "My Applications",
@@ -46,7 +50,7 @@ const DashboardNavbar = () => {
     {
       label: "Saved Jobs",
       href: "/dashboard/saved-jobs",
-      icon: <CiBookmarkCheck />,
+      icon: <LuBookmarkCheck />,
     },
     {
       label: "Interview Schedules",
@@ -69,7 +73,7 @@ const DashboardNavbar = () => {
     {
       label: "My Profile",
       href: "/dashboard/profile",
-      icon: <HiOutlineUserCircle />,
+      icon: <LuSquareUserRound />,
     },
     {
       label: "My Jobs",
@@ -92,7 +96,7 @@ const DashboardNavbar = () => {
     {
       label: "My Profile",
       href: "/dashboard/profile",
-      icon: <HiOutlineUserCircle />,
+      icon: <LuSquareUserRound />,
     },
     {
       label: "Settings",
@@ -127,14 +131,16 @@ const DashboardNavbar = () => {
   }, []);
 
   return (
-    <div className="flex justify-between px-4 py-3 items-center w-full bg-white shadow-xl">
+    <div className="flex justify-between pr-4 py-2 items-center w-full bg-white shadow-xl">
       {/* Left Icon */}
-      <button
-        onClick={() => setShowName(!showName)}
-        className="text-xl text-gray-600 hover:text-gray-800 cursor-pointer hidden lg:block"
-      >
-        <FaRightLeft />
-      </button>
+      <div className="bg-[#00847D] rounded-r-xl">
+        <button
+          onClick={() => setShowName(!showName)}
+          className="text-xl  py-4 px-2 text-white cursor-pointer hidden lg:block"
+        >
+          {showName ? <FaChevronLeft /> : <FaChevronRight />}
+        </button>
+      </div>
       <div className="lg:hidden block">
         {/* Mobile Navigation */}
         <div className="drawer">
@@ -316,9 +322,9 @@ const DashboardNavbar = () => {
             <ul className=" text-gray-600">
               {/* User Info */}
               <li className="border-b border-gray-300 p-4">
-                <p className="text-sm font-medium">{session?.user?.name}</p>
+                <p className="text-sm font-medium">{currentUser?.name}</p>
                 <span className="text-xs text-gray-400">
-                  {session?.user?.email}
+                  {currentUser?.email}
                 </span>
               </li>
 

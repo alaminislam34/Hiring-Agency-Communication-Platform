@@ -133,15 +133,15 @@ const DashboardNavbar = () => {
   return (
     <div className="flex justify-between pr-4 py-2 items-center w-full bg-white shadow-xl">
       {/* Left Icon */}
-      <div className="bg-[#00847D] rounded-r-xl">
+      <div className="bg-[#00847D] rounded-r-xl hidden lg:block">
         <button
           onClick={() => setShowName(!showName)}
-          className="text-xl  py-4 px-2 text-white cursor-pointer hidden lg:block"
+          className="text-xl  py-4 px-2  cursor-pointer "
         >
           {showName ? <FaChevronLeft /> : <FaChevronRight />}
         </button>
       </div>
-      <div className="lg:hidden block">
+      <div className="lg:hidden block pl-2">
         {/* Mobile Navigation */}
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -151,28 +151,28 @@ const DashboardNavbar = () => {
               <RiMenu2Line />
             </label>
           </div>
-          <div className="drawer-side">
+          <div className="drawer-side z-50">
             <label
               htmlFor="my-drawer"
               aria-label="close sidebar"
               className="drawer-overlay"
             ></label>
 
-            <ul className="menu  bg-gray-900 text-base-content min-h-full w-80 p-4">
+            <ul className="menu bg-black text-base-content min-h-full w-80 p-4">
               <div className="p-2">
                 <button
                   onClick={() =>
                     (document.getElementById("my-drawer").checked = false)
                   }
-                  className="absolute top-2 right-2"
+                  className="absolute top-2 right-2 z-30"
                 >
-                  <MdClose className="text-xl text-white" />
+                  <MdClose className="text-xl " />
                 </button>
               </div>
               {/* Sidebar content here */}
               <li>
-                <Link href={"/"} className="text-white text-lg md:text-xl">
-                  JobHive
+                <Link href={"/"} className=" text-lg md:text-xl">
+                  <img src="/jobhive.png" alt="logo" className="w-32" />
                 </Link>
               </li>
               {currentUser?.role === "employer"
@@ -182,9 +182,7 @@ const DashboardNavbar = () => {
                       <Link
                         href={href}
                         className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                          pathname === href
-                            ? "text-white"
-                            : "hover:text-white text-gray-500"
+                          pathname === href ? "" : "hover: text-gray-500"
                         }`}
                       >
                         {icon}
@@ -199,9 +197,7 @@ const DashboardNavbar = () => {
                       <Link
                         href={href}
                         className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                          pathname === href
-                            ? "text-white"
-                            : "hover:text-white text-gray-500"
+                          pathname === href ? "" : "hover: text-gray-500"
                         }`}
                       >
                         {icon}
@@ -216,9 +212,7 @@ const DashboardNavbar = () => {
                       <Link
                         href={href}
                         className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                          pathname === href
-                            ? "text-white"
-                            : "hover:text-white text-gray-500"
+                          pathname === href ? "" : "hover: text-gray-500"
                         }`}
                       >
                         {icon}
@@ -364,7 +358,7 @@ const DashboardNavbar = () => {
         <li className="relative">
           <img
             onClick={() => setIsOpen(!isOpen)} // Toggle dropdown visibility
-            src={session?.user?.image || "/default-avatar.png"}
+            src={session?.user?.image || "/fakeUser.jpg"}
             alt="User"
             className="w-10 h-10 rounded-full border bg-gray-300 cursor-pointer"
           />

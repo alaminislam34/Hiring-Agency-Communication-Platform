@@ -23,7 +23,7 @@ export default function DashboardLayout({ children }) {
           showName ? "lg:ml-64" : "lg:ml-20"
         }`}
       >
-        <div className="sticky top-0 left-0 z-50">
+        <div className="sticky top-0 left-0 z-40">
           <DashboardNavbar />
         </div>
         <div className="overflow-hidden">{children}</div>

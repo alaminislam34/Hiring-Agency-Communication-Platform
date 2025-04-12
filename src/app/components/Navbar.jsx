@@ -5,7 +5,7 @@ import { useAppContext } from "@/Providers/AppProviders";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { HiOutlineUserCircle } from "react-icons/hi2";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { VscSaveAll } from "react-icons/vsc";
@@ -13,6 +13,8 @@ import { CiBookmarkCheck } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaCog, FaQuestionCircle } from "react-icons/fa";
 import { FaBriefcase, FaUsers } from "react-icons/fa6";
+import { RiMenuUnfold2Fill } from "react-icons/ri";
+import { GrClose } from "react-icons/gr";
 
 const Navbar = () => {
   const session = useSession();
@@ -117,17 +119,6 @@ const Navbar = () => {
       icon: <FaCog />,
     },
   ];
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <div className="bg-base-100 shadow-md h-[68px] relative">
@@ -136,28 +127,45 @@ const Navbar = () => {
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">
             {/* Mobile Dropdown Button */}
-            <div className="dropdown lg:hidden">
-              <label
-                tabIndex={0}
-                className="btn btn-ghost flex items-center gap-2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h8m-8 6h16"
-                  />
-                </svg>
-              </label>
+            <div className="lg:hidden">
+              <button onClick={() => setIsOpen(true)} className="btn btn-sm">
+                <RiMenuUnfold2Fill className="text-xl" />
+              </button>
             </div>
-
+            <div
+              className={`lg:hidden absolute top-0 duration-300 z-40 ${
+                isOpen
+                  ? "left-0 scale-100 opacity-100"
+                  : "-left-52 scale-95 pointer-events-none opacity-0"
+              } w-screen h-screen md:w-1/2 bg-white p-4`}
+            >
+              <ul className="flex flex-col justify-start">
+                <li>
+                  <button onClick={() => setIsOpen(false)}>
+                    <GrClose />
+                  </button>
+                </li>
+                <li>
+                  <img
+                    src="/jobhive.png"
+                    alt="logo"
+                    className="w-32  py-2 my-2"
+                  />
+                </li>
+                {navLink.map(({ href, name }) => (
+                  <li
+                    key={href}
+                    className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
+                      pathname === href ? "bg-gray-400" : ""
+                    } py-1 px-2`}
+                  >
+                    <Link href={href} className="">
+                      {name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
             {/* Logo */}
             <Link href="/" className="text-xl font-bold flex items-center">
               <img src="JobHive.png" alt="Logo" className="h-6 mr-2" />

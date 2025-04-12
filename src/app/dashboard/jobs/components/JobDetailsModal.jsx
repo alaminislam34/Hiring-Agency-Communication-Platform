@@ -33,7 +33,7 @@ const JobDetailsModal = ({ id }) => {
 
   return (
     <div className="flex justify-center items-center p-4">
-      <div className="w-full  rounded-2xl shadow-xl p-8 overflow-y-auto max-h-[90vh]">
+      <div className="w-full ">
         <h2 className="text-3xl font-bold text-center mb-6  ">
           {job.jobTitle}
         </h2>

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import JobAddModal from "./JobAddModal";
 // import { useQuery } from "@tanstack/react-query";
 // import Swal from "sweetalert2";
 // import "sweetalert2/src/sweetalert2.scss";
@@ -72,7 +73,11 @@ const JobsPage = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-semibold mb-4">Job Listings</h1>
+      <div className="flex justify-between items-center my-4">
+        <h1 className="text-3xl font-semibold mb-4">Job Listings</h1>
+
+        <JobAddModal />
+      </div>
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         <table className="w-full border-collapse text-sm table">
           <thead className="bg-gray-100 text-gray-700 uppercase text-left">

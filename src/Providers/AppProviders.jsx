@@ -10,7 +10,23 @@ export const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [showName, setShowName] = useState(true);
   const [loading, setLoading] = useState(true);
-  console.log(currentUser);
+  const [jobs, setJobs] = useState([]);
+  const [type, setType] = useState("");
+  console.log("job type type", type, "jobs", jobs);
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const res = await fetch(`/api/allJobs?jobType=${type}`);
+        const data = await res.json();
+        setJobs(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, []);
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -39,6 +55,7 @@ export const AppProvider = ({ children }) => {
     setShowName,
     currentUser,
     loading,
+    setType,
   };
   return <AppContext.Provider value={info}>{children}</AppContext.Provider>;
 };

@@ -8,7 +8,7 @@ const AllJobs = async () => {
   const jobs = await jobsCollection.find({}).toArray();
 
   return (
-    <div className="bg-gray-50 min-h-screen p-6">
+    <div className="bg-gray-50 p-6">
       <h1 className="text-3xl font-bold mb-6 text-center">
         All Available Jobs
       </h1>
@@ -49,27 +49,43 @@ const AllJobs = async () => {
               </Link>
 
               {/* Apply Now (Modal or Link depending on your flow) */}
-              <ApplyButton />
+              <ApplyButton
+                job={{
+                  _id: job._id.toString(),
+                  jobTitle: job.jobTitle,
+                  companyName: job.companyName,
+                  location: job.location,
+                  jobType: job.jobType,
+                  salary: {
+                    currency: job.currency,
+                    min: job.minSalary,
+                    max: job.maxSalary,
+                  },
+                  postDate: job.postDate, // ✅ send actual Date or timestamp
+                  deadline: job.deadline,
+                  description: job.description,
+                  skills: job.skills,
+                  requirements: job.requirements,
+                  // contactEmail: job.contactEmail,
+                  // contactPhone: job.contactPhone,
+                }}
+                modalId={`apply_modal_${job._id}`}
+              />
             </div>
             {/* Open the modal using document.getElementById('ID').showModal() method */}
 
-            <dialog
-              id="my_modal_5"
-              className="modal modal-bottom sm:modal-middle"
-            >
-              <div className="modal-box">
-                <h3 className="font-bold text-lg">Hello!</h3>
-                <p className="py-4">
-                  Press ESC key or click the button below to close
-                </p>
-                <div className="modal-action">
-                  <form method="dialog">
-                    {/* if there is a button in form, it will close the modal */}
-                    <button className="btn">Close</button>
-                  </form>
-                </div>
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Hello!</h3>
+              <p className="py-4">
+                Press ESC key or click the button below to close
+              </p>
+              <div className="modal-action">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className="btn">Close</button>
+                </form>
               </div>
-            </dialog>
+            </div>
           </div>
         ))}
       </div>

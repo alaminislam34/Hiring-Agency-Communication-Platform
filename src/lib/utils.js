@@ -1,7 +1,17 @@
 import { clsx } from "clsx";
-import { FaCog, FaQuestionCircle, FaTachometerAlt } from "react-icons/fa";
+import {
+  FaCog,
+  FaHome,
+  FaQuestionCircle,
+  FaTachometerAlt,
+} from "react-icons/fa";
 import { FaBriefcase, FaUsers } from "react-icons/fa6";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { IoChatbubblesSharp } from "react-icons/io5";
+import { LuBookmarkCheck, LuSquareUserRound } from "react-icons/lu";
+import { RiProfileLine } from "react-icons/ri";
 import { twMerge } from "tailwind-merge";
+import { BsPersonWorkspace } from "react-icons/bs";
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -9,9 +19,9 @@ export function cn(...inputs) {
 
 export const employerNavLinks = [
   {
-    name: "Dashboard",
+    name: "Home",
     href: "/dashboard",
-    icon: <FaTachometerAlt />,
+    icon: <FaHome />,
   },
   { name: "Jobs", href: "/dashboard/jobs", icon: <FaBriefcase /> },
   {
@@ -31,45 +41,40 @@ export const jobSeekerNavLinks = [
   {
     name: "Home",
     href: "/dashboard",
-    icon: <FaTachometerAlt />,
+    icon: <FaHome />,
   },
   {
     name: "Applied-Jobs",
     href: "/dashboard/applied-jobs",
-    icon: <FaTachometerAlt />,
-  },
-  {
-    name: "Profile",
-    href: "/dashboard/profile",
-    icon: <FaTachometerAlt />,
+    icon: <LuBookmarkCheck />,
   },
   {
     name: "Notification",
     href: "/dashboard/notifications",
-    icon: <FaTachometerAlt />,
+    icon: <IoIosNotificationsOutline />,
   },
   {
     name: "My Resume",
     href: "/dashboard/myresume",
-    icon: <FaTachometerAlt />,
+    icon: <RiProfileLine />,
   },
   {
     name: "Chatting",
     href: "/dashboard/chatbox",
-    icon: <FaTachometerAlt />,
+    icon: <IoChatbubblesSharp />,
   },
 ];
 export const adminNavLinks = [
   {
-    name: "Dashboard",
+    name: "Home",
     href: "/dashboard",
     icon: <FaTachometerAlt />,
   },
   {
     name: "Users",
     href: "/dashboard/users",
-    icon: <FaTachometerAlt />,
+    icon: <LuSquareUserRound />,
   },
-  { name: "Jobs", href: "/dashboard/allJobs", icon: <FaBriefcase /> },
+  { name: "Jobs", href: "/dashboard/allJobs", icon: <BsPersonWorkspace /> },
   { name: "Settings", href: "/dashboard/settings", icon: <FaCog /> },
 ];

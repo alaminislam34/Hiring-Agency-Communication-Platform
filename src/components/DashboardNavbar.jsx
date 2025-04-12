@@ -25,7 +25,7 @@ import {
   LuSquareUserRound,
 } from "react-icons/lu";
 import { SiReaddotcv } from "react-icons/si";
-import { IoHelp, IoSettingsOutline } from "react-icons/io5";
+import { IoHelp, IoNotifications, IoSettingsOutline } from "react-icons/io5";
 
 const DashboardNavbar = () => {
   const { data: session } = useSession();
@@ -239,25 +239,25 @@ const DashboardNavbar = () => {
             onClick={() => setShowNotification(!showNotification)}
             className="hover:text-gray-800 cursor-pointer"
           >
-            <RiNotificationLine className="text-2xl text-gray-600" />
+            <IoIosNotificationsOutline className="text-2xl text-gray-600" />
           </button>
           <div
-            className={`absolute ${
+            className={`absolute top-12 right-0 ${
               showNotification
-                ? "top-12 opacity-100"
-                : "-top-20 opacity-0 pointer-events-none"
-            } duration-300 right-2 w-52 h-56 rounded-xl bg-white z-20 shadow-lg p-4`}
+                ? "scale-100 opacity-100"
+                : "scale-50 opacity-0 pointer-events-none"
+            } duration-300 right-2 w-72 max-h-80 overflow-y-auto rounded-xl bg-white z-20 shadow-lg border border-gray-300`}
           >
             {showNotification && (
               <div ref={notificationDropdown}>
                 {/* Notification Title */}
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    New Notification
+                <div className="flex items-center justify-between mb-2 py-3 px-2 sticky top-0 bg-white">
+                  <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                    <IoIosNotificationsOutline /> New Notification
                   </h3>
                   <button
                     onClick={() => setShowNotification(false)}
-                    className="text-gray-600 hover:text-gray-800 focus:outline-none"
+                    className="text-gray-600 hover:text-gray-800 focus:outline-none cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -276,19 +276,78 @@ const DashboardNavbar = () => {
                   </button>
                 </div>
 
-                {/* Notification Message */}
-                <p className="text-sm text-gray-700 mb-3">
-                  You have new updates in your dashboard. Please check the
-                  latest tasks and review the notifications.
-                </p>
+                <div className="flex flex-col justify-between items-start">
+                  <ul className="w-full space-y-2 *:bg-[#eaffff] *:p-2">
+                    <li className="text-sm text-gray-500">
+                      <div className=" flex flex-col gap-1">
+                        <span>
+                          You have a new notification. User Name sent you a
+                          message.{" "}
+                        </span>
+                        <span className="text-right text-xs">
+                          {" "}
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
+                    </li>
+                    <li className="text-sm text-gray-500">
+                      <div className=" flex flex-col gap-1">
+                        <span>
+                          You have a new notification. User Name sent you a
+                          message.{" "}
+                        </span>
+                        <span className="text-right text-xs">
+                          {" "}
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
+                    </li>
+                    <li className="text-sm text-gray-500">
+                      <div className=" flex flex-col gap-1">
+                        <span>
+                          You have a new notification. User Name sent you a
+                          message.{" "}
+                        </span>
+                        <span className="text-right text-xs">
+                          {" "}
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
+                    </li>
+                    <li className="text-sm text-gray-500">
+                      <div className=" flex flex-col gap-1">
+                        <span>
+                          You have a new notification. User Name sent you a
+                          message.{" "}
+                        </span>
+                        <span className="text-right text-xs">
+                          {" "}
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
+                    </li>
+                    <li className="text-sm text-gray-500">
+                      <div className=" flex flex-col gap-1">
+                        <span>
+                          You have a new notification. User Name sent you a
+                          message.{" "}
+                        </span>
+                        <span className="text-right text-xs">
+                          {" "}
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
 
-                {/* Action Link */}
-                <Link
-                  href="/employerDashboard/messages"
-                  className="block text-sm text-blue-600 hover:underline"
-                >
-                  View Updates
-                </Link>
+                  {/* Action Link */}
+                  <Link
+                    href="/dashboard/notifications"
+                    className="block text-sm text-blue-600 hover:underline mt-2 px-2 pb-4"
+                  >
+                    View Updates
+                  </Link>
+                </div>
               </div>
             )}
           </div>
@@ -297,7 +356,7 @@ const DashboardNavbar = () => {
         {/* User Name */}
         <li className="hidden sm:block">
           <p className="text-gray-700 text-sm font-medium">
-            {session?.user?.name}
+            {currentUser?.name}
           </p>
         </li>
 

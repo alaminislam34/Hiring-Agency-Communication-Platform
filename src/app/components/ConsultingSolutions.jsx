@@ -3,9 +3,9 @@ import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
 export default function ConsultingSolutions() {
   return (
-    <div className="flex items-center justify-center max-w-6xl mx-auto w-11/12">
-      <div className="flex items-center flex-col lg:flex-row justify-between gap-10">
-        <div className="lg:w-1/2 pl-4">
+    <div className=" mx-auto w-11/12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="flex flex-col justify-center pl-4 w-full 2xl:w-2/3">
           <h2 className="text-3xl font-semibold text-gray-900 leading-snug">
             Consulting solutions to drive business impact
           </h2>
@@ -28,21 +28,20 @@ export default function ConsultingSolutions() {
           </ul>
 
           <div className="mt-6 flex gap-4">
-            <button className="bg-[#084049] text-white px-6 py-3 rounded-full text-lg font-medium hover:bg-[#02282E] transition cursor-pointer">
+            <button className="bg-[#084049] text-white px-6 py-3 rounded-full text-sm md:text-lg font-medium hover:bg-[#02282E] transition cursor-pointer">
               Find your consulting solution
             </button>
-            <button className="border border-gray-500 text-gray-900 px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-200 transition cursor-pointer">
+            <button className="border border-gray-500 text-gray-900 px-6 py-3 rounded-full text-sm md:text-lg font-medium hover:bg-gray-200 transition cursor-pointer">
               Learn more
             </button>
           </div>
         </div>
 
-        <Image
+        <img
           src="/consulting.webp"
           alt="Business meeting"
-          width={500}
-          height={400}
-          className="rounded-lg shadow-md"
+          
+          className="rounded-lg shadow-md w-full h-[400px]"
         />
       </div>
     </div>

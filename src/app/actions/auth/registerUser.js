@@ -5,28 +5,26 @@ import dbConnect, { collection } from "@/lib/dbConnect";
 export const register = async (user) => {
   const userCollection = dbConnect(collection.user_collection);
   const { email, password, userName } = user;
-  if (!email || !password) {
+
+  const isExistUser = await userCollection.findOne({ email });
+  if (isExistUser) {
     return {
       success: false,
-      message: "Please enter email and password",
+      message: "User already exists",
     };
   }
-  const isExistUser = await userCollection.findOne({ email: email });
-  const isExistUsername = await userCollection.findOne({ userName: userName });
-  if (!isExistUser) {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    user.password = hashedPassword;
-    const result = await userCollection.insertOne(user);
-    return { success: true, insertedId: result.insertedId.toString() };
-  }
+
+  const isExistUsername = await userCollection.findOne({ userName });
   if (isExistUsername) {
     return {
       success: false,
-      message: "Username already exist",
+      message: "Username already exists",
     };
   }
-  return {
-    success: false,
-    message: "User already exist",
-  };
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+  user.password = hashedPassword;
+
+  const result = await userCollection.insertOne(user);
+  return { success: true, insertedId: result.insertedId.toString() };
 };

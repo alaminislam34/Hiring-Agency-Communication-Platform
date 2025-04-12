@@ -7,38 +7,39 @@ const TabJob = () => {
 
   return (
     <div className="my-10">
-      <SectionTitle
-        title={"Open Positions"}
-        className="text-3xl font-bold text-[#084049]"
-        subtitle={
-          <span
-            dangerouslySetInnerHTML={{
-              __html:
-                "Want to work with some of the best global talent and build software used <br /> by all the companies you know and love? Join the team -- we're hiring!",
-            }}
-          />
-        }></SectionTitle>
+      <div className="text-center my-8">
+        <h1 className="text-3xl font-bold text-[#084049]">Open Positions</h1>
+        <p
+          className={`mt-2 text-center w-full md:w-[90%] lg:w-[80%] xl:w-[50%]  mx-auto font-semibold`}
+        >
+          Want to work with some of the best global talent and build software used  by all the companies you know and love? Join the team -- we're hiring!
+        </p>
+      </div>
 
       {/* Tabs */}
       <div className="tabs tabs-boxed flex justify-center">
         <button
           className={`tab ${activeTab === "Design" ? "tab-active" : ""}`}
-          onClick={() => setActiveTab("Design")}>
+          onClick={() => setActiveTab("Design")}
+        >
           Design
         </button>
         <button
           className={`tab ${activeTab === "Engineering" ? "tab-active" : ""}`}
-          onClick={() => setActiveTab("Engineering")}>
+          onClick={() => setActiveTab("Engineering")}
+        >
           Software Engineering
         </button>
         <button
           className={`tab ${activeTab === "Success" ? "tab-active" : ""}`}
-          onClick={() => setActiveTab("Success")}>
+          onClick={() => setActiveTab("Success")}
+        >
           Customer Success
         </button>
         <button
           className={`tab ${activeTab === "Sales" ? "tab-active" : ""}`}
-          onClick={() => setActiveTab("Sales")}>
+          onClick={() => setActiveTab("Sales")}
+        >
           Sales
         </button>
       </div>
@@ -47,21 +48,35 @@ const TabJob = () => {
       <div className="mt-6">
         {activeTab === "Design" && (
           <div className="space-y-4">
-            <h2 className="text-lg font-bold">Design Jobs</h2>
+            <h2 className="text-xl text-[#084049] font-bold">Design Jobs</h2>
             <p>Explore opportunities in graphic and product design.</p>
             <div className="border rounded-lg p-4 bg-base-100">
               <h3 className="text-lg font-bold">Product Designer</h3>
               <p className="text-sm text-gray-600">
                 Mid-level product designer needed to join our dynamic team.
               </p>
-              <button className="btn btn-primary btn-sm mt-4">View Job</button>
+              <button className="btn btn-sm mt-4 bg-[#084049] text-white hover:bg-red-600">View Job</button>
+            </div>
+            <div className="border rounded-lg p-4 bg-base-100">
+              <h3 className="text-lg font-bold">Graphics Designer</h3>
+              <p className="text-sm text-gray-600">
+                Mid-level product designer needed to join our dynamic team.
+              </p>
+              <button className="btn btn-sm mt-4 bg-[#084049] text-white hover:bg-red-600">View Job</button>
+            </div>
+            <div className="border rounded-lg p-4 bg-base-100">
+              <h3 className="text-lg font-bold">Web  Designer</h3>
+              <p className="text-sm text-gray-600">
+                Mid-level product designer needed to join our dynamic team.
+              </p>
+              <button className="btn btn-sm mt-4 bg-[#084049] text-white hover:bg-red-600">View Job</button>
             </div>
           </div>
         )}
 
         {activeTab === "Engineering" && (
           <div className="space-y-4">
-            <h2 className="text-lg font-bold">Software Engineering Jobs</h2>
+            <h2 className="text-xl text-[#084049] font-bold">Software Engineering Jobs</h2>
             <p>
               Build innovative solutions and shape the future of technology.
             </p>
@@ -77,7 +92,7 @@ const TabJob = () => {
 
         {activeTab === "Success" && (
           <div className="space-y-4">
-            <h2 className="text-lg font-bold">Customer Success Jobs</h2>
+            <h2 className="text-xl text-[#084049] font-bold">Customer Success Jobs</h2>
             <p>
               Support clients and ensure their satisfaction with our services.
             </p>
@@ -93,7 +108,7 @@ const TabJob = () => {
 
         {activeTab === "Sales" && (
           <div className="space-y-4">
-            <h2 className="text-lg font-bold">Sales Jobs</h2>
+            <h2 className="text-xl text-[#084049] font-bold">Sales Jobs</h2>
             <p>Drive growth and generate revenue by connecting with clients.</p>
             <div className="border rounded-lg p-4 bg-base-100">
               <h3 className="text-lg font-bold">Sales Representative</h3>

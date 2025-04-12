@@ -45,7 +45,7 @@ export const jobSeekerNavLinks = [
   },
   {
     name: "Notification",
-    href: "/dashboard/notification",
+    href: "/dashboard/notifications",
     icon: <FaTachometerAlt />,
   },
   {

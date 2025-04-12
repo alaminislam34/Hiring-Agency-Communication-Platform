@@ -47,13 +47,12 @@ const Testimonials = () => {
       </div>
 
       {/* Testimonials Slider */}
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="w-11/12 mx-auto px-4">
         <Slider {...settings}>
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-6 bg-base-100 shadow-2xl rounded-lg my-4"
-            >
+              className="flex flex-col items-center text-center p-6 bg-base-100 shadow-2xl rounded-lg my-4 mx-6 h-[300px]">
               {/* User Image */}
               <div className="w-20 h-20 relative mb-4">
                 <img

@@ -71,10 +71,5 @@ export const adminNavLinks = [
     icon: <FaTachometerAlt />,
   },
   { name: "Jobs", href: "/dashboard/allJobs", icon: <FaBriefcase /> },
-  {
-    name: "Candidates",
-    href: "/dashboard/candidates",
-    icon: <FaUsers />,
-  },
   { name: "Settings", href: "/dashboard/settings", icon: <FaCog /> },
 ];

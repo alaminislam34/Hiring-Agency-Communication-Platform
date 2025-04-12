@@ -49,7 +49,7 @@ const DashboardNavbar = () => {
     },
     {
       label: "Saved Jobs",
-      href: "/dashboard/saved-jobs",
+      href: "/dashboard/savedJobs",
       icon: <LuBookmarkCheck />,
     },
     {

@@ -2,6 +2,7 @@
 
 import React from "react";
 import AddJobForm from "../../components/JobAddForm";
+import { FaPlus } from "react-icons/fa6";
 
 const JobAddModal = () => {
   return (
@@ -10,7 +11,7 @@ const JobAddModal = () => {
         onClick={() => document.getElementById("my_modal_5").showModal()}
         className="btn"
       >
-        Add Jobs
+        Add Jobs <FaPlus />
       </button>
       <dialog id="my_modal_5" className="modal modal-middle">
         <div className="modal-box max-w-5xl mx-auto w-11/12 relative">

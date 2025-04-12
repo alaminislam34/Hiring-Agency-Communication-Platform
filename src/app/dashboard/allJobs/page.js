@@ -35,6 +35,7 @@ const AllJobs = async () => {
                 <td className="">
                   {new Date(job.deadline).toLocaleDateString()}
                 </td>
+
                 <td>
                   <ActionsButton id={job._id} />
                 </td>

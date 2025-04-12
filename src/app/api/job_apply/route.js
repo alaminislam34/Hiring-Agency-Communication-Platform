@@ -2,32 +2,61 @@ import dbConnect, { collection } from "@/lib/dbConnect";
 
 export const POST = async (req) => {
   try {
-    // Connect to the database collection
     const apply_jobCollection = dbConnect(collection.appliedCollection);
 
-    // Get data from request body
     const data = await req.json();
+    console.log("Received application data:", data);
 
-    if (!data) {
+    const {
+      name,
+      email,
+      resume,
+      coverLetter,
+      jobId,
+      jobTitle,
+      companyName,
+      location,
+      jobType,
+      posted,
+      deadline,
+      description,
+      skills,
+      requirements,
+    } = data;
+
+    if (!name || !email || !resume || !jobId || !jobTitle) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
-        {
-          status: 400,
-        }
+        { status: 400 }
       );
     }
 
-    // Insert data into the collection
-    const result = await apply_jobCollection.insertOne(data);
+    const result = await apply_jobCollection.insertOne({
+      name,
+      email,
+      resume,
+      coverLetter,
+      jobId,
+      jobTitle,
+      companyName,
+      location,
+      jobType,
+      // salary,
+      posted,
+      deadline,
+      description,
+      skills,
+      requirements,
+      // contactInformation,
+      appliedAt: new Date(),
+    });
 
     return new Response(
       JSON.stringify({
         message: "Job applied successfully",
         insertedId: result.insertedId,
       }),
-      {
-        status: 201,
-      }
+      { status: 201 }
     );
   } catch (error) {
     console.error("Error applying for job:", error);

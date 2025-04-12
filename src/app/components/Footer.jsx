@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="w-11/12 mx-auto text-neutral-content p-10 ">
         {/* Logo Section */}
         <div className=" w-full flex justify-center items-center mb-12">
-          <div  className="sm:col-span-4 text-left mb-4 sm:mb-0 ">
+          <div  className=" text-left mb-4 ">
             <Link
               href="/"
               className="flex flex-row gap-2 items-center bg-white p-8 rounded-xl"
@@ -17,9 +17,10 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+          
           {/* Social Section */}
-          <nav>
+          <div className="w-full">
             <h6 className="font-semibold mb-4 text-2xl text-white">Social</h6>
             <div className="grid grid-flow-col gap-4">
               <a>
@@ -60,10 +61,10 @@ const Footer = () => {
               Fraud Alert | Privacy Policy | Terms of Use
             </p>
             <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
-          </nav>
+          </div>
 
           {/* Services Section */}
-          <nav>
+          <div className="w-full">
             <h6 className="font-semibold mb-4 text-2xl text-white">Services</h6>
             <div className="flex flex-col gap-2">
             <a className="link link-hover">Browse Jobs</a>
@@ -71,10 +72,10 @@ const Footer = () => {
             <a className="link link-hover">Permanent Talent</a>
             <a className="link link-hover">Consulting Solutions</a>
             </div>
-          </nav>
+          </div>
 
           {/* About Section */}
-          <nav>
+          <div className="w-full">
             <h6 className="font-semibold mb-4 text-2xl text-white">About</h6>
             <div className="flex flex-col gap-2">
             <a className="link link-hover">Job directory</a>
@@ -82,18 +83,7 @@ const Footer = () => {
             <a className="link link-hover">Leadership</a>
             <a className="link link-hover">Careers With Us</a>
             </div>
-          </nav>
-
-          {/* Region Selector */}
-          <nav className="flex flex-col justify-end ml-auto text-end">
-            <h6 className="text-xl md:self-end">Canada (English)</h6>
-            <button className="cursor-pointer bg-[#1d2a2e] hover:bg-[#27323a] border border-white py-2 lg:py-3 px-5 rounded-4xl flex items-center text-lg lg:text-xl mt-4">
-              <span className="">Select a region and language</span>
-              <span className="ml-1">
-                <FaArrowRight />
-              </span>
-            </button>
-          </nav>
+          </div>
         </div>
       </div>
     </footer>

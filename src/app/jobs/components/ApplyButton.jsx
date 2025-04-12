@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
-const ApplyButton = () => {
+const ApplyButton = ({ job, modalId }) => {
+  console.log(job);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,30 +16,65 @@ const ApplyButton = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    const result = fetch(`/api/job_apply`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    console.log(result);
-    document.getElementById("my_modal_5").close();
+
+    const applicationData = {
+      ...formData,
+      jobId: job._id.toString(),
+      jobTitle: job.jobTitle,
+      companyName: job.companyName,
+      location: job.location,
+      jobType: job.jobType,
+      posted: new Date(job.postDate).toLocaleDateString(),
+      deadline: new Date(job.deadline).toLocaleDateString(),
+      description: job.description,
+      skills: job.skills,
+      requirements: job.requirements,
+      // Don't include salary or contactInformation if you're not sending them
+    };
+
+    console.log("Submitting application data:", applicationData);
+
+    try {
+      const res = await fetch("/api/job_apply", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(applicationData),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        alert("Application submitted successfully!");
+        setFormData({
+          name: "",
+          email: "",
+          resume: "",
+          coverLetter: "",
+        });
+        document.getElementById(modalId).close();
+      } else {
+        alert(result.error || "Failed to submit application");
+      }
+    } catch (err) {
+      console.error("Submission error:", err);
+      alert("Something went wrong");
+    }
   };
 
   return (
     <div>
       <button
-        onClick={() => document.getElementById("my_modal_5").showModal()}
+        onClick={() => document.getElementById(modalId).showModal()}
         className="text-sm px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded cursor-pointer"
       >
         Apply Now
       </button>
 
-      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+      <dialog id={modalId} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box bg-white shadow-lg rounded-lg p-6 max-w-xl mx-auto">
           <h3 className="font-bold text-2xl text-gray-800 mb-4">
             Apply for This Job
@@ -101,7 +138,7 @@ const ApplyButton = () => {
               <button
                 type="button"
                 className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300"
-                onClick={() => document.getElementById("my_modal_5").close()}
+                onClick={() => document.getElementById(modalId).close()}
               >
                 Cancel
               </button>

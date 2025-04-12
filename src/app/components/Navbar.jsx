@@ -6,6 +6,13 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { HiOutlineUserCircle } from "react-icons/hi2";
+import { TbLayoutDashboard } from "react-icons/tb";
+import { VscSaveAll } from "react-icons/vsc";
+import { CiBookmarkCheck } from "react-icons/ci";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { FaCog, FaQuestionCircle } from "react-icons/fa";
+import { FaBriefcase, FaUsers } from "react-icons/fa6";
 
 const Navbar = () => {
   const session = useSession();
@@ -20,6 +27,95 @@ const Navbar = () => {
     { href: "/jobs", name: "Jobs" },
     { href: "/about", name: "About Us" },
     { href: "/blogs", name: "Blogs" },
+  ];
+  // jobSeeker links
+  const jobSeekerLinks = [
+    {
+      name: "Profile",
+      href: "/dashboard/profile",
+      icon: <HiOutlineUserCircle />,
+    },
+    {
+      name: "Dashboard",
+      href: "/dashboard",
+      icon: <TbLayoutDashboard />,
+    },
+    {
+      name: "Saved Jobs",
+      href: "/dashboard/saved-jobs",
+      icon: <VscSaveAll />,
+    },
+    {
+      name: "Applied Jobs",
+      href: "/dashboard/applied-jobs",
+      icon: <CiBookmarkCheck />,
+    },
+    {
+      name: "Notifications",
+      href: "/dashboard/notifications",
+      icon: <IoIosNotificationsOutline />,
+    },
+  ];
+  // employer links
+  const employerLinks = [
+    {
+      name: "Profile",
+      href: "/dashboard/profile",
+      icon: <HiOutlineUserCircle />,
+    },
+    {
+      name: "Dashboard",
+      href: "/dashboard",
+      icon: <TbLayoutDashboard />,
+    },
+    {
+      name: "Jobs",
+      href: "/dashboard/jobs",
+      icon: <FaBriefcase />,
+    },
+    {
+      name: "Candidates",
+      href: "/dashboard/candidates",
+      icon: <FaUsers />,
+    },
+    {
+      name: "Settings",
+      href: "/dashboard/settings",
+      icon: <FaCog />,
+    },
+    {
+      name: "Help",
+      href: "/dashboard/help",
+      icon: <FaQuestionCircle />,
+    },
+  ];
+  // admin links
+  const adminLinks = [
+    {
+      name: "Profile",
+      href: "/dashboard/profile",
+      icon: <HiOutlineUserCircle />,
+    },
+    {
+      name: "Admin Panel",
+      href: "/dashboard",
+      icon: <TbLayoutDashboard />,
+    },
+    {
+      name: "Users",
+      href: "/dashboard/users",
+      icon: <FaUsers />,
+    },
+    {
+      name: "Jobs",
+      href: "/dashboard/jobs",
+      icon: <FaBriefcase />,
+    },
+    {
+      name: "Settings",
+      href: "/dashboard/settings",
+      icon: <FaCog />,
+    },
   ];
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -88,7 +184,7 @@ const Navbar = () => {
 
           {/* Navbar End (Search & Sign In) */}
           <div className="navbar-end space-x-4">
-            {/* Search Icon */}
+            {/* Search Icon
             <button
               onClick={() => setIsOpen(true)}
               className="btn btn-ghost"
@@ -108,118 +204,77 @@ const Navbar = () => {
                   d="M21 21l-4.35-4.35M17 11A6 6 0 1 0 5 11a6 6 0 0 0 12 0z"
                 />
               </svg>
-            </button>
+            </button> */}
+            <div>
+              <Link
+                href="/dashboard/notifications"
+                className="flex items-center justify-center text-2xl hover:text-[#00e1ff] cursor-pointer"
+              >
+                <IoIosNotificationsOutline />
+              </Link>
+            </div>
 
             {currentUser ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 relative">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   src={currentUser?.image || "/logo.png"}
-                  className="w-12 h-12 rounded-full bg-accent border cursor-pointer"
+                  className="w-12 h-12 rounded-full border-[#00e1ff] bg-accent border cursor-pointer"
                   alt="User Profile"
                 />
                 <div
-                  className={`absolute top-16 right-0 z-50 bg-white shadow-lg rounded-xl p-4 w-64 duration-300 transition-all ${
+                  className={`absolute top-[65px] right-0 z-50 overflow-hidden bg-white border border-gray-300 shadow-lg rounded-xl w-64 duration-300 transition-all ${
                     isDropdownOpen
                       ? "opacity-100 scale-100"
-                      : "opacity-0 scale-95 pointer-events-none"
+                      : "opacity-0 scale-50 pointer-events-none"
                   }`}
                 >
-                  <ul className="space-y-3 text-gray-700">
-                    <li className="font-semibold">{currentUser?.name}</li>
-                    <li className="text-sm text-gray-500">
-                      {currentUser?.email}
+                  <ul className=" text-gray-700">
+                    <li className="p-4">
+                      <p className="font-semibold">{currentUser?.name}</p>
+                      <p className="text-sm text-gray-500">
+                        {currentUser?.email}
+                      </p>
                     </li>
-                    <hr />
+                    <li className="border-b border-gray-300"></li>
                     {/* Job Seeker Menu */}
-                    {currentUser?.role === "jobSeeker" && (
-                      <>
-                        <li>
-                          <Link
-                            href="Dashboard/profile"
-                            className="block hover:text-primary"
-                          >
-                            Profile
+                    {currentUser?.role === "jobSeeker" &&
+                      jobSeekerLinks.map(({ name, href, icon }) => (
+                        <li
+                          key={name}
+                          className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-3 py-2 duration-300 transition-all cursor-pointer "
+                        >
+                          <Link href={href} className="flex items-center gap-2">
+                            {icon} {name}
                           </Link>
                         </li>
-                        <li>
-                          <Link
-                            href="/dashboard"
-                            className="block hover:text-primary"
-                          >
-                            Dashboard
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Saved Jobs
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Applied Jobs
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Notifications
-                          </Link>
-                        </li>
-                      </>
-                    )}
+                      ))}
                     {/* Employer Menu */}
-                    {currentUser?.role === "employer" && (
-                      <>
-                        <li>
-                          <Link
-                            href="/dashboard"
-                            className="block hover:text-primary"
-                          >
-                            Dashboard
+                    {currentUser?.role === "employer" &&
+                      employerLinks.map(({ name, href, icon }) => (
+                        <li
+                          key={name}
+                          className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-3 py-2 duration-300 transition-all cursor-pointer "
+                        >
+                          <Link href={href} className="flex items-center gap-2">
+                            {icon} {name}
                           </Link>
                         </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            My Jobs
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Applications
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Billing & Payments
-                          </Link>
-                        </li>
-                      </>
-                    )}
+                      ))}
                     {/* Admin Menu */}
-                    {currentUser?.role === "admin" && (
-                      <>
-                        <li>
-                          <Link
-                            href="dashboard"
-                            className="block hover:text-primary"
-                          >
-                            Admin Panel
+                    {currentUser?.role === "admin" &&
+                      adminLinks.map(({ name, href, icon }) => (
+                        <li
+                          key={name}
+                          className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-3 py-2 duration-300 transition-all cursor-pointer "
+                        >
+                          <Link href={href} className="flex items-center gap-2">
+                            {icon} {name}
                           </Link>
                         </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Manage Users
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Reports
-                          </Link>
-                        </li>
-                      </>
-                    )}
-                    <hr />
-                    <li>
+                      ))}
+                    <li className="border-b border-gray-300"></li>
+                    <li className="py-2 px-3 hover:bg-red-300 hover:text-black duration-300 cursor-pointer">
                       <LogoutButton />
                     </li>
                   </ul>
@@ -231,7 +286,7 @@ const Navbar = () => {
           </div>
         </nav>
       </div>
-      <div
+      {/* <div
         ref={searchRef}
         className={`items-center fixed top-6 left-0 w-full z-50 ${
           isOpen ? "flex" : "hidden"
@@ -251,7 +306,7 @@ const Navbar = () => {
             Search
           </button>
         </form>
-      </div>
+      </div> */}
     </div>
   );
 };

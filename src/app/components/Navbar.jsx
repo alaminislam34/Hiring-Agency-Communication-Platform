@@ -184,7 +184,7 @@ const Navbar = () => {
 
           {/* Navbar End (Search & Sign In) */}
           <div className="navbar-end space-x-4">
-            {/* Search Icon */}
+            {/* Search Icon
             <button
               onClick={() => setIsOpen(true)}
               className="btn btn-ghost"
@@ -204,7 +204,15 @@ const Navbar = () => {
                   d="M21 21l-4.35-4.35M17 11A6 6 0 1 0 5 11a6 6 0 0 0 12 0z"
                 />
               </svg>
-            </button>
+            </button> */}
+            <div>
+              <Link
+                href="/dashboard/notifications"
+                className="flex items-center justify-center text-2xl hover:text-[#00e1ff] cursor-pointer"
+              >
+                <IoIosNotificationsOutline />
+              </Link>
+            </div>
 
             {currentUser ? (
               <div className="flex items-center gap-2 relative">
@@ -278,7 +286,7 @@ const Navbar = () => {
           </div>
         </nav>
       </div>
-      <div
+      {/* <div
         ref={searchRef}
         className={`items-center fixed top-6 left-0 w-full z-50 ${
           isOpen ? "flex" : "hidden"
@@ -298,7 +306,7 @@ const Navbar = () => {
             Search
           </button>
         </form>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -12,7 +12,6 @@ export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState([]);
   const [type, setType] = useState("");
-  console.log("job type type", type, "jobs", jobs);
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -32,7 +31,6 @@ export const AppProvider = ({ children }) => {
       try {
         const res = await fetch("/api/currentUser");
         const data = await res.json();
-        console.log("user data", data);
         if (data.error) {
           setCurrentUser(null);
         } else {

@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }) {
         <div className="sticky top-0 left-0 z-50">
           <DashboardNavbar />
         </div>
-        {children}
+        <div className="overflow-hidden">{children}</div>
       </main>
     </div>
   );

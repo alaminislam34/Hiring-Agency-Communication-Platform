@@ -44,11 +44,11 @@ const SideBar = () => {
           } mb-6`}
         >
           <img
-            src={currentUser?.image ? currentUser?.image : "/user-avatar.png"}
+            src={currentUser?.image ? currentUser?.image : "/fakeUser.jpg"}
             alt="User"
             className={`${
               showName ? "w-20 h-20" : "w-12 h-12"
-            } rounded-full border-2 border-[#00847D]`}
+            } rounded-full border-2 border-white`}
           />
           {showName ? (
             <>

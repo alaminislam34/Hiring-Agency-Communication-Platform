@@ -9,7 +9,7 @@ const JobAddModal = () => {
     <div>
       <button
         onClick={() => document.getElementById("my_modal_5").showModal()}
-        className="btn"
+        className="btn bg-teal-500 hover:bg-teal-600 rounded-xl"
       >
         Add Jobs <FaPlus />
       </button>

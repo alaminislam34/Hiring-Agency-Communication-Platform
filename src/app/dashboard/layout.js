@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }) {
         <div className="sticky top-0 left-0 z-40">
           <DashboardNavbar />
         </div>
-        <section className="min-h-[520px]">{children}</section>
+        <section className="min-h-[520px] p-4">{children}</section>
         <footer>
           <DashboardFooter />
         </footer>

@@ -14,7 +14,6 @@ import { FaCog, FaQuestionCircle } from "react-icons/fa";
 import { FaBriefcase, FaUsers } from "react-icons/fa6";
 import { RiMenu2Fill } from "react-icons/ri";
 import { GrClose } from "react-icons/gr";
-import { jobSeekerNavLinks } from "@/lib/utils";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -300,7 +299,7 @@ const Navbar = () => {
           <div className="navbar-center hidden lg:flex">
             <ul className="flex flex-row gap-6 text-md">
               {currentUser?.role === "jobSeeker"
-                ? jobSeekerNavLinks.map(({ href, name }) => (
+                ? jobSeekerNavLink.map(({ href, name }) => (
                     <li
                       key={href}
                       className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
@@ -389,7 +388,7 @@ const Navbar = () => {
                     <li className="border-b border-gray-300"></li>
                     {/* Job Seeker Menu */}
                     {currentUser?.role === "jobSeeker" &&
-                      jobSeekerLinks.map(({ name, href, icon }) => (
+                      jobSeekerNavLink.map(({ name, href, icon }) => (
                         <li
                           key={name}
                           className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-3 py-2 duration-300 transition-all cursor-pointer "

@@ -41,6 +41,7 @@ export const POST = async (req) => {
       companyName,
       location,
       jobType,
+
       // salary,
       posted,
       deadline,
@@ -49,6 +50,7 @@ export const POST = async (req) => {
       requirements,
       // contactInformation,
       appliedAt: new Date(),
+      status: "Pending",
     });
 
     return new Response(

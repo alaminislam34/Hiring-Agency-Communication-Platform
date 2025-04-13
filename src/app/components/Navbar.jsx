@@ -388,7 +388,7 @@ const Navbar = () => {
                     <li className="border-b border-gray-300"></li>
                     {/* Job Seeker Menu */}
                     {currentUser?.role === "jobSeeker" &&
-                      jobSeekerNavLink.map(({ name, href, icon }) => (
+                      jobSeekerLinks.map(({ name, href, icon }) => (
                         <li
                           key={name}
                           className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-3 py-2 duration-300 transition-all cursor-pointer "

@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { IoIosNotificationsOutline } from "react-icons/io";
 
 const Navbar = () => {
   const session = useSession();
@@ -16,11 +17,11 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchRef = useRef(null);
   const { currentUser } = useAppContext();
+
   const navLink = [
     { href: "/", name: "Home" },
     { href: "/jobs", name: "Jobs" },
     { href: "/about", name: "About Us" },
-
     { href: "/blogs", name: "Blogs" },
   ];
 
@@ -96,38 +97,25 @@ const Navbar = () => {
 
           {/* Navbar End (Search & Sign In) */}
           <div className="navbar-end space-x-4">
-            {/* Search Icon */}
-            <button
-              onClick={() => setIsOpen(true)}
-              className="btn btn-ghost"
-              aria-label="Search">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-4.35-4.35M17 11A6 6 0 1 0 5 11a6 6 0 0 0 12 0z"
-                />
-              </svg>
-            </button>
+            <div>
+              <Link
+                href="/dashboard/notifications"
+                className="flex items-center justify-center text-2xl hover:text-[#00e1ff] cursor-pointer">
+                <IoIosNotificationsOutline />
+              </Link>
+            </div>
 
             {/* Profile Dropdown */}
-
             {currentUser ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 relative">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   src={currentUser?.image || "/logo.png"}
-                  className="w-12 h-12 rounded-full bg-accent border cursor-pointer"
+                  className="w-12 h-12 rounded-full border-[#00e1ff] bg-accent border cursor-pointer"
                   alt="User Profile"
                 />
                 <div
-                  className={`absolute top-16 right-0 z-50 bg-white shadow-lg rounded-xl p-4 w-64 duration-300 transition-all ${
+                  className={`absolute top-[65px] right-0 z-50 overflow-hidden bg-white border border-gray-300 shadow-lg rounded-xl w-64 duration-300 transition-all ${
                     isDropdownOpen
                       ? "opacity-100 scale-100"
                       : "opacity-0 scale-95 pointer-events-none"
@@ -143,12 +131,11 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link
-                            href="employerDashboard/profile"
+                            href="/employerDashboard/profile"
                             className="block hover:text-primary">
                             Profile
                           </Link>
                         </li>
-                        {/* Additional menu items here */}
                         <li>
                           <Link
                             href="/dashboard"
@@ -173,57 +160,26 @@ const Navbar = () => {
                         </li>
                       </>
                     )}
-                    {/* Employer Menu */}
                     {currentUser?.role === "employer" && (
-                      <>
-                        <li>
-                          <Link
-                            href="/dashboard"
-                            className="block hover:text-primary">
-                            Dashboard
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            My Jobs
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Applications
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Billing & Payments
-                          </Link>
-                        </li>
-                      </>
+                      <li>
+                        <Link
+                          href="/dashboard"
+                          className="block hover:text-primary">
+                          Dashboard
+                        </Link>
+                      </li>
                     )}
-                    {/* Admin Menu */}
                     {currentUser?.role === "admin" && (
-                      <>
-                        <li>
-                          <Link
-                            href="dashboard"
-                            className="block hover:text-primary">
-                            Admin Panel
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Manage Users
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#" className="block hover:text-primary">
-                            Reports
-                          </Link>
-                        </li>
-                      </>
+                      <li>
+                        <Link
+                          href="/dashboard"
+                          className="block hover:text-primary">
+                          Admin Panel
+                        </Link>
+                      </li>
                     )}
-                    <hr />
-                    <li>
+                    <li className="border-b border-gray-300"></li>
+                    <li className="py-2 px-3 hover:bg-red-300 hover:text-black duration-300 cursor-pointer">
                       <LogoutButton />
                     </li>
                   </ul>

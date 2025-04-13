@@ -9,6 +9,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa6";
 
 const SideBar = () => {
   const pathname = usePathname();
@@ -29,7 +30,7 @@ const SideBar = () => {
         </Link>
         <button
           onClick={() => setIsOpen(false)}
-          className="lg:hidden text-gray-400 hover:text-white"
+          className="lg:hidden  hover:text-white"
         >
           <FaTimes size={20} />
         </button>
@@ -47,13 +48,13 @@ const SideBar = () => {
             alt="User"
             className={`${
               showName ? "w-20 h-20" : "w-12 h-12"
-            } rounded-full border-2 border-gray-500`}
+            } rounded-full border-2 border-[#00847D]`}
           />
           {showName ? (
             <>
               {" "}
               <h3 className="mt-2 text-lg font-medium">{currentUser?.name}</h3>
-              <p className="text-sm text-gray-400">{currentUser?.role}</p>
+              <p className="text-sm ">{currentUser?.role}</p>
             </>
           ) : (
             " "
@@ -71,9 +72,7 @@ const SideBar = () => {
                 <Link
                   href={href}
                   className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                    pathname === href
-                      ? "text-white"
-                      : "hover:text-white text-gray-500"
+                    pathname === href ? "text-white" : "hover:text-white "
                   }`}
                 >
                   <span>{icon}</span>
@@ -94,9 +93,7 @@ const SideBar = () => {
                 <Link
                   href={href}
                   className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                    pathname === href
-                      ? "text-white"
-                      : "hover:text-white text-gray-500"
+                    pathname === href ? "text-white" : "hover:text-white "
                   }`}
                 >
                   <span>{icon}</span>
@@ -117,9 +114,7 @@ const SideBar = () => {
                 <Link
                   href={href}
                   className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                    pathname === href
-                      ? "text-white"
-                      : "hover:text-white text-gray-500"
+                    pathname === href ? "text-white" : "hover:text-white "
                   }`}
                 >
                   <span>{icon}</span>{" "}

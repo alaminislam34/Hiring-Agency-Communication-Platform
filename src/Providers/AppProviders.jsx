@@ -68,5 +68,4 @@ export const AppProvider = ({ children }) => {
   return <AppContext.Provider value={info}>{children}</AppContext.Provider>;
 };
 
-// 3️⃣ Custom Hook দিয়ে Context ব্যবহার করা সহজ করা
 export const useAppContext = () => useContext(AppContext);

@@ -1,5 +1,7 @@
 // import Image from "next/image";
 
+// import Chat from "./chatbox/components/chat";
+// import ChatPage from "./chatbox/components/ChatPage";
 import { ToastContainer } from "react-toastify";
 import Accordion from "./components/Accordion";
 import Banner from "./components/Banner";

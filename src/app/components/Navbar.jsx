@@ -12,7 +12,7 @@ import { CiBookmarkCheck } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaCog, FaQuestionCircle } from "react-icons/fa";
 import { FaBriefcase, FaUsers } from "react-icons/fa6";
-import { RiMenuUnfold2Fill } from "react-icons/ri";
+import { RiMenu2Fill } from "react-icons/ri";
 import { GrClose } from "react-icons/gr";
 import { jobSeekerNavLinks } from "@/lib/utils";
 
@@ -202,7 +202,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="bg-base-100 shadow-md h-[68px] relative">
+    <div className="bg-base-100 shadow-md h-[65px] relative">
       <div className="w-full fixed top-0 left-0 z-50 bg-white py-2 shadow-xl">
         <nav className="navbar w-full md:w-11/12 mx-auto flex justify-center items-center">
           {/* Navbar Start (Logo & Mobile Menu) */}
@@ -211,17 +211,17 @@ const Navbar = () => {
             <div className="lg:hidden mr-2">
               <button
                 onClick={() => setIsOpen(true)}
-                className="btn btn-sm bg-teal-500 hover:bg-teal-600"
+                className="btn btn-sm bg-teal-500 hover:bg-teal-600 text-white"
               >
-                <RiMenuUnfold2Fill className="text-xl" />
+                <RiMenu2Fill className="text-xl text-white" />
               </button>
             </div>
             <div
-              className={`lg:hidden absolute top-0 duration-300 z-40 ${
+              className={`lg:hidden absolute top-0 duration-500 z-40 ${
                 isOpen
                   ? "left-0 scale-100 opacity-100"
-                  : "-left-52 scale-95 pointer-events-none opacity-0"
-              } w-screen h-screen md:w-1/2 bg-white p-4`}
+                  : "-left-52 pointer-events-none opacity-0"
+              } w-screen h-screen md:w-1/2 bg-teal-600 p-4`}
             >
               <ul className="flex flex-col justify-start">
                 <li>
@@ -241,9 +241,9 @@ const Navbar = () => {
                   ? jobSeekerNavLink.map(({ href, name }) => (
                       <li
                         key={href}
-                        className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
-                          pathname === href ? "bg-gray-400" : ""
-                        } py-1 px-2`}
+                        className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
+                          pathname === href ? "bg-white text-teal-800" : ""
+                        }`}
                       >
                         <Link href={href} className="">
                           {name}
@@ -254,9 +254,9 @@ const Navbar = () => {
                   ? employerNavLinks.map(({ href, name }) => (
                       <li
                         key={href}
-                        className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
-                          pathname === href ? "bg-gray-400" : ""
-                        } py-1 px-2`}
+                        className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
+                          pathname === href ? "bg-white text-teal-800" : ""
+                        }`}
                       >
                         <Link href={href} className="">
                           {name}
@@ -267,9 +267,9 @@ const Navbar = () => {
                   ? adminNavLinks.map(({ href, name }) => (
                       <li
                         key={href}
-                        className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
-                          pathname === href ? "bg-gray-400" : ""
-                        } py-1 px-2`}
+                        className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
+                          pathname === href ? "bg-white text-teal-800" : ""
+                        }`}
                       >
                         <Link href={href} className="">
                           {name}
@@ -279,9 +279,9 @@ const Navbar = () => {
                   : NavLinks.map(({ href, name }) => (
                       <li
                         key={href}
-                        className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
-                          pathname === href ? "bg-gray-400" : ""
-                        } py-1 px-2`}
+                        className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
+                          pathname === href ? "bg-white text-teal-800" : ""
+                        }`}
                       >
                         <Link href={href} className="">
                           {name}

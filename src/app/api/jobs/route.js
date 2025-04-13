@@ -1,8 +1,9 @@
 import dbConnect, { collection } from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req) {
   try {
+    const email = req.nextUrl.searchParams.get("employerEmail");
     const jobsCollection = dbConnect(collection.jobsCollection);
     const jobs = await jobsCollection.find({}).toArray();
     console.log(jobs);

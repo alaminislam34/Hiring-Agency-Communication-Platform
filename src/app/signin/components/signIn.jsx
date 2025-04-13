@@ -14,7 +14,6 @@ const SignInComponent = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
     const res = await signIn("credentials", {
       email,
       password,
@@ -25,7 +24,7 @@ const SignInComponent = () => {
     if (res.ok) {
       toast.success("Login Successful! 🎉");
       form.reset();
-      route.push("/");
+      route.push("/dashboard");
     } else {
       setError("Invalid email or password");
     }

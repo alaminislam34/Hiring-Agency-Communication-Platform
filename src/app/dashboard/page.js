@@ -6,7 +6,7 @@ import { useAppContext } from "@/Providers/AppProviders";
 import LoadingPage from "../loadingPage/page";
 
 const EmployerDashboard = () => {
-  const { loading } = useAppContext();
+  const { loading, currentUser } = useAppContext();
   if (loading) {
     return <LoadingPage />;
   }

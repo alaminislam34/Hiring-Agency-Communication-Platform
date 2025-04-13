@@ -3,19 +3,15 @@ import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
 
 import { useAppContext } from "@/Providers/AppProviders";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
 
 const Navbar = () => {
-  const session = useSession();
-  console.log(session);
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const searchRef = useRef(null);
   const { currentUser } = useAppContext();
 
   const navLink = [
@@ -73,7 +69,75 @@ const Navbar = () => {
                 ))}
               </ul>
             </div>
+            <div
+              className={`lg:hidden absolute top-0 duration-300 z-40 ${
+                isOpen
+                  ? "left-0 scale-100 opacity-100"
+                  : "-left-52 scale-95 pointer-events-none opacity-0"
+              } w-screen h-screen md:w-1/2 bg-white p-4`}>
+              <ul className="flex flex-col justify-start">
+                <li>
+                  <button onClick={() => setIsOpen(false)}>
+                    <GrClose />
+                  </button>
+                </li>
+                <li>
+                  <img
+                    src="/jobhive.png"
+                    alt="logo"
+                    className="w-32  py-2 my-2"
+                  />
+                </li>
 
+                {currentUser?.role === "jobSeeker"
+                  ? jobSeekerNavLink.map(({ href, name }) => (
+                      <li
+                        key={href}
+                        className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
+                          pathname === href ? "bg-gray-400" : ""
+                        } py-1 px-2`}>
+                        <Link href={href} className="">
+                          {name}
+                        </Link>
+                      </li>
+                    ))
+                  : currentUser?.role === "employer"
+                  ? employerNavLinks.map(({ href, name }) => (
+                      <li
+                        key={href}
+                        className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
+                          pathname === href ? "bg-gray-400" : ""
+                        } py-1 px-2`}>
+                        <Link href={href} className="">
+                          {name}
+                        </Link>
+                      </li>
+                    ))
+                  : currentUser?.role === "admin"
+                  ? adminNavLinks.map(({ href, name }) => (
+                      <li
+                        key={href}
+                        className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
+                          pathname === href ? "bg-gray-400" : ""
+                        } py-1 px-2`}>
+                        <Link href={href} className="">
+                          {name}
+                        </Link>
+                      </li>
+                    ))
+                  : NavLinks.map(({ href, name }) => (
+                      <li
+                        key={href}
+                        className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
+                          pathname === href ? "bg-gray-400" : ""
+                        } py-1 px-2`}>
+                        <Link href={href} className="">
+                          {name}
+                        </Link>
+                      </li>
+                    ))}
+              </ul>
+            </div>
             {/* Logo */}
             <Link href="/" className="text-xl font-bold flex items-center">
               <img src="JobHive.png" alt="Logo" className="h-6 mr-2" />
@@ -110,8 +174,8 @@ const Navbar = () => {
               <div className="flex items-center gap-2 relative">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  src={currentUser?.image || "/logo.png"}
-                  className="w-12 h-12 rounded-full border-[#00e1ff] bg-accent border cursor-pointer"
+                  src={currentUser?.image || "/fakeUser.jpg"}
+                  className="w-12 h-12 rounded-full border-teal-500 bg-accent border cursor-pointer"
                   alt="User Profile"
                 />
                 <div

@@ -6,5 +6,6 @@ export async function DELETE(req, { params }) {
   const p = await params;
   const jobsCollection = dbConnect(collection.jobsCollection);
   const result = await jobsCollection.deleteOne({ _id: new ObjectId(p.id) });
+  console.log("Delete jobs", result);
   return NextResponse.json(result);
 }

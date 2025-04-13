@@ -13,18 +13,23 @@ import {
 const EmployerProfile = () => {
   const { currentUser } = useAppContext();
 
+  // State for handling all the info
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingAdditional, setIsEditingAdditional] = useState(false);
   const [isEditingAddress, setIsEditingAddress] = useState(false);
   const [isEditingEducation, setIsEditingEducation] = useState(false);
   const [isEditingLinks, setIsEditingLinks] = useState(false);
   const [isEditingJob, setIsEditingJob] = useState(false);
+
+  // Educational Info
   const [educationInfo, setEducationInfo] = useState({
     educationLevel: currentUser?.educationLevel || "",
     degreeTitle: currentUser?.degreeTitle || "",
     institution: currentUser?.institution || "",
     passingYear: currentUser?.passingYear || "",
   });
+
+  // Job Experience data
   const [jobExperience, setJobExperience] = useState({
     jobTitle: "",
     companyName: "",
@@ -34,6 +39,7 @@ const EmployerProfile = () => {
     endDate: "",
     isPresent: false,
   });
+  // Additional Info data
   const [addressInfo, setAddressInfo] = useState({
     country: currentUser?.country || "",
     division: currentUser?.division || "",

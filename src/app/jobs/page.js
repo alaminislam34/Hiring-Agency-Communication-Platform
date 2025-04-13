@@ -8,7 +8,7 @@ const AllJobs = async () => {
   const jobs = await jobsCollection.find({}).toArray();
 
   return (
-    <div className="bg-gray-50 min-h-screen p-6">
+    <div className="bg-gray-50 p-6">
       <h1 className="text-3xl font-bold mb-6 text-center">
         All Available Jobs
       </h1>

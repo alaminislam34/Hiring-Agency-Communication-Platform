@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Card } from "@/components/ui/card";
 import {
   AiOutlineAppstore,
   AiOutlineCheckCircle,
@@ -31,11 +30,37 @@ ChartJS.register(
   Legend
 );
 
-const stats = [
+const adminStats = [
   { title: "Active Users", value: 24, icon: <AiOutlineAppstore size={24} /> },
   { title: "Active Jobs", value: 12, icon: <AiOutlineCheckCircle size={24} /> },
   { title: "Total Apply", value: 5, icon: <AiOutlineClockCircle size={24} /> },
   { title: "Total Employers", value: 145, icon: <AiOutlineUser size={24} /> },
+];
+
+const employerStats = [
+  { title: "Active Jobs", value: 24, icon: <AiOutlineAppstore size={24} /> },
+  {
+    title: "Deactivated Jobs",
+    value: 12,
+    icon: <AiOutlineAppstore size={24} />,
+  },
+  {
+    title: "Total Applications",
+    value: 5,
+    icon: <AiOutlineUser size={24} />,
+  },
+  {
+    title: "Pending Applicants",
+    value: 145,
+    icon: <AiOutlineUser size={24} />,
+  },
+];
+
+const jobSeekerStats = [
+  { title: "Total Jobs", value: 24, icon: <AiOutlineAppstore size={24} /> },
+  { title: "Active Jobs", value: 12, icon: <AiOutlineCheckCircle size={24} /> },
+  { title: "Total Apply", value: 5, icon: <AiOutlineClockCircle size={24} /> },
+  { title: "Saved Jobs", value: 145, icon: <AiOutlineUser size={24} /> },
 ];
 
 const chartData = {
@@ -106,53 +131,69 @@ const chartOptions = {
 };
 
 const HomePage = () => {
-  const { currentUser } = useAppContext();
+  const { currentUser, showName } = useAppContext();
   return (
-    <div className="p-6 min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-100  text-gray-800  transition-colors duration-300 ">
+    <div className="">
       {/* Title and Intro */}
-      <h1 className="text-xl lg:text-2xl font-semibold mb-8 tracking-tight">
+      <h1 className="text-xl lg:text-2xl font-semibold tracking-tight my-6 lg:my-8">
         Welcome back, {currentUser?.name}!<br />
-        <span className="text-lg font-medium text-gray-600">
+        <span className="lg:text-lg text-sm md:text-base font-medium text-gray-600">
           Here is your <span className="capitalize">{currentUser?.role}</span>{" "}
           dashboard overview
         </span>
       </h1>
 
       {/* Statistics */}
-      <div className="flex flex-wrap justify-between gap-6 mb-10">
-        {stats.map((stat, index) => (
-          <Card
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {(currentUser?.role === "admin"
+          ? adminStats
+          : currentUser?.role === "employer"
+          ? employerStats
+          : jobSeekerStats
+        ).map((stat, index) => (
+          <div
             key={index}
-            className="rounded-2xl shadow-lg bg-white  hover:shadow-xl hover:scale-[1.02] transition-transform duration-300 ease-in-out p-4 flex-1"
+            className="shadow-xl rounded-xl bg-white p-4 space-y-2"
           >
-            <div className="flex items-center gap-3 mb-3">
-              {stat.icon}
-              <p className="text-sm text-gray-500  font-medium">{stat.title}</p>
+            <div className="flex items-center gap-3 text-gray-400">
+              <span className=""> {stat.icon}</span>
+              <p className="text-sm font-medium">{stat.title}</p>
             </div>
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">{stat.value}</h2>
+              <h2 className="text-base md:text-lg text-right lg:text-xl text-gray-500">
+                {stat.value}
+              </h2>
               <FaArrowTrendUp className="text-green-500 text-xl" />
             </div>
-          </Card>
+          </div>
         ))}
       </div>
 
       {/* Chart Overview */}
       <div className="my-8">
-        <Card className="p-6 rounded-2xl shadow-md bg-white ">
-          <div className="h-80">
+        <div className="p-6 rounded-2xl shadow-md bg-white flex items-center justify-center">
+          <div
+            className={`w-full duration-300 ${
+              showName ? "lg:w-[1000px]" : "lg:w-[1100px]"
+            } h-80`}
+          >
             <Bar data={chartData} options={chartOptions} />
           </div>
-        </Card>
+        </div>
       </div>
 
       {/* Chart Comparison */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
-        <Card className="p-6 rounded-2xl shadow-md bg-white ">
-          <div className="h-80">
+        <div className="p-6 rounded-2xl shadow-md bg-white flex items-center justify-center">
+          <div
+            className={`duration-300 ${
+              showName ? "lg:w-[450px]" : "lg:w-[500px] "
+            } w-full h-80
+          `}
+          >
             <Bar data={chartData2} options={chartOptions} />
           </div>
-        </Card>
+        </div>
         <div className="bg-white rounded-2xl shadow-md p-6">
           <CircleChart />
         </div>

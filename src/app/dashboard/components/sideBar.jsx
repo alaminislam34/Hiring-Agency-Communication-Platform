@@ -54,13 +54,17 @@ const SideBar = () => {
             } rounded-full border-2 border-white duration-500`}
           />
 
-          <div className={`duration-500 ${showName ? "block" : "hidden"}`}>
+          <div
+            className={`duration-500 text-center text-gray-300 ${
+              showName ? "block" : "hidden"
+            }`}
+          >
             <h3
               className={`${
                 showName
                   ? "opacity-100"
                   : "opacity-0 pointer-events-none hidden"
-              }mt-2 text-lg font-medium`}
+              }mt-2 text-base md:text-lg font-medium`}
             >
               {currentUser?.name}
             </h3>
@@ -69,7 +73,7 @@ const SideBar = () => {
                 showName
                   ? "opacity-100"
                   : "opacity-0 pointer-events-none hidden"
-              }text-sm`}
+              } text-sm first-letter:uppercase`}
             >
               {currentUser?.role}
             </p>
@@ -119,7 +123,7 @@ const SideBar = () => {
               >
                 <Link
                   href={href}
-                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-300 w-full ${
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-30j0 w-full ${
                     pathname === href ? "bg-white text-black" : "hover: "
                   } ${showName ? "" : ""}`}
                 >
@@ -147,7 +151,7 @@ const SideBar = () => {
               >
                 <Link
                   href={href}
-                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-300 w-full ${
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-30j0 w-full ${
                     pathname === href ? "bg-white text-black" : "hover:"
                   }`}
                 >

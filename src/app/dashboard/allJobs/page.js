@@ -1,18 +1,18 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
+"use client";
+import { useAppContext } from "@/Providers/AppProviders";
 import ActionsButton from "../users/components/ActionsButton";
 
-const AllJobs = async () => {
-  const jobsCollection = dbConnect(collection.jobsCollection);
-  const jobs = await jobsCollection.find({}).toArray();
+const AllJobs = () => {
+  const { jobs } = useAppContext();
   return (
-    <div className="bg-white p-6 mt-10 rounded-lg shadow-lg">
+    <div className="">
       <h1 className="text-2xl font-bold mb-4">All Jobs</h1>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto border border-teal-600 rounded-xl shadow-xl ">
         <table className="table table-auto">
           <thead>
-            <tr className="bg-gray-100 text-left">
+            <tr className="bg-teal-600 text-white text-left">
               <th className="">Job Title</th>
               <th className="">Job Type</th>
               <th className="">Salary</th>
@@ -35,6 +35,7 @@ const AllJobs = async () => {
                 <td className="">
                   {new Date(job.deadline).toLocaleDateString()}
                 </td>
+
                 <td>
                   <ActionsButton id={job._id} />
                 </td>

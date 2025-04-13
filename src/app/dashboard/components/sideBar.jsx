@@ -25,8 +25,11 @@ const SideBar = () => {
       {/* Sidebar Header */}
       <div className="flex items-center justify-between mb-6">
         <Link href="/" className="flex items-center text-xl font-bold">
-          <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
-          {showName ? "JobHive" : ""}
+          <img src="/navLogo.png" alt="Logo" className="h-10 mr-2" />
+          <span className="text-xl md:text-2xl">
+            {" "}
+            {showName ? "JobHive" : ""}
+          </span>
         </Link>
         <button
           onClick={() => setIsOpen(false)}
@@ -44,21 +47,37 @@ const SideBar = () => {
           } mb-6`}
         >
           <img
-            src={currentUser?.image ? currentUser?.image : "/user-avatar.png"}
+            src={currentUser?.image ? currentUser?.image : "/fakeUser.jpg"}
             alt="User"
             className={`${
               showName ? "w-20 h-20" : "w-12 h-12"
-            } rounded-full border-2 border-[#00847D]`}
+            } rounded-full border-2 border-white duration-500`}
           />
-          {showName ? (
-            <>
-              {" "}
-              <h3 className="mt-2 text-lg font-medium">{currentUser?.name}</h3>
-              <p className="text-sm ">{currentUser?.role}</p>
-            </>
-          ) : (
-            " "
-          )}
+
+          <div
+            className={`duration-500 text-center text-gray-300 ${
+              showName ? "block" : "hidden"
+            }`}
+          >
+            <h3
+              className={`${
+                showName
+                  ? "opacity-100"
+                  : "opacity-0 pointer-events-none hidden"
+              }mt-2 text-base md:text-lg font-medium`}
+            >
+              {currentUser?.name}
+            </h3>
+            <p
+              className={`${
+                showName
+                  ? "opacity-100"
+                  : "opacity-0 pointer-events-none hidden"
+              } text-sm first-letter:uppercase`}
+            >
+              {currentUser?.role}
+            </p>
+          </div>
         </div>
       ) : (
         ""
@@ -68,17 +87,24 @@ const SideBar = () => {
       <ul className="space-y-2">
         {currentUser?.role === "employer"
           ? employerNavLinks.map(({ name, href, icon }) => (
-              <li key={name}>
+              <li
+                key={name}
+                className={`flex ${
+                  showName ? "" : " items-center justify-center"
+                } w-full`}
+              >
                 <Link
                   href={href}
-                  className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                    pathname === href ? "text-white" : "hover:text-white "
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-300 w-full ${
+                    pathname === href ? "bg-white text-black" : "hover: "
                   }`}
                 >
                   <span>{icon}</span>
                   <span
-                    className={`${
-                      showName ? "opacity-100" : "opacity-0 pointer-events-none"
+                    className={`duration-500 ${
+                      showName
+                        ? "opacity-100"
+                        : "opacity-0 pointer-events-none hidden"
                     }`}
                   >
                     {name}
@@ -89,17 +115,24 @@ const SideBar = () => {
             ))
           : currentUser?.role === "jobSeeker"
           ? jobSeekerNavLinks.map(({ name, href, icon }) => (
-              <li key={name}>
+              <li
+                key={name}
+                className={`flex ${
+                  showName ? "" : " items-center justify-center"
+                } w-full`}
+              >
                 <Link
                   href={href}
-                  className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                    pathname === href ? "text-white" : "hover:text-white "
-                  }`}
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-30j0 w-full ${
+                    pathname === href ? "bg-white text-black" : "hover: "
+                  } ${showName ? "" : ""}`}
                 >
                   <span>{icon}</span>
                   <span
-                    className={`${
-                      showName ? "opacity-100" : "opacity-0 pointer-events-none"
+                    className={`duration-500 ${
+                      showName
+                        ? "opacity-100"
+                        : "opacity-0 pointer-events-none hidden"
                     }`}
                   >
                     {name}
@@ -110,17 +143,24 @@ const SideBar = () => {
             ))
           : currentUser?.role === "admin"
           ? adminNavLinks.map(({ name, href, icon }) => (
-              <li key={name}>
+              <li
+                key={name}
+                className={`flex ${
+                  showName ? "" : " items-center justify-center"
+                } w-full`}
+              >
                 <Link
                   href={href}
-                  className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                    pathname === href ? "text-white" : "hover:text-white "
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-30j0 w-full ${
+                    pathname === href ? "bg-white text-black" : "hover:"
                   }`}
                 >
                   <span>{icon}</span>{" "}
                   <span
-                    className={`${
-                      showName ? "opacity-100" : "opacity-0 pointer-events-none"
+                    className={`duration-500 ${
+                      showName
+                        ? "opacity-100"
+                        : "opacity-0 pointer-events-none hidden"
                     }`}
                   >
                     {name}

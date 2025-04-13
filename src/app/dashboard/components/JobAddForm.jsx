@@ -1,11 +1,13 @@
 "use client";
 
+import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const AddJobForm = () => {
+  const { currentUser } = useAppContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,6 +33,7 @@ const AddJobForm = () => {
       companyName,
       location,
       jobType,
+      employerEmail: currentUser?.email,
       jobCategory,
       minSalary,
       maxSalary,

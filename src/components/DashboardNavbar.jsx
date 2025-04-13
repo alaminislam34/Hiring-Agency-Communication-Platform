@@ -131,12 +131,12 @@ const DashboardNavbar = () => {
   }, []);
 
   return (
-    <div className="flex justify-between pr-4 py-2 items-center w-full bg-white shadow-xl">
+    <div className="flex justify-between pr-4 py-2 items-center bg-white shadow-xl rounded-xl lg:mt-2 lg:mx-4 lg:px-4">
       {/* Left Icon */}
-      <div className="bg-[#00847D] rounded-r-xl hidden lg:block">
+      <div className="bg-[#00847D] rounded-full hidden lg:block">
         <button
           onClick={() => setShowName(!showName)}
-          className="text-xl  py-4 px-2  cursor-pointer "
+          className="text-xl  p-4 cursor-pointer text-white"
         >
           {showName ? <FaChevronLeft /> : <FaChevronRight />}
         </button>
@@ -158,7 +158,7 @@ const DashboardNavbar = () => {
               className="drawer-overlay"
             ></label>
 
-            <ul className="menu bg-black text-base-content min-h-full w-80 p-4">
+            <ul className="menu bg-white text-base-content min-h-full w-80 p-4">
               <div className="p-2">
                 <button
                   onClick={() =>

@@ -29,7 +29,7 @@ const CircleChart = () => {
   };
 
   return (
-    <div className="max-w-xs mx-auto  p-4 rounded-lg shadow">
+    <div className="max-w-xs mx-auto  p-4">
       <h2 className="text-lg font-semibold text-center mb-4">Tech Overview</h2>
       <Doughnut data={data} options={options} />
     </div>

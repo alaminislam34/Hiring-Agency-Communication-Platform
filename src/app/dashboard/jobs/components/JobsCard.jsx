@@ -74,13 +74,13 @@ const JobsPage = () => {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center my-4">
-        <h1 className="text-3xl font-semibold mb-4">Job Listings</h1>
+        <h1 className="text-xl md:text-2xl font-semibold">Job Listings</h1>
 
         <JobAddModal />
       </div>
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+      <div className="overflow-x-auto bg-white shadow-xl rounded-xl border border-[#00847D]">
         <table className="w-full border-collapse text-sm table">
-          <thead className="bg-gray-100 text-gray-700 uppercase text-left">
+          <thead className="bg-[#00847D] text-white first-letter:uppercase font-medium text-left">
             <tr>
               <th>Job Title</th>
               <th>Company</th>
@@ -95,7 +95,7 @@ const JobsPage = () => {
 
           <tbody className="divide-y divide-gray-200">
             {jobs.map((job) => (
-              <tr key={job._id} className="hover:bg-gray-50">
+              <tr key={job._id} className="hover:bg-teal-50">
                 <td className="font-medium">{job.jobTitle}</td>
                 <td>{job.companyName}</td>
                 <td>{job.location}</td>
@@ -110,7 +110,7 @@ const JobsPage = () => {
                     onClick={() =>
                       document.getElementById(`my_modal_${job._id}`).showModal()
                     }
-                    className="p-2 bg-blue-400 hover:bg-blue-500 text-white rounded-md cursor-pointer"
+                    className="p-2 bg-teal- hover:bg-teal-600 text-white rounded-md cursor-pointer"
                   >
                     Details
                   </button>

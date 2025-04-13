@@ -1,4 +1,6 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { createContext, useState, useContext, useEffect } from "react";
 
 // 1️⃣ Context তৈরি করা
@@ -10,22 +12,25 @@ export const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [showName, setShowName] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [jobs, setJobs] = useState([]);
   const [type, setType] = useState("");
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const res = await fetch(`/api/allJobs?jobType=${type}`);
-        const data = await res.json();
-        setJobs(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchJobs();
-  }, []);
+
+  // ✅ Jobs Fetch Function
+  const fetchJobs = async () => {
+    const res = await axios(`/api/allJobs?jobType=${type}`);
+    return res.data;
+  };
+
+  // ✅ React Query for fetching jobs
+  const {
+    data: jobs = [], // fallback empty array
+    isLoading: jobsLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["jobs", type],
+    queryFn: fetchJobs,
+  });
+
+  // ✅ Fetch Current User
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -46,6 +51,7 @@ export const AppProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  // ✅ Context Info
   const info = {
     showSidebar,
     setShowSidebar,
@@ -54,7 +60,11 @@ export const AppProvider = ({ children }) => {
     currentUser,
     loading,
     setType,
+    jobs,
+    jobsLoading,
+    refetchJobs: refetch,
   };
+
   return <AppContext.Provider value={info}>{children}</AppContext.Provider>;
 };
 

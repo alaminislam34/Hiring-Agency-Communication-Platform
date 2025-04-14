@@ -3,7 +3,6 @@
 import SideBar from "./components/sideBar";
 import { useAppContext } from "../../Providers/AppProviders";
 import DashboardNavbar from "@/components/DashboardNavbar";
-import { FaChevronRight } from "react-icons/fa6";
 import DashboardFooter from "./components/DashboardFooter";
 
 export default function DashboardLayout({ children }) {

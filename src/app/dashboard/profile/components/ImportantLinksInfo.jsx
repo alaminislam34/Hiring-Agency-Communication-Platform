@@ -1,124 +1,144 @@
 "use client";
 
 import { useState } from "react";
-import { FaEdit } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaGlobe,
+  FaFileAlt,
+  FaImage,
+  FaEdit,
+} from "react-icons/fa";
 import CommonTitleOrEditBtn from "./CommonTitleOrEditBtn";
+import { useAppContext } from "@/Providers/AppProviders";
+import axios from "axios";
+import Swal from "sweetalert2";
 
-const ImportantLinksInfo = ({ currentUser }) => {
-  const [isEditingLinks, setIsEditingLinks] = useState(false);
+const ImportantLinksInfo = () => {
+  const { isEditingInfo, setIsEditingInfo, userRefetch, currentUser } =
+    useAppContext();
+  const [loading, setLoading] = useState(false);
 
   const [importantLinks, setImportantLinks] = useState({
     cv: currentUser?.cv || "",
     github: currentUser?.github || "",
-    portfolio: currentUser?.portfolio || "",
     linkedin: currentUser?.linkedinProfile || "",
-    image: currentUser?.profileImage || "",
+    portfolio: currentUser?.portfolio || "",
   });
 
-  const handleLinksUpdate = (e) => {
+  const handleLinksUpdate = async (e) => {
     e.preventDefault();
-    const { cv, github, portfolio, linkedin, image } = importantLinks;
-
-    if (!cv || !github || !portfolio || !linkedin || !image) {
-      alert("Please fill in all the fields with valid links!");
-      return;
+    setLoading(true);
+    try {
+      const res = await axios.post("/api/updateProfile", importantLinks);
+      if (res.data.modifiedCount > 0) {
+        userRefetch();
+        Swal.fire("Success", "Profile updated successfully", "success");
+        setIsEditingInfo("");
+      } else {
+        Swal.fire("Failed", "Profile update failed", "error");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-
-    console.log("Updated Important Links:", importantLinks);
-    setIsEditingLinks(false);
   };
+
+  const renderLinkField = (field, label, icon) => (
+    <div key={field} className="flex flex-col gap-2">
+      <label className="flex items-center gap-2">
+        {icon}
+        {label}
+      </label>
+      <input
+        type="url"
+        required
+        placeholder={`Enter ${label} link`}
+        className="border border-teal-500 focus:ring-2 focus:ring-teal-500 p-2 rounded-lg focus:outline-teal-500"
+        value={importantLinks[field]}
+        onChange={(e) =>
+          setImportantLinks({
+            ...importantLinks,
+            [field]: e.target.value,
+          })
+        }
+      />
+    </div>
+  );
 
   return (
     <div className="space-y-4">
-      <CommonTitleOrEditBtn title={"Important Links"} showEdit={"links"} />
+      <CommonTitleOrEditBtn
+        title="Important Links"
+        showEdit={"links"}
+        onClickEdit={() => setIsEditingLinks("links")}
+      />
 
-      {isEditingLinks === "links" ? (
-        <form onSubmit={handleLinksUpdate} className="grid grid-cols-1 gap-4">
-          {["cv", "github", "portfolio", "linkedin", "image"].map((field) => (
-            <input
-              key={field}
-              type="url"
-              placeholder={`Enter ${
-                field.charAt(0).toUpperCase() + field.slice(1)
-              } Link`}
-              className="border px-3 py-2 rounded text-black"
-              value={importantLinks[field]}
-              onChange={(e) =>
-                setImportantLinks({
-                  ...importantLinks,
-                  [field]: e.target.value,
-                })
-              }
-            />
-          ))}
+      {isEditingInfo === "links" ? (
+        <form
+          onSubmit={handleLinksUpdate}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-x-6"
+        >
+          {renderLinkField("cv", "CV", <FaFileAlt />)}
+          {renderLinkField("github", "GitHub", <FaGithub />)}
+          {renderLinkField("portfolio", "Portfolio", <FaGlobe />)}
+          {renderLinkField("linkedin", "LinkedIn", <FaLinkedin />)}
 
-          {importantLinks.image && (
-            <img
-              src={importantLinks.image}
-              alt="Profile Preview"
-              className="w-32 h-32 rounded-full object-cover border"
-            />
-          )}
-
-          <button
-            type="submit"
-            className="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 cursor-pointer"
-          >
-            Save Links
-          </button>
+          <div className="col-span-full">
+            <button
+              type="submit"
+              className="w-full border border-teal-500 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 rounded-lg transition duration-200 cursor-pointer btn"
+            >
+              {loading ? (
+                <div className="flex items-end gap-2">
+                  Saving{" "}
+                  <span className="loading loading-dots loading-sm"></span>
+                </div>
+              ) : (
+                "Save Links"
+              )}
+            </button>
+          </div>
         </form>
       ) : (
-        <ul className="text-sm space-y-2">
-          <li>
-            <strong>CV:</strong>{" "}
-            <a
-              href={importantLinks.cv || "#"}
-              target="_blank"
-              className="text-teal-500 underline"
-            >
-              {importantLinks.cv ? "Open CV Link" : "Not Provided"}
-            </a>
-          </li>
-          <li>
-            <strong>GitHub:</strong>{" "}
-            <a
-              href={importantLinks.github || "#"}
-              target="_blank"
-              className="text-teal-500 underline"
-            >
-              {importantLinks.github ? "Open GitHub Profile" : "Not Provided"}
-            </a>
-          </li>
-          <li>
-            <strong>Portfolio:</strong>{" "}
-            <a
-              href={importantLinks.portfolio || "#"}
-              target="_blank"
-              className="text-teal-500 underline"
-            >
-              {importantLinks.portfolio ? "Open Portfolio" : "Not Provided"}
-            </a>
-          </li>
-          <li>
-            <strong>LinkedIn:</strong>{" "}
-            <a
-              href={importantLinks.linkedin || "#"}
-              target="_blank"
-              className="text-teal-500 underline"
-            >
-              {importantLinks.linkedin ? "Open LinkedIn" : "Not Provided"}
-            </a>
-          </li>
-          <li>
-            <strong>Profile Image:</strong>{" "}
-            <a
-              href={importantLinks.image || "#"}
-              target="_blank"
-              className="text-teal-500 underline"
-            >
-              {importantLinks.image ? "Open Image" : "Not Provided"}
-            </a>
-          </li>
+        <ul className="text-sm space-y-4">
+          {[
+            {
+              label: "CV",
+              value: currentUser?.cv,
+              icon: <FaFileAlt className="text-teal-600" />,
+            },
+            {
+              label: "GitHub",
+              value: currentUser?.github,
+              icon: <FaGithub className="text-teal-600" />,
+            },
+            {
+              label: "Portfolio",
+              value: currentUser?.portfolio,
+              icon: <FaGlobe className="text-teal-600" />,
+            },
+            {
+              label: "LinkedIn",
+              value: currentUser?.linkedin,
+              icon: <FaLinkedin className="text-teal-600" />,
+            },
+          ].map(({ label, value, icon }) => (
+            <li key={label} className="flex items-center gap-2 py-1">
+              <span className="text-xl"> {icon}</span>
+              <span className="">{label}:</span>
+              <a
+                href={value || "#"}
+                target="_blank"
+                className={`underline ${
+                  value ? "text-teal-500" : "text-gray-400 cursor-not-allowed"
+                }`}
+              >
+                {value ? `Open ${label}` : "Not Provided"}
+              </a>
+            </li>
+          ))}
         </ul>
       )}
     </div>

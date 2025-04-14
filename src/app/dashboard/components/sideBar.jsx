@@ -62,14 +62,14 @@ const SideBar = () => {
                   : "opacity-0 pointer-events-none hidden"
               }mt-2 text-base md:text-lg font-medium`}
             >
-              {currentUser?.name}
+              {currentUser?.userName}
             </h3>
             <p
               className={`${
                 showName
                   ? "opacity-100"
                   : "opacity-0 pointer-events-none hidden"
-              } text-sm first-letter:uppercase`}
+              } text-sm first-letter:uppercase text-gray-500`}
             >
               {currentUser?.role}
             </p>

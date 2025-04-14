@@ -15,9 +15,11 @@ const EmployerProfile = () => {
   const { currentUser } = useAppContext();
 
   // Info tab state (saved in localStorage)
-  const [infoBtn, setInfoBtn] = useState(() => {
-    return localStorage.getItem("infoLink") || "Additional Info";
-  });
+  const [infoBtn, setInfoBtn] = useState("Profile Info");
+
+  useEffect(() => {
+    localStorage.setItem("infoLink", infoBtn);
+  }, [infoBtn]);
 
   useEffect(() => {
     localStorage.setItem("infoLink", infoBtn);
@@ -27,8 +29,7 @@ const EmployerProfile = () => {
 
   const info = [
     { name: "Profile Info", icon: <TbFileInfo /> },
-    { name: "Additional Info", icon: <TbFileInfo /> },
-    { name: "Address Info", icon: <PiAddressBookTabs /> },
+    // { name: "Additional Info", icon: <TbFileInfo /> },
     { name: "Education Info", icon: <FaBookReader /> },
     { name: "Important Links", icon: <FaLink /> },
     { name: "Job Experience", icon: <FaGraduationCap /> },
@@ -37,16 +38,20 @@ const EmployerProfile = () => {
   return (
     <div className="flex flex-col gap-4 md:flex-row justify-between items-start relative">
       <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-8 gap-4 lg:gap-6 w-full">
-        <div className="md:col-span-2 lg:col-span-2 shadow-xl border border-teal-500 bg-gradient-to-br from-teal-100 via-teal-100 to-teal-50 rounded-xl p-4 flex lg:flex-col flex-wrap ">
-          <div className="flex flex-col items-center p-2 border-b border-teal-500 border-dashed mb-2 w-full lg:mb-4">
+        <div className="md:col-span-2 lg:col-span-2 shadow-xl border border-teal-500 bg-gradient-to-br from-teal-50 via-teal-50 to-white rounded-xl p-4 flex lg:flex-col flex-wrap ">
+          <div className="flex flex-col items-center p-2 border-b border-teal-500 border-dashed mb-2 w-full lg:mb-4 space-y-2">
             <img
               src={currentUser?.image}
               alt={currentUser?.name}
               className="w-32 h-32 rounded-full border-4 border-teal-500"
             />
             <div className="text-center">
-              <h3>{currentUser?.name}</h3>
-              <p>{currentUser?.email}</p>
+              <h3 className="text-base md:text-lg lg:text-xl">
+                {currentUser?.name}
+              </h3>
+              <p className="text-sm lg:text-base text-gray-500">
+                {currentUser?.email}
+              </p>
             </div>
           </div>
           <ul className="duration-500 transition-all ease-in-out space-y-2 w-full">
@@ -74,7 +79,7 @@ const EmployerProfile = () => {
             ))}
           </ul>
         </div>
-        <div className="md:col-span-4 lg:col-span-6 border border-dashed border-teal-500 bg-gradient-to-br from-teal-100 via-teal-100 to-teal-50 rounded-xl p-4">
+        <div className="md:col-span-4 lg:col-span-6 border border-dashed border-teal-500 bg-gradient-to-br from-teal-50 via-teal-50 to-white rounded-xl shadow-xl p-4">
           {infoBtn === "Profile Info" && <ProfileInfo />}
           {infoBtn === "Additional Info" && <AdditionalInfo />}
           {infoBtn === "Address Info" && <AddressInfo />}

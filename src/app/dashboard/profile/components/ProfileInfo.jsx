@@ -2,26 +2,26 @@
 import { useState, useEffect } from "react";
 import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
-import {
-  FaMapMarkerAlt,
-  FaUserEdit,
-  FaEnvelope,
-  FaGlobe,
-  FaLinkedin,
-} from "react-icons/fa";
+import { FaMapMarkerAlt, FaUserEdit } from "react-icons/fa";
 import { LuPhone, LuUpload, LuUserRound } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { set } from "react-hook-form";
+import { ToastContainer } from "react-toastify";
 
 const ProfileInfo = () => {
   const { currentUser, isEditing, setIsEditing, userRefetch } = useAppContext();
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: currentUser?.name || "",
+    userName: currentUser?.userName || "",
     phone: currentUser?.phone || "",
     location: currentUser?.location || "",
+    address: currentUser?.address || "",
     image: currentUser?.image || "",
+    bio: currentUser?.bio || "",
   });
 
   const [initialData, setInitialData] = useState(formData);
@@ -31,15 +31,21 @@ const ProfileInfo = () => {
   useEffect(() => {
     setFormData({
       name: currentUser?.name || "",
+      userName: currentUser?.userName || "",
       phone: currentUser?.phone || "",
       location: currentUser?.location || "",
+      address: currentUser?.address || "",
       image: currentUser?.image || "",
+      bio: currentUser?.bio || "",
     });
     setInitialData({
       name: currentUser?.name || "",
+      userName: currentUser?.userName || "",
       phone: currentUser?.phone || "",
       location: currentUser?.location || "",
+      address: currentUser?.address || "",
       image: currentUser?.image || "",
+      bio: currentUser?.bio || "",
     });
   }, [currentUser]);
 
@@ -52,20 +58,20 @@ const ProfileInfo = () => {
 
   const handleEdit = async (e) => {
     e.preventDefault();
-
-    const { name, phone, location, image } = formData;
-    if (!name || !phone || !location)
-      return toast.error("Please fill all the fields");
-
+    setLoading(true);
     try {
       const res = await axios.post("/api/updateProfile", formData);
       if (res.data.modifiedCount > 0) {
         userRefetch();
         Swal.fire("Success", "Profile updated successfully", "success");
         setIsEditing(false);
+      } else {
+        toast.error("Something went wrong");
       }
     } catch (error) {
       toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -152,6 +158,7 @@ const ProfileInfo = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+            {/* Location */}
             <label className="flex flex-col gap-2">
               <span className="flex items-center gap-2">
                 <FaMapMarkerAlt /> Location
@@ -165,9 +172,9 @@ const ProfileInfo = () => {
                 className="p-2 border border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500"
               />
             </label>
-
+            {/* Phone */}
             <label className="flex flex-col gap-2">
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 ">
                 <LuPhone /> Phone
               </span>
               <input
@@ -180,7 +187,47 @@ const ProfileInfo = () => {
               />
             </label>
           </div>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+            {/* User name */}
+            <label htmlFor="userName" className="flex flex-col gap-2">
+              <span className="">Username</span>
+              <input
+                type="text"
+                placeholder="Username"
+                required
+                name="userName"
+                value={formData.userName}
+                onChange={handleChange}
+                className="p-2 border border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500"
+              />
+            </label>
+            {/* Address */}
+            <label htmlFor="address" className="flex flex-col gap-2">
+              <span className="">Address (optional)</span>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className="p-2 border border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500"
+              />
+            </label>
+          </div>
+          <div className="">
+            <label htmlFor="bio" className="flex flex-col gap-2">
+              <span className="">Bio</span>
+              <textarea
+                type="text"
+                name="bio"
+                placeholder="Enter your bio..."
+                required
+                rows="4"
+                value={formData.bio}
+                onChange={handleChange}
+                className="p-2 border border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500"
+              />
+            </label>
+          </div>
           <div className="flex justify-start">
             <label className="flex flex-col gap-2 cursor-pointer">
               <span className="flex items-center gap-2">
@@ -215,16 +262,31 @@ const ProfileInfo = () => {
                   : "bg-gray-400 cursor-not-allowed"
               }`}
             >
-              Save Changes
+              {loading ? (
+                <div className="flex items-end gap-2">
+                  Saving{" "}
+                  <span className="loading loading-dots loading-sm"></span>
+                </div>
+              ) : (
+                "Save Changes"
+              )}
             </button>
           </div>
         </form>
       ) : (
         <div className="w-full space-y-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div className="md:col-span-2">
+              <span className="text-sm text-gray-400">Bio</span>
+              <p>{currentUser?.bio || "No bio"}</p>
+            </div>
             <div>
               <span className="text-sm text-gray-400">Full Name</span>
               <p>{currentUser?.name}</p>
+            </div>
+            <div>
+              <span className="text-sm text-gray-400">Username</span>
+              <p>{currentUser?.userName}</p>
             </div>
             <div>
               <span className="text-sm text-gray-400">Email</span>
@@ -241,36 +303,15 @@ const ProfileInfo = () => {
                 {currentUser?.location || "No location"}
               </p>
             </div>
+            <div>
+              <span className="text-sm text-gray-400">Address</span>
+              <p className="flex items-center">
+                <FaMapMarkerAlt className="mr-2" />
+                {currentUser?.address || "N/A"}
+              </p>
+            </div>
           </div>
-
-          <div className="flex space-x-4 mt-4">
-            {currentUser?.email && (
-              <a
-                href={`mailto:${currentUser.email}`}
-                className="text-gray-600 hover:text-teal-500"
-              >
-                <FaEnvelope size={20} />
-              </a>
-            )}
-            {currentUser?.linkedin && (
-              <a
-                href={currentUser.linkedin}
-                target="_blank"
-                className="text-gray-600 hover:text-teal-500"
-              >
-                <FaLinkedin size={20} />
-              </a>
-            )}
-            {currentUser?.website && (
-              <a
-                href={currentUser.website}
-                target="_blank"
-                className="text-gray-600 hover:text-teal-500"
-              >
-                <FaGlobe size={20} />
-              </a>
-            )}
-          </div>
+          <ToastContainer position="top-center" autoClose={3000} />
         </div>
       )}
     </div>

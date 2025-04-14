@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
+import CommonTitleOrEditBtn from "./CommonTitleOrEditBtn";
 
 const JobExperienceInfo = () => {
   const [isEditingJob, setIsEditingJob] = useState(false);
@@ -52,18 +53,9 @@ const JobExperienceInfo = () => {
   };
 
   return (
-    <div className="p-6 rounded-lg shadow space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Job Experience</h2>
-        <button
-          onClick={() => setIsEditingJob(!isEditingJob)}
-          className="text-black hover:text-blue-500"
-        >
-          <FaEdit />
-        </button>
-      </div>
-
-      {isEditingJob ? (
+    <div className="space-y-4">
+      <CommonTitleOrEditBtn title={"Job Experience"} showEdit={"jobs"} />
+      {isEditingJob === "jobs" ? (
         <form
           onSubmit={handleJobUpdate}
           className="grid grid-cols-1 md:grid-cols-2 gap-4"

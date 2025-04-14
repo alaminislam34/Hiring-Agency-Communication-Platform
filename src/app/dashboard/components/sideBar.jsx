@@ -24,17 +24,13 @@ const SideBar = () => {
     >
       {/* Sidebar Header */}
       <div className="flex items-center justify-between mb-6">
-        <Link href="/" className="flex items-center text-xl font-bold">
-          <img src="/navLogo.png" alt="Logo" className="h-10 mr-2" />
-          <span className="text-xl md:text-2xl">
-            {" "}
+        <Link href="/" className="flex items-center">
+          <img src="/navLogo2.jpg" alt="Logo" className="h-10 lg:h-12 mr-2" />
+          <span className="text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-teal-800 via-teal-700 to-teal-600 bg-clip-text text-transparent">
             {showName ? "JobHive" : ""}
           </span>
         </Link>
-        <button
-          onClick={() => setIsOpen(false)}
-          className="lg:hidden  hover:text-white"
-        >
+        <button onClick={() => setIsOpen(false)} className="lg:hidden  ">
           <FaTimes size={20} />
         </button>
       </div>
@@ -55,7 +51,7 @@ const SideBar = () => {
           />
 
           <div
-            className={`duration-500 text-center text-gray-300 ${
+            className={`duration-500 text-center  ${
               showName ? "block" : "hidden"
             }`}
           >
@@ -95,11 +91,21 @@ const SideBar = () => {
               >
                 <Link
                   href={href}
-                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-300 w-full ${
-                    pathname === href ? "bg-white text-black" : "hover: "
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-300 w-full hover:bg-gradient-to-r from-teal-200 to-teal-100 text-teal-800 ${
+                    pathname === href
+                      ? "bg-gradient-to-r from-teal-200 to-teal-100 text-teal-800 shadow-[2px_2px_10px_0px_rgb(0,0,0,0.2)]"
+                      : ""
                   }`}
                 >
-                  <span>{icon}</span>
+                  <span
+                    className={`${
+                      pathname === href
+                        ? "bg-gradient-to-r from-teal-600 to-teal-500 text-white"
+                        : "bg-transparent"
+                    } p-1 rounded-full`}
+                  >
+                    {icon}
+                  </span>
                   <span
                     className={`duration-500 ${
                       showName
@@ -109,7 +115,6 @@ const SideBar = () => {
                   >
                     {name}
                   </span>
-                  {/* {showName ? name : ""} */}
                 </Link>
               </li>
             ))
@@ -123,11 +128,21 @@ const SideBar = () => {
               >
                 <Link
                   href={href}
-                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-30j0 w-full ${
-                    pathname === href ? "bg-white text-black" : "hover: "
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-30j0 w-full hover:bg-gradient-to-r from-teal-200 to-teal-100 text-teal-800 ${
+                    pathname === href
+                      ? "bg-gradient-to-r from-teal-200 to-teal-100 text-teal-800 shadow-[2px_2px_10px_0px_rgb(0,0,0,0.2)]"
+                      : ""
                   } ${showName ? "" : ""}`}
                 >
-                  <span>{icon}</span>
+                  <span
+                    className={`${
+                      pathname === href
+                        ? "bg-gradient-to-r from-teal-600 to-teal-500 text-white"
+                        : "bg-transparent"
+                    } p-1 rounded-full`}
+                  >
+                    {icon}
+                  </span>
                   <span
                     className={`duration-500 ${
                       showName
@@ -151,11 +166,21 @@ const SideBar = () => {
               >
                 <Link
                   href={href}
-                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-30j0 w-full ${
-                    pathname === href ? "bg-white text-black" : "hover:"
+                  className={`flex items-center gap-3 px-2 py-2 rounded-md duration-30j0 w-full hover:bg-gradient-to-r from-teal-200 to-teal-100 text-teal-800 ${
+                    pathname === href
+                      ? "bg-gradient-to-r from-teal-200 to-teal-100 text-teal-800 shadow-[2px_2px_10px_0px_rgb(0,0,0,0.2)]"
+                      : ""
                   }`}
                 >
-                  <span>{icon}</span>{" "}
+                  <span
+                    className={`${
+                      pathname === href
+                        ? "bg-gradient-to-r from-teal-600 to-teal-500 text-white"
+                        : "bg-transparent"
+                    } p-1 rounded-full`}
+                  >
+                    {icon}
+                  </span>{" "}
                   <span
                     className={`duration-500 ${
                       showName

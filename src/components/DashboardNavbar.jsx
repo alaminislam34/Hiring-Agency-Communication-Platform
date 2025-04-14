@@ -358,9 +358,9 @@ const DashboardNavbar = () => {
         <li className="relative">
           <img
             onClick={() => setIsOpen(!isOpen)} // Toggle dropdown visibility
-            src={session?.user?.image || "/fakeUser.jpg"}
+            src={currentUser?.image || "/fakeUser.jpg"}
             alt="User"
-            className="w-10 h-10 rounded-full border bg-gray-300 cursor-pointer"
+            className="w-10 h-10 rounded-full border object-cover bg-center bg-gray-300 cursor-pointer"
           />
 
           {/* Dropdown Menu */}

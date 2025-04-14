@@ -12,8 +12,8 @@ export default function DashboardLayout({ children }) {
     <div className="flex min-h-screen ">
       {/* Sidebar for Dashboard */}
       <div
-        className={`hidden lg:block fixed h-screen bg-[#00847D] p-4 shadow-lg duration-500  ${
-          showName ? " text-white w-64" : "w-20"
+        className={`hidden lg:block fixed h-screen shadow-2xl bg-gradient-to-br from-teal-100 via-teal-100 to-teal-50 p-4 duration-500  ${
+          showName ? "w-64" : "w-20"
         }`}
       >
         <SideBar />

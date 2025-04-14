@@ -1,7 +1,9 @@
 "use client";
 
+import { useAppContext } from "@/Providers/AppProviders";
 import { useState, useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
+import CommonTitleOrEditBtn from "./CommonTitleOrEditBtn";
 
 // Dummy currentUser fallback for safety (replace this with your actual user context or props)
 const defaultUser = {
@@ -12,7 +14,7 @@ const defaultUser = {
 };
 
 const EducationalInfo = ({ currentUser = defaultUser }) => {
-  const [isEditingEducation, setIsEditingEducation] = useState(false);
+  const { isEditingInfo, setIsEditingInfo } = useAppContext();
 
   const [educationInfo, setEducationInfo] = useState({
     educationLevel: "",
@@ -57,18 +59,13 @@ const EducationalInfo = ({ currentUser = defaultUser }) => {
 
   return (
     <div>
-      <div className="p-6 rounded-lg shadow space-y-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold">Educational Info</h2>
-          <button
-            onClick={() => setIsEditingEducation(!isEditingEducation)}
-            className="text-black hover:text-blue-400"
-          >
-            <FaEdit />
-          </button>
-        </div>
+      <div className="space-y-4">
+        <CommonTitleOrEditBtn
+          title={"Educational Info"}
+          showEdit={"education"}
+        />
 
-        {isEditingEducation ? (
+        {isEditingInfo === "education" ? (
           <form
             onSubmit={handleEducationUpdate}
             className="grid grid-cols-1 md:grid-cols-2 gap-4"

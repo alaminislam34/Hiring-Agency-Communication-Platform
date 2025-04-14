@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
+import CommonTitleOrEditBtn from "./CommonTitleOrEditBtn";
 
 const ImportantLinksInfo = ({ currentUser }) => {
   const [isEditingLinks, setIsEditingLinks] = useState(false);
@@ -28,18 +29,10 @@ const ImportantLinksInfo = ({ currentUser }) => {
   };
 
   return (
-    <div className="p-6 rounded-lg shadow space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Important Links</h2>
-        <button
-          onClick={() => setIsEditingLinks(!isEditingLinks)}
-          className="text-black hover:text-teal-400"
-        >
-          <FaEdit />
-        </button>
-      </div>
+    <div className="space-y-4">
+      <CommonTitleOrEditBtn title={"Important Links"} showEdit={"links"} />
 
-      {isEditingLinks ? (
+      {isEditingLinks === "links" ? (
         <form onSubmit={handleLinksUpdate} className="grid grid-cols-1 gap-4">
           {["cv", "github", "portfolio", "linkedin", "image"].map((field) => (
             <input

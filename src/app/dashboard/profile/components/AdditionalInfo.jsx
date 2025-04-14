@@ -2,10 +2,10 @@
 
 import { useAppContext } from "@/Providers/AppProviders";
 import { useState } from "react";
-import { FaEdit } from "react-icons/fa";
+import CommonTitleOrEditBtn from "./CommonTitleOrEditBtn";
 
 const AdditionalInfo = () => {
-  const { currentUser } = useAppContext();
+  const { currentUser, isEditingInfo } = useAppContext();
   // Additional Information
   const [additionalInfo, setAdditionalInfo] = useState({
     gender: currentUser?.gender || "",
@@ -14,34 +14,23 @@ const AdditionalInfo = () => {
     internetType: currentUser?.internetType || "",
     experience: currentUser?.experience || "",
   });
-  // Additional Info data
-  const [addressInfo, setAddressInfo] = useState({
-    country: currentUser?.country || "",
-    division: currentUser?.division || "",
-    street: currentUser?.street || "",
-  });
+
   // edit Additional Information handler
   const handleAdditionalUpdate = async (e) => {
     e.preventDefault();
     console.log("Updated Additional Info:", additionalInfo);
     setIsEditingAdditional(false);
   };
-  const [isEditingAdditional, setIsEditingAdditional] = useState(false);
   return (
     <div>
       {/* Additional Info Section */}
-      <div className="  p-6 rounded-lg shadow space-y-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold">Additional Info</h2>
-          <button
-            onClick={() => setIsEditingAdditional(!isEditingAdditional)}
-            className="text-black hover:text-blue-400"
-          >
-            <FaEdit />
-          </button>
-        </div>
+      <div className="space-y-4">
+        <CommonTitleOrEditBtn
+          title={"Additional Info"}
+          showEdit={"additional"}
+        />
 
-        {isEditingAdditional ? (
+        {isEditingInfo === "additional" ? (
           <form
             onSubmit={handleAdditionalUpdate}
             className="grid grid-cols-1 md:grid-cols-2 gap-4"

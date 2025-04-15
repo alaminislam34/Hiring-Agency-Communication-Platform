@@ -8,7 +8,7 @@ import DashboardFooter from "./components/DashboardFooter";
 export default function DashboardLayout({ children }) {
   const { showName } = useAppContext();
   return (
-    <div className="flex min-h-screen ">
+    <div className="flex min-h-screen">
       {/* Sidebar for Dashboard */}
       <div
         className={`hidden lg:block fixed h-screen shadow-2xl bg-gradient-to-br from-teal-100 via-teal-100 to-teal-50 p-4 duration-500  ${

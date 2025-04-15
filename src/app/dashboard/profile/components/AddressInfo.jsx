@@ -37,7 +37,7 @@ const AddressInfo = () => {
         {isEditingInfo === "address" ? (
           <form
             onSubmit={handleAddressUpdate}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-x-6"
           >
             {/* Country Select */}
             <select

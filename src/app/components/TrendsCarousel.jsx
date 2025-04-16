@@ -43,12 +43,12 @@ const TrendsCarousel = () => {
   return (
     <div className=" mx-auto w-11/12">
       <SectionTitle title={"Hiring trends and insights"} />
-      <div className="mt-12 ">
+      <div className="mt-12">
         <Slider {...settings} className="">
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-6 shadow-lg rounded-lg h-[280px] mx-4"
+              className="flex flex-col items-center  justify-center text-center p-6 rounded-lg h-[280px] border border-[#084049]"
             >
               {/* Image centered properly */}
               <div className="w-20 h-20 relative mb-4 flex justify-center mx-auto ">
@@ -60,8 +60,10 @@ const TrendsCarousel = () => {
                   className="rounded-full object-cover"
                 />
               </div>
-              <p className="text-base lg:text-lg">"{review.testimonial}"</p>
-              <h3 className="font-bold text-lg">{review.name}</h3>
+              <p className="text-base lg:text-lg text-gray-800">
+                {review.testimonial}
+              </p>
+              <h3 className="font-semibold text-lg mt-1.5">{review.name}</h3>
             </div>
           ))}
         </Slider>

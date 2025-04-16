@@ -1,9 +1,11 @@
 "use client";
+import { useAppContext } from "@/Providers/AppProviders";
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
+import CommonTitleOrEditBtn from "./CommonTitleOrEditBtn";
 
 const AddressInfo = () => {
-  const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const { isEditingInfo, setIsEditingInfo } = useAppContext();
 
   // address info state
   const [addressInfo, setAddressInfo] = useState({
@@ -23,28 +25,19 @@ const AddressInfo = () => {
   const handleAddressUpdate = (e) => {
     e.preventDefault();
     console.log("Updated Address Info:", addressInfo);
-    setIsEditingAddress(false);
+    setIsEditingInfo(false);
   };
 
   return (
     <div>
       {/* Address Info Section */}
-      <div className="p-6 rounded-lg shadow space-y-4 bg-white">
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold">Address Info</h2>
-          <button
-            onClick={() => setIsEditingAddress(!isEditingAddress)}
-            className="text-black hover:text-blue-500"
-            title="Edit Address"
-          >
-            <FaEdit />
-          </button>
-        </div>
+      <div className="space-y-4">
+        <CommonTitleOrEditBtn title={"Address Info"} showEdit={"address"} />
 
-        {isEditingAddress ? (
+        {isEditingInfo === "address" ? (
           <form
             onSubmit={handleAddressUpdate}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-x-6"
           >
             {/* Country Select */}
             <select

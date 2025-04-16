@@ -17,7 +17,7 @@ import ZegoHome from "./components/zegoBoom/ZegoHome";
 
 export default async function Home() {
   return (
-    <div className="space-y-8 lg:space-y-12 mb-8 lg:mb-12">
+    <div className="space-y-8 lg:space-y-12 mb-8 lg:mb-12 w-full">
       <Banner></Banner>
       <TrendsCarousel />
       <FindJob></FindJob>

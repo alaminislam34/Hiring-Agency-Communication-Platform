@@ -3,17 +3,16 @@
 import SideBar from "./components/sideBar";
 import { useAppContext } from "../../Providers/AppProviders";
 import DashboardNavbar from "@/components/DashboardNavbar";
-import { FaChevronRight } from "react-icons/fa6";
 import DashboardFooter from "./components/DashboardFooter";
 
 export default function DashboardLayout({ children }) {
   const { showName } = useAppContext();
   return (
-    <div className="flex min-h-screen ">
+    <div className="flex min-h-screen">
       {/* Sidebar for Dashboard */}
       <div
-        className={`hidden lg:block fixed h-screen bg-[#00847D] p-4 shadow-lg duration-500  ${
-          showName ? " text-white w-64" : "w-20"
+        className={`hidden lg:block fixed h-screen shadow-2xl bg-gradient-to-br from-teal-100 via-teal-100 to-teal-50 p-4 duration-500  ${
+          showName ? "w-64" : "w-20"
         }`}
       >
         <SideBar />

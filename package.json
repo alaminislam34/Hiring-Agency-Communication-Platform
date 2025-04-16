@@ -34,6 +34,7 @@
     "mongodb": "^6.14.2",
     "next": "15.2.2",
     "next-auth": "^4.24.11",
+    "nodemailer": "^6.10.1",
     "pnpm": "^10.6.5",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
@@ -57,6 +58,7 @@
     "uuid": "^11.1.0",
     "yup": "^1.6.1",
     "zustand": "^5.0.3"
+    
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

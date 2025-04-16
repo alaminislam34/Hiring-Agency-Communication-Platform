@@ -2,6 +2,7 @@
 
 import { generativeText } from "@/app/utils/gemini";
 import { useEffect, useState } from "react";
+import { FiSend } from "react-icons/fi";
 
 const customQA = [
   {
@@ -151,7 +152,7 @@ export default function GeminiComponent() {
               }`}
               disabled={loading}
             >
-              Send
+              <FiSend />
             </button>
           </div>
         </div>

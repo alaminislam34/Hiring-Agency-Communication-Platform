@@ -1,28 +1,112 @@
+// "use client";
+// import { useQuery } from "@tanstack/react-query";
+// import axios from "axios";
+// import { createContext, useState, useContext, useEffect } from "react";
+
+// // 1️⃣ Context তৈরি করা
+// const AppContext = createContext();
+
+// // 2️⃣ Provider Component তৈরি করা
+// export const AppProvider = ({ children }) => {
+//   const [showSidebar, setShowSidebar] = useState(false);
+//   const [currentUser, setCurrentUser] = useState(null);
+//   const [showName, setShowName] = useState(true);
+//   const [loading, setLoading] = useState(true);
+//   const [type, setType] = useState("");
+//   //for zego
+//   const { fullName, setFullName } = useUser();
+//   const [roomID, setRoomID] = useState("");
+
+//   // ✅ Jobs Fetch Function
+//   const fetchJobs = async () => {
+//     const res = await axios(`/api/allJobs?jobType=${type}`);
+//     return res.data;
+//   };
+
+//   // ✅ React Query for fetching jobs
+//   const {
+//     data: jobs = [], // fallback empty array
+//     isLoading: jobsLoading,
+//     refetch,
+//   } = useQuery({
+//     queryKey: ["jobs", type],
+//     queryFn: fetchJobs,
+//   });
+
+//   // ✅ Fetch Current User
+//   useEffect(() => {
+//     const fetchUser = async () => {
+//       try {
+//         const res = await fetch("/api/currentUser");
+//         const data = await res.json();
+//         if (data.error) {
+//           setCurrentUser(null);
+//         } else {
+//           setCurrentUser(data);
+//         }
+//       } catch (error) {
+//         console.error("Failed to fetch user:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchUser();
+//   }, []);
+
+//   // here is for zegocloud things
+
+//   // ✅ Context Info
+//   const info = {
+//     showSidebar,
+//     setShowSidebar,
+//     showName,
+//     setShowName,
+//     currentUser,
+//     loading,
+//     setType,
+//     jobs,
+//     jobsLoading,
+//     refetchJobs: refetch,
+//     // for zego
+//     fullName,
+//     setFullName,
+//     roomID,
+//     setRoomID,
+//   };
+
+//   return <AppContext.Provider value={info}>{children}</AppContext.Provider>;
+// };
+
+// export const useAppContext = () => useContext(AppContext);
+
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { createContext, useState, useContext, useEffect } from "react";
 
-// 1️⃣ Context তৈরি করা
 const AppContext = createContext();
 
-// 2️⃣ Provider Component তৈরি করা
 export const AppProvider = ({ children }) => {
+  // General App State
   const [showSidebar, setShowSidebar] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [showName, setShowName] = useState(true);
   const [loading, setLoading] = useState(true);
   const [type, setType] = useState("");
 
-  // ✅ Jobs Fetch Function
+  // Zego Meeting State
+  const [fullName, setFullName] = useState(""); // Added to Context
+  const [roomID, setRoomID] = useState("");
+
+  // Jobs Data Fetching
   const fetchJobs = async () => {
     const res = await axios(`/api/allJobs?jobType=${type}`);
     return res.data;
   };
 
-  // ✅ React Query for fetching jobs
   const {
-    data: jobs = [], // fallback empty array
+    data: jobs = [],
     isLoading: jobsLoading,
     refetch,
   } = useQuery({
@@ -30,29 +114,26 @@ export const AppProvider = ({ children }) => {
     queryFn: fetchJobs,
   });
 
-  // ✅ Fetch Current User
+  // Fetch Current User
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await fetch("/api/currentUser");
         const data = await res.json();
-        if (data.error) {
-          setCurrentUser(null);
-        } else {
-          setCurrentUser(data);
-        }
+        setCurrentUser(data.error ? null : data);
       } catch (error) {
         console.error("Failed to fetch user:", error);
+        setCurrentUser(null);
       } finally {
         setLoading(false);
       }
     };
-
     fetchUser();
   }, []);
 
-  // ✅ Context Info
-  const info = {
+  // Context Value
+  const contextValue = {
+    // General App State
     showSidebar,
     setShowSidebar,
     showName,
@@ -60,12 +141,22 @@ export const AppProvider = ({ children }) => {
     currentUser,
     loading,
     setType,
+
+    // Jobs Data
     jobs,
     jobsLoading,
     refetchJobs: refetch,
+
+    // Zego Meeting State
+    fullName,
+    setFullName,
+    roomID,
+    setRoomID,
   };
 
-  return <AppContext.Provider value={info}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
+  );
 };
 
 export const useAppContext = () => useContext(AppContext);

@@ -13,6 +13,7 @@ import SeekKit from "./components/SeekKit";
 import Testimonials from "./components/Testimonials";
 import TrendsCarousel from "./components/TrendsCarousel";
 import GeminiComponent from "./components/GeminiComponent";
+import ZegoHome from "./components/zegoBoom/ZegoHome";
 
 export default async function Home() {
   return (
@@ -29,6 +30,7 @@ export default async function Home() {
       <CareerMove />
       <Testimonials />
       <Accordion />
+      <ZegoHome></ZegoHome>
       <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );

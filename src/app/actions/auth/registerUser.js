@@ -1,6 +1,9 @@
 "use server";
+
 import bcrypt from "bcryptjs";
 import dbConnect, { collection } from "@/lib/dbConnect";
+import { sendVerificationEmail } from "@/lib/sendVerificationEmail"; // 👈 You'll create this
+import { v4 as uuidv4 } from "uuid";
 
 export const register = async (user) => {
   const userCollection = dbConnect(collection.user_collection);
@@ -23,8 +26,25 @@ export const register = async (user) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  user.password = hashedPassword;
+  const verificationToken = uuidv4();
 
-  const result = await userCollection.insertOne(user);
-  return { success: true, insertedId: result.insertedId.toString() };
+  const newUser = {
+    ...user,
+    password: hashedPassword,
+    isVerified: false,
+    verificationToken,
+    createdAt: new Date(),
+  };
+
+  const result = await userCollection.insertOne(newUser);
+
+  // 👇 send verification email
+  await sendVerificationEmail(email, verificationToken, userName);
+
+  return {
+    success: true,
+    message:
+      "Registration successful. Please check your email to verify your account.",
+    insertedId: result.insertedId.toString(),
+  };
 };

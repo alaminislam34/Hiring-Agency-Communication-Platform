@@ -2,9 +2,9 @@ import React from "react";
 
 const DashboardFooter = () => {
   return (
-    <div className="py-4 text-center bg-[#B3E6E3] ">
+    <div className="py-4 text-center bg-gradient-to-br from-teal-100 via-teal-50 to-white">
       <p className="text-xs md:text-sm">
-        Developed by Team Quantum Warriors 2025 ©
+        Powered by Team Quantum Warriors — © 2025
       </p>
     </div>
   );

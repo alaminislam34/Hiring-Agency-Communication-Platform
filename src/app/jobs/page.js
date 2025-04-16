@@ -1,12 +1,11 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
+"use client";
 import Link from "next/link";
 import JobsFilterOptions from "./components/JobsFilterOptions";
 import ApplyButton from "./components/ApplyButton";
+import { useAppContext } from "@/Providers/AppProviders";
 
-const AllJobs = async () => {
-  const jobsCollection = dbConnect(collection.jobsCollection);
-  const jobs = await jobsCollection.find({}).toArray();
-
+const AllJobs = () => {
+  const { jobs } = useAppContext();
   return (
     <div className="bg-gray-50 p-6">
       <h1 className="text-3xl font-bold mb-6 text-center">

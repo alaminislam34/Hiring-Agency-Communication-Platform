@@ -1,9 +1,34 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import SectionTitle from "@/app/components/SectionTitle";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const TabJob = () => {
-  // State to manage active tab
   const [activeTab, setActiveTab] = useState("Design");
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    const allJobs = async () => {
+      const res = await fetch("/api/jobs");
+      const data = await res.json(); // Add await here
+      console.log("All jobs from about page", data);
+      setJobs(data);
+    };
+    allJobs();
+  }, []);
+
+  // Categorize jobs dynamically (use regX)
+  const categories = {
+    Design: jobs.filter((job) => /design/i.test(job.jobTitle || "")),
+    Engineering: jobs.filter((job) =>
+      /(engineering|engineer|software engineer)/i.test(job.jobTitle || "")
+    ),
+    Customer_Success: jobs.filter((job) =>
+      /customer/i.test(job.jobTitle || "")
+    ),
+    Sales: jobs.filter((job) => /sales/i.test(job.jobTitle || "")),
+  };
 
   return (
     <div className="my-10">
@@ -18,6 +43,7 @@ const TabJob = () => {
 
       {/* Tabs */}
       <div className="tabs tabs-boxed flex justify-center">
+<<<<<<< HEAD
         <button
           className={`tab ${activeTab === "Design" ? "tab-active" : ""}`}
           onClick={() => setActiveTab("Design")}
@@ -52,9 +78,32 @@ const TabJob = () => {
             <p>Explore opportunities in graphic and product design.</p>
             <div className="border rounded-lg p-4 bg-base-100">
               <h3 className="text-lg font-bold">Product Designer</h3>
+=======
+        {Object.keys(categories).map((category) => (
+          <button
+            key={category}
+            className={`tab ${activeTab === category ? "tab-active" : ""}`}
+            onClick={() => setActiveTab(category)}>
+            {category}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab Content */}
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {categories[activeTab]?.length > 0 ? (
+          categories[activeTab].map((job) => (
+            <div
+              key={job._id}
+              className="border rounded-lg p-4 bg-base-100 mt-4 ml-2">
+              <h3 className="text-lg font-bold">{job.jobTitle}</h3>
+>>>>>>> 4cad9262258316ab3cc9f2e8f3360a73af9c1865
               <p className="text-sm text-gray-600">
-                Mid-level product designer needed to join our dynamic team.
+                {" "}
+                <span className="font-bold">Company Name</span>:{" "}
+                {job.companyName}
               </p>
+<<<<<<< HEAD
               <button className="btn btn-sm mt-4 bg-[#084049] text-white hover:bg-red-600">View Job</button>
             </div>
             <div className="border rounded-lg p-4 bg-base-100">
@@ -82,9 +131,13 @@ const TabJob = () => {
             </p>
             <div className="border rounded-lg p-4 bg-base-100">
               <h3 className="text-lg font-bold">Frontend Developer</h3>
+=======
+>>>>>>> 4cad9262258316ab3cc9f2e8f3360a73af9c1865
               <p className="text-sm text-gray-600">
-                Work on cutting-edge web applications with React and Tailwind.
+                {" "}
+                <span className="font-bold">Job Type:</span>: {job.jobType}
               </p>
+<<<<<<< HEAD
               <button className="btn btn-primary btn-sm mt-4">View Job</button>
             </div>
           </div>
@@ -98,9 +151,13 @@ const TabJob = () => {
             </p>
             <div className="border rounded-lg p-4 bg-base-100">
               <h3 className="text-lg font-bold">Customer Support Specialist</h3>
+=======
+>>>>>>> 4cad9262258316ab3cc9f2e8f3360a73af9c1865
               <p className="text-sm text-gray-600">
-                Help clients resolve their issues and achieve success.
+                {" "}
+                <span className="font-bold">DeadLine:</span>: {job.deadline}
               </p>
+<<<<<<< HEAD
               <button className="btn btn-primary btn-sm mt-4">View Job</button>
             </div>
           </div>
@@ -112,12 +169,21 @@ const TabJob = () => {
             <p>Drive growth and generate revenue by connecting with clients.</p>
             <div className="border rounded-lg p-4 bg-base-100">
               <h3 className="text-lg font-bold">Sales Representative</h3>
+=======
+>>>>>>> 4cad9262258316ab3cc9f2e8f3360a73af9c1865
               <p className="text-sm text-gray-600">
-                Join our sales team and help expand our market reach.
+                {" "}
+                <span className="font-bold">Location:</span>: {job.location}
               </p>
-              <button className="btn btn-primary btn-sm mt-4">View Job</button>
+              <Link href={`/jobs/${job._id}`}>
+                <button className="btn btn-primary btn-sm mt-4">
+                  View Job
+                </button>
+              </Link>
             </div>
-          </div>
+          ))
+        ) : (
+          <p>No jobs available in this category.</p>
         )}
       </div>
     </div>

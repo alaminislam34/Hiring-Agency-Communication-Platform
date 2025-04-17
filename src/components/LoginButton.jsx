@@ -7,7 +7,7 @@ const LoginButton = () => {
     <div>
       <button
         onClick={() => signIn()}
-        className="text-white font-medium px-6 py-2 bg-teal-500 hover:bg-teal-600 duration-300 rounded-md cursor-pointer "
+        className="text-white md:font-medium px-4 md:px-6 py-2 bg-teal-500 hover:bg-teal-600 duration-300 rounded-md cursor-pointer "
       >
         Login
       </button>

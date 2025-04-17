@@ -35,6 +35,11 @@ export const employerNavLinks = [
     href: "/dashboard/help",
     icon: <FaQuestionCircle />,
   },
+  {
+    name: "Meetings",
+    href: "/dashboard/Meeting",
+    icon: <IoChatbubblesSharp />,
+  },
 ];
 
 export const jobSeekerNavLinks = [
@@ -63,6 +68,11 @@ export const jobSeekerNavLinks = [
     href: "/dashboard/chatbox",
     icon: <IoChatbubblesSharp />,
   },
+  {
+    name: "Meetings",
+    href: "/dashboard/Meeting",
+    icon: <IoChatbubblesSharp />,
+  },
 ];
 export const adminNavLinks = [
   {
@@ -77,4 +87,9 @@ export const adminNavLinks = [
   },
   { name: "Jobs", href: "/dashboard/allJobs", icon: <BsPersonWorkspace /> },
   { name: "Settings", href: "/dashboard/settings", icon: <FaCog /> },
+  {
+    name: "Meetings",
+    href: "/dashboard/Meeting",
+    icon: <IoChatbubblesSharp />,
+  },
 ];

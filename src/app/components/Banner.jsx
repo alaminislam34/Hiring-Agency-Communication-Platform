@@ -1,7 +1,21 @@
+'use client';
+import { useAppContext } from "@/Providers/AppProviders";
+import Link from "next/link";
+import {  useRouter } from "next/navigation";
 import React from "react";
 import { FaLocationArrow, FaSearchengin } from "react-icons/fa6";
 
 const Banner = () => {
+  const router = useRouter();
+  const {  currentUser } = useAppContext();
+  
+  const handleClick = () => {
+    if (currentUser && currentUser?.role === 'employer') {
+      router.push('/dashboard/jobs');
+    } else {
+      router.push(`/signin`);
+    }
+  };
   return (
     <div className="mb-0">
       <div
@@ -26,17 +40,18 @@ const Banner = () => {
             </p>
             {/* buttons for jobs related */}
             <div className="flex flex-col items-center justify-center md:flex-row gap-4 md:gap-6 py-8 w-full">
-              <button className="rounded-full flex justify-center items-center border cursor-pointer lg:text-xl py-2 md:py-3 px-4 lg:px-6 bg-white text-black hover:text-green-950 relative overflow-hidden z-[1] group">
+              
+              <Link  href="/jobs" className="rounded-full flex justify-center items-center border cursor-pointer lg:text-xl py-2 md:py-3 px-4 lg:px-6 bg-white text-black hover:text-green-950 relative overflow-hidden z-[1] group">
                 Find Your Next Job
                 <div className="w-full h-full bg-white absolute top-0 left-0 z-[-1] group-hover:bg-[#084049]/10 "></div>
-              </button>
+              </Link>
 
               <div className="border-1 h-16 lg:block hidden border-white"></div>
               <div className="flex flex-row gap-4 md:gap-6">
-                <button className="rounded-full flex justify-center items-center bg-[#084049]/50 hover:bg-transparent border cursor-pointer  text-white lg:text-xl py-2 md:py-3 px-4 lg:px-6">
+                <button onClick={handleClick} className="rounded-full flex justify-center items-center bg-[#084049]/50 hover:bg-transparent border cursor-pointer  text-white lg:text-xl py-2 md:py-3 px-4 lg:px-6">
                   Preview Candidates
                 </button>
-                <button className="rounded-full flex justify-center items-center bg-[#084049]/50 hover:bg-transparent border cursor-pointer  text-white lg:text-xl py-2 md:py-3 px-4 lg:px-6">
+                <button onClick={handleClick}   className="rounded-full flex justify-center items-center bg-[#084049]/50 hover:bg-transparent border cursor-pointer  text-white lg:text-xl py-2 md:py-3 px-4 lg:px-6">
                   Hire Now
                 </button>
               </div>

@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import SocialsLogin from "./SocialsLogin";
 
 const SignInComponent = () => {
+  
   const [error, setError] = useState("");
   const route = useRouter();
   const handleSingIn = async (e) => {
@@ -24,6 +25,16 @@ const SignInComponent = () => {
     if (res.ok) {
       toast.success("Login Successful! 🎉");
       form.reset();
+
+      // const redirectTo = localStorage.getItem('postLoginRedirect');
+      // if (redirectTo) {
+      //   localStorage.removeItem('postLoginRedirect');
+      //   route.push(redirectTo);
+      // } else {
+      //   route.push('/dashboard'); // fallback
+      // }
+    
+
       route.push("/dashboard");
     } else {
       setError("Invalid email or password");

@@ -131,7 +131,7 @@ const chartOptions = {
 };
 
 const HomePage = () => {
-  const { currentUser, showName } = useAppContext();
+  const { currentUser, showName, jobs } = useAppContext();
   return (
     <div className="">
       {/* Title and Intro */}

@@ -435,7 +435,7 @@ const Page = () => {
       </div>
 
       {/* Jobs section-4 */}
-      <TabJob></TabJob>
+      {/* <TabJob></TabJob> */}
       {/* Employee Review Slider- section-5 */}
       <EmployeeReview></EmployeeReview>
 

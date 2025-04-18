@@ -8,8 +8,6 @@ export async function GET(req) {
   const userEmail = session?.user?.email;
   const userCollection = dbConnect(collection.user_collection);
   const user = await userCollection.findOne({ email: userEmail });
-  console.log("current user", user);
-
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   } else {

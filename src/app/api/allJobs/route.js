@@ -12,7 +12,6 @@ export async function GET(req) {
     }
 
     const jobs = await jobsCollection.find(query).toArray();
-    console.log(jobs);
     return NextResponse.json(jobs);
   } catch (error) {
     console.error("Error fetching jobs:", error);

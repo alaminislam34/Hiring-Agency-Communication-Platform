@@ -15,7 +15,9 @@ export default function RootLayout({ children }) {
           <AppProvider>
             <body>
               <ClientNavbar />
-              <section className="min-h-[650px]">{children}</section>
+              <section className="md:min-h-[650px] min-h-[600px] bg-teal-50">
+                {children}
+              </section>
               <ClientFooter />
             </body>
           </AppProvider>

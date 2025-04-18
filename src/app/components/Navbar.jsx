@@ -201,8 +201,8 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="bg-base-100 shadow-md h-[65px] relative">
-      <div className="w-full fixed top-0 left-0 z-50 bg-white py-2 shadow-xl">
+    <div className="bg-base-100 h-[74px] md:h-[42px] relative">
+      <div className="w-full fixed top-0 left-0 z-50 bg-white shadow-xl">
         <nav className="navbar w-full md:w-11/12 mx-auto flex justify-center items-center">
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">
@@ -357,7 +357,7 @@ const Navbar = () => {
             <div>
               <Link
                 href="/dashboard/notifications"
-                className="flex items-center justify-center text-2xl hover:text-teal-500 cursor-pointer"
+                className="flex items-center justify-center text-2xl hover:text-teal-700 cursor-pointer"
               >
                 <IoIosNotificationsOutline />
               </Link>

@@ -1,131 +1,139 @@
 "use client";
 import { register } from "@/app/actions/auth/registerUser";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useAppContext } from "@/Providers/AppProviders";
+import { signIn } from "next-auth/react";
+import React, { useEffect, useState } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const RegisterForm = ({ setIsSignUp }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showPass, setShowPass] = useState(false);
   const [passError, setPassError] = useState("");
-  const [error, setError] = useState(null);
-  const router = useRouter();
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { isVerified } = useAppContext();
+  const [user, setUser] = useState({});
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const form = e.target;
-    const name = form.fullName.value;
     const email = form.email.value;
     const password = form.password.value;
-    const role = form.role.value;
-    const user = { name, email, password, role };
-    // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    // if (password != confirmPassword) {
-    //   setPassError("Password does not match");
-    //   return;
-    // }
-    // if (!passwordRegex.test(password)) {
-    //   setPassError(
-    //     "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
-    //   );
-    //   return;
-    // }
-    const res = await register(user);
-    if (res.success) {
-      router.push("/");
-      form.reset();
-      Swal.fire("Check Mail", "Account created successfully", "success");
-    } else if (!res.message.includes("Username")) {
-      toast.error(res.message);
+    setUser({ email, password });
+    if (!email || !password) {
+      setPassError("Email and Password are required.");
+      setLoading(false);
+      return;
     }
-    if (res.message.includes("Username")) {
-      setError(res.message);
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+    try {
+      if (!passwordRegex.test(password)) {
+        setPassError(
+          "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
+        );
+      } else {
+        setPassError("");
+        const res = await register({ email, password });
+        if (res.insertedId) {
+          Swal.fire(
+            "Success",
+            "Please check your email to verify your account",
+            "success"
+          );
+        } else {
+          Swal.fire("Error", res.message, "error");
+        }
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      Swal.fire("Error", "Something went wrong", "error");
+    } finally {
+      setLoading(false);
     }
   };
+  useEffect(() => {
+    if (isVerified) {
+      const res = signIn("credentials", {
+        email: user.email,
+        password: user.password,
+        redirect: false,
+        callbackUrl: "/dashboard",
+      });
+    }
+  }, [isVerified]);
 
   return (
-    <div className="max-w-[320px] w-full">
+    <div className="w-full">
       <form onSubmit={handleRegister} className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label className="flex flex-col gap-2">
-            <span className="text-gray-500 text-sm md:text-base">
-              Full Name
-            </span>
+        {message ? (
+          <p>
+            <small className="text-red-500">{message}</small>
+          </p>
+        ) : (
+          ""
+        )}
+        {/* Email */}
+        <label className="flex flex-col gap-2">
+          <span className="text-gray-500 text-sm md:text-base">Email</span>
+          <input
+            type="email"
+            name="email"
+            className="py-2 px-4 rounded-xl border border-teal-500/50 focus:outline-teal-600 bg-teal-100"
+          />
+        </label>
+        {/* Password */}
+        <label className="flex flex-col gap-2 relative">
+          <span className="text-gray-500 text-sm md:text-base">Password</span>
+          <div className="relative">
             <input
-              type="text"
-              name="fullName"
-              className="input border-[#084049]/30 w-full"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              className="py-2 px-4 rounded-xl border border-teal-500/50 focus:outline-teal-600 bg-teal-100 w-full pr-10"
             />
-          </label>
-
-          {passError && <p className="text-red-500 text-xs">{passError}</p>}
-          <label className="flex flex-col gap-2 relative">
-            <span className="text-gray-500 text-sm md:text-base">Password</span>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                className="input border-[#084049]/30 w-full pr-8"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-lg lg:text-xl"
-              >
-                {showPassword ? <LuEyeClosed /> : <LuEye />}
-              </button>
-            </div>
-          </label>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label className="flex flex-col gap-2">
-            <span className="text-gray-500 text-sm md:text-base">Email</span>
-            <input
-              type="email"
-              name="email"
-              className="input border-[#084049]/30 w-full"
-            />
-          </label>
-          <label className="flex flex-col gap-2">
-            <span className="text-gray-500 text-sm md:text-base">
-              Select Role
-            </span>
-            <select
-              name="role"
-              defaultValue={""}
-              className="border-[#084049]/30 p-2 rounded-lg border"
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-lg lg:text-xl"
             >
-              <option value="" disabled>
-                Select Role
-              </option>
-              <option value="jobSeeker">Job Seeker</option>
-              <option value="employer">Employer</option>
-            </select>
-          </label>
-        </div>
-
-        <div className="flex justify-center">
-          <button
-            type="submit"
-            className="py-2 lg:py-3 w-full cursor-pointer bg-teal-600 hover:bg-teal-700 text-white rounded-xl"
-          >
-            Register
-          </button>
-        </div>
-        <div className="flex flex-row gap-1 text-sm text-center items-center justify-center">
-          <p>Already have an account?</p>{" "}
-          <button
-            onClick={() => setIsSignUp(false)}
-            className="underline cursor-pointer"
-          >
-            Login
-          </button>
-        </div>
+              {showPassword ? <LuEyeClosed /> : <LuEye />}
+            </button>
+          </div>
+        </label>
+        {passError ? (
+          <p>
+            <small className="text-red-500">{passError}</small>
+          </p>
+        ) : (
+          ""
+        )}
+        <button
+          type="submit"
+          className={`py-2 lg:py-3 w-full bg-teal-600 text-white rounded-xl ${
+            loading ? "cursor-not-allowed" : "cursor-pointer hover:bg-teal-700"
+          }`}
+        >
+          {loading ? (
+            <div className="flex items-end gap-2 justify-center">
+              Register{" "}
+              <span className="loading loading-dots loading-md pt-2"></span>
+            </div>
+          ) : (
+            "Register"
+          )}
+        </button>
       </form>
+      <div className="flex flex-row gap-1 text-sm text-center items-center justify-center md:hidden">
+        <p>Already have an account?</p>{" "}
+        <button
+          onClick={() => setIsSignUp(false)}
+          className="underline cursor-pointer"
+        >
+          Login
+        </button>
+      </div>
     </div>
   );
 };

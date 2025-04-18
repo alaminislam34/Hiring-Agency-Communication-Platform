@@ -10,6 +10,7 @@ import EducationalInfo from "./EducationalInfo";
 import ImportantLinksInfo from "./ImportantLinksInfo";
 import JobExperienceInfo from "./JobExperienceInfo";
 import ProfileInfo from "./ProfileInfo";
+import { LucideVerified } from "lucide-react";
 
 const EmployerProfile = () => {
   const { currentUser } = useAppContext();
@@ -40,17 +41,26 @@ const EmployerProfile = () => {
       <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-8 gap-4 lg:gap-6 w-full">
         <div className="md:col-span-2 lg:col-span-2 shadow-xl border border-teal-500 bg-gradient-to-br from-teal-50 via-teal-50 to-white rounded-xl p-4 flex lg:flex-col flex-wrap ">
           <div className="flex flex-col items-center p-2 border-b border-teal-500 border-dashed mb-2 w-full lg:mb-4 space-y-2">
-            <img
-              src={currentUser?.image}
-              alt={currentUser?.name}
-              className="w-32 h-32 rounded-full border-4 border-teal-500"
-            />
+            <div className="w-32 h-32 rounded-full relative">
+              <img
+                src={currentUser?.image || "/fakeUser.jpg"}
+                alt={currentUser?.name}
+                className="border-4 rounded-full border-teal-500 w-full h-full object-cover bg-cover bg-center"
+              />
+              {currentUser?.isVerified ? (
+                <div className="absolute w-6 h-6 right-2 top-2 flex items-center justify-center rounded-full bg-green-500">
+                  <LucideVerified className="text-xl md:text-2xl lg:text-3xl text-white" />
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
             <div className="text-center">
               <h3 className="text-base md:text-lg lg:text-xl">
                 {currentUser?.name}
               </h3>
-              <p className="text-sm lg:text-base text-gray-500">
-                {currentUser?.email}
+              <p className="text-sm flex flex-row items-center gap-2 text-gray-500">
+                UserId: {currentUser?._id}
               </p>
             </div>
           </div>

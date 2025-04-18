@@ -20,20 +20,20 @@ const SocialsLogin = () => {
     }
   }, [session?.status]);
   return (
-    <div className="flex flex-row gap-4 items-center justify-center">
+    <div className="flex flex-row gap-4">
       <button
         type="button"
         onClick={() => handleSocialsLogin("google")}
-        className="p-2 border shadow-[2px_2px_25px_0px] shadow-black/40 text-lg rounded-full cursor-pointer border-teal-200 bg-teal-300 text-black hover:scale-105 duration-300"
+        className="p-2 md:px-4 border shadow-[2px_2px_25px_0px] flex items-center gap-2 shadow-black/20 roundedfull md:rounded-2xl cursor-pointer border-teal-200 bg-teal-300 text-black hover:scale-105 duration-300"
       >
-        <FcGoogle />
+        <p className="md:block hidden">Google</p> <FcGoogle />
       </button>
       <button
         type="button"
         onClick={() => handleSocialsLogin("github")}
-        className="p-2 border shadow-[2px_2px_25px_0px] shadow-black/40 text-lg rounded-full cursor-pointer border-teal-200 bg-teal-300 text-black hover:scale-105 duration-300"
+        className="p-2 md:px-4 border shadow-[2px_2px_25px_0px] flex items-center gap-2 shadow-black/20 roundedfull md:rounded-2xl cursor-pointer border-teal-200 bg-teal-300 text-black hover:scale-105 duration-300"
       >
-        <LuGithub />
+        <p className="md:block hidden">GitHub</p> <LuGithub />
       </button>
     </div>
   );

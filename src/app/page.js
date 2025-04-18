@@ -1,5 +1,5 @@
 // import Image from "next/image";
-
+"use client";
 // import Chat from "./chatbox/components/chat";
 // import ChatPage from "./chatbox/components/ChatPage";
 import { ToastContainer } from "react-toastify";
@@ -15,22 +15,24 @@ import TrendsCarousel from "./components/TrendsCarousel";
 import GeminiComponent from "./components/GeminiComponent";
 import ZegoHome from "./components/zegoBoom/ZegoHome";
 
-export default async function Home() {
+export default function Home() {
   return (
-    <div className="space-y-8 lg:space-y-12 py-6 w-full ">
+    <div className="space-y-8 lg:space-y-12 py-6 w-full">
       <Banner></Banner>
-      <TrendsCarousel />
-      <FindJob></FindJob>
-      <div className="">
-        <GeminiComponent></GeminiComponent>
-      </div>
-      <SeekKit />
-      <FindTalent />
-      <ConsultingSolutions />
-      <CareerMove />
-      <Testimonials />
-      <Accordion />
-      <ZegoHome></ZegoHome>
+      <section className="max-w-7xl mx-auto w-11/12">
+        <TrendsCarousel />
+        <FindJob></FindJob>
+        <div className="">
+          <GeminiComponent></GeminiComponent>
+        </div>
+        <SeekKit />
+        <FindTalent />
+        <ConsultingSolutions />
+        <CareerMove />
+        <Testimonials />
+        <Accordion />
+        <ZegoHome></ZegoHome>
+      </section>
 
       <ToastContainer position="top-center" autoClose={3000} />
     </div>

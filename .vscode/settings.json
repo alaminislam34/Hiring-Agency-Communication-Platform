@@ -1,3 +1,28 @@
 {
+<<<<<<< HEAD
+  "cSpell.words": [
+    "Searchengin"
+  ],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "theme"
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "twMerge\\(([^)]*)\\)",
+      "[\"'`]([^\"'`]*).*?[\"'`]"
+    ],
+    [
+      "createTheme(?:<\\w+>)?\\s*\\(([^)]*)\\)",
+      "{?\\s?[\\w].*:\\s*?[\"'`]([^\"'`]*).*?,?\\s?}?"
+    ]
+  ]
+}
+=======
   "cSpell.words": ["countrydivision", "Searchengin", "নেবে"]
 }
+>>>>>>> 4cad9262258316ab3cc9f2e8f3360a73af9c1865

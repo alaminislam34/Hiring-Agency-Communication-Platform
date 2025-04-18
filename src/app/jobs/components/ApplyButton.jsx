@@ -77,9 +77,9 @@ const ApplyButton = ({ job, modalId }) => {
     <div>
       <button
         onClick={() => document.getElementById(modalId).showModal()}
-        className="text-sm px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded cursor-pointer"
+        className="text-sm px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded cursor-pointer"
       >
-        Apply Now
+        Easy Apply
       </button>
 
       <dialog id={modalId} className="modal modal-bottom sm:modal-middle">
@@ -145,14 +145,14 @@ const ApplyButton = ({ job, modalId }) => {
             <div className="flex justify-end space-x-3 pt-4">
               <button
                 type="button"
-                className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300"
+                className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 cursor-pointer"
                 onClick={() => document.getElementById(modalId).close()}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer"
               >
                 Submit Application
               </button>

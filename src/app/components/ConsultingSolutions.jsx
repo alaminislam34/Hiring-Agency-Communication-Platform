@@ -13,7 +13,7 @@ import { useState } from "react";
 export default function ConsultingSolutions() {
   const [openModal, setOpenModal] = useState(false);
   return (
-    <div className=" mx-auto w-11/12">
+    <div className="">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <div className="flex flex-col justify-center pl-4 w-full 2xl:w-2/3">
           <h2 className="text-3xl font-semibold text-gray-900 leading-snug">

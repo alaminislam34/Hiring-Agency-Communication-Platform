@@ -19,7 +19,8 @@ export default function Home() {
   return (
     <div className="space-y-8 lg:space-y-12 py-6 w-full">
       <Banner></Banner>
-      <section className="max-w-7xl mx-auto w-11/12">
+      <br />
+      <section className="max-w-7xl mx-auto w-11/12 space-y-8 md:space-y-12">
         <TrendsCarousel />
         <FindJob></FindJob>
         <div className="">

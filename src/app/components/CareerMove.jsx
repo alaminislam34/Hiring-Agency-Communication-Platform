@@ -18,7 +18,7 @@ export default function CareerMove() {
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <div className=" mx-auto w-11/12">
+    <div className="">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <img
           src="/career.webp"
@@ -55,7 +55,10 @@ export default function CareerMove() {
           </ul>
 
           <div className="mt-6 flex gap-4">
-            <Link href="/jobs" className="bg-[#084049] text-white px-6 py-3 rounded-full text-sm md:text-lg font-medium hover:bg-[#02282E] transition cursor-pointer">
+            <Link
+              href="/jobs"
+              className="bg-[#084049] text-white px-6 py-3 rounded-full text-sm md:text-lg font-medium hover:bg-[#02282E] transition cursor-pointer"
+            >
               Get job matches
             </Link>
             <button

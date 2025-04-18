@@ -47,23 +47,24 @@ const Testimonials = () => {
       </div>
 
       {/* Testimonials Slider */}
-      <div className="w-11/12 mx-auto px-4">
+      <div className="w-11/12 mx-auto">
         <Slider {...settings}>
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-6 bg-base-100 shadow-2xl rounded-lg my-4 mx-6 h-[300px]">
+              className="text-center p-6 bg-base-100 rounded-lg h-[300px] border border-[#084049]"
+            >
               {/* User Image */}
-              <div className="w-20 h-20 relative mb-4">
+              <div className="flex justify-center mb-4">
                 <img
                   src={review.image}
                   alt={review.name}
-                  className="rounded-full object-cover w-full h-full"
+                  className="rounded-full w-20"
                 />
               </div>
 
               {/* Testimonial Text */}
-              <p className="text-lg italic mb-4">"{review.testimonial}"</p>
+              <p className="text-lg mb-4">"{review.testimonial}"</p>
               <h3 className="font-bold text-lg">{review.name}</h3>
             </div>
           ))}

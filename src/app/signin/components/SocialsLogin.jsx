@@ -20,7 +20,7 @@ const SocialsLogin = () => {
     }
   }, [session?.status]);
   return (
-    <div className="flex flex-row gap-4 items-center justify-center py-2">
+    <div className="flex flex-row gap-4 items-center justify-center">
       <button
         type="button"
         onClick={() => handleSocialsLogin("google")}

@@ -3,9 +3,8 @@ import SignInComponent from "./components/signIn";
 
 const SignIn = async () => {
   return (
-    <div className="flex justify-center items-center min-h-[550px]">
+    <div className="min-h-[650px] flex items-center justify-center w-11/12 mx-auto">
       <SignInComponent />
-
       <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );

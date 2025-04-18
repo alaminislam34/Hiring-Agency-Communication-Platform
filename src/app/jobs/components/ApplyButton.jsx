@@ -1,9 +1,8 @@
 "use client";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const ApplyButton = ({ job, modalId }) => {
-  console.log(job);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,10 +30,7 @@ const ApplyButton = ({ job, modalId }) => {
       description: job.description,
       skills: job.skills,
       requirements: job.requirements,
-      // Don't include salary or contactInformation if you're not sending them
     };
-
-    console.log("Submitting application data:", applicationData);
 
     try {
       const res = await fetch("/api/job_apply", {
@@ -48,7 +44,11 @@ const ApplyButton = ({ job, modalId }) => {
       const result = await res.json();
 
       if (res.ok) {
-        alert("Application submitted successfully!");
+        Swal.fire({
+          icon: "success",
+          title: "Application Submitted",
+          text: "Your job application has been submitted successfully!",
+        });
         setFormData({
           name: "",
           email: "",
@@ -57,11 +57,19 @@ const ApplyButton = ({ job, modalId }) => {
         });
         document.getElementById(modalId).close();
       } else {
-        alert(result.error || "Failed to submit application");
+        Swal.fire({
+          icon: "error",
+          title: "Submission Failed",
+          text: result.error || "Failed to submit application",
+        });
       }
     } catch (err) {
       console.error("Submission error:", err);
-      alert("Something went wrong");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Something went wrong while submitting your application.",
+      });
     }
   };
 

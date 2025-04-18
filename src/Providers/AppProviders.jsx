@@ -15,6 +15,8 @@ export const AppProvider = ({ children }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingInfo, setIsEditingInfo] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [jobTitle, setJobTitle] = useState("");
+  const [location, setLocation] = useState("");
 
   // Zego Meeting State
   const [fullName, setFullName] = useState(""); // Added to Context
@@ -23,7 +25,9 @@ export const AppProvider = ({ children }) => {
   // Jobs Data Fetching
   // ✅ Jobs fetch function
   const fetchJobs = async () => {
-    const res = await axios(`/api/allJobs?jobType=${type}`);
+    const res = await axios(
+      `/api/allJobs?jobType=${type}&jobTitle=${jobTitle}&location=${location}`
+    );
     return res.data;
   };
 
@@ -77,6 +81,8 @@ export const AppProvider = ({ children }) => {
     userRefetch,
     isVerified,
     setIsVerified,
+    setJobTitle,
+    setLocation,
   };
 
   return (

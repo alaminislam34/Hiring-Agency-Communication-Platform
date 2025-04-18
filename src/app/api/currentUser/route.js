@@ -6,11 +6,27 @@ import { NextResponse } from "next/server";
 export async function GET(req) {
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
+
+  const { searchParams } = new URL(req.url);
+  const emailFromQuery = searchParams.get("email");
+
+  const query = {};
+  if (emailFromQuery) {
+    query.email = emailFromQuery;
+  }
+  if (userEmail) {
+    query.email = userEmail;
+  }
+
   const userCollection = dbConnect(collection.user_collection);
-  const user = await userCollection.findOne({ email: userEmail });
+  if (!query.email) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  }
+
+  const user = await userCollection.findOne(query);
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
-  } else {
-    return NextResponse.json(user);
   }
+
+  return NextResponse.json(user);
 }

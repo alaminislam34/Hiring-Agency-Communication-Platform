@@ -375,10 +375,8 @@ const DashboardNavbar = () => {
             <ul className=" text-gray-600">
               {/* User Info */}
               <li className="border-b border-gray-300 p-4">
-                <p className="text-sm font-medium">{currentUser?.name}</p>
-                <span className="text-xs text-gray-400">
-                  {currentUser?.email}
-                </span>
+                <p className="font-medium">{currentUser?.name}</p>
+                <span className="text-gray-500">{currentUser?.email}</span>
               </li>
 
               {currentUser?.role === "jobSeeker"

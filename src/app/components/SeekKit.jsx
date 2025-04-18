@@ -9,7 +9,7 @@ import SectionTitle from "./SectionTitle";
 
 const SeekKit = () => {
   return (
-    <div className=" mx-auto w-11/12">
+    <div className="">
       {/* section title */}
       <SectionTitle title={"Job seeker tool kit."} />
       {/* section description */}
@@ -26,11 +26,11 @@ const SeekKit = () => {
           }
           className="flex flex-col items-center justify-start gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center hover:shadow-[0px_0px_25px_0px_rgb(0,0,0,0.3)] shadow-[0px_0px_20px_0px_rgb(0,0,0,0.2)]"
         >
-          <div className="p-3 rounded-full border-4 border-blue-400">
+          <div className="p-3 rounded-full border-4 border-teal-400">
             <Image src={cv} alt="CV Template" width={50} height={50} />
           </div>
           <div>
-            <p className="text-lg text-blue-950 md:text-xl lg:text-2xl font-semibold">
+            <p className="text-lg text-teal-950 md:text-xl lg:text-2xl font-semibold">
               CV Template
             </p>
           </div>
@@ -41,11 +41,11 @@ const SeekKit = () => {
           }
           className="flex flex-col items-center justify-start gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center hover:shadow-[0px_0px_25px_0px_rgb(0,0,0,0.3)] shadow-[0px_0px_20px_0px_rgb(0,0,0,0.2)]"
         >
-          <div className="p-3 rounded-full border-4 border-blue-400">
+          <div className="p-3 rounded-full border-4 border-teal-400">
             <Image src={coverLetter} alt="CV Template" width={50} height={50} />
           </div>
           <div>
-            <p className="text-lg text-blue-950 md:text-xl lg:text-2xl font-semibold">
+            <p className="text-lg text-teal-950 md:text-xl lg:text-2xl font-semibold">
               Cover Letter Template
             </p>
           </div>
@@ -56,7 +56,7 @@ const SeekKit = () => {
           }
           className="flex flex-col items-center justify-start gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center hover:shadow-[0px_0px_25px_0px_rgb(0,0,0,0.3)] shadow-[0px_0px_20px_0px_rgb(0,0,0,0.2)]"
         >
-          <div className="p-3 rounded-full border-4 border-blue-400">
+          <div className="p-3 rounded-full border-4 border-teal-400">
             <Image
               src={resignationL}
               alt="CV Template"
@@ -65,7 +65,7 @@ const SeekKit = () => {
             />
           </div>
           <div>
-            <p className="text-lg text-blue-950 md:text-xl lg:text-2xl font-semibold">
+            <p className="text-lg text-teal-950 md:text-xl lg:text-2xl font-semibold">
               Resignation Letter Template
             </p>
           </div>
@@ -76,17 +76,17 @@ const SeekKit = () => {
           }
           className="flex flex-col items-center justify-start gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center hover:shadow-[0px_0px_25px_0px_rgb(0,0,0,0.3)] shadow-[0px_0px_20px_0px_rgb(0,0,0,0.2)]"
         >
-          <div className="p-3 rounded-full border-4 border-blue-400">
+          <div className="p-3 rounded-full border-4 border-teal-400">
             <Image src={interview} alt="CV Template" width={50} height={50} />
           </div>
           <div>
-            <p className="text-lg text-blue-950 md:text-xl lg:text-2xl font-semibold">
+            <p className="text-lg text-teal-950 md:text-xl lg:text-2xl font-semibold">
               Interview Guide Template
             </p>
           </div>
         </Link>
         <div className="flex flex-col items-center justify-start gap-4 px-4 py-6 rounded-md bg-white hover:-translate-y-2 duration-300 cursor-pointer text-center hover:shadow-[0px_0px_25px_0px_rgb(0,0,0,0.3)] shadow-[0px_0px_20px_0px_rgb(0,0,0,0.2)]">
-          <div className="p-3 rounded-full border-4 border-blue-400">
+          <div className="p-3 rounded-full border-4 border-teal-400">
             <Image
               src={notification}
               alt="CV Template"
@@ -95,7 +95,7 @@ const SeekKit = () => {
             />
           </div>
           <div>
-            <p className="text-lg text-blue-950 md:text-xl lg:text-2xl font-semibold">
+            <p className="text-lg text-teal-950 md:text-xl lg:text-2xl font-semibold">
               Sign up for alerts
             </p>
           </div>
@@ -105,7 +105,7 @@ const SeekKit = () => {
         {/* This is a tool kit explore button */}
         <Link
           href={"/jobtoolkit"}
-          className="text-lg md:text-xl font-medium py-2 px-4 lg:py-3 lg:px-6 rounded-full bg-[#084049] hover:bg-[#02282E] text-white duration-300 cursor-pointer"
+          className=" py-2 px-4 lg:py-3 lg:px-6 rounded-full bg-teal-500 hover:bg-teal-600 text-white duration-300 cursor-pointer"
         >
           Explore our tool kit
         </Link>

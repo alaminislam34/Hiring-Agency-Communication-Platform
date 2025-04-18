@@ -10,13 +10,13 @@ export async function GET(req) {
 
     const query = {};
     if (jobType) {
-      query.jobType = jobType;
+      query.jobType = { $regex: jobType, $options: "i" };
     }
     if (jobTitle) {
-      query.jobTitle = jobTitle;
+      query.jobTitle = { $regex: jobTitle, $options: "i" };
     }
     if (location) {
-      query.location = location;
+      query.location = { $regex: location, $options: "i" };
     }
 
     const jobs = await jobsCollection.find(query).toArray();

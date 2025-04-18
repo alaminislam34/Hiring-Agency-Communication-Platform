@@ -6,7 +6,7 @@ import { sendVerificationEmail } from "@/lib/sendVerificationEmail";
 
 export const register = async (user) => {
   const userCollection = dbConnect(collection.user_collection);
-  const { email, password, userName } = user;
+  const { email, password } = user;
 
   const isExistUser = await userCollection.findOne({ email });
   if (isExistUser) {

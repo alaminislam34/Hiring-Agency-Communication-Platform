@@ -7,20 +7,24 @@ import SocialsLogin from "./SocialsLogin";
 import RegisterForm from "@/app/signup/components/RegisterForm";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { useAppContext } from "@/Providers/AppProviders";
+import PasswordReset from "./PasswordReset";
 
 const SignInComponent = () => {
+  
   const [error, setError] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [resetPassword, setResetPassword] = useState(false);
   const route = useRouter();
   const { userRefetch } = useAppContext();
-  const handleSingIn = async (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
+    console.log("form data", email, password);
     try {
       const res = await signIn("credentials", {
         email,
@@ -28,9 +32,9 @@ const SignInComponent = () => {
         redirect: false,
         callbackUrl: "/",
       });
-
+      console.log(res);
       if (res.ok) {
-        toast.success("Login Successful! 🎉");
+        toast.success("Login Successful! 🎉 🎉");
         userRefetch();
         form.reset();
         route.push("/dashboard");
@@ -82,6 +86,8 @@ const SignInComponent = () => {
             </h1>
             {isSignUp ? (
               <RegisterForm setIsSignUp={setIsSignUp} />
+            ) : resetPassword ? (
+              <PasswordReset />
             ) : (
               <div className="w-full">
                 {error && (
@@ -89,7 +95,7 @@ const SignInComponent = () => {
                     {error}
                   </p>
                 )}
-                <form onSubmit={handleSingIn} className="flex flex-col gap-4">
+                <form onSubmit={handleSignIn} className="flex flex-col gap-4">
                   <label htmlFor="email" className="flex flex-col gap-2">
                     <span className="text-gray-500">Email</span>
                     <input
@@ -119,6 +125,7 @@ const SignInComponent = () => {
                   </label>
 
                   <button
+                    onClick={() => setResetPassword(true)}
                     type="button"
                     className="pl-2 underline cursor-pointer text-left"
                   >

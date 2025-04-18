@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAppContext } from "@/Providers/AppProviders";
-import { v4 as uuid } from "uuid";
+
 
 export default function ZegoHome() {
   const { fullName, setFullName, roomID, setRoomID } = useAppContext();

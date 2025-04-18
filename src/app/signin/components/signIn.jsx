@@ -7,12 +7,14 @@ import SocialsLogin from "./SocialsLogin";
 import RegisterForm from "@/app/signup/components/RegisterForm";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { useAppContext } from "@/Providers/AppProviders";
+import PasswordReset from "./PasswordReset";
 
 const SignInComponent = () => {
   const [error, setError] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [resetPassword, setResetPassword] = useState(false);
   const route = useRouter();
   const { userRefetch } = useAppContext();
   const handleSignIn = async (e) => {
@@ -83,6 +85,8 @@ const SignInComponent = () => {
             </h1>
             {isSignUp ? (
               <RegisterForm setIsSignUp={setIsSignUp} />
+            ) : resetPassword ? (
+              <PasswordReset />
             ) : (
               <div className="w-full">
                 {error && (
@@ -120,6 +124,7 @@ const SignInComponent = () => {
                   </label>
 
                   <button
+                    onClick={() => setResetPassword(true)}
                     type="button"
                     className="pl-2 underline cursor-pointer text-left"
                   >

@@ -15,12 +15,13 @@ const SignInComponent = () => {
   const [loading, setLoading] = useState(false);
   const route = useRouter();
   const { userRefetch } = useAppContext();
-  const handleSingIn = async (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
+    console.log("form data", email, password);
     try {
       const res = await signIn("credentials", {
         email,
@@ -28,9 +29,9 @@ const SignInComponent = () => {
         redirect: false,
         callbackUrl: "/",
       });
-
+      console.log(res);
       if (res.ok) {
-        toast.success("Login Successful! 🎉");
+        toast.success("Login Successful! 🎉 🎉");
         userRefetch();
         form.reset();
         route.push("/dashboard");
@@ -89,7 +90,7 @@ const SignInComponent = () => {
                     {error}
                   </p>
                 )}
-                <form onSubmit={handleSingIn} className="flex flex-col gap-4">
+                <form onSubmit={handleSignIn} className="flex flex-col gap-4">
                   <label htmlFor="email" className="flex flex-col gap-2">
                     <span className="text-gray-500">Email</span>
                     <input

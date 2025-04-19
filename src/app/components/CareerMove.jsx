@@ -57,13 +57,13 @@ export default function CareerMove() {
           <div className="mt-6 flex gap-4">
             <Link
               href="/jobs"
-              className="bg-[#084049] text-white px-6 py-3 rounded-full text-sm md:text-lg font-medium hover:bg-[#02282E] transition cursor-pointer"
+              className="bg-teal-500 text-white px-4 py-2 rounded-full text-sm md:text-base hover:bg-teal-600 transition cursor-pointer"
             >
               Get job matches
             </Link>
             <button
               onClick={() => setOpenModal(true)}
-              className="border border-gray-500 text-gray-900 px-6 py-3 rounded-full text-sm md:text-lg font-medium hover:bg-gray-200 transition cursor-pointer"
+              className="border border-gray-500 px-4 py-2 rounded-full text-sm md:text-base hover:bg-teal-200 transition cursor-pointer"
             >
               Learn more
             </button>

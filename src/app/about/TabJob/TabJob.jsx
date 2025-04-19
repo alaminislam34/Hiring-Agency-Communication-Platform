@@ -84,13 +84,9 @@ const TabJob = () => {
                 <span className="font-bold">Company Name</span>:{" "}
                 {job.companyName}
               </p>
-<<<<<<< HEAD
-              <button className="btn btn-sm mt-4 bg-[#084049] text-white hover:bg-red-600">View Job</button>
-=======
               <button className="btn btn-sm mt-4 bg-[#084049] text-white hover:bg-red-600">
                 View Job
               </button>
->>>>>>> 67d31c8c67e1b672a2a892a8fe3d3c707272ba02
             </div>
             <div className="border rounded-lg p-4 bg-base-100">
               <h3 className="text-lg font-bold">Graphics Designer</h3>
@@ -151,11 +147,7 @@ const TabJob = () => {
           </div>
         )}
 
-<<<<<<< HEAD
-        {(activeTab === "Sales" && (
-=======
         {activeTab === "Sales" ? (
->>>>>>> 67d31c8c67e1b672a2a892a8fe3d3c707272ba02
           <div className="space-y-4">
             <h2 className="text-xl text-[#084049] font-bold">Sales Jobs</h2>
             <p>Drive growth and generate revenue by connecting with clients.</p>
@@ -171,13 +163,8 @@ const TabJob = () => {
                 </button>
               </Link>
             </div>
-<<<<<<< HEAD
-            </div>
-          )): (
-=======
           </div>
         ) : (
->>>>>>> 67d31c8c67e1b672a2a892a8fe3d3c707272ba02
           <p>No jobs available in this category.</p>
         )}
       </div>

@@ -105,7 +105,7 @@ const SeekKit = () => {
         {/* This is a tool kit explore button */}
         <Link
           href={"/jobtoolkit"}
-          className=" py-2 px-4 lg:py-3 lg:px-6 rounded-full bg-teal-500 hover:bg-teal-600 text-white duration-300 cursor-pointer"
+          className="py-2 px-4 rounded-full bg-teal-500 hover:bg-teal-600 text-white duration-300 cursor-pointer"
         >
           Explore our tool kit
         </Link>

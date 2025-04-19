@@ -2,7 +2,7 @@
 
 import { useAppContext } from "@/Providers/AppProviders";
 
-const JobsFilterOptions = ({ filteredJobs }) => {
+const JobsFilterOptions = () => {
   const { setType, type: JobType } = useAppContext();
 
   const jobsType = [

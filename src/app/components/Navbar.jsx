@@ -15,12 +15,14 @@ import { FaBriefcase, FaUsers } from "react-icons/fa6";
 import { RiMenu2Fill } from "react-icons/ri";
 import { GrClose } from "react-icons/gr";
 import { LiaReadme } from "react-icons/lia";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { currentUser } = useAppContext();
+  const session = useSession();
   const jobSeekerNavLink = [
     {
       name: "Home",
@@ -322,7 +324,7 @@ const Navbar = () => {
                     <li
                       key={href}
                       className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
-                        pathname === href ? "after:w-full" : ""
+                        pathname === href ? "text-teal-600" : ""
                       } py-1 px-2`}
                     >
                       <Link href={href} className="">
@@ -335,7 +337,7 @@ const Navbar = () => {
                     <li
                       key={href}
                       className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
-                        pathname === href ? "after:w-full" : ""
+                        pathname === href ? "text-teal-600" : ""
                       } py-1 px-2`}
                     >
                       <Link href={href} className="">
@@ -347,7 +349,7 @@ const Navbar = () => {
                     <li
                       key={href}
                       className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
-                        pathname === href ? "after:w-full" : ""
+                        pathname === href ? "text-teal-600" : ""
                       } py-1 px-2`}
                     >
                       <Link href={href} className="">
@@ -369,7 +371,7 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {currentUser ? (
+            {currentUser && session?.data.user ? (
               <div className="flex items-center gap-2 relative">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}

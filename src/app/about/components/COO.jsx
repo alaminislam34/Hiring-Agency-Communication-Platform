@@ -2,7 +2,7 @@
 
 const COO = () => {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-16">
+    <div className="px-4 py-16">
       {/* Heading */}
       <h1 className="text-4xl font-bold text-center text-[#084049] mb-12">
         Meet Our COO – Akash Muhammad Abrrar

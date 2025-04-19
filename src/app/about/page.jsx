@@ -1,16 +1,6 @@
 "use client";
-import React from "react";
-import {
-  FaConnectdevelop,
-  FaLinkedin,
-  FaPeopleLine,
-  FaRegMessage,
-} from "react-icons/fa6";
+
 import { Nunito } from "next/font/google";
-import { SlEnergy } from "react-icons/sl";
-import { MdOutlineManageHistory } from "react-icons/md";
-import { RiChatSmileAiLine, RiTwitterXFill } from "react-icons/ri";
-import Link from "next/link";
 import TabJob from "./TabJob/TabJob";
 import EmployeeReview from "./employeeReview/EmployeeReview";
 import SectionTitle from "../components/SectionTitle";
@@ -20,7 +10,7 @@ const nunito = Nunito({ subsets: ["latin"] });
 
 const Page = () => {
   return (
-    <div className={`w-[90%] mx-auto my-10 ${nunito.className}`}>
+    <div className={`max-w-7xl mx-auto my-10 ${nunito.className}`}>
       {/* Title Text Section-1 */}
 
       <div className="text-center py-6 space-y-4 lg:space-y-6">
@@ -98,7 +88,6 @@ const Page = () => {
         <FeaturesGrid />
       </div>
 
-      {/* hiring section(meet out team section) */}
       {/* section -3 */}
       <div className="mb-12">
         {/* text-contents-div */}

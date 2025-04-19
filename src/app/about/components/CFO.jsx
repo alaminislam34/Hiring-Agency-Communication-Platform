@@ -2,7 +2,7 @@
 
 const CFO = () => {
   return (
-    <div className="max-w-6xl mx-auto px-4 mb-8 py-4">
+    <div className="px-4 mb-8 py-4">
       {/* Heading */}
       <h1 className="text-4xl font-bold text-center text-[#084049] mb-12">
         Meet Our CFO – Md Rakib Gazi

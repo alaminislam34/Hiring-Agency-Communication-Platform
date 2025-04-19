@@ -1,11 +1,9 @@
 "use client";
 
+import { Globe } from "lucide-react";
 import Link from "next/link";
-import { BsLinkedin, BsTwitter } from "react-icons/bs";
-import { FaConnectdevelop, FaLinkedin } from "react-icons/fa6";
 import { IoBrowsers } from "react-icons/io5";
-import { LuCode, LuLinkedin, LuTwitter } from "react-icons/lu";
-import { RiTwitterXFill } from "react-icons/ri";
+import { LuLinkedin, LuTwitter } from "react-icons/lu";
 
 const teamMembers = [
   {
@@ -80,7 +78,7 @@ const TeamCard = () => {
             <div key={index} className="">
               <Link
                 href={{ pathname: "/about/name/", query: { name } }}
-                className="p-6 flex flex-col justify-between bg-gray-50 rounded-lg shadow-md hover:shadow-lg cursor-pointer border border-transparent hover:border-teal-500"
+                className="inline-block p-6 flex-col justify-between bg-gray-50 rounded-lg shadow-md hover:shadow-lg cursor-pointer border border-transparent hover:border-teal-500"
               >
                 <div>
                   <div className="w-28 h-28 border border-teal-500 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center overflow-hidden">
@@ -100,31 +98,35 @@ const TeamCard = () => {
                     {description}
                   </p>
                 </div>
-                {/* Social Links */}
-                <div className="flex justify-center items-center gap-4 w-full rounded-2xl mt-4">
-                  <a
-                    href={twitter}
-                    target="_blank"
-                    className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
-                  >
-                    <LuTwitter />
-                  </a>
-                  <a
-                    href={portfolio}
-                    target="_blank"
-                    className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
-                  >
-                    <IoBrowsers />
-                  </a>
-                  <a
-                    href={linkedin}
-                    target="_blank"
-                    className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
-                  >
-                    <LuLinkedin />
-                  </a>
-                </div>
               </Link>
+
+              {/* Social Links moved outside Link */}
+              <div className="flex justify-center items-center gap-4 w-full rounded-2xl mt-4">
+                <a
+                  href={twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
+                >
+                  <LuTwitter />
+                </a>
+                <a
+                  href={portfolio}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
+                >
+                  <Globe />
+                </a>
+                <a
+                  href={linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
+                >
+                  <LuLinkedin />
+                </a>
+              </div>
             </div>
           )
         )}

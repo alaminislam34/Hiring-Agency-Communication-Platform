@@ -22,12 +22,12 @@ const TabJob = () => {
   }, []);
 
   const categories = {
-    Design: jobs.filter((job) => /design/i.test(job.jobTitle || "")),
-    Engineering: jobs.filter((job) =>
+    Design: jobs?.filter((job) => /design/i.test(job.jobTitle || "")),
+    Engineering: jobs?.filter((job) =>
       /(engineering|engineer|software engineer)/i.test(job.jobTitle || "")
     ),
-    Success: jobs.filter((job) => /customer/i.test(job.jobTitle || "")),
-    Sales: jobs.filter((job) => /sales/i.test(job.jobTitle || "")),
+    Success: jobs?.filter((job) => /customer/i.test(job.jobTitle || "")),
+    Sales: jobs?.filter((job) => /sales/i.test(job.jobTitle || "")),
   };
 
   const tabTitles = {
@@ -55,22 +55,27 @@ const TabJob = () => {
           hiring!
         </p>
       </div>
-
-      {/* Tabs */}
-      <div className="tabs tabs-boxed flex justify-center gap-2 flex-wrap">
-        {Object.keys(categories).map((cat) => (
-          <button
-            key={cat}
-            className={`tab ${activeTab === cat ? "tab-active" : ""}`}
-            onClick={() => setActiveTab(cat)}
-          >
-            {cat === "Success"
-              ? "Customer Success"
-              : cat === "Engineering"
-              ? "Software Engineering"
-              : cat}
-          </button>
-        ))}
+      <div className="flex items-center justify-center">
+        {/* Tabs */}
+        <div className="tabs tabs-boxed flex justify-center overflow-hidden flex-wrap">
+          {Object.keys(categories).map((cat) => (
+            <button
+              key={cat}
+              className={`py-2 px-4 ${
+                activeTab === cat
+                  ? "text-teal-600 font-semibold border-x border-t rounded-t-lg"
+                  : "border-b border-teal-600"
+              }`}
+              onClick={() => setActiveTab(cat)}
+            >
+              {cat === "Success"
+                ? "Customer Success"
+                : cat === "Engineering"
+                ? "Software Engineering"
+                : cat}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Tab Content */}
@@ -80,30 +85,32 @@ const TabJob = () => {
         </h2>
         <p>{tabDescriptions[activeTab]}</p>
 
-        {categories[activeTab]?.length > 0 ? (
-          categories[activeTab].map((job) => (
-            <div key={job._id} className="border rounded-lg p-4 bg-base-100">
-              <h3 className="text-lg font-bold">{job.jobTitle}</h3>
-              <p className="text-sm text-gray-600">
-                <span className="font-bold">Company:</span> {job.companyName}{" "}
-                <br />
-                <span className="font-bold">Type:</span> {job.jobType} <br />
-                <span className="font-bold">Location:</span> {job.location}{" "}
-                <br />
-                <span className="font-bold">Deadline:</span> {job.deadline}
-              </p>
-              <Link href={`/jobs/${job._id}`}>
-                <button className="btn btn-sm mt-4 bg-[#084049] text-white hover:bg-red-600">
-                  View Job
-                </button>
-              </Link>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-500 italic">
-            No jobs available in this category.
-          </p>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {categories[activeTab]?.length > 0 ? (
+            categories[activeTab].map((job) => (
+              <div key={job._id} className="border rounded-lg p-4 bg-base-100">
+                <h3 className="text-lg font-bold">{job.jobTitle}</h3>
+                <p className="text-sm text-gray-600">
+                  <span className="font-bold">Company:</span> {job.companyName}{" "}
+                  <br />
+                  <span className="font-bold">Type:</span> {job.jobType} <br />
+                  <span className="font-bold">Location:</span> {job.location}{" "}
+                  <br />
+                  <span className="font-bold">Deadline:</span> {job.deadline}
+                </p>
+                <Link href={`/jobs/${job._id}`}>
+                  <button className="btn btn-sm mt-4 bg-[#084049] text-white hover:bg-red-600">
+                    View Job
+                  </button>
+                </Link>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500 italic md:col-span-2">
+              No jobs available in this category.
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import CMO from "../components/CMO";
 const AboutMember = ({ searchParams }) => {
   const { name } = searchParams;
   return (
-    <div className="max-w-6xl mx-auto px-4 py-16">
+    <div className="px-4 py-16">
       <div>
         <button>
           <Link

@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 const AboutMember = ({ searchParams }) => {
+  const { name } = searchParams;
   return (
     <div className="max-w-6xl mx-auto px-4 py-16">
       <div>
@@ -13,7 +14,7 @@ const AboutMember = ({ searchParams }) => {
           >
             About Us
           </Link>{" "}
-          | {searchParams.name}
+          | {name}
         </button>
       </div>
       {/* Heading */}

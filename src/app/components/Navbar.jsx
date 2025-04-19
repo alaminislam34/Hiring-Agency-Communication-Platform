@@ -14,6 +14,7 @@ import { FaCog, FaQuestionCircle } from "react-icons/fa";
 import { FaBriefcase, FaUsers } from "react-icons/fa6";
 import { RiMenu2Fill } from "react-icons/ri";
 import { GrClose } from "react-icons/gr";
+import { LiaReadme } from "react-icons/lia";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -24,22 +25,27 @@ const Navbar = () => {
     {
       name: "Home",
       href: "/",
+      icon: <HiOutlineUserCircle />,
     },
     {
       name: "Jobs",
       href: "/jobs",
+      icon: <FaBriefcase />,
     },
     {
       name: "Saved Jobs",
       href: "/savedJobs",
+      icon: <CiBookmarkCheck />,
     },
     {
       name: "Applied Jobs",
       href: "/appliedJobs",
+      icon: <VscSaveAll />,
     },
     {
       name: "Blogs",
       href: "/blogs",
+      icon: <LiaReadme />,
     },
   ];
   const NavLinks = [
@@ -297,17 +303,17 @@ const Navbar = () => {
 
           {/* Navbar Center (Desktop Menu) */}
           <div className="navbar-center hidden lg:flex">
-            <ul className="flex flex-row gap-6 text-md">
+            <ul className="flex flex-row gap-2 text-md">
               {currentUser?.role === "jobSeeker"
-                ? jobSeekerNavLink.map(({ href, name }) => (
-                    <li
-                      key={href}
-                      className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
-                        pathname === href ? "after:w-full" : ""
-                      } py-1 px-2`}
-                    >
-                      <Link href={href} className="">
-                        {name}
+                ? jobSeekerNavLink.map(({ href, name, icon }) => (
+                    <li key={href} className="relative">
+                      <Link
+                        href={href}
+                        className={`relative flex items-center gap-2 px-4 py-2 text-sm md:text-base font-medium rounded-full transition-all duration-300 ${
+                          pathname === href ? "text-teal-500" : "text-gray-700 "
+                        }`}
+                      >
+                        {icon} {name}
                       </Link>
                     </li>
                   ))

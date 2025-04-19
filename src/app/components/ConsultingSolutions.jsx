@@ -13,7 +13,7 @@ import { useState } from "react";
 export default function ConsultingSolutions() {
   const [openModal, setOpenModal] = useState(false);
   return (
-    <div className=" mx-auto w-11/12">
+    <div className="">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <div className="flex flex-col justify-center pl-4 w-full 2xl:w-2/3">
           <h2 className="text-3xl font-semibold text-gray-900 leading-snug">
@@ -40,13 +40,13 @@ export default function ConsultingSolutions() {
           <div className="mt-6 flex gap-4">
             <Link
               href="/consulting"
-              className="bg-[#084049] text-white px-6 py-3 rounded-full text-sm md:text-lg font-medium hover:bg-[#02282E] transition cursor-pointer"
+              className="bg-teal-500 text-white px-4 py-2 rounded-full text-sm md:text-base  hover:bg-teal-600 transition cursor-pointer"
             >
               Find your consulting solution
             </Link>
             <button
               onClick={() => setOpenModal(true)}
-              className="border border-gray-500 text-gray-900 px-6 py-3 rounded-full text-sm md:text-lg font-medium hover:bg-gray-200 transition cursor-pointer"
+              className="border border-gray-500 text-gray-900 px-4 py-2 rounded-full text-sm md:text-base  hover:bg-gray-200 transition cursor-pointer"
             >
               Learn more
             </button>

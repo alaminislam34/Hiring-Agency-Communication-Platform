@@ -26,7 +26,7 @@ export default function FindJob() {
   //   console.log("Location:", location);
   // };
   return (
-    <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 w-11/12">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12">
       {/* text  */}
       <div className="flex flex-col justify-center">
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-blue-950 py-6">
@@ -38,33 +38,34 @@ export default function FindJob() {
           for.
         </p>
         {/* input field */}
-        <form  className="flex flex-col gap-2 mt-12">
+        <form className="flex flex-col gap-2 mt-12">
           <div className="">
             <h5 className="text-black font-base text-lg">
               I am looking For a{" "}
             </h5>
-            <label className="input w-full mt-4">
+            <label className=" px-4 border border-teal-500 focus:ring-2 focus:ring-teal-500 focus:outline-teal-500 rounded-lg mt-4 flex items-center">
               <FaSearchengin></FaSearchengin>
               <input
                 type="search"
-                name="title"
-                value={title} onChange={(e) => setTitle(e.target.value)}
-                placeholder="Job title"
-                className=""
+                required
+                placeholder="User Role"
+                className="w-full h-full py-2 px-4 border-none focus:outline-none"
               />
             </label>
           </div>
           <div>
             <h5 className="text-black font-base text-lg">Located in</h5>
-            <label className="input w-full mt-4">
+            <label className=" px-4 border border-teal-500 focus:ring-2 focus:ring-teal-500 focus:outline-teal-500 rounded-lg mt-4 flex items-center">
               <FaLocationDot></FaLocationDot>
-              <input type="search" name="location" value={jobLocation} onChange={(e) => setJobLocation(e.target.value)} placeholder="Location" />
+              <input
+                type="search"
+                required
+                placeholder="Skills "
+                className="w-full h-full py-2 px-4 border-none focus:outline-none"
+              />
             </label>
           </div>
-          <button
-            type="submit"
-            className="px-4 max-w-md lg:max-w-[325px] mt-3  py-2 rounded-lg bg-[#084049] hover:bg-[#02282E] border cursor-pointer text-white"
-          >
+          <button className="px-4 mt-3 py-2 rounded-lg bg-teal-500 w-full hover:bg-teal-600 border cursor-pointer text-white">
             Preview Candidates
           </button>
         </form>

@@ -1,93 +1,56 @@
-'use client';
+"use client";
 import { useAppContext } from "@/Providers/AppProviders";
 import Link from "next/link";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
-import { FaLocationArrow, FaSearchengin } from "react-icons/fa6";
+import { FaUserTie, FaBriefcase } from "react-icons/fa6";
 
 const Banner = () => {
   const router = useRouter();
-  const {  currentUser } = useAppContext();
-  
+  const { currentUser } = useAppContext();
+
   const handleClick = () => {
-    if (currentUser && currentUser?.role === 'employer') {
-      router.push('/dashboard/jobs');
+    if (currentUser && currentUser?.role === "employer") {
+      router.push("/dashboard/jobs");
     } else {
       router.push(`/signin`);
     }
   };
+
   return (
     <div className="mb-0">
       <div
-        className="hero min-h-[600px] bg-cover object-cover "
-        style={{
-          backgroundImage:
-            "url(https://i.ibb.co.com/dwNS7Mt5/bussiness-people-working-team-office-1303-22863.jpg)",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
+        className="hero min-h-[680px] bg-cover bg-center relative"
+        style={{ backgroundImage: "url('/team3.png')" }}
       >
-        <div className="hero-overlay"></div>
-        <div className="">
-          <div className=" w-11/12 pl-4">
-            <h1 className="mb-5 text-2xl md:text-3xl lg:text-5xl font-medium text-center text-white w-3/4  mx-auto leading-[1.8]
-">
-              Everything's Possible When You Have The Talent.
-            </h1>
-            <p className="mb-5 text-gray-300 text-center">
-              Find skilled candidates, in-demand jobs and the solutions you need
-              to help you do best work yet.
-            </p>
-            {/* buttons for jobs related */}
-            <div className="flex flex-col items-center justify-center md:flex-row gap-4 md:gap-6 py-8 w-full">
-              
-              <Link  href="/jobs" className="rounded-full flex justify-center items-center border cursor-pointer lg:text-xl py-2 md:py-3 px-4 lg:px-6 bg-white text-black hover:text-green-950 relative overflow-hidden z-[1] group">
-                Find Your Next Job
-                <div className="w-full h-full bg-white absolute top-0 left-0 z-[-1] group-hover:bg-[#084049]/10 "></div>
-              </Link>
+        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="relative z-10 flex flex-col justify-center items-center text-center px-4 w-full h-full">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight max-w-3xl">
+            Unlock Opportunities. Connect With Top Talent or Your Dream Job.
+          </h1>
+          <p className="mt-4 text-gray-200 text-lg max-w-xl">
+            Discover skilled professionals or land the perfect role for your
+            future. Search. Connect. Hire or Get Hired — effortlessly.
+          </p>
 
-              <div className="border-1 h-16 lg:block hidden border-white"></div>
-              <div className="flex flex-row gap-4 md:gap-6">
-                <button onClick={handleClick} className="rounded-full flex justify-center items-center bg-[#084049]/50 hover:bg-transparent border cursor-pointer  text-white lg:text-xl py-2 md:py-3 px-4 lg:px-6">
-                  Preview Candidates
-                </button>
-                <button onClick={handleClick}   className="rounded-full flex justify-center items-center bg-[#084049]/50 hover:bg-transparent border cursor-pointer  text-white lg:text-xl py-2 md:py-3 px-4 lg:px-6">
-                  Hire Now
-                </button>
-              </div>
-            </div>
+          {/* Buttons */}
+          <div className="mt-10 flex flex-col md:flex-row items-center gap-4">
+            <Link
+              href="/jobs"
+              className="flex items-center gap-2 bg-white text-teal-600 font-semibold px-6 py-3 rounded-full shadow hover:bg-teal-100 transition duration-300"
+            >
+              <FaBriefcase />
+              Find Your Next Job
+            </Link>
+
+            <button
+              onClick={handleClick}
+              className="flex items-center gap-2 border border-white text-white hover:bg-teal-600 hover:text-white font-semibold px-6 py-3 rounded-full transition duration-300 cursor-pointer"
+            >
+              <FaUserTie />
+              Hire Top Talent
+            </button>
           </div>
-        </div>
-      </div>
-
-      <div className="w-11/12 mx-auto relative bottom-20 px-4">
-        <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row items-center gap-4">
-          {/* Job Title Input with Icon */}
-          <div className="flex-1 relative">
-            <FaSearchengin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
-            <input
-              type="text"
-              placeholder="Job Title, Skills, or Keywords"
-              className="w-full pl-10 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-            />
-          </div>
-
-          {/* Location Input with Icon */}
-          <div className="flex-1 relative">
-            <FaLocationArrow className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
-            <input
-              type="text"
-              placeholder="City, Province, or Postal Code"
-              className="w-full pl-10 p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-            />
-          </div>
-
-          {/* Search Button */}
-          
-          <button className="bg-[#084049] text-white py-4 px-6 rounded-md hover:bg-red-600 cursor-pointer w-full sm:w-auto">
-            Search Jobs
-          </button>
-          
         </div>
       </div>
     </div>

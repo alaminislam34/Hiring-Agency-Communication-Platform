@@ -12,6 +12,7 @@ const Testimonials = () => {
     slidesToShow: 3,
     slidesToScroll: 3,
     autoplay: true,
+
     autoplaySpeed: 3000,
     arrows: false,
     responsive: [
@@ -47,12 +48,12 @@ const Testimonials = () => {
       </div>
 
       {/* Testimonials Slider */}
-      <div className="w-11/12 mx-auto">
+      <div className="">
         <Slider {...settings}>
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="text-center p-6 bg-base-100 rounded-lg h-[300px] border border-[#084049]"
+              className="text-center p-4 bg-base-100 rounded-lg h-[300px] border-[#084049]"
             >
               {/* User Image */}
               <div className="flex justify-center mb-4">

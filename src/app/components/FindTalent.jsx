@@ -27,7 +27,7 @@ export default function FindTalent() {
         <img
           src="/talent-1.webp"
           alt="Team working"
-          className="rounded-lg shadow-md h-[400px] w-full"
+          className="rounded-lg shadow-md h-[400px] object-cover bg-cover w-full"
         />
 
         <div className=" flex flex-col justify-center w-full 2xl:w-2/3 pl-4">
@@ -61,13 +61,13 @@ export default function FindTalent() {
           <div className="mt-6 flex gap-4">
             <button
               onClick={handleClick}
-              className="bg-[#084049] text-white px-6 py-3 rounded-full text-sm md:text-lg font-medium hover:bg-[#02282E] transition cursor-pointer"
+              className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-full text-sm md:text-base  transition cursor-pointer"
             >
               Find your next hire
             </button>
             <button
               onClick={() => setOpenModal(true)}
-              className="border border-gray-500 text-gray-900 px-6 py-3 rounded-full text-sm md:text-lg font-medium hover:bg-gray-200 transition cursor-pointer"
+              className="border border-gray-500 text-gray-900 px-4 py-2 rounded-full text-sm md:text-base  hover:bg-teal-200 transition cursor-pointer"
             >
               Learn more
             </button>
@@ -83,9 +83,9 @@ export default function FindTalent() {
                 <div className="space-y-6">
                   <article className="prose max-w-none prose-headings:text-teal-600 prose-p:text-gray-700 prose-li:text-gray-600 space-y-6">
                     <p>
-                      Welcome to <strong>JobHive</strong> — your trusted platform
-                      for hiring top talent across all industries. Whether
-                      you're a startup looking for your first hire or an
+                      Welcome to <strong>JobHive</strong> — your trusted
+                      platform for hiring top talent across all industries.
+                      Whether you're a startup looking for your first hire or an
                       enterprise seeking highly skilled professionals, Job makes
                       it easy, fast, and effective.
                     </p>
@@ -166,7 +166,9 @@ export default function FindTalent() {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button onClick={() => setOpenModal(false)} color="gray">Got it, let's hire!</Button>
+                <Button onClick={() => setOpenModal(false)} color="gray">
+                  Got it, let's hire!
+                </Button>
                 <Button color="gray" onClick={() => setOpenModal(false)}>
                   Decline
                 </Button>

@@ -38,6 +38,7 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["jobs", type],
     queryFn: fetchJobs,
+    enabled: true,
   });
   // console.log(jobs);
   // ✅ Fetch Current User
@@ -64,6 +65,7 @@ export const AppProvider = ({ children }) => {
     setShowName,
     currentUser,
     setType,
+    type,
 
     // Jobs Data
     jobs,

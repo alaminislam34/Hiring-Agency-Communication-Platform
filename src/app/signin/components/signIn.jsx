@@ -17,6 +17,7 @@ const SignInComponent = () => {
   const [loading, setLoading] = useState(false);
   const [resetPassword, setResetPassword] = useState(false);
   const route = useRouter();
+  const [email, setEmail] = useState("");
   const { userRefetch } = useAppContext();
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -34,10 +35,9 @@ const SignInComponent = () => {
       });
       console.log(res);
       if (res.ok) {
-        toast.success("Login Successful! 🎉 🎉");
         userRefetch();
         form.reset();
-        route.push("/dashboard");
+        toast.success("Login Successful! 🎉 🎉");
       } else {
         setError("Invalid email or password");
       }
@@ -54,11 +54,11 @@ const SignInComponent = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      className="flex justify-center items-center max-w-4xl w-full rounded-2xl shadow-[-4px_4px_50px_5px] shadow-black/30 bg-white"
+      className="flex justify-center items-center max-w-5xl w-full rounded-2xl shadow-[4px_4px_50px_-5px] my-10 md:my-12 lg:my-16 shadow-black/25 bg-white"
     >
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="hidden p-4 lg:p-6 md:flex items-center justify-center">
-          <div className="md:space-y-2 lg:space-y-4 ">
+          <div className="md:space-y-2 lg:space-y-4">
             <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold">
               {isSignUp ? "Sign Up to JobHive" : "Welcome Back to JobHive"}
             </h1>
@@ -71,23 +71,28 @@ const SignInComponent = () => {
               {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
               <button
                 onClick={() => setIsSignUp(!isSignUp)}
-                className="text-teal-500 font-medium cursor-pointer underline"
+                className="text-teal-700 font-medium cursor-pointer underline"
               >
                 {isSignUp ? "Sign In" : "Sign Up"}
               </button>
             </p>
+            <div className="hidden md:block">
+              <SocialsLogin />
+            </div>
           </div>
         </div>
-        <div className="p-4 lg:p-6 rounded-xl w-full max-w-sm">
-          <div className="space-y-6 flex flex-col items-center justify-center">
-            <SocialsLogin />
+        <div className="p-4 lg:p-6 rounded-xl w-full">
+          <div className="space-y-6 flex flex-col items-center justify-center duration-300">
             <h1 className="text-2xl md:text-3xl font-semibold text-center text-teal-700">
-              {isSignUp ? "Sign Up" : "Login"}
+              {isSignUp ? "Sign Up" : resetPassword ? "" : "Sign In"}
             </h1>
             {isSignUp ? (
               <RegisterForm setIsSignUp={setIsSignUp} />
             ) : resetPassword ? (
-              <PasswordReset />
+              <PasswordReset
+                setResetPassword={setResetPassword}
+                email={email}
+              />
             ) : (
               <div className="w-full">
                 {error && (
@@ -102,6 +107,7 @@ const SignInComponent = () => {
                       className="py-2 px-4 rounded-xl border border-teal-500/50 focus:outline-teal-600 bg-teal-100"
                       type="email"
                       name="email"
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
                       required
                     />
@@ -160,6 +166,9 @@ const SignInComponent = () => {
                 </p>
               </div>
             )}
+            <div className="md:hidden block">
+              <SocialsLogin />
+            </div>
           </div>
         </div>
       </div>

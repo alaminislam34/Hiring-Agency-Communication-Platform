@@ -4,9 +4,9 @@ import { useAppContext } from "@/Providers/AppProviders";
 import { useParams } from "next/navigation";
 
 export default function Room() {
-  const { fullName } = useAppContext();
+  const { fullName, currentUser } = useAppContext();
   const containerRef = useRef(null);
-  const initializedRef = useRef(false); // Prevent multiple joins
+  const initializedRef = useRef(false);
   const { roomid } = useParams();
 
   useEffect(() => {
@@ -35,31 +35,47 @@ export default function Room() {
         if (typeof crypto !== "undefined" && crypto.randomUUID) {
           return crypto.randomUUID();
         }
-        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        return (
+          Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
+        );
       };
+
+      const userName = fullName || currentUser?.email || `User-${Date.now()}`;
 
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         Number(appID),
         serverSecret,
         roomid,
         generateUUID(),
-        fullName || `User-${Date.now()}`,
+        userName,
         720
       );
 
       const zp = ZegoUIKitPrebuilt.create(kitToken);
+
       zp.joinRoom({
         container: containerRef.current,
         scenario: {
           mode: ZegoUIKitPrebuilt.VideoConference,
         },
+        sharedLinks: [
+          {
+            name: "Invite Link",
+            url: typeof window !== "undefined" ? window.location.href : "",
+          },
+        ],
+        showScreenSharingButton: true,
       });
     };
 
     if (typeof window !== "undefined") {
       initializeMeeting();
     }
-  }, [roomid, fullName]);
+  }, [roomid, fullName, currentUser]);
 
-  return <div ref={containerRef} className="w-screen h-screen bg-black" />;
+  return (
+    <div className="h-[200px] md:h-[90vh] pt-6">
+      <div ref={containerRef} className="w-full h-full" />
+    </div>
+  );
 }

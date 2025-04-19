@@ -3,28 +3,15 @@ import Image from "next/image";
 import image from "../../../public/image.webp";
 import { FaLocationDot, FaSearchengin } from "react-icons/fa6";
 import { useAppContext } from "@/Providers/AppProviders";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export default function FindJob() {
   const { setJobTitle, setLocation } = useAppContext();
   const [title, setTitle] = useState("");
   const [jobLocation, setJobLocation] = useState("");
-  setJobTitle(title);
-  setLocation(jobLocation);
-  // const handleSearch = (e) => {
-  //   e.preventDefault();
-
-  //   const form = e.target;
-  //   const jobTitle = form.title.value;
-  //   const location = form.location.value;
-
-  //   // Set values to context
-  //   // setJobTitle(jobTitle);
-  //   // setLocation(location);
-
-  //   // Optional: console log to test
-  //   console.log("Job Title:", jobTitle);
-  //   console.log("Location:", location);
-  // };
+  useEffect(() => {
+    setJobTitle(title);
+    setLocation(jobLocation);
+  }, [title, jobLocation]);
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12">
       {/* text  */}

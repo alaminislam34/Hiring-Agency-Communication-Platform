@@ -15,7 +15,10 @@ export default function RootLayout({ children }) {
           <AppProvider>
             <body>
               <ClientNavbar />
-              <section className="md:min-h-[650px] min-h-[600px] bg-teal-50">
+              <section
+                className="md:min-h-[650px] min-h-[600px] bg-teal-50"
+                suppressHydrationWarning
+              >
                 {children}
               </section>
               <ClientFooter />

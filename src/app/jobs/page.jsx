@@ -19,16 +19,17 @@ const AllJobs = () => {
         <div className="md:col-span-1 border p-4 rounded-lg border-teal-500">
           <JobsFilterOptions />
         </div>
-        <div className="md:col-span-3 lg:col-span-4 overflow-y-auto h-screen">
+        <div className="md:col-span-3 lg:col-span-4 overflow-y-auto h-screen border border-teal-500 rounded-lg shadow">
           <div className="space-y-4 sticky top-0 bg-white py-2">
             <form
               onSubmit={handleSearch}
-              className="flex items-center justify-end gap-2"
+              className="flex md:items-center flex-col md:flex-row justify-end gap-2 p-4"
             >
               <input
                 type="text"
                 name="search"
                 placeholder="Search jobs.."
+                onChange={(e) => setJobTitle(e.target.value)}
                 className="py-2 px-4 border border-teal-500 focus:outline-teal-500 focus:ring-2 focus:ring-teal-500 rounded-lg"
               />
               <button
@@ -57,7 +58,7 @@ const AllJobs = () => {
           ) : (
             <div className="">
               {jobs.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 md:mt-6 w-11/12 mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 md:mt-6 w-11/12 mx-auto">
                   {jobs.map((job) => (
                     <div
                       key={job._id.toString()}

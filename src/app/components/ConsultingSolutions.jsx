@@ -18,7 +18,7 @@ export default function ConsultingSolutions() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Left Side Content */}
         <div className="flex flex-col justify-center pl-4 w-full 2xl:w-2/3">
-          <h2 className="text-3xl font-semibold text-gray-900 leading-snug">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900 leading-snug">
             Consulting solutions to drive business impact
           </h2>
           <ul className="mt-4 space-y-4 text-gray-700">

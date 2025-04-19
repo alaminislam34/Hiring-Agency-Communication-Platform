@@ -25,7 +25,7 @@ export default function CareerMove() {
         />
 
         <div className="space-y-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-snug">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900 leading-snug">
             Make the career move you want
           </h2>
 

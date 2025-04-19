@@ -46,7 +46,7 @@ export default function FindTalent() {
         />
 
         <div className="flex flex-col justify-center pl-4 w-full 2xl:w-2/3">
-          <h2 className="text-3xl font-semibold text-gray-900 leading-snug">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900 leading-snug">
             Find talent to get more done
           </h2>
 

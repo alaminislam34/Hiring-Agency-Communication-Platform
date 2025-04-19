@@ -58,8 +58,8 @@ const Navbar = () => {
       href: "/jobs",
     },
     {
-      name: "Saved Jobs",
-      href: "/savedJobs",
+      name: "About Us",
+      href: "/about",
     },
 
     {

@@ -29,7 +29,7 @@ const teamMembers = [
   },
   {
     imgSrc: "/teamImg/rony.jpeg",
-    name: "Rokonujjaman Rony",
+    name: "MD Rokonujjaman Rony",
     title: "Product Manager",
     description:
       "Former PM for Linear, Lambda School, and On Deck. Currently working on End-Game Project",
@@ -77,57 +77,54 @@ const TeamCard = () => {
             { imgSrc, name, title, description, twitter, linkedin, portfolio },
             index
           ) => (
-            <div
-              key={index}
-              className="p-6 flex flex-col justify-between bg-gray-50 rounded-lg shadow-md hover:shadow-lg cursor-pointer "
-            >
-              <div>
-                <div className="w-28 h-28 border border-teal-500 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center overflow-hidden">
-                  <Link
-                    href={`/about/${name.replace(" ", "-").toLowerCase()}`}
-                    className="w-full h-full"
-                  >
+            <div key={index} className="">
+              <Link
+                href={{ pathname: "/about/name/", query: { name } }}
+                className="p-6 flex flex-col justify-between bg-gray-50 rounded-lg shadow-md hover:shadow-lg cursor-pointer border border-transparent hover:border-teal-500"
+              >
+                <div>
+                  <div className="w-28 h-28 border border-teal-500 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center overflow-hidden">
                     <img
                       className="object-cover bg-cover bg-center w-full h-full"
                       src={imgSrc}
                       alt="Team member"
                     />
-                  </Link>
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-semibold text-center">
+                    {name}
+                  </h3>
+                  <p className="text-sm md:text-base text-center text-teal-600">
+                    {title}
+                  </p>
+                  <p className="text-sm text-gray-600 text-center">
+                    {description}
+                  </p>
                 </div>
-                <h3 className="text-xl md:text-2xl font-semibold text-center">
-                  {name}
-                </h3>
-                <p className="text-sm md:text-base text-center text-teal-600">
-                  {title}
-                </p>
-                <p className="text-sm text-gray-600 text-center">
-                  {description}
-                </p>
-              </div>
-              {/* Social Links */}
-              <div className="flex justify-center items-center gap-4 w-full rounded-2xl mt-4">
-                <a
-                  href={twitter}
-                  target="_blank"
-                  className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
-                >
-                  <LuTwitter />
-                </a>
-                <a
-                  href={portfolio}
-                  target="_blank"
-                  className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
-                >
-                  <IoBrowsers />
-                </a>
-                <a
-                  href={linkedin}
-                  target="_blank"
-                  className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
-                >
-                  <LuLinkedin />
-                </a>
-              </div>
+                {/* Social Links */}
+                <div className="flex justify-center items-center gap-4 w-full rounded-2xl mt-4">
+                  <a
+                    href={twitter}
+                    target="_blank"
+                    className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
+                  >
+                    <LuTwitter />
+                  </a>
+                  <a
+                    href={portfolio}
+                    target="_blank"
+                    className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
+                  >
+                    <IoBrowsers />
+                  </a>
+                  <a
+                    href={linkedin}
+                    target="_blank"
+                    className="w-9 h-9 duration-300 rounded-full overflow-hidden flex items-center justify-center text-lg p-2 border border-teal-500 text-teal-600 hover:border-transparent hover:bg-teal-500 hover:text-white"
+                  >
+                    <LuLinkedin />
+                  </a>
+                </div>
+              </Link>
             </div>
           )
         )}

@@ -297,7 +297,7 @@ const Navbar = () => {
             </div>
             {/* Logo */}
             <Link href="/" className="text-xl font-bold flex items-center">
-              <img src="JobHive.png" alt="Logo" className="h-6 mr-2" />
+              <img src="/JobHive.png" alt="Logo" className="h-6 mr-2" />
             </Link>
           </div>
 

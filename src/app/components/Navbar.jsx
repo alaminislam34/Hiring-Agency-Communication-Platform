@@ -322,7 +322,7 @@ const Navbar = () => {
                     <li
                       key={href}
                       className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
-                        pathname === href ? "after:w-full" : ""
+                        pathname === href ? "text-teal-600" : ""
                       } py-1 px-2`}
                     >
                       <Link href={href} className="">
@@ -335,7 +335,7 @@ const Navbar = () => {
                     <li
                       key={href}
                       className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
-                        pathname === href ? "after:w-full" : ""
+                        pathname === href ? "text-teal-600" : ""
                       } py-1 px-2`}
                     >
                       <Link href={href} className="">
@@ -347,7 +347,7 @@ const Navbar = () => {
                     <li
                       key={href}
                       className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
-                        pathname === href ? "after:w-full" : ""
+                        pathname === href ? "text-teal-600" : ""
                       } py-1 px-2`}
                     >
                       <Link href={href} className="">

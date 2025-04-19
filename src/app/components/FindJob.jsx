@@ -1,7 +1,30 @@
+"use client";
 import Image from "next/image";
 import image from "../../../public/image.webp";
 import { FaLocationDot, FaSearchengin } from "react-icons/fa6";
+import { useAppContext } from "@/Providers/AppProviders";
+import { useState } from "react";
 export default function FindJob() {
+  const { setJobTitle, setLocation } = useAppContext();
+  const [title, setTitle] = useState("");
+  const [jobLocation, setJobLocation] = useState("");
+  setJobTitle(title);
+  setLocation(jobLocation);
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+
+  //   const form = e.target;
+  //   const jobTitle = form.title.value;
+  //   const location = form.location.value;
+
+  //   // Set values to context
+  //   // setJobTitle(jobTitle);
+  //   // setLocation(location);
+
+  //   // Optional: console log to test
+  //   console.log("Job Title:", jobTitle);
+  //   console.log("Location:", location);
+  // };
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12">
       {/* text  */}
@@ -15,7 +38,7 @@ export default function FindJob() {
           for.
         </p>
         {/* input field */}
-        <div className="flex flex-col gap-2 mt-12">
+        <form className="flex flex-col gap-2 mt-12">
           <div className="">
             <h5 className="text-black font-base text-lg">
               I am looking For a{" "}
@@ -45,7 +68,7 @@ export default function FindJob() {
           <button className="px-4 mt-3 py-2 rounded-lg bg-teal-500 w-full hover:bg-teal-600 border cursor-pointer text-white">
             Preview Candidates
           </button>
-        </div>
+        </form>
       </div>
 
       {/* image */}

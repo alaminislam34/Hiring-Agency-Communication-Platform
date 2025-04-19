@@ -30,7 +30,7 @@ export const AppProvider = ({ children }) => {
     );
     return res.data;
   };
-
+  
   const {
     data: jobs = [],
     isLoading: jobsLoading,
@@ -40,7 +40,7 @@ export const AppProvider = ({ children }) => {
     queryFn: fetchJobs,
     enabled: true,
   });
-
+  // console.log(jobs);
   // ✅ Fetch Current User
   const fetchUser = async () => {
     const res = await axios("/api/currentUser");

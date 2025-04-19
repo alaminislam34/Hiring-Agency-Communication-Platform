@@ -41,7 +41,7 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="py-10">
+    <div className="py-6">
       {/* Section Title */}
       <div className="text-center mb-8">
         <SectionTitle title={"Explore Testimonials"} />

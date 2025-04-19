@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
@@ -8,7 +10,7 @@ const Footer = () => {
       <div className="w-11/12 mx-auto text-neutral-content p-10 ">
         {/* Logo Section */}
         <div className=" w-full flex justify-center items-center mb-12">
-          <div  className=" text-left mb-4 ">
+          <div className=" text-left mb-4 ">
             <Link
               href="/"
               className="flex flex-row gap-2 items-center bg-white p-8 rounded-xl"
@@ -18,7 +20,6 @@ const Footer = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
-          
           {/* Social Section */}
           <div className="w-full">
             <h6 className="font-semibold mb-4 text-2xl text-white">Social</h6>
@@ -67,10 +68,10 @@ const Footer = () => {
           <div className="w-full">
             <h6 className="font-semibold mb-4 text-2xl text-white">Services</h6>
             <div className="flex flex-col gap-2">
-            <a className="link link-hover">Browse Jobs</a>
-            <a className="link link-hover">Contract Talent</a>
-            <a className="link link-hover">Permanent Talent</a>
-            <a className="link link-hover">Consulting Solutions</a>
+              <a className="link link-hover">Browse Jobs</a>
+              <a className="link link-hover">Contract Talent</a>
+              <a className="link link-hover">Permanent Talent</a>
+              <a className="link link-hover">Consulting Solutions</a>
             </div>
           </div>
 
@@ -78,10 +79,10 @@ const Footer = () => {
           <div className="w-full">
             <h6 className="font-semibold mb-4 text-2xl text-white">About</h6>
             <div className="flex flex-col gap-2">
-            <a className="link link-hover">Job directory</a>
-            <a className="link link-hover">About Robert Half</a>
-            <a className="link link-hover">Leadership</a>
-            <a className="link link-hover">Careers With Us</a>
+              <a className="link link-hover">Job directory</a>
+              <a className="link link-hover">About Robert Half</a>
+              <a className="link link-hover">Leadership</a>
+              <a className="link link-hover">Careers With Us</a>
             </div>
           </div>
         </div>

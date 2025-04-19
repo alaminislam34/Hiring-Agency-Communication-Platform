@@ -38,7 +38,7 @@ export default function Accordion() {
   };
 
   return (
-    <div className="mx-auto p-6  w-11/12">
+    <div className="p-6">
       <SectionTitle title={"Frequently Asked Questions"} />
       <div className="space-y-4">
         {faqs.map((faq, index) => (

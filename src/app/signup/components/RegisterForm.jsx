@@ -4,6 +4,7 @@ import { useAppContext } from "@/Providers/AppProviders";
 import { signIn } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
+import { ThreeDots } from "react-loader-spinner";
 import Swal from "sweetalert2";
 
 const RegisterForm = ({ setIsSignUp }) => {
@@ -117,11 +118,20 @@ const RegisterForm = ({ setIsSignUp }) => {
         >
           {loading ? (
             <div className="flex items-end gap-2 justify-center">
-              Register{" "}
-              <span className="loading loading-dots loading-md pt-2"></span>
+              Signing{" "}
+              <ThreeDots
+                visible={true}
+                height="20"
+                width="20"
+                color="#fff"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
             </div>
           ) : (
-            "Register"
+            "Sign Up"
           )}
         </button>
       </form>

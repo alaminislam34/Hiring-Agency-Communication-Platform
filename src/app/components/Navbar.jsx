@@ -15,12 +15,14 @@ import { FaBriefcase, FaUsers } from "react-icons/fa6";
 import { RiMenu2Fill } from "react-icons/ri";
 import { GrClose } from "react-icons/gr";
 import { LiaReadme } from "react-icons/lia";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { currentUser } = useAppContext();
+  const session = useSession();
   const jobSeekerNavLink = [
     {
       name: "Home",
@@ -369,7 +371,7 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {currentUser ? (
+            {currentUser && session?.data.user ? (
               <div className="flex items-center gap-2 relative">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}

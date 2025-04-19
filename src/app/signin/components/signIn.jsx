@@ -8,9 +8,9 @@ import RegisterForm from "@/app/signup/components/RegisterForm";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { useAppContext } from "@/Providers/AppProviders";
 import PasswordReset from "./PasswordReset";
+import { ThreeDots } from "react-loader-spinner";
 
 const SignInComponent = () => {
-  
   const [error, setError] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -146,9 +146,18 @@ const SignInComponent = () => {
                     }`}
                   >
                     {loading ? (
-                      <div className="flex items-end justify-center">
+                      <div className="flex items-end justify-center gap-2">
                         Signing{" "}
-                        <span className="loading loading-dots loading-sm"></span>
+                        <ThreeDots
+                          visible={true}
+                          height="20"
+                          width="20"
+                          color="#fff"
+                          radius="9"
+                          ariaLabel="three-dots-loading"
+                          wrapperStyle={{}}
+                          wrapperClass=""
+                        />
                       </div>
                     ) : (
                       "Sign In"

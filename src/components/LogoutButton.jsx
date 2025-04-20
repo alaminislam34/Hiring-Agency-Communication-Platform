@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const LogoutButton = () => {
   const handleSignout = () => {
     signOut();
-    toast.success("Logout Successful! 🎉");
+    toast.success(" Logout Successful!");
   };
   return (
     <div>

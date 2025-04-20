@@ -63,7 +63,7 @@ const JobsPage = () => {
       </div>
       <div className="overflow-x-auto bg-white shadow-xl rounded-xl border border-[#00847D]">
         <table className="w-full border-collapse text-sm table">
-          <thead className="bg-[#00847D] text-white first-letter:uppercase text-sm text-left">
+          <thead className=" first-letter:uppercase text-sm text-left">
             <tr>
               <th>Job Title</th>
               <th>Company</th>

@@ -10,9 +10,9 @@ const AllJobs = () => {
 
       {/* Table */}
       <div className="overflow-x-auto border border-teal-600 rounded-xl shadow-xl ">
-        <table className="table table-auto">
+        <table className="min-w-full table divide-y divide-gray-200 bg-white">
           <thead>
-            <tr className="bg-teal-600 text-white text-left">
+            <tr className="text-left *:uppercase *:tracking-wider">
               <th className="">Job Title</th>
               <th className="">Job Type</th>
               <th className="">Salary</th>
@@ -22,25 +22,33 @@ const AllJobs = () => {
             </tr>
           </thead>
           <tbody>
-            {jobs.map((job) => (
-              <tr key={job._id} className=" hover:bg-gray-50">
-                <td className="">{job.jobTitle}</td>
-                <td className="">{job.jobType}</td>
-                <td className="">
-                  {job.currency} {job.minSalary} - {job.maxSalary}
-                </td>
-                <td className="">
-                  {new Date(job.postDate).toLocaleDateString()}
-                </td>
-                <td className="">
-                  {new Date(job.deadline).toLocaleDateString()}
-                </td>
+            {jobs?.length > 0 ? (
+              jobs?.map((job) => (
+                <tr key={job._id} className=" hover:bg-gray-50">
+                  <td className="">{job.jobTitle}</td>
+                  <td className="">{job.jobType}</td>
+                  <td className="">
+                    {job.currency} {job.minSalary} - {job.maxSalary}
+                  </td>
+                  <td className="">
+                    {new Date(job.postDate).toLocaleDateString()}
+                  </td>
+                  <td className="">
+                    {new Date(job.deadline).toLocaleDateString()}
+                  </td>
 
-                <td>
-                  <ActionsButton id={job._id} />
+                  <td>
+                    <ActionsButton id={job._id} />
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  No jobs found
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

@@ -47,7 +47,7 @@ const SideBar = () => {
             alt="User"
             className={`${
               showName ? "w-20 h-20" : "w-12 h-12"
-            } rounded-full border-2 border-white duration-500`}
+            } rounded-full border-2 border-white duration-500 object-cover bg-cover bg-center`}
           />
 
           <div

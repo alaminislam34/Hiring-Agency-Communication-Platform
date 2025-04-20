@@ -8,6 +8,9 @@ import Swal from "sweetalert2";
 
 const AddJobForm = () => {
   const { currentUser } = useAppContext();
+
+  //added for check realtime notification
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,7 +28,7 @@ const AddJobForm = () => {
     const skills = form.skills.value.trim();
     const contactEmail = form.contactEmail.value.trim();
     const contactPhone = form.contactPhone.value.trim();
-    const postDate = new Date().toISOString(); // ISO format
+    const postDate = new Date().toISOString();
     const deadline = new Date(form.deadline.value).toISOString();
 
     const jobData = {
@@ -50,6 +53,13 @@ const AddJobForm = () => {
     try {
       const res = await axios.post("/api/postJob", jobData);
       if (res.status === 201) {
+        // ✅ Notify jobseekers
+        await axios.post("/api/notify-job-post", {
+          jobTitle,
+          companyName,
+          postDate,
+        });
+
         form.reset();
         document.getElementById("my_modal_5").close();
         Swal.fire("Job Posted Successfully!", "", "success");

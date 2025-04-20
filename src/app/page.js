@@ -13,6 +13,8 @@ import SeekKit from "./components/SeekKit";
 import Testimonials from "./components/Testimonials";
 import TrendsCarousel from "./components/TrendsCarousel";
 import GeminiComponent from "./components/GeminiComponent";
+import ScheduleForm from "./components/scheduleInterview/ScheduleForm";
+import ScheduleList from "./components/scheduleInterview/ScheduleList";
 
 export default function Home() {
   return (
@@ -29,6 +31,8 @@ export default function Home() {
         <CareerMove />
         <Testimonials />
         <Accordion />
+        <ScheduleForm></ScheduleForm>
+        <ScheduleList></ScheduleList>
       </section>
 
       <ToastContainer position="top-center" autoClose={3000} />

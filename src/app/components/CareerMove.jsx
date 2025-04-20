@@ -16,8 +16,8 @@ export default function CareerMove() {
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <section className="py-10 bg-white">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+    <section className="py-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <img
           src="/career.webp"
           alt="Career move"

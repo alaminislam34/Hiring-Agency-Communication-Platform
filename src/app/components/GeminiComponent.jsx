@@ -1,8 +1,11 @@
 "use client";
 
 import { generativeText } from "@/app/utils/gemini";
+import { Send } from "lucide-react";
+import { Smile } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
+import { BsCaretDown, BsCaretUp } from "react-icons/bs";
 import { FiSend } from "react-icons/fi";
 import { GrClose } from "react-icons/gr";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
@@ -81,14 +84,12 @@ export default function GeminiComponent() {
   return (
     <>
       {/* Chat Modal */}
-      <div
-        className={`fixed bottom-3 md:bottom-5 right-3 md:right-5 z-[60] overflow-hidden`}
-      >
+      <div className={`fixed bottom-2 right-2 md:right-5 z-[60] m-0`}>
         {/* Floating Button */}
-        <div className="flex items-center justify-end mb-2">
+        <div className="flex items-center justify-end">
           <button
             onClick={() => setOpen(!open)}
-            className="w-14 h-12 rounded-xl bg-teal-500 btn text-white text-xl"
+            className="w-12 h-10 rounded-xl bg-teal-500 btn text-white text-xl border-none"
           >
             {open ? <GrClose /> : <IoChatbubbleEllipsesSharp />}
           </button>
@@ -96,52 +97,60 @@ export default function GeminiComponent() {
         <div
           className={`${
             open
-              ? "flex w-[300px] md:w-[350px] h-[450px] md:h-[480px] opacity-100 pointer-events-auto"
+              ? "flex w-[300px] md:w-[350px] h-[400px] md:h-[480px] opacity-100 pointer-events-auto"
               : "w-0 h-0 opacity-0 pointer-events-none"
           } duration-500 border overflow-hidden rounded-xl border-teal-600 bg-white shadow-xl flex-col relative`}
         >
           <div className="relative">
             {/* Title */}
-            <h2 className="text-xl font-semibold text-center text-teal-50 bg-gradient-to-tr from-teal-500 via-teal-400 to-teal-500 py-3 flex items-center justify-center gap-2 z-10">
-              <RiRobot3Line className="text-xl" /> JobHive Gemini AI
+            <h2 className="text-xl font-semibold text-center text-teal-50 bg-gradient-to-tr from-teal-500 via-teal-600 to-teal-600 py-3 flex items-center justify-center gap-2 z-10 relative">
+              <RiRobot3Line className="text-2xl" /> JobHive Gemini AI
             </h2>
 
             {/* Custom Q&A */}
 
             <div
-              className={`${
-                showQ ? "flex" : "hidden"
-              } flex-wrap gap-2 justify-center py-2 bg-teal-100 border-teal-400 px-2 border-b`}
+              className={`overflow-hidden duration-300 ${
+                showQ ? "h-24 py-2" : "h-0"
+              } flex flex-wrap gap-2 justify-center bg-gradient-to-tr from-teal-500 via-teal-600 to-teal-600 border-teal-400 px-2 border-b`}
             >
               {customQA.map((item, idx) => (
                 <button
                   key={idx}
                   title={item.hint}
                   onClick={() => handleCustomClick(item)}
-                  className="border border-teal-500 cursor-pointer text-sm text-teal-500 p-1 rounded-xl hover:bg-teal-500 hover:text-white transition duration-300"
+                  className="border border-teal-50 cursor-pointer text-xs text-teal-950 bg-white py-1.5 px-3 rounded-xl hover:bg-teal-500 hover:text-white transition duration-300"
                 >
                   {item.question}
                 </button>
               ))}
             </div>
-          </div>
-          <div className="flex items-center justify-end">
-            <button
-              onClick={() => setShowQ(!showQ)}
-              className="py-1 px-3 bg-gradient-to-l from-teal-400 via-teal-400 to-teal-500 cursor-pointer"
-            >
-              {showQ ? <FaCaretUp /> : <FaCaretDown />}
-            </button>
+            <div className="absolute right-0 bottom-0 z-20">
+              <button
+                onClick={() => setShowQ(!showQ)}
+                className="py-1 px-3 rounded-t-lg bg-gradient-to-l from-teal-200 via-teal-200 to-teal-300 cursor-pointer"
+              >
+                {showQ ? <BsCaretUp /> : <BsCaretDown />}
+              </button>
+            </div>
           </div>
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto space-y-3 p-4">
+          <div
+            style={{
+              backgroundImage: `url('/aiBot.jpg')`,
+              backgroundPosition: "right",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+            className="flex-1 overflow-y-auto space-y-3 p-4 shadow-inner"
+          >
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`py-1 px-2 text-sm max-w-2/3 ${
+                className={`py-1 px-2 text-sm max-w-2/3 w-auto shadow-2xl text-black ${
                   msg.sender === "user"
-                    ? "bg-gradient-to-r from-teal-400 via-teal-400 to-teal-500 ml-auto text-right rounded-t-xl rounded-bl-xl"
-                    : "bg-gradient-to-l from-teal-400 via-teal-400 to-teal-500 mr-auto text-left rounded-t-xl rounded-br-xl"
+                    ? "bg-gradient-to-r from-teal-100/60 via-teal-200/60 to-teal-200/60 backdrop-blur-lg ml-auto text-right rounded-t-xl rounded-bl-xl"
+                    : "bg-gradient-to-l from-teal-100/60 via-teal-200/60 to-teal-200/60 backdrop-blur-lg mr-auto text-left rounded-t-xl rounded-br-xl"
                 }`}
               >
                 {msg.text}
@@ -161,25 +170,36 @@ export default function GeminiComponent() {
 
           <form
             onSubmit={handleGenerate}
-            className="flex items-center gap-2 bg-gradient-to-l from-teal-400 via-teal-400 to-teal-500 rounded-b-xl rounded-br-xl w-full p-2"
+            className="flex flex-row items-center gap-2 bg-gradient-to-l from-teal-500 via-teal-600 to-teal-600 rounded-b-xl rounded-br-xl w-full p-2"
           >
-            <input
-              type="text"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Ask me anything..."
-              className="flex-1 border border-gray-300 p-2 rounded-lg focus:outline-none bg-white"
-              disabled={loading}
-            />
+            <div className="flex items-center gap-2">
+              <button className="cursor-pointer text-white">
+                <Plus />
+              </button>
+              <button className="cursor-pointer text-white">
+                <Smile />
+              </button>
+            </div>
+            <label htmlFor="file">
+              <input
+                type="text"
+                rows={1}
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="Ask me anything..."
+                className="border border-gray-300 p-2 rounded-lg focus:outline-none bg-white w-[200px]"
+                disabled={loading}
+              />
+            </label>
             <button
               className={`rounded-lg btn border-none ${
                 loading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-br from-teal-200 to-teal-300"
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-gradient-to-br from-teal-100 to-teal-200"
               }`}
               disabled={loading}
             >
-              <FiSend className="text-xl hover:scale-95 duration-300" />
+              <Send className="text-xl hover:scale-95 duration-300" />
             </button>
           </form>
         </div>

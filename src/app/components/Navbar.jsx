@@ -209,7 +209,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="bg-base-100 h-[74px] md:h-[42px] relative">
+    <div className="bg-base-100 h-[68px] md:h-[42px] relative">
       <div className="w-full fixed top-0 left-0 z-50 bg-white shadow-xl">
         <nav className="navbar w-full md:w-11/12 mx-auto flex justify-center items-center">
           {/* Navbar Start (Logo & Mobile Menu) */}

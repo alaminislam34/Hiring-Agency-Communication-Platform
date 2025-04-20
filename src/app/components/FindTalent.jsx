@@ -37,7 +37,7 @@ export default function FindTalent() {
   };
 
   return (
-    <section className="w-11/12 mx-auto py-12">
+    <section className="py-12">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <img
           src="/talent-1.webp"

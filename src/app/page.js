@@ -16,7 +16,7 @@ import GeminiComponent from "./components/GeminiComponent";
 
 export default function Home() {
   return (
-    <div className="space-y-8 lg:space-y-12 py-6 w-full">
+    <div className="space-y-8 lg:space-y-12 w-full">
       <Banner></Banner>
       <br />
       <section className="max-w-7xl mx-auto w-11/12 space-y-8 md:space-y-12">

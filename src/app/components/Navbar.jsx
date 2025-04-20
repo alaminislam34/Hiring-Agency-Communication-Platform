@@ -19,7 +19,8 @@ const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { currentUser } = useAppContext();
+  const { currentUser, notificationCount, markNotificationsAsSeen } =
+    useAppContext();
   const jobSeekerNavLink = [
     {
       name: "Home",
@@ -201,8 +202,8 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="bg-base-100 shadow-md h-[65px] relative">
-      <div className="w-full fixed top-0 left-0 z-50 bg-white py-2 shadow-xl">
+    <div className="bg-base-100 h-[74px] md:h-[42px] relative">
+      <div className="w-full fixed top-0 left-0 z-50 bg-white shadow-xl">
         <nav className="navbar w-full md:w-11/12 mx-auto flex justify-center items-center">
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">
@@ -354,12 +355,19 @@ const Navbar = () => {
 
           {/* Navbar End (Search & Sign In) */}
           <div className="navbar-end space-x-4">
-            <div>
+            <div className="relative">
               <Link
                 href="/dashboard/notifications"
-                className="flex items-center justify-center text-2xl hover:text-teal-500 cursor-pointer"
+                onClick={markNotificationsAsSeen}
+                className="flex items-center justify-center text-2xl hover:text-teal-700 cursor-pointer"
               >
                 <IoIosNotificationsOutline />
+                {/* Badge - only shown if count > 0 */}
+                {notificationCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full animate-bounce">
+                    {notificationCount}
+                  </span>
+                )}
               </Link>
             </div>
 

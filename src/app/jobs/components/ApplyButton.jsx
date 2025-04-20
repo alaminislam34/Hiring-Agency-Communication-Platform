@@ -25,15 +25,15 @@ const ApplyButton = ({ job, modalId }) => {
       companyName: job.companyName,
       location: job.location,
       jobType: job.jobType,
-      posted: new Date(job.postDate).toLocaleDateString(),
-      deadline: new Date(job.deadline).toLocaleDateString(),
+      postDate: job.postDate,
+      deadline: job.deadline,
       description: job.description,
       skills: job.skills,
       requirements: job.requirements,
     };
 
     try {
-      const res = await fetch("/api/job_apply", {
+      const res = await fetch("/api/apply-job", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -24,14 +24,14 @@ const SocialsLogin = () => {
       <button
         type="button"
         onClick={() => handleSocialsLogin("google")}
-        className="p-2 border shadow-xl rounded-full cursor-pointer border-gray-200 hover:scale-105 duration-300"
+        className="p-2 border shadow-[2px_2px_25px_0px] shadow-black/40 text-lg rounded-full cursor-pointer border-teal-200 bg-teal-300 text-black hover:scale-105 duration-300"
       >
         <FcGoogle />
       </button>
       <button
         type="button"
         onClick={() => handleSocialsLogin("github")}
-        className="p-2 border shadow-xl rounded-full cursor-pointer border-gray-200 hover:scale-105 duration-300"
+        className="p-2 border shadow-[2px_2px_25px_0px] shadow-black/40 text-lg rounded-full cursor-pointer border-teal-200 bg-teal-300 text-black hover:scale-105 duration-300"
       >
         <LuGithub />
       </button>

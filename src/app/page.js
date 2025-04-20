@@ -14,10 +14,12 @@ import Testimonials from "./components/Testimonials";
 import TrendsCarousel from "./components/TrendsCarousel";
 import GeminiComponent from "./components/GeminiComponent";
 import ZegoHome from "./components/zegoBoom/ZegoHome";
+import ScheduleForm from "./components/scheduleInterview/ScheduleForm";
+import ScheduleList from "./components/scheduleInterview/ScheduleList";
 
 export default async function Home() {
   return (
-    <div className="space-y-8 lg:space-y-12 mb-8 lg:mb-12 w-full">
+    <div className="space-y-8 lg:space-y-12 py-6 w-full ">
       <Banner></Banner>
       <TrendsCarousel />
       <FindJob></FindJob>
@@ -30,7 +32,10 @@ export default async function Home() {
       <CareerMove />
       <Testimonials />
       <Accordion />
+      <ScheduleForm></ScheduleForm>
+      <ScheduleList></ScheduleList>
       <ZegoHome></ZegoHome>
+
       <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );

@@ -324,7 +324,7 @@ const Navbar = () => {
                 ? employerNavLinks.map(({ href, name }) => (
                     <li
                       key={href}
-                      className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
+                      className={`hover:text-teal-600 ${
                         pathname === href ? "text-teal-600" : ""
                       } py-1 px-2`}
                     >
@@ -337,7 +337,7 @@ const Navbar = () => {
                 ? adminNavLinks.map(({ href, name }) => (
                     <li
                       key={href}
-                      className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
+                      className={`hover:text-teal-600 ${
                         pathname === href ? "text-teal-600" : ""
                       } py-1 px-2`}
                     >
@@ -349,7 +349,7 @@ const Navbar = () => {
                 : NavLinks.map(({ href, name }) => (
                     <li
                       key={href}
-                      className={`relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all after:duration-300 hover:after:w-full ${
+                      className={`hover:text-teal-600 ${
                         pathname === href ? "text-teal-600" : ""
                       } py-1 px-2`}
                     >
@@ -365,8 +365,7 @@ const Navbar = () => {
           <div className="navbar-end space-x-4">
             <div className="relative">
               <Link
-                href="/dashboard/notifications"
-                onClick={markNotificationsAsSeen}
+                href={currentUser ? "/dashboard/notifications" : "/signin"}
                 className="flex items-center justify-center text-2xl hover:text-teal-700 cursor-pointer"
               >
                 <IoIosNotificationsOutline />

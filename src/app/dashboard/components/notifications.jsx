@@ -1,3 +1,4 @@
+"use client";
 import { RxCross2 } from "react-icons/rx";
 import { IoTimeOutline } from "react-icons/io5";
 import { useNotifications } from "@/Providers/NotificationContext";

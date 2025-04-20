@@ -1,5 +1,5 @@
-import { ObjectId } from "mongodb";
 import dbConnect, { collection } from "@/lib/dbConnect";
+import { ObjectId } from "mongodb";
 
 // POST — Create a new interview
 export async function POST(request) {

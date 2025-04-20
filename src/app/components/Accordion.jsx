@@ -38,7 +38,7 @@ export default function Accordion() {
   };
 
   return (
-    <div className="mx-auto p-6  w-11/12">
+    <div className="p-6">
       <SectionTitle title={"Frequently Asked Questions"} />
       <div className="space-y-4">
         {faqs.map((faq, index) => (
@@ -48,13 +48,14 @@ export default function Accordion() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.8 }}
-            variants={containerVariants}>
+            variants={containerVariants}
+          >
             <input type="checkbox" />
-            <div className="collapse-title text-gray-700 text-lg font-medium">
+            <div className="collapse-title text-gray-700 bg-teal-200 text-lg font-medium">
               {faq.question}
             </div>
             <div className="collapse-content">
-              <p className="text-gray-700">{faq.answer}</p>
+              <p className="text-gray-700 pt-2">{faq.answer}</p>
             </div>
           </motion.div>
         ))}

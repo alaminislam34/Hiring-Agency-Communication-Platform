@@ -1,18 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { socket } from "../socket";
+import { Smile, Paperclip } from "lucide-react";
 
 export default function Chat({ roomId, userType }) {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const bottomRef = useRef(null);
 
   useEffect(() => {
-    if (roomId) {
-      socket.emit("joinRoom", roomId);
-    }
+    if (!roomId) return;
 
-    // Listen for incoming messages
+    socket.emit("joinRoom", roomId);
+
     const handleReceiveMessage = (newMessage) => {
       setMessages((prev) => [...prev, newMessage]);
     };
@@ -24,61 +25,69 @@ export default function Chat({ roomId, userType }) {
     };
   }, [roomId]);
 
-  // Send a message
-  const sendMessage = () => {
-    if (message.trim()) {
-      const newMessage = {
-        text: message,
-        sender: userType, // "jobSeeker" or "employer"
-      };
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-      setMessages((prev) => [...prev, newMessage]);
+  const sendMessage = (e) => {
+    e?.preventDefault(); // Prevent default form submit behavior
 
-      socket.emit("sendMessage", { roomId, message: newMessage });
+    if (!message.trim()) return;
 
-      setMessage("");
-    }
+    const newMessage = {
+      text: message,
+      sender: userType,
+    };
+
+    setMessages((prev) => [...prev, newMessage]);
+    socket.emit("sendMessage", { roomId, message: newMessage });
+    setMessage("");
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-4 bg-gray-100 shadow-lg rounded-lg">
-      <h2 className="text-xl font-semibold mb-3 text-center">Live Chat</h2>
-
+    <div className="bg-teal-200 shadow-lg rounded-lg mt-6">
       {/* Message Box */}
-      <div className="h-64 overflow-y-auto bg-white p-3 border rounded flex flex-col space-y-2">
+      <div className="h-[400px] overflow-y-auto p-4 flex flex-col space-y-2">
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`p-3 max-w-[70%] rounded-lg ${
+            className={`max-w-[70%] break-words p-2 text-sm ${
               msg.sender === "employer"
-                ? "bg-blue-500 text-white self-end" // Right-aligned (Employer)
-                : "bg-gray-300 text-black self-start" // Left-aligned (Job Seeker)
+                ? "bg-gradient-to-r from-teal-400 via-teal-400 to-teal-500 ml-auto text-right rounded-t-xl rounded-bl-xl"
+                : "bg-gradient-to-l from-teal-400 via-teal-400 to-teal-500 mr-auto text-left rounded-b-xl rounded-tr-xl"
             }`}
           >
-            <strong>
-              {msg.sender === "employer" ? "Employer" : "Job Seeker"}:{" "}
-            </strong>
             {msg.text}
           </div>
         ))}
+        <div ref={bottomRef}></div>
       </div>
 
-      {/* Input Field */}
-      <div className="flex mt-3">
+      {/* Input Area */}
+      <form
+        onSubmit={sendMessage}
+        className="px-4 py-3 bg-gradient-to-br from-teal-500 to-teal-400 border-t border-gray-200 flex items-center gap-2 rounded-b-lg"
+      >
+        <button type="button" className="text-white">
+          <Smile size={22} />
+        </button>
+        <button type="button" className="text-white">
+          <Paperclip size={22} />
+        </button>
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="flex-1 p-2 border rounded-l focus:outline-none"
-          placeholder="Type a message..."
+          placeholder="Type your message..."
+          className="flex-1 px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400"
         />
         <button
-          onClick={sendMessage}
-          className="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600"
+          type="submit"
+          className="bg-white text-teal-600 px-4 py-2 rounded-full hover:bg-teal-100 transition"
         >
           Send
         </button>
-      </div>
+      </form>
     </div>
   );
 }

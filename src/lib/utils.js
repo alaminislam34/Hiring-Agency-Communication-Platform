@@ -70,7 +70,7 @@ export const jobSeekerNavLinks = [
   },
   {
     name: "Meetings",
-    href: "/dashboard/Meeting",
+    href: "/dashboard/meeting",
     icon: <IoChatbubblesSharp />,
   },
 ];

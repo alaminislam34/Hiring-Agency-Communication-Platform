@@ -63,28 +63,6 @@ export const AppProvider = ({ children }) => {
     };
   }, []);
 
-  // 🧠 Register logged-in user with socket server (for targeted events)
-  // useEffect(() => {
-  //   const socket = io("http://localhost:3002");
-  //   socket.connect();
-
-  //   if (currentUser?.email) {
-  //     socket.emit("registerUser", currentUser.email);
-  //     console.log("📨 Registered current user:", currentUser.email);
-  //   }
-
-  //   socket.on("jobApplicationNotification", (data) => {
-  //     console.log("📬 Employer Notification Received:", data);
-  //     alert(
-  //       `📬 New Application for "${data.jobTitle}" by ${data.applicantName}`
-  //     );
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, [currentUser]);
-
   //2nd
   useEffect(() => {
     const socket = io("http://localhost:3002");
@@ -120,8 +98,26 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["jobs", type],
     queryFn: fetchJobs,
+    enabled: true,
   });
 
+  // console.log(jobs);
+  // ✅ Fetch Current User
+  // const fetchUser = async () => {
+  //   const res = await axios("/api/currentUser");
+  //   return res.data;
+  // };
+
+  // const {
+  //   data: currentUser,
+  //   isLoading: userLoading,
+  //   refetch: userRefetch,
+  // } = useQuery({
+  //   queryKey: ["users"],
+  //   queryFn: fetchUser,
+  // });
+
+  // Context Value
   const contextValue = {
     // General App State
     showSidebar,
@@ -130,6 +126,7 @@ export const AppProvider = ({ children }) => {
     setShowName,
     currentUser,
     setType,
+    type,
 
     // Jobs Data
     jobs,

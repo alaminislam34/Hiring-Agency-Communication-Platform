@@ -1,5 +1,5 @@
 // import Image from "next/image";
-
+"use client";
 // import Chat from "./chatbox/components/chat";
 // import ChatPage from "./chatbox/components/ChatPage";
 import { ToastContainer } from "react-toastify";
@@ -17,9 +17,9 @@ import ZegoHome from "./components/zegoBoom/ZegoHome";
 import ScheduleForm from "./components/scheduleInterview/ScheduleForm";
 import ScheduleList from "./components/scheduleInterview/ScheduleList";
 
-export default async function Home() {
+export default function Home() {
   return (
-    <div className="space-y-8 lg:space-y-12 py-6 w-full ">
+    <div className="space-y-8 lg:space-y-12 py-6 w-full">
       <Banner></Banner>
       <TrendsCarousel />
       <FindJob></FindJob>

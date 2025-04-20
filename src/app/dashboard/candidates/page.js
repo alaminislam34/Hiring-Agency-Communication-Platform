@@ -39,7 +39,7 @@ const candidates = [
 
 const Candidates = () => {
   return (
-    <div className="max-w-6xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+    <div className="mt-10 p-6 bg-white shadow-lg rounded-lg">
       <h1 className="text-2xl font-bold border-b pb-2">Candidates</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
         {candidates.map((candidate) => (

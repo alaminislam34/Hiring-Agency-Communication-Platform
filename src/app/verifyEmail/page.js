@@ -1,16 +1,16 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 
-export default function VerifyEmailPage() {
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email");
+export default function VerifyEmailPage({ searchParams }) {
+  const email = searchParams?.email;
   const [status, setStatus] = useState("verifying");
+
   useEffect(() => {
     if (!email) return setStatus("no-email");
+
     const verifyEmail = async () => {
       try {
         const res = await axios.post("/api/emailVerify", { email });
@@ -31,6 +31,7 @@ export default function VerifyEmailPage() {
       {status === "verifying" && (
         <p className="text-lg">Verifying your email...</p>
       )}
+
       {status === "success" && (
         <div>
           <CheckCircle className="text-green-500 w-14 h-14 mx-auto mb-3" />
@@ -41,23 +42,26 @@ export default function VerifyEmailPage() {
             You can now sign in to your account.
           </p>
           <Link
-            href={"/signin"}
-            className="btn bg-teal-500 hover:bg-teal-600 rounded-md"
+            href="/signin"
+            className="btn bg-teal-500 hover:bg-teal-600 rounded-md mt-4"
           >
             Sign In
           </Link>
         </div>
       )}
+
       {status === "failed" && (
         <p className="text-red-500">
           Verification failed. Please try again later.
         </p>
       )}
+
       {status === "error" && (
         <p className="text-red-500">
           An error occurred. Please contact support.
         </p>
       )}
+
       {status === "no-email" && (
         <p className="text-orange-500">
           No email provided in the verification link.

@@ -21,7 +21,7 @@ export const sendVerificationEmail = async (email) => {
   <div style="max-width: 600px; margin: 0 auto; padding: 30px; background: #f9f9f9; font-family: Arial, sans-serif; border: 1px solid #ddd; border-radius: 10px;">
     <div style="text-align: center;">
       <h1 style="color: #009688; margin-bottom: 10px;">Welcome to JobHive</h1>
-      <p style="font-size: 16px; color: #333;">Hi  <p className="text-sm">${email}</p>,</p>
+      <p style="font-size: 16px; color: #333;">Hi <p className="text-sm">${email}</p>,</p>
       <p style="font-size: 15px; color: #555; margin: 20px 0;">
         Thanks for registering with us! You're one step away from accessing all the opportunities on JobHive.
       </p>

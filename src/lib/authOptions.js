@@ -53,6 +53,7 @@ export const authOptions = {
           name,
           email,
           role: "jobSeeker",
+          isVerified: true,
           createdAt: new Date(),
         };
         const userCollection = dbConnect(collection.user_collection);

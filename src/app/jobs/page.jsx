@@ -115,6 +115,7 @@ const AllJobs = () => {
                             companyName: job.companyName,
                             location: job.location,
                             jobType: job.jobType,
+                            employerEmail: job.employerEmail,
                             salary: {
                               currency: job.currency,
                               min: job.minSalary,

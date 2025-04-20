@@ -15,6 +15,7 @@ export default function dbConnect(collectionName) {
         version: ServerApiVersion.v1,
         strict: true,
         deprecationErrors: true,
+        ssl: false,
       },
     });
     return client.db(process.env.DB_NAME).collection(collectionName);

@@ -5,17 +5,23 @@ import { useAppContext } from "@/Providers/AppProviders";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { HiOutlineUserCircle } from "react-icons/hi2";
-import { TbLayoutDashboard } from "react-icons/tb";
-import { VscSaveAll } from "react-icons/vsc";
-import { CiBookmarkCheck } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { FaCog, FaQuestionCircle } from "react-icons/fa";
-import { FaBriefcase, FaUsers } from "react-icons/fa6";
 import { RiMenu2Fill } from "react-icons/ri";
 import { GrClose } from "react-icons/gr";
-import { LiaReadme } from "react-icons/lia";
 import { useSession } from "next-auth/react";
+import { House } from "lucide-react";
+import { BriefcaseBusiness } from "lucide-react";
+import { SquarePlus } from "lucide-react";
+import { GalleryVertical } from "lucide-react";
+import { UserCog } from "lucide-react";
+import { CircleGauge } from "lucide-react";
+import { Bookmark } from "lucide-react";
+import { FileCheck } from "lucide-react";
+import { Bell } from "lucide-react";
+import { Users } from "lucide-react";
+import { Settings } from "lucide-react";
+import { CircleHelp } from "lucide-react";
+import { SquareChevronRight } from "lucide-react";
 
 const Navbar = () => {
   const session = useSession();
@@ -24,98 +30,106 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { currentUser, notificationCount, markNotificationsAsSeen } =
     useAppContext();
+
+  // Job Seeker NavLinks
   const jobSeekerNavLink = [
     {
       name: "Home",
       href: "/",
-      icon: <HiOutlineUserCircle />,
+      icon: <House size={18} />,
     },
     {
       name: "Jobs",
       href: "/jobs",
-      icon: <FaBriefcase />,
+      icon: <BriefcaseBusiness size={18} />,
     },
     {
       name: "Saved Jobs",
       href: "/savedJobs",
-      icon: <CiBookmarkCheck />,
+      icon: <Bookmark size={18} />,
     },
     {
       name: "Applied Jobs",
       href: "/appliedJobs",
-      icon: <VscSaveAll />,
+      icon: <FileCheck size={18} />,
     },
     {
       name: "Blogs",
       href: "/blogs",
-      icon: <LiaReadme />,
+      icon: <GalleryVertical size={18} />,
     },
   ];
   const NavLinks = [
     {
       name: "Home",
       href: "/",
+      icon: <House size={18} />,
     },
     {
       name: "Jobs",
       href: "/jobs",
+      icon: <BriefcaseBusiness size={18} />,
     },
     {
       name: "About Us",
       href: "/about",
+      icon: <SquareChevronRight size={18} />,
     },
 
     {
       name: "Blogs",
       href: "/blogs",
+      icon: <GalleryVertical size={18} />,
     },
   ];
   const adminNavLinks = [
     {
       name: "Home",
       href: "/",
+      icon: <House size={18} />,
     },
     {
       name: "Jobs",
       href: "/jobs",
+      icon: <BriefcaseBusiness size={18} />,
     },
     {
       name: "About Us",
       href: "/about",
+      icon: <SquareChevronRight size={18} />,
     },
-    {
-      name: "Reports",
-      href: "/adminReportsPage",
-    },
+
     {
       name: "Manage Users",
       href: "/manageUsers",
+      icon: <Users size={18} />,
     },
     {
       name: "Manage Jobs",
       href: "/manageJobs",
+      icon: <BriefcaseBusiness size={18} />,
     },
   ];
   const employerNavLinks = [
     {
       name: "Home",
       href: "/",
+      icon: <House size={18} />,
     },
     {
       name: "Jobs",
       href: "/jobs",
+      icon: <BriefcaseBusiness size={18} />,
     },
     {
       name: "Post Job",
       href: "/postJob",
-    },
-    {
-      name: "Reports",
-      href: "/employerReportsPage",
+      icon: <SquarePlus size={18} />,
     },
     {
       name: "Blogs",
       href: "/blogs",
+      icon: <GalleryVertical size={18} />,
     },
   ];
 
@@ -124,27 +138,27 @@ const Navbar = () => {
     {
       name: "Profile",
       href: "/dashboard/profile",
-      icon: <HiOutlineUserCircle />,
+      icon: <UserCog size={18} />,
     },
     {
       name: "Dashboard",
       href: "/dashboard",
-      icon: <TbLayoutDashboard />,
+      icon: <CircleGauge size={18} />,
     },
     {
       name: "Saved Jobs",
       href: "/dashboard/saved-jobs",
-      icon: <VscSaveAll />,
+      icon: <Bookmark size={18} />,
     },
     {
       name: "Applied Jobs",
       href: "/dashboard/applied-jobs",
-      icon: <CiBookmarkCheck />,
+      icon: <FileCheck size={18} />,
     },
     {
       name: "Notifications",
       href: "/dashboard/notifications",
-      icon: <IoIosNotificationsOutline />,
+      icon: <Bell size={18} />,
     },
   ];
   // employer links
@@ -152,32 +166,32 @@ const Navbar = () => {
     {
       name: "Profile",
       href: "/dashboard/profile",
-      icon: <HiOutlineUserCircle />,
+      icon: <UserCog size={18} />,
     },
     {
       name: "Dashboard",
       href: "/dashboard",
-      icon: <TbLayoutDashboard />,
+      icon: <CircleGauge size={18} />,
     },
     {
       name: "Jobs",
       href: "/dashboard/jobs",
-      icon: <FaBriefcase />,
+      icon: <BriefcaseBusiness size={18} />,
     },
     {
       name: "Candidates",
       href: "/dashboard/candidates",
-      icon: <FaUsers />,
+      icon: <Users size={18} />,
     },
     {
       name: "Settings",
       href: "/dashboard/settings",
-      icon: <FaCog />,
+      icon: <Settings size={18} />,
     },
     {
       name: "Help",
       href: "/dashboard/help",
-      icon: <FaQuestionCircle />,
+      icon: <CircleHelp size={18} />,
     },
   ];
   // admin links
@@ -185,27 +199,27 @@ const Navbar = () => {
     {
       name: "Profile",
       href: "/dashboard/profile",
-      icon: <HiOutlineUserCircle />,
+      icon: <UserCog size={18} />,
     },
     {
       name: "Admin Panel",
       href: "/dashboard",
-      icon: <TbLayoutDashboard />,
+      icon: <CircleGauge size={18} />,
     },
     {
       name: "Users",
       href: "/dashboard/users",
-      icon: <FaUsers />,
+      icon: <Users size={18} />,
     },
     {
       name: "Jobs",
       href: "/dashboard/jobs",
-      icon: <FaBriefcase />,
+      icon: <BriefcaseBusiness size={18} />,
     },
     {
       name: "Settings",
       href: "/dashboard/settings",
-      icon: <FaCog />,
+      icon: <Settings size={18} />,
     },
   ];
 
@@ -246,33 +260,53 @@ const Navbar = () => {
                 </li>
 
                 {currentUser?.role === "jobSeeker"
-                  ? jobSeekerNavLink.map(({ href, name }) => (
+                  ? jobSeekerNavLink.map(({ href, name, icon }) => (
                       <li
                         key={href}
                         className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
                           pathname === href ? "bg-white text-teal-800" : ""
                         }`}
                       >
-                        <Link href={href} className="">
+                        <Link href={href} className="flex items-center gap-2">
+                          <span
+                            className={`p-1 ${
+                              pathname === href
+                                ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
+                                : ""
+                            } `}
+                          >
+                            {" "}
+                            {icon}
+                          </span>
                           {name}
                         </Link>
                       </li>
                     ))
                   : currentUser?.role === "employer"
-                  ? employerNavLinks.map(({ href, name }) => (
+                  ? employerNavLinks.map(({ href, name, icon }) => (
                       <li
                         key={href}
                         className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
                           pathname === href ? "bg-white text-teal-800" : ""
                         }`}
                       >
-                        <Link href={href} className="">
+                        <Link href={href} className="flex items-center gap-2">
+                          <span
+                            className={`p-1 ${
+                              pathname === href
+                                ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
+                                : ""
+                            } `}
+                          >
+                            {" "}
+                            {icon}
+                          </span>
                           {name}
                         </Link>
                       </li>
                     ))
                   : currentUser?.role === "admin"
-                  ? adminNavLinks.map(({ href, name }) => (
+                  ? adminNavLinks.map(({ href, name, icon }) => (
                       <li
                         key={href}
                         className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
@@ -280,18 +314,38 @@ const Navbar = () => {
                         }`}
                       >
                         <Link href={href} className="">
+                          <span
+                            className={`p-1 ${
+                              pathname === href
+                                ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
+                                : ""
+                            } `}
+                          >
+                            {" "}
+                            {icon}
+                          </span>
                           {name}
                         </Link>
                       </li>
                     ))
-                  : NavLinks.map(({ href, name }) => (
+                  : NavLinks.map(({ href, name, icon }) => (
                       <li
                         key={href}
                         className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
                           pathname === href ? "bg-white text-teal-800" : ""
                         }`}
                       >
-                        <Link href={href} className="">
+                        <Link href={href} className="flex items-center gap-2">
+                          <span
+                            className={`p-1 ${
+                              pathname === href
+                                ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
+                                : ""
+                            } `}
+                          >
+                            {" "}
+                            {icon}
+                          </span>
                           {name}
                         </Link>
                       </li>
@@ -346,14 +400,15 @@ const Navbar = () => {
                       </Link>
                     </li>
                   ))
-                : NavLinks.map(({ href, name }) => (
+                : NavLinks.map(({ href, name, icon }) => (
                     <li
                       key={href}
                       className={`hover:text-teal-600 ${
                         pathname === href ? "text-teal-600" : ""
                       } py-1 px-2`}
                     >
-                      <Link href={href} className="">
+                      <Link href={href} className="flex items-center gap-2">
+                        {icon}
                         {name}
                       </Link>
                     </li>
@@ -368,7 +423,7 @@ const Navbar = () => {
                 href={currentUser ? "/dashboard/notifications" : "/signin"}
                 className="flex items-center justify-center text-2xl hover:text-teal-700 cursor-pointer"
               >
-                <IoIosNotificationsOutline />
+                <Bell />
                 {/* Badge - only shown if count > 0 */}
                 {notificationCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full animate-bounce">

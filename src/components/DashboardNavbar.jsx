@@ -211,7 +211,17 @@ const DashboardNavbar = () => {
                             : "hover: text-gray-500"
                         }`}
                       >
-                        <span className="p-1"> {icon}</span>
+                        {" "}
+                        <span
+                          className={`p-1 ${
+                            pathname === href
+                              ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
+                              : ""
+                          } `}
+                        >
+                          {" "}
+                          {icon}
+                        </span>
                         {name}
                       </Link>
                     </li>
@@ -254,7 +264,17 @@ const DashboardNavbar = () => {
                             : "hover: text-gray-500"
                         }`}
                       >
-                        <span className="p-1"> {icon}</span>
+                        {" "}
+                        <span
+                          className={`p-1 ${
+                            pathname === href
+                              ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
+                              : ""
+                          } `}
+                        >
+                          {" "}
+                          {icon}
+                        </span>
                         {name}
                       </Link>
                     </li>

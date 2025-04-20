@@ -18,24 +18,32 @@ export const employerNavLinks = [
   {
     name: "Overview",
     href: "/dashboard",
-    icon: <ChartLine />,
+    icon: <ChartLine size={18} />,
   },
-  { name: "Jobs", href: "/dashboard/jobs", icon: <BriefcaseBusiness /> },
+  {
+    name: "Jobs",
+    href: "/dashboard/jobs",
+    icon: <BriefcaseBusiness size={18} />,
+  },
   {
     name: "Candidates",
     href: "/dashboard/candidates",
-    icon: <Users />,
+    icon: <Users size={18} />,
   },
-  { name: "Settings", href: "/dashboard/settings", icon: <Settings /> },
+  {
+    name: "Settings",
+    href: "/dashboard/settings",
+    icon: <Settings size={18} />,
+  },
   {
     name: "Help",
     href: "/dashboard/help",
-    icon: <CircleHelp />,
+    icon: <CircleHelp size={18} />,
   },
   {
     name: "Meetings",
     href: "/dashboard/Meeting",
-    icon: <Video />,
+    icon: <Video size={18} />,
   },
 ];
 
@@ -43,45 +51,53 @@ export const jobSeekerNavLinks = [
   {
     name: "Overview",
     href: "/dashboard",
-    icon: <ChartLine />,
+    icon: <ChartLine size={18} />,
   },
   {
     name: "Applied-Jobs",
     href: "/dashboard/applied-jobs",
-    icon: <SquareCheckBig />,
+    icon: <SquareCheckBig size={18} />,
   },
   {
     name: "Notification",
     href: "/dashboard/notifications",
-    icon: <Bell />,
+    icon: <Bell size={18} />,
   },
   {
     name: "Chatting",
     href: "/dashboard/chatbox",
-    icon: <MessageSquareText />,
+    icon: <MessageSquareText size={18} />,
   },
   {
     name: "Meetings",
     href: "/dashboard/meeting",
-    icon: <Video />,
+    icon: <Video size={18} />,
   },
 ];
 export const adminNavLinks = [
   {
     name: "Overview",
     href: "/dashboard",
-    icon: <ChartLine />,
+    icon: <ChartLine size={18} />,
   },
   {
     name: "Users",
     href: "/dashboard/users",
-    icon: <Users />,
+    icon: <Users size={18} />,
   },
-  { name: "Jobs", href: "/dashboard/allJobs", icon: <BriefcaseBusiness /> },
-  { name: "Settings", href: "/dashboard/settings", icon: <Settings /> },
+  {
+    name: "Jobs",
+    href: "/dashboard/allJobs",
+    icon: <BriefcaseBusiness size={18} />,
+  },
+  {
+    name: "Settings",
+    href: "/dashboard/settings",
+    icon: <Settings size={18} />,
+  },
   {
     name: "Meetings",
     href: "/dashboard/Meeting",
-    icon: <Video />,
+    icon: <Video size={18} />,
   },
 ];

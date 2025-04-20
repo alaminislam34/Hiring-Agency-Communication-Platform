@@ -18,11 +18,12 @@ import { LiaReadme } from "react-icons/lia";
 import { useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const session = useSession();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { currentUser } = useAppContext();
-  const session = useSession();
+  const { currentUser, notificationCount, markNotificationsAsSeen } =
+    useAppContext();
   const jobSeekerNavLink = [
     {
       name: "Home",
@@ -362,16 +363,22 @@ const Navbar = () => {
 
           {/* Navbar End (Search & Sign In) */}
           <div className="navbar-end space-x-4">
-            <div>
+            <div className="relative">
               <Link
                 href={currentUser ? "/dashboard/notifications" : "/signin"}
                 className="flex items-center justify-center text-2xl hover:text-teal-700 cursor-pointer"
               >
                 <IoIosNotificationsOutline />
+                {/* Badge - only shown if count > 0 */}
+                {notificationCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full animate-bounce">
+                    {notificationCount}
+                  </span>
+                )}
               </Link>
             </div>
 
-            {currentUser && session?.data.user ? (
+            {currentUser && session?.data?.user ? (
               <div className="flex items-center gap-2 relative">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}

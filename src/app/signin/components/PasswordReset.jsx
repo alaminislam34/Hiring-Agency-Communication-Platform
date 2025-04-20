@@ -127,7 +127,7 @@ const PasswordReset = ({ setResetPassword, email }) => {
     <div className="w-full">
       {/* Method Toggle */}
       <div className="flex gap-4 mb-4 pb-4 items-center justify-center">
-        {["oldPassword", "otp"].map((m) => (
+        {["otp"].map((m) => (
           <button
             key={m}
             type="button"

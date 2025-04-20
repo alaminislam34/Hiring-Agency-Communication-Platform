@@ -3,7 +3,7 @@ export const collection = {
   user_collection: "users",
   jobsCollection: "jobs",
   appliedCollection: "applied-jobs",
-  savedJobsCollection: "saved-jobs",
+  interviewsCollection: "interviews",
 };
 const uri = process.env.MONGODB_URI;
 

@@ -1,58 +1,68 @@
+"use client";
 import { RxCross2 } from "react-icons/rx";
 import { IoTimeOutline } from "react-icons/io5";
+import { useNotifications } from "@/Providers/NotificationContext";
+import { useEffect } from "react";
+import { useAppContext } from "@/Providers/AppProviders";
+
 export default function Notifications() {
-  const applications = [
-    { id: 1, name: "Henry Wilson", category: "Product Designer" },
-    { id: 2, name: "Emily Johnson", category: "Software Engineer" },
-    { id: 3, name: "Michael Brown", category: "Data Analyst" },
-    { id: 4, name: "Sophia Davis", category: "Marketing Specialist" },
-    { id: 5, name: "James Anderson", category: "UX/UI Designer" },
-    { id: 6, name: "Olivia Martinez", category: "Project Manager" },
-    { id: 7, name: "William Taylor", category: "Frontend Developer" },
-    { id: 8, name: "Ava Thomas", category: "Backend Developer" },
-    { id: 9, name: "Ethan White", category: "Cybersecurity Analyst" },
-    { id: 10, name: "Mia Harris", category: "Business Analyst" },
-  ];
+  const { notifications, clearNotifications } = useNotifications();
+  const { markNotificationsAsSeen } = useAppContext(); // 👈 Get the function
+
+  // ✅ Mark notifications as seen when the page loads
+  useEffect(() => {
+    markNotificationsAsSeen();
+  }, []);
+
+  const formatTime = (isoDate) => {
+    const date = new Date(isoDate);
+    const now = new Date();
+    const diff = Math.floor((now - date) / 60000);
+    if (diff < 1) return "Just now";
+    if (diff < 60) return `${diff} min ago`;
+    if (diff < 1440) return `${Math.floor(diff / 60)} hr ago`;
+    return date.toLocaleDateString();
+  };
 
   return (
     <div className="mt-6 space-y-2">
-      {applications.map((item) => (
-        <div
-          key={item.id}
-          className="flex flex-col rounded-lg transition duration-200"
-        >
-          <div className="flex justify-between items-center">
-            <div className="flex justify-center items-center gap-6">
-              <div className="bg-gray-300 p-0.5 rounded-md">
-                <RxCross2 />
+      {notifications.length === 0 ? (
+        <p className="text-sm text-gray-500">No notifications yet.</p>
+      ) : (
+        <>
+          {notifications.map((item) => (
+            <div key={item.id} className="bg-white p-3 rounded shadow">
+              <div className="flex justify-between items-center">
+                <div className="flex gap-4 items-center">
+                  <div className="bg-gray-200 p-1 rounded">
+                    <RxCross2 />
+                  </div>
+                  <span className="bg-[#00847d] text-white px-2 py-0.5 rounded text-xs">
+                    New Job Posted
+                  </span>
+                </div>
+                <div className="flex items-center gap-1 text-xs text-gray-500">
+                  <IoTimeOutline />
+                  {formatTime(item.time)}
+                </div>
               </div>
-              <div className="">
-                <button className="text-xs px-1 py-0.5 border bg-[#00847d] text-white rounded-md">
-                  Joined New User
-                </button>
+              <div className="pl-11 mt-1">
+                <h6 className="font-semibold">{item.title}</h6>
+                <p className="text-sm text-gray-600">{item.message}</p>
+                <p className="text-xs text-red-600 font-semibold">
+                  {item.company}
+                </p>
               </div>
             </div>
-
-            {/* Notification Received Time */}
-            <div className="flex justify-center items-center gap-1 text-gray-500">
-              <span className="text-xs">
-                <IoTimeOutline />
-              </span>{" "}
-              <span className="text-xs">30 January 2025 at 10:20 Am</span>
-            </div>
-          </div>
-          <div className="pl-11 pt-0.5 space-y-0.5">
-            <h6 className="font-semibold">New Application: {item.name}</h6>
-            <p className="text-gray-600 text-sm">
-              {" "}
-              You’ve received a new job application! Review the applicant’s
-              details to take the next step in the hiring process.
-            </p>
-            <h6 className="font-semibold text-red-600 text-xs">{item.name}</h6>
-          </div>
-          <div className="divider"></div>
-        </div>
-      ))}
+          ))}
+          <button
+            onClick={clearNotifications}
+            className="text-sm text-red-500 underline mt-2"
+          >
+            Clear All Notifications
+          </button>
+        </>
+      )}
     </div>
   );
 }

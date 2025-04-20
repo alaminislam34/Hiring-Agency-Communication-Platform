@@ -110,7 +110,7 @@ export default function GeminiComponent() {
             {/* Custom Q&A */}
 
             <div
-              className={`overflow-hidden duration-300 ${
+              className={`overflow-y-auto duration-300 ${
                 showQ ? "h-24 py-2" : "h-0"
               } flex flex-wrap gap-2 justify-center bg-gradient-to-tr from-teal-500 via-teal-600 to-teal-600 border-teal-400 px-2 border-b`}
             >
@@ -187,7 +187,7 @@ export default function GeminiComponent() {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Ask me anything..."
-                className="border border-gray-300 p-2 rounded-lg focus:outline-none bg-white w-[200px]"
+                className="border border-gray-300 p-2 rounded-lg focus:outline-none bg-white w-[150px] md:w-[200px] "
                 disabled={loading}
               />
             </label>

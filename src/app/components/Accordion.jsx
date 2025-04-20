@@ -1,8 +1,7 @@
 "use client";
-
-import { motion } from "framer-motion";
+import Lottie from "react-lottie";
 import SectionTitle from "./SectionTitle";
-
+import faq from "../../../public/faq.json";
 export default function Accordion() {
   const faqs = [
     {
@@ -32,33 +31,31 @@ export default function Accordion() {
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
-  };
-
   return (
-    <div className="p-6">
+    <div className="">
       <SectionTitle title={"Frequently Asked Questions"} />
-      <div className="space-y-4">
-        {faqs.map((faq, index) => (
-          <motion.div
-            key={index}
-            className="collapse collapse-plus border border-gray-300 rounded-lg"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.8 }}
-            variants={containerVariants}
-          >
-            <input type="checkbox" />
-            <div className="collapse-title text-gray-700 bg-teal-200 text-lg font-medium">
-              {faq.question}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div className="-rotate-y-180 pointer-events-none">
+          <Lottie
+            options={{ animationData: faq, loop: true, autoplay: true }}
+          ></Lottie>
+        </div>
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className="collapse collapse-plus border duration-500 border-gray-300 rounded-lg"
+            >
+              <input type="checkbox" className="" />
+              <div className="collapse-title text-gray-700 bg-teal-200 text-lg font-medium">
+                {faq.question}
+              </div>
+              <div className="collapse-content">
+                <p className="text-gray-700 pt-2 text-sm">{faq.answer}</p>
+              </div>
             </div>
-            <div className="collapse-content">
-              <p className="text-gray-700 pt-2">{faq.answer}</p>
-            </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -127,20 +127,13 @@ const PasswordReset = ({ setResetPassword, email }) => {
     <div className="w-full">
       {/* Method Toggle */}
       <div className="flex gap-4 mb-4 pb-4 items-center justify-center">
-        {["otp"].map((m) => (
-          <button
-            key={m}
-            type="button"
-            onClick={() => setMethod(m)}
-            className={`px-3 py-2 rounded-xl border cursor-pointer ${
-              method === m
-                ? "bg-teal-600 text-white"
-                : "bg-transparent text-gray-600"
-            }`}
-          >
-            {m === "oldPassword" ? "Use Old Password" : "Reset with OTP"}
-          </button>
-        ))}
+        <button
+          type="button"
+          className={`px-3 py-2 rounded-xl border cursor-pointer bg-teal-600 text-white
+           `}
+        >
+          {"Reset with OTP"}
+        </button>
       </div>
 
       <form onSubmit={handleResetPassword} className="flex flex-col gap-4">
@@ -154,7 +147,7 @@ const PasswordReset = ({ setResetPassword, email }) => {
           </p>
         )}
 
-        {/* Old Password Input */}
+        {/* Old Password Input
         {method === "oldPassword" && (
           <PasswordField
             label="Old Password"
@@ -162,67 +155,66 @@ const PasswordReset = ({ setResetPassword, email }) => {
             show={showPassword.old}
             toggle={() => togglePasswordVisibility("old")}
           />
-        )}
+        )} */}
 
         {/* OTP Fields */}
-        {method === "otp" && (
-          <>
-            <div className="">
-              <label className="flex-1 flex flex-col gap-2">
-                <span className="text-gray-500 flex flex-row justify-between">
-                  OTP Code{" "}
-                  {otpSent ? (
-                    <p className=" flex flex-row gap-2 items-center">
-                      Check email <LuMail className="" />
-                    </p>
-                  ) : verifyLoading ? (
-                    <span className="loading loading-dots"></span>
-                  ) : verify ? (
-                    <p className="flex flex-row gap-2 items-center">
-                      <LucideVerified className="text-green-600" /> OTP verified
-                    </p>
-                  ) : (
-                    ""
-                  )}
-                </span>
-                <div className="flex flex-col md:flex-wrap md:flex-row gap-2 w-full">
-                  <input
-                    type="text"
-                    name="otp"
-                    disabled={verify}
-                    value={otpCode}
-                    onChange={(e) => setOtpCode(e.target.value)}
-                    className="py-2 px-4 w-full rounded-xl border border-teal-500/50 bg-teal-100"
-                  />
+        <>
+          <div className="">
+            <label className="flex-1 flex flex-col gap-2">
+              <span className="text-gray-500 flex flex-row justify-between">
+                OTP Code{" "}
+                {otpSent ? (
+                  <p className=" flex flex-row gap-2 items-center">
+                    Check email <LuMail className="" />
+                  </p>
+                ) : verifyLoading ? (
+                  <span className="loading loading-dots"></span>
+                ) : verify ? (
+                  <p className="flex flex-row gap-2 items-center">
+                    <LucideVerified className="text-green-600" /> OTP verified
+                  </p>
+                ) : (
+                  ""
+                )}
+              </span>
+              <div className="flex flex-col md:flex-wrap md:flex-row gap-2 w-full">
+                <input
+                  required
+                  type="text"
+                  name="otp"
+                  disabled={verify}
+                  value={otpCode}
+                  onChange={(e) => setOtpCode(e.target.value)}
+                  className="py-2 px-4 w-full rounded-xl border border-teal-500/50 bg-teal-100"
+                />
 
-                  <div className="flex flex-col gap-2">
-                    <button
-                      type="button"
-                      onClick={handleSendOTP}
-                      className={`px-4 py-2 bg-teal-600 text-white rounded-xl  ${
-                        loading2
-                          ? "cursor-not-allowed"
-                          : "cursor-pointer hover:bg-teal-700"
-                      }`}
-                    >
-                      {otpSent ? (
-                        loading2 ? (
-                          <span className="loading loading-dots"></span>
-                        ) : (
-                          "Resend OTP"
-                        )
-                      ) : loading2 ? (
+                <div className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={handleSendOTP}
+                    className={`px-4 py-2 bg-teal-600 text-white rounded-xl  ${
+                      loading2
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer hover:bg-teal-700"
+                    }`}
+                  >
+                    {otpSent ? (
+                      loading2 ? (
                         <span className="loading loading-dots"></span>
                       ) : (
-                        "Send OTP"
-                      )}
-                    </button>
-                  </div>
+                        "Resend OTP"
+                      )
+                    ) : loading2 ? (
+                      <span className="loading loading-dots"></span>
+                    ) : (
+                      "Send OTP"
+                    )}
+                  </button>
                 </div>
-              </label>
-            </div>
-          </>
-        )}
+              </div>
+            </label>
+          </div>
+        </>
 
         {/* New Password */}
 

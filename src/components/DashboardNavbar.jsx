@@ -10,13 +10,8 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { FaChevronLeft, FaChevronRight, FaRightLeft } from "react-icons/fa6";
 import { MdClose } from "react-icons/md";
-import { RiMenu2Line, RiNotificationLine } from "react-icons/ri";
-import { HiOutlineUserCircle } from "react-icons/hi2";
-import { TbLayoutDashboard } from "react-icons/tb";
-import { VscSaveAll } from "react-icons/vsc";
-import { CiBookmarkCheck } from "react-icons/ci";
+import { RiMenu2Line } from "react-icons/ri";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { FaCog, FaQuestionCircle } from "react-icons/fa";
 import { FaBriefcase, FaUsers } from "react-icons/fa6";
 import { FiFileText } from "react-icons/fi";
 import {
@@ -25,7 +20,17 @@ import {
   LuSquareUserRound,
 } from "react-icons/lu";
 import { SiReaddotcv } from "react-icons/si";
-import { IoHelp, IoNotifications, IoSettingsOutline } from "react-icons/io5";
+import { IoHelp, IoSettingsOutline } from "react-icons/io5";
+import { UserCog } from "lucide-react";
+import { FileCheck } from "lucide-react";
+import { Bookmark } from "lucide-react";
+import { CalendarDays } from "lucide-react";
+import { FileCheck2 } from "lucide-react";
+import { Settings } from "lucide-react";
+import { CircleHelp } from "lucide-react";
+import { TableProperties } from "lucide-react";
+import { Users } from "lucide-react";
+import { Bell } from "lucide-react";
 
 const DashboardNavbar = () => {
   const { data: session } = useSession();
@@ -40,70 +45,83 @@ const DashboardNavbar = () => {
     {
       label: "My Profile",
       href: "/dashboard/profile",
-      icon: <LuSquareUserRound />,
+      icon: <UserCog />,
     },
     {
       label: "My Applications",
       href: "/dashboard/applications",
-      icon: <FiFileText />,
+      icon: <FileCheck />,
     },
     {
       label: "Saved Jobs",
       href: "/dashboard/savedJobs",
-      icon: <LuBookmarkCheck />,
+      icon: <Bookmark />,
     },
     {
       label: "Interview Schedules",
       href: "/dashboard/interviews",
-      icon: <LuCalendarDays />,
+      icon: <CalendarDays />,
     },
+
     {
-      label: "Resume Builder",
-      href: "/dashboard/myresume",
-      icon: <SiReaddotcv />,
+      label: "Apply Employer",
+      href: "/dashboard/applyEmployer",
+      icon: <FileCheck2 />,
     },
     {
       label: "Settings",
       href: "/dashboard/settings",
-      icon: <IoSettingsOutline />,
+      icon: <Settings />,
     },
-    { label: "Help & Support", href: "/dashboard/support", icon: <IoHelp /> },
+    {
+      label: "Help & Support",
+      href: "/dashboard/support",
+      icon: <CircleHelp />,
+    },
   ];
   const employerLinks = [
     {
       label: "My Profile",
       href: "/dashboard/profile",
-      icon: <LuSquareUserRound />,
+      icon: <UserCog />,
     },
     {
       label: "My Jobs",
       href: "/dashboard/jobs",
-      icon: <FaBriefcase />,
+      icon: <TableProperties />,
     },
     {
       label: "Candidates",
       href: "/dashboard/candidates",
-      icon: <FaUsers />,
+      icon: <Users />,
     },
     {
       label: "Settings",
       href: "/dashboard/settings",
-      icon: <IoSettingsOutline />,
+      icon: <Settings />,
     },
-    { label: "Help & Support", href: "/dashboard/support", icon: <IoHelp /> },
+    {
+      label: "Help & Support",
+      href: "/dashboard/support",
+      icon: <CircleHelp />,
+    },
   ];
   const adminLinks = [
     {
       label: "My Profile",
       href: "/dashboard/profile",
-      icon: <LuSquareUserRound />,
+      icon: <UserCog />,
+    },
+    {
+      label: "Employer Applications",
+      href: "/dashboard/employerApplications",
+      icon: <Users />,
     },
     {
       label: "Settings",
       href: "/dashboard/settings",
-      icon: <IoSettingsOutline />,
+      icon: <Settings />,
     },
-    { label: "Help & Support", href: "/dashboard/support", icon: <IoHelp /> },
   ];
   // Click Outside to Close Dropdown
   useEffect(() => {
@@ -131,7 +149,7 @@ const DashboardNavbar = () => {
   }, []);
 
   return (
-    <div className="flex justify-between pr-4 py-2 items-center bg-white shadow-xl rounded-xl lg:mt-2 lg:mx-4 lg:px-4">
+    <div className="flex justify-between px-4 py-2 items-center bg-white shadow-xl rounded-xl lg:mt-2 lg:mx-4 lg:px-4">
       {/* Left Icon */}
       <div className="bg-[#00847D] rounded-full hidden lg:block">
         <button
@@ -141,13 +159,16 @@ const DashboardNavbar = () => {
           {showName ? <FaChevronLeft /> : <FaChevronRight />}
         </button>
       </div>
-      <div className="lg:hidden block pl-2">
+      <div className="lg:hidden block">
         {/* Mobile Navigation */}
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
             {/* Page content here */}
-            <label htmlFor="my-drawer" className="btn drawer-button">
+            <label
+              htmlFor="my-drawer"
+              className="btn drawer-button bg-teal-500 hover:bg-teal-600 hover:text-white"
+            >
               <RiMenu2Line />
             </label>
           </div>
@@ -158,7 +179,7 @@ const DashboardNavbar = () => {
               className="drawer-overlay"
             ></label>
 
-            <ul className="menu bg-white text-base-content min-h-full w-80 p-4">
+            <ul className="menu bg-white text-base-content min-h-full w-80 ">
               <div className="p-2">
                 <button
                   onClick={() =>
@@ -166,13 +187,16 @@ const DashboardNavbar = () => {
                   }
                   className="absolute top-2 right-2 z-30"
                 >
-                  <MdClose className="text-xl " />
+                  <MdClose className="text-xl" />
                 </button>
               </div>
               {/* Sidebar content here */}
-              <li>
-                <Link href={"/"} className=" text-lg md:text-xl">
-                  <img src="/jobhive.png" alt="logo" className="w-32" />
+              <li className="mb-4">
+                <Link href={"/"} className="">
+                  <img src="/navLogo2.jpg" alt="logo" className="w-16" />
+                  <p className="text-3xl font-bold">
+                    <span className="text-teal-600">Job</span>Hive
+                  </p>
                 </Link>
               </li>
               {currentUser?.role === "employer"
@@ -182,10 +206,12 @@ const DashboardNavbar = () => {
                       <Link
                         href={href}
                         className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                          pathname === href ? "" : "hover: text-gray-500"
+                          pathname === href
+                            ? "bg-gradient-to-br from-teal-300 via-teal-200 to-teal-200"
+                            : "hover: text-gray-500"
                         }`}
                       >
-                        {icon}
+                        <span className="p-1"> {icon}</span>
                         {name}
                       </Link>
                     </li>
@@ -196,11 +222,22 @@ const DashboardNavbar = () => {
                       {" "}
                       <Link
                         href={href}
-                        className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                          pathname === href ? "" : "hover: text-gray-500"
+                        className={`flex items-center gap-3 px-2 py-2 rounded-md transition hover:bg-teal-300 ${
+                          pathname === href
+                            ? "bg-gradient-to-r from-teal-300 via-teal-200 to-teal-200"
+                            : " text-gray-500"
                         }`}
                       >
-                        {icon}
+                        <span
+                          className={`p-1 ${
+                            pathname === href
+                              ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
+                              : ""
+                          } `}
+                        >
+                          {" "}
+                          {icon}
+                        </span>
                         {name}
                       </Link>
                     </li>
@@ -212,10 +249,12 @@ const DashboardNavbar = () => {
                       <Link
                         href={href}
                         className={`flex items-center gap-3 px-2 py-2 rounded-md transition ${
-                          pathname === href ? "" : "hover: text-gray-500"
+                          pathname === href
+                            ? "bg-gradient-to-br from-teal-300 via-teal-200 to-teal-200"
+                            : "hover: text-gray-500"
                         }`}
                       >
-                        {icon}
+                        <span className="p-1"> {icon}</span>
                         {name}
                       </Link>
                     </li>
@@ -233,13 +272,11 @@ const DashboardNavbar = () => {
             onClick={() => setShowNotification(!showNotification)}
             className="hover:text-gray-800 cursor-pointer"
           >
-            <IoIosNotificationsOutline className="text-2xl text-gray-600" />
+            <Bell className="text-2xl text-gray-600" />
           </button>
           <div
             className={`absolute top-12 right-0 ${
-              showNotification
-                ? "scale-100 opacity-100"
-                : "scale-50 opacity-0 pointer-events-none"
+              showNotification ? "scale-100 " : "scale-95 pointer-events-none"
             } duration-300 right-2 w-72 max-h-80 overflow-y-auto rounded-xl bg-white z-20 shadow-lg border border-gray-300`}
           >
             {showNotification && (
@@ -348,9 +385,12 @@ const DashboardNavbar = () => {
         </li>
 
         {/* User Name */}
-        <li className="hidden sm:block">
-          <p className="text-gray-700 text-sm font-medium">
-            {currentUser?.name}
+        <li className="">
+          <p className="text-gray-700 text-sm font-medium flex flex-col justify-end items-end">
+            {currentUser?.userName || currentUser?.name}
+            <span className="text-gray-500 text-xs first-letter:uppercase">
+              {currentUser?.role}
+            </span>
           </p>
         </li>
 
@@ -370,22 +410,24 @@ const DashboardNavbar = () => {
               isOpen
                 ? "opacity-100 scale-100"
                 : "scale-50 pointer-events-none opacity-0"
-            } duration-500 w-56 min-h-52 border border-gray-300 rounded-md overflow-hidden bg-white shadow-lg z-20`}
+            } duration-500 w-64 min-h-52 border border-gray-300 rounded-md overflow-hidden bg-white shadow-lg z-20`}
           >
             <ul className=" text-gray-600">
               {/* User Info */}
               <li className="border-b border-gray-300 p-4">
-                <p className="font-medium">{currentUser?.name}</p>
-                <span className="text-gray-500">{currentUser?.email}</span>
+                <p className="font-medium text-lg">{currentUser?.name}</p>
+                <span className="text-gray-500 text-sm">
+                  {currentUser?.email}
+                </span>
               </li>
 
               {currentUser?.role === "jobSeeker"
                 ? jobSeekerLinks.map(({ label, href, icon }) => (
                     <li
                       key={label}
-                      className={`py-2 px-3 text-sm text-[#105269] ${
-                        pathname === href ? "bg-[#cbfeff]" : ""
-                      } hover:bg-[#cbfeff] duration-300 cursor-pointer`}
+                      className={`py-2 px-3 text-sm text-gray-500 ${
+                        pathname === href ? "bg-teal-200" : ""
+                      } hover:bg-teal-200 duration-300 cursor-pointer`}
                     >
                       <Link href={href} className="flex items-center gap-2">
                         {icon} {label}
@@ -396,9 +438,9 @@ const DashboardNavbar = () => {
                 ? employerLinks.map(({ label, href, icon }) => (
                     <li
                       key={label}
-                      className={`py-2 px-3 text-sm text-[#105269] ${
-                        pathname === href ? "bg-[#cbfeff]" : ""
-                      } hover:bg-[#cbfeff] duration-300 cursor-pointer`}
+                      className={`py-2 px-3 text-sm text-gray-500 ${
+                        pathname === href ? "bg-teal-200" : ""
+                      } hover:bg-teal-200 duration-300 cursor-pointer`}
                     >
                       <Link href={href} className="flex items-center gap-2">
                         {icon} {label}
@@ -409,9 +451,9 @@ const DashboardNavbar = () => {
                 ? adminLinks.map(({ label, href, icon }) => (
                     <li
                       key={label}
-                      className={`py-2 px-3 text-sm text-[#105269] ${
-                        pathname === href ? "bg-[#cbfeff]" : ""
-                      } hover:bg-[#cbfeff] duration-300 cursor-pointer`}
+                      className={`py-2 px-3 text-sm text-gray-500 ${
+                        pathname === href ? "bg-teal-200" : ""
+                      } hover:bg-teal-200 duration-300 cursor-pointer`}
                     >
                       <Link href={href} className="flex items-center gap-2">
                         {icon} {label}

@@ -4,6 +4,7 @@ export const collection = {
   jobsCollection: "jobs",
   appliedCollection: "applied-jobs",
   interviewsCollection: "interviews",
+  applyForEmployerCollection: "employerApply",
 };
 const uri = process.env.MONGODB_URI;
 

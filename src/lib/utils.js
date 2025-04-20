@@ -1,17 +1,14 @@
 import { clsx } from "clsx";
-import {
-  FaCog,
-  FaHome,
-  FaQuestionCircle,
-  FaTachometerAlt,
-} from "react-icons/fa";
-import { FaBriefcase, FaUsers } from "react-icons/fa6";
-import { IoIosNotificationsOutline } from "react-icons/io";
-import { IoChatbubblesSharp } from "react-icons/io5";
-import { LuBookmarkCheck, LuSquareUserRound } from "react-icons/lu";
-import { RiProfileLine } from "react-icons/ri";
 import { twMerge } from "tailwind-merge";
-import { BsPersonWorkspace } from "react-icons/bs";
+import { BriefcaseBusiness } from "lucide-react";
+import { Users } from "lucide-react";
+import { Settings } from "lucide-react";
+import { CircleHelp } from "lucide-react";
+import { Video } from "lucide-react";
+import { SquareCheckBig } from "lucide-react";
+import { Bell } from "lucide-react";
+import { MessageSquareText } from "lucide-react";
+import { ChartLine } from "lucide-react";
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -19,77 +16,72 @@ export function cn(...inputs) {
 
 export const employerNavLinks = [
   {
-    name: "Home",
+    name: "Overview",
     href: "/dashboard",
-    icon: <FaHome />,
+    icon: <ChartLine />,
   },
-  { name: "Jobs", href: "/dashboard/jobs", icon: <FaBriefcase /> },
+  { name: "Jobs", href: "/dashboard/jobs", icon: <BriefcaseBusiness /> },
   {
     name: "Candidates",
     href: "/dashboard/candidates",
-    icon: <FaUsers />,
+    icon: <Users />,
   },
-  { name: "Settings", href: "/dashboard/settings", icon: <FaCog /> },
+  { name: "Settings", href: "/dashboard/settings", icon: <Settings /> },
   {
     name: "Help",
     href: "/dashboard/help",
-    icon: <FaQuestionCircle />,
+    icon: <CircleHelp />,
   },
   {
     name: "Meetings",
     href: "/dashboard/Meeting",
-    icon: <IoChatbubblesSharp />,
+    icon: <Video />,
   },
 ];
 
 export const jobSeekerNavLinks = [
   {
-    name: "Home",
+    name: "Overview",
     href: "/dashboard",
-    icon: <FaHome />,
+    icon: <ChartLine />,
   },
   {
     name: "Applied-Jobs",
     href: "/dashboard/applied-jobs",
-    icon: <LuBookmarkCheck />,
+    icon: <SquareCheckBig />,
   },
   {
     name: "Notification",
     href: "/dashboard/notifications",
-    icon: <IoIosNotificationsOutline />,
-  },
-  {
-    name: "My Resume",
-    href: "/dashboard/myresume",
-    icon: <RiProfileLine />,
+    icon: <Bell />,
   },
   {
     name: "Chatting",
     href: "/dashboard/chatbox",
-    icon: <IoChatbubblesSharp />,
+    icon: <MessageSquareText />,
   },
   {
     name: "Meetings",
     href: "/dashboard/meeting",
-    icon: <IoChatbubblesSharp />,
+    icon: <Video />,
   },
 ];
 export const adminNavLinks = [
   {
-    name: "Home",
+    name: "Overview",
     href: "/dashboard",
-    icon: <FaTachometerAlt />,
+    icon: <ChartLine />,
   },
   {
     name: "Users",
     href: "/dashboard/users",
-    icon: <LuSquareUserRound />,
+    icon: <Users />,
   },
-  { name: "Jobs", href: "/dashboard/allJobs", icon: <BsPersonWorkspace /> },
-  { name: "Settings", href: "/dashboard/settings", icon: <FaCog /> },
+  { name: "Jobs", href: "/dashboard/allJobs", icon: <BriefcaseBusiness /> },
+  { name: "Settings", href: "/dashboard/settings", icon: <Settings /> },
   {
     name: "Meetings",
     href: "/dashboard/Meeting",
-    icon: <IoChatbubblesSharp />,
+    icon: <Video />,
   },
 ];

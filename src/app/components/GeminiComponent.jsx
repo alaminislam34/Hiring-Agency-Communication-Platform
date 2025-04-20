@@ -81,7 +81,9 @@ export default function GeminiComponent() {
   return (
     <>
       {/* Chat Modal */}
-      <div className={`fixed bottom-5 right-5 z-[60] overflow-hidden`}>
+      <div
+        className={`fixed bottom-3 md:bottom-5 right-3 md:right-5 z-[60] overflow-hidden`}
+      >
         {/* Floating Button */}
         <div className="flex items-center justify-end mb-2">
           <button
@@ -94,7 +96,7 @@ export default function GeminiComponent() {
         <div
           className={`${
             open
-              ? "flex w-[350px] h-[480px]"
+              ? "flex w-[300px] md:w-[350px] h-[450px] md:h-[480px] opacity-100 pointer-events-auto"
               : "w-0 h-0 opacity-0 pointer-events-none"
           } duration-500 border overflow-hidden rounded-xl border-teal-600 bg-white shadow-xl flex-col relative`}
         >

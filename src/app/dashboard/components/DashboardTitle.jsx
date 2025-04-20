@@ -24,7 +24,7 @@ const DashboardTitle = () => {
     },
     {
       title: "Active Jobs",
-      value: jobs?.length,
+      value: jobs?.length || 0,
       icon: <BriefcaseBusiness size={24} />,
     },
     {

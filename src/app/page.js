@@ -13,7 +13,6 @@ import SeekKit from "./components/SeekKit";
 import Testimonials from "./components/Testimonials";
 import TrendsCarousel from "./components/TrendsCarousel";
 import GeminiComponent from "./components/GeminiComponent";
-import ZegoHome from "./components/zegoBoom/ZegoHome";
 import ScheduleForm from "./components/scheduleInterview/ScheduleForm";
 import ScheduleList from "./components/scheduleInterview/ScheduleList";
 
@@ -21,20 +20,20 @@ export default function Home() {
   return (
     <div className="space-y-8 lg:space-y-12 py-6 w-full">
       <Banner></Banner>
-      <TrendsCarousel />
-      <FindJob></FindJob>
-      <div className="">
+      <br />
+      <section className="max-w-7xl mx-auto w-11/12 space-y-8 md:space-y-12">
+        <TrendsCarousel />
+        <FindJob></FindJob>
         <GeminiComponent></GeminiComponent>
-      </div>
-      <SeekKit />
-      <FindTalent />
-      <ConsultingSolutions />
-      <CareerMove />
-      <Testimonials />
-      <Accordion />
-      <ScheduleForm></ScheduleForm>
-      <ScheduleList></ScheduleList>
-      <ZegoHome></ZegoHome>
+        <SeekKit />
+        <FindTalent />
+        <ConsultingSolutions />
+        <CareerMove />
+        <Testimonials />
+        <Accordion />
+        <ScheduleForm></ScheduleForm>
+        <ScheduleList></ScheduleList>
+      </section>
 
       <ToastContainer position="top-center" autoClose={3000} />
     </div>

@@ -19,7 +19,10 @@ export default function ScheduleForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/schedule", formData);
+      const res = await axios.post(
+        "http://localhost:3002/api/schedule",
+        formData
+      );
       alert("Interview scheduled successfully!");
       setFormData({
         title: "",

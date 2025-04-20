@@ -54,7 +54,7 @@ const AddJobForm = () => {
       const res = await axios.post("/api/postJob", jobData);
       if (res.status === 201) {
         // ✅ Notify jobseekers
-        await axios.post("/api/notify-job-post", {
+        await axios.post("http://localhost:3002/api/notify-job-post", {
           jobTitle,
           companyName,
           postDate,

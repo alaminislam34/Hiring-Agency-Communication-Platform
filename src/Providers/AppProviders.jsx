@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { createContext, useState, useContext, useEffect } from "react";
 import { io } from "socket.io-client";
+import Swal from "sweetalert2";
 
 const AppContext = createContext();
 
@@ -63,7 +64,6 @@ export const AppProvider = ({ children }) => {
     };
   }, []);
 
-  //2nd
   useEffect(() => {
     const socket = io("http://localhost:3002");
     socket.connect();
@@ -75,7 +75,13 @@ export const AppProvider = ({ children }) => {
     // ✅ Employer receives job application notification
     socket.on("jobApplicationNotification", (data) => {
       console.log("📬 Employer Notification Received:", data);
-      alert(`📩 ${data.applicantName} applied to your job: ${data.jobTitle}`);
+
+      Swal.fire({
+        icon: "info",
+        title: "New Job Application!",
+        html: `<strong>${data.applicantName}</strong> applied to your job: <em>${data.jobTitle}</em>`,
+        confirmButtonText: "Got it!",
+      });
     });
 
     return () => {
@@ -100,22 +106,6 @@ export const AppProvider = ({ children }) => {
     queryFn: fetchJobs,
     enabled: true,
   });
-
-  // console.log(jobs);
-  // ✅ Fetch Current User
-  // const fetchUser = async () => {
-  //   const res = await axios("/api/currentUser");
-  //   return res.data;
-  // };
-
-  // const {
-  //   data: currentUser,
-  //   isLoading: userLoading,
-  //   refetch: userRefetch,
-  // } = useQuery({
-  //   queryKey: ["users"],
-  //   queryFn: fetchUser,
-  // });
 
   // Context Value
   const contextValue = {

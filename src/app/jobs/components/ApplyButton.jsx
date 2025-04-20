@@ -1,4 +1,5 @@
 "use client";
+import { socket } from "@/app/dashboard/chatbox/socket";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -15,6 +16,64 @@ const ApplyButton = ({ job, modalId }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const applicationData = {
+  //     ...formData,
+  //     jobId: job._id.toString(),
+  //     jobTitle: job.jobTitle,
+  //     companyName: job.companyName,
+  //     location: job.location,
+  //     jobType: job.jobType,
+  //     postDate: job.postDate,
+  //     deadline: job.deadline,
+  //     description: job.description,
+  //     skills: job.skills,
+  //     requirements: job.requirements,
+  //   };
+
+  //   try {
+  //     const res = await fetch("http://localhost:3002/api/apply-job", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(applicationData),
+  //     });
+
+  //     const result = await res.json();
+
+  //     if (res.ok) {
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Application Submitted",
+  //         text: "Your job application has been submitted successfully!",
+  //       });
+  //       setFormData({
+  //         name: "",
+  //         email: "",
+  //         resume: "",
+  //         coverLetter: "",
+  //       });
+  //       document.getElementById(modalId).close();
+  //     } else {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Submission Failed",
+  //         text: result.error || "Failed to submit application",
+  //       });
+  //     }
+  //   } catch (err) {
+  //     console.error("Submission error:", err);
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Error",
+  //       text: "Something went wrong while submitting your application.",
+  //     });
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -26,6 +85,7 @@ const ApplyButton = ({ job, modalId }) => {
       location: job.location,
       jobType: job.jobType,
       postDate: job.postDate,
+      employerEmail: job.employerEmail,
       deadline: job.deadline,
       description: job.description,
       skills: job.skills,
@@ -33,7 +93,7 @@ const ApplyButton = ({ job, modalId }) => {
     };
 
     try {
-      const res = await fetch("/api/apply-job", {
+      const res = await fetch("http://localhost:3002/api/apply-job", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,6 +104,13 @@ const ApplyButton = ({ job, modalId }) => {
       const result = await res.json();
 
       if (res.ok) {
+        // ✅ Emit socket notification
+        socket.emit("jobApplication", {
+          employerEmail: job.employerEmail, // Ensure this exists in `job` object
+          jobTitle: job.jobTitle,
+          applicantName: formData.name,
+        });
+
         Swal.fire({
           icon: "success",
           title: "Application Submitted",

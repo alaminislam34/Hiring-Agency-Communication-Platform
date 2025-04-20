@@ -28,6 +28,24 @@ export const AppProvider = ({ children }) => {
     setNotificationCount(0); // resets badge
   };
 
+  // fetch total applied jobs for admin
+  const fetchTotalAppliedJobs = async () => {
+    try {
+      const res = await axios("/api/totalAppliedJobs");
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const {
+    data: totalAppliedJobs,
+    isLoading: totalAppliedJobsLoading,
+    refetch: totalAppliedJobsRefetch,
+  } = useQuery({
+    queryKey: ["totalAppliedJobs"],
+    queryFn: fetchTotalAppliedJobs,
+  });
+
   // ✅ Fetch Current User
   const fetchUser = async () => {
     const res = await axios("/api/currentUser");
@@ -41,6 +59,24 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: fetchUser,
+  });
+
+  // ✅ Fetch total users
+  const fetchTotalUsers = async () => {
+    try {
+      const res = await axios("/api/totalUsers");
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const {
+    data: totalUsers,
+    isLoading: totalUsersLoading,
+    refetch: totalUsersRefetch,
+  } = useQuery({
+    queryKey: ["totalUsers"],
+    queryFn: fetchTotalUsers,
   });
 
   // 🔌 Initialize socket for notifications
@@ -101,22 +137,6 @@ export const AppProvider = ({ children }) => {
     enabled: true,
   });
 
-  // console.log(jobs);
-  // ✅ Fetch Current User
-  // const fetchUser = async () => {
-  //   const res = await axios("/api/currentUser");
-  //   return res.data;
-  // };
-
-  // const {
-  //   data: currentUser,
-  //   isLoading: userLoading,
-  //   refetch: userRefetch,
-  // } = useQuery({
-  //   queryKey: ["users"],
-  //   queryFn: fetchUser,
-  // });
-
   // Context Value
   const contextValue = {
     // General App State
@@ -151,6 +171,16 @@ export const AppProvider = ({ children }) => {
     notificationCount,
     setNotificationCount,
     markNotificationsAsSeen,
+
+    // ✅ applied jobs data
+    totalAppliedJobs,
+    totalAppliedJobsLoading,
+    totalAppliedJobsRefetch,
+
+    // ✅ total users data
+    totalUsers,
+    totalUsersLoading,
+    totalUsersRefetch,
   };
 
   return (

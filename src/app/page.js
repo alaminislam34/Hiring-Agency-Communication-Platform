@@ -22,9 +22,7 @@ export default function Home() {
       <section className="max-w-7xl mx-auto w-11/12 space-y-8 md:space-y-12">
         <TrendsCarousel />
         <FindJob></FindJob>
-        <div className="">
-          <GeminiComponent></GeminiComponent>
-        </div>
+        <GeminiComponent></GeminiComponent>
         <SeekKit />
         <FindTalent />
         <ConsultingSolutions />

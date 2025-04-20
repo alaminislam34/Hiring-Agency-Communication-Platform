@@ -102,7 +102,7 @@ export default function GeminiComponent() {
         >
           <div className="relative">
             {/* Title */}
-            <h2 className="text-xl font-semibold text-center text-teal-100 bg-gradient-to-tr from-teal-400 via-teal-400 to-teal-500 py-3 flex items-center justify-center gap-2 z-10">
+            <h2 className="text-xl font-semibold text-center text-teal-50 bg-gradient-to-tr from-teal-500 via-teal-400 to-teal-500 py-3 flex items-center justify-center gap-2 z-10">
               <RiRobot3Line className="text-xl" /> JobHive Gemini AI
             </h2>
 
@@ -179,7 +179,7 @@ export default function GeminiComponent() {
               }`}
               disabled={loading}
             >
-              <FiSend className="text-xl" />
+              <FiSend className="text-xl hover:scale-95 duration-300" />
             </button>
           </form>
         </div>

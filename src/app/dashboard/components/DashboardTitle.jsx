@@ -6,6 +6,7 @@ import { Bookmark } from "lucide-react";
 import { BriefcaseBusiness } from "lucide-react";
 import { Users } from "lucide-react";
 import { FaArrowTrendUp } from "react-icons/fa6";
+import { ThreeDots } from "react-loader-spinner";
 
 const DashboardTitle = () => {
   const {
@@ -93,7 +94,20 @@ const DashboardTitle = () => {
             </div>
             <div className="flex items-center justify-between">
               <h2 className="text-base md:text-lg text-right lg:text-xl text-gray-800">
-                {stat.value}
+                {totalAppliedJobsLoading || totalUsersLoading ? (
+                  <ThreeDots
+                    visible={true}
+                    height="20"
+                    width="20"
+                    color="#fff"
+                    radius="9"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                  />
+                ) : (
+                  stat.value
+                )}
               </h2>
               <FaArrowTrendUp className="text-green-500 text-xl" />
             </div>

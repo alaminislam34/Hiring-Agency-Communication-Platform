@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { signOut } from "next-auth/react";
 import { createContext, useState, useContext, useEffect } from "react";
 import { io } from "socket.io-client";
 import Swal from "sweetalert2";
@@ -39,7 +40,7 @@ export const AppProvider = ({ children }) => {
     }
   };
   const {
-    data: totalAppliedJobs,
+    data: totalAppliedJobs = [],
     isLoading: totalAppliedJobsLoading,
     refetch: totalAppliedJobsRefetch,
   } = useQuery({
@@ -71,8 +72,9 @@ export const AppProvider = ({ children }) => {
       console.log(err);
     }
   };
+
   const {
-    data: totalUsers,
+    data: totalUsers = [],
     isLoading: totalUsersLoading,
     refetch: totalUsersRefetch,
   } = useQuery({
@@ -132,6 +134,12 @@ export const AppProvider = ({ children }) => {
     );
     return res.data;
   };
+  // useEffect(() => {
+  //   if (currentUser === undefined) return; // এখনো load হয়নি
+  //   if (currentUser === null || !currentUser?.email) {
+  //     signOut(); // সত্যিই invalid user হলে
+  //   }
+  // }, [currentUser]);
 
   const {
     data: jobs = [],

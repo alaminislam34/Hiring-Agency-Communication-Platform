@@ -135,7 +135,7 @@ const AllJobs = () => {
                 </div>
               ) : (
                 <div className="flex items-center justify-center w-full min-h-[200px]">
-                  <p className="text-sm md:text-base lg:text-lg font-semibold text-gray-800">
+                  <p className="text-sm md:text-base lg:text-lg font-semibold text-gray-800 px-4">
                     😕 No jobs found based on your selected filters. Try
                     adjusting your search.
                   </p>

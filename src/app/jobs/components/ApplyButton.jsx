@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 const ApplyButton = ({ job, modalId }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    candidateName: "",
+    candidatesEmail: "",
     resume: "",
     coverLetter: "",
   });
@@ -17,64 +17,6 @@ const ApplyButton = ({ job, modalId }) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const applicationData = {
-  //     ...formData,
-  //     jobId: job._id.toString(),
-  //     jobTitle: job.jobTitle,
-  //     companyName: job.companyName,
-  //     location: job.location,
-  //     jobType: job.jobType,
-  //     postDate: job.postDate,
-  //     deadline: job.deadline,
-  //     description: job.description,
-  //     skills: job.skills,
-  //     requirements: job.requirements,
-  //   };
-
-  //   try {
-  //     const res = await fetch("https://jobhive-server.onrender.com/api/apply-job", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(applicationData),
-  //     });
-
-  //     const result = await res.json();
-
-  //     if (res.ok) {
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Application Submitted",
-  //         text: "Your job application has been submitted successfully!",
-  //       });
-  //       setFormData({
-  //         name: "",
-  //         email: "",
-  //         resume: "",
-  //         coverLetter: "",
-  //       });
-  //       document.getElementById(modalId).close();
-  //     } else {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Submission Failed",
-  //         text: result.error || "Failed to submit application",
-  //       });
-  //     }
-  //   } catch (err) {
-  //     console.error("Submission error:", err);
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Error",
-  //       text: "Something went wrong while submitting your application.",
-  //     });
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,14 +27,10 @@ const ApplyButton = ({ job, modalId }) => {
       jobId: job._id.toString(),
       jobTitle: job.jobTitle,
       companyName: job.companyName,
-      location: job.location,
       jobType: job.jobType,
       postDate: job.postDate,
       employerEmail: job.employerEmail,
       deadline: job.deadline,
-      description: job.description,
-      skills: job.skills,
-      requirements: job.requirements,
     };
 
     try {
@@ -148,8 +86,8 @@ const ApplyButton = ({ job, modalId }) => {
               <label className="block text-sm text-gray-600">Full Name</label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="candidateName"
+                value={formData.candidateName}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"
@@ -162,8 +100,8 @@ const ApplyButton = ({ job, modalId }) => {
               </label>
               <input
                 type="email"
-                name="email"
-                value={formData.email}
+                name="candidatesEmail"
+                value={formData.candidatesEmail}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"

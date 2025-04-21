@@ -83,6 +83,24 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // ✅ Fetch applied jobs collection
+  const fetchAppliedJobs = async () => {
+    try {
+      const res = await axios("/api/getAppliedJobs");
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const {
+    data: appliedJobsCollection = [],
+    refetch: appliedJobsRefetch,
+    isLoading: appliedJobsLoading,
+  } = useQuery({
+    queryKey: ["appliedJobs"],
+    queryFn: fetchAppliedJobs,
+  });
+
   const {
     data: totalUsers = [],
     isLoading: totalUsersLoading,
@@ -203,6 +221,11 @@ export const AppProvider = ({ children }) => {
     // bookmark jobs store
     setBookmark,
     bookmark,
+
+    // applied jobs collection
+    appliedJobsCollection,
+    appliedJobsLoading,
+    appliedJobsRefetch,
   };
 
   return (

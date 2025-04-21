@@ -1,11 +1,11 @@
 import Image from "next/image";
-import cv from "../../../public/cvTemplate.png";
-import coverLetter from "../../../public/coverLetter.png";
-import interview from "../../../public/interview.png";
-import resignationL from "../../../public/resignationL.png";
-import notification from "../../../public/notification.png";
+import cv from "../../../../public/cvTemplate.png";
+import coverLetter from "../../../../public/coverLetter.png";
+import interview from "../../../../public/interview.png";
+import resignationL from "../../../../public/resignationL.png";
+import notification from "../../../../public/notification.png";
 import Link from "next/link";
-import SectionTitle from "./SectionTitle";
+import SectionTitle from "../SharedComponents/SectionTitle";
 
 const SeekKit = () => {
   return (

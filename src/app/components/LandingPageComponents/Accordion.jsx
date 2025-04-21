@@ -1,7 +1,7 @@
 "use client";
 import Lottie from "react-lottie";
-import SectionTitle from "./SectionTitle";
-import faq from "../../../public/faq.json";
+import SectionTitle from "../SharedComponents/SectionTitle";
+import faq from "../../../../public/faq.json";
 export default function Accordion() {
   const faqs = [
     {

@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Slider from "react-slick"; // Importing React Slick Slider
-import reviews from "./testimonialData/review.json"; // Your reviews JSON
-import SectionTitle from "./SectionTitle"; // Assuming SectionTitle is your custom component
+import reviews from "../testimonialData/review.json"; // Your reviews JSON
+import SectionTitle from "../SharedComponents/SectionTitle";
 
 const Testimonials = () => {
   const settings = {

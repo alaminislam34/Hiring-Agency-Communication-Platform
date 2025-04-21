@@ -9,7 +9,7 @@ import FreelancingRemote from "./components/FreelancingRemote";
 import SkillDevelopment from "./components/SkillDevelopment";
 import PortfolioBranding from "./components/PortfolioBranding";
 import PlatformRelated from "./components/PlatformRelated";
-import SectionTitle from "../components/SectionTitle";
+import SectionTitle from "../components/SharedComponents/SectionTitle";
 const page = () => {
   return (
     <div className="mt-8 max-w-7xl mx-auto">

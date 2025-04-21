@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import image from "../../../public/image.webp";
+import image from "../../../../public/image.webp";
 import { FaLocationDot, FaSearchengin } from "react-icons/fa6";
 import { useAppContext } from "@/Providers/AppProviders";
 import { useEffect, useState } from "react";

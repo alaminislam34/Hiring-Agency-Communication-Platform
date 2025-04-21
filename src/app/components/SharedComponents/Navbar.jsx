@@ -22,6 +22,7 @@ import { Users } from "lucide-react";
 import { Settings } from "lucide-react";
 import { CircleHelp } from "lucide-react";
 import { SquareChevronRight } from "lucide-react";
+import useValidateSession from "@/lib/unValidateSession";
 
 const Navbar = () => {
   const session = useSession();
@@ -30,6 +31,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { currentUser, notificationCount, markNotificationsAsSeen } =
     useAppContext();
+  useValidateSession();
 
   // Job Seeker NavLinks
   const jobSeekerNavLink = [

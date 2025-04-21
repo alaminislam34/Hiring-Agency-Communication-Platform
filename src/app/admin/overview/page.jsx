@@ -1,13 +1,7 @@
 "use client";
 
-import React from "react";
-import {
-  AiOutlineAppstore,
-  AiOutlineCheckCircle,
-  AiOutlineClockCircle,
-  AiOutlineUser,
-} from "react-icons/ai";
-import { useAppContext } from "@/Providers/AppProviders";
+import DashboardTitle from "@/app/components/dashboardComponents/DashboardTitle";
+import CircleChart from "@/app/dashboard/components/CircleChart";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,8 +12,6 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import CircleChart from "./CircleChart";
-import DashboardTitle from "./DashboardTitle";
 
 ChartJS.register(
   CategoryScale,
@@ -97,7 +89,7 @@ const chartOptions = {
   },
 };
 
-const HomePage = () => {
+const Overview = () => {
   const { currentUser, showName, jobs } = useAppContext();
   return (
     <div className="">
@@ -135,4 +127,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Overview;

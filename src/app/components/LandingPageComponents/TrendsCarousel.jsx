@@ -2,8 +2,8 @@
 import React from "react";
 import Slider from "react-slick";
 // import Image from "next/image";
-import reviews from "./testimonialData/review.json";
-import SectionTitle from "./SectionTitle";
+import reviews from "../testimonialData/review.json";
+import SectionTitle from "../SharedComponents/SectionTitle";
 
 const TrendsCarousel = () => {
   const settings = {

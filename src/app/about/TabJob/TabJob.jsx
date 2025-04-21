@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import SectionTitle from "@/app/components/SectionTitle";
+import SectionTitle from "@/app/components/SharedComponents/SectionTitle";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 

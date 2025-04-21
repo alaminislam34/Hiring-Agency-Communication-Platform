@@ -1,34 +1,23 @@
-import { loginUser } from "@/app/actions/auth/loginUser";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
+import { loginUser } from "@/app/actions/auth/loginUser";
 import dbConnect, { collection } from "./dbConnect";
 
 export const authOptions = {
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
       name: "Credentials",
-      // `credentials` is used to generate a form on the sign in page.
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
         email: { label: "Email", type: "email", placeholder: "Enter email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
+      async authorize(credentials) {
         const user = await loginUser(credentials);
-
         if (user) {
-          // Any object returned will be saved in `user` property of the JWT
           return user;
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
           return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       },
     }),
@@ -41,39 +30,57 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
+
   pages: {
     signIn: "/signin",
   },
-  callbacks: {
-    async signIn({ user, account, profile, credentials }) {
-      console.log(user);
-      const { name, email } = user;
-      if (user) {
-        const newUser = {
-          name,
-          email,
-          role: "jobSeeker",
-          isVerified: true,
-          createdAt: new Date(),
-        };
-        const userCollection = dbConnect(collection.user_collection);
-        const userExist = await userCollection.findOne({ email: email });
-        if (!userExist) {
-          const result = await userCollection.insertOne(newUser);
-          console.log(result);
-        }
-      }
 
-      return true;
+  callbacks: {
+    // When user signs in via Google/GitHub
+    async signIn({ user }) {
+      try {
+        const { name, email } = user;
+
+        if (!email) return false;
+
+        const userCollection = dbConnect(collection.user_collection);
+        const userExist = await userCollection.findOne({ email });
+
+        if (!userExist) {
+          await userCollection.insertOne({
+            name,
+            email,
+            role: "jobSeeker",
+            isVerified: true,
+            createdAt: new Date(),
+          });
+        }
+
+        return true;
+      } catch (error) {
+        console.error("Error in signIn callback:", error);
+        return false;
+      }
     },
-    // async redirect({ url, baseUrl }) {
-    //   return baseUrl;
-    // },
-    // async session({ session, token, user }) {
-    //   return session;
-    // },
-    // async jwt({ token, user, account, profile, isNewUser }) {
-    //   return token;
-    // },
+
+    // Validate session: check if user still exists in DB
+    async session({ session }) {
+      try {
+        const userCollection = dbConnect(collection.user_collection);
+        const userExist = await userCollection.findOne({
+          email: session?.user?.email,
+        });
+
+        if (!userExist) {
+          // Session invalid since user was deleted
+          return null;
+        }
+
+        return session;
+      } catch (error) {
+        console.error("Error in session callback:", error);
+        return null;
+      }
+    },
   },
 };

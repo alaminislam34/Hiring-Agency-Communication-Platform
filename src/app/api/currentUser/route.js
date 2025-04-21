@@ -8,7 +8,7 @@ export async function GET(req) {
   const userEmail = session?.user?.email;
 
   const { searchParams } = new URL(req.url);
-  const emailFromQuery = searchParams.get("email");
+  const emailFromQuery = searchParams.get("senderEmail");
 
   const query = {};
   if (emailFromQuery) {
@@ -24,6 +24,7 @@ export async function GET(req) {
   }
 
   const user = await userCollection.findOne(query);
+  console.log("verify user", user);
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }

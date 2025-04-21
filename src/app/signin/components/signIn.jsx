@@ -1,6 +1,5 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import SocialsLogin from "./SocialsLogin";
@@ -9,15 +8,12 @@ import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { useAppContext } from "@/Providers/AppProviders";
 import PasswordReset from "./PasswordReset";
 import { ThreeDots } from "react-loader-spinner";
-
 const SignInComponent = () => {
   const [error, setError] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [resetPassword, setResetPassword] = useState(false);
-  const route = useRouter();
-  const [email, setEmail] = useState("");
   const { userRefetch } = useAppContext();
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -47,6 +43,7 @@ const SignInComponent = () => {
       setLoading(false);
     }
   };
+
   return (
     <div
       style={{
@@ -89,10 +86,7 @@ const SignInComponent = () => {
             {isSignUp ? (
               <RegisterForm setIsSignUp={setIsSignUp} />
             ) : resetPassword ? (
-              <PasswordReset
-                setResetPassword={setResetPassword}
-                email={email}
-              />
+              <PasswordReset setResetPassword={setResetPassword} />
             ) : (
               <div className="w-full">
                 {error && (
@@ -104,10 +98,9 @@ const SignInComponent = () => {
                   <label htmlFor="email" className="flex flex-col gap-2">
                     <span className="text-gray-500">Email</span>
                     <input
-                      className="py-2 px-4 rounded-xl border border-teal-500/50 focus:outline-teal-600 bg-teal-100"
+                      className="py-2 px-4 rounded-md border border-teal-500/50 focus:outline-teal-600 bg-teal-100"
                       type="email"
                       name="email"
-                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
                       required
                     />
@@ -118,7 +111,7 @@ const SignInComponent = () => {
                       <input
                         type={showPassword ? "text" : "password"}
                         name="password"
-                        className="py-2 px-4 rounded-xl border border-teal-500/50 focus:outline-teal-600 bg-teal-100 w-full pr-10"
+                        className="py-2 px-4 rounded-md border border-teal-500/50 focus:outline-teal-600 bg-teal-100 w-full pr-10"
                       />
                       <button
                         type="button"
@@ -139,7 +132,7 @@ const SignInComponent = () => {
                   </button>
                   <button
                     type="submit"
-                    className={`w-full py-2 lg:py-3 bg-teal-600  rounded-xl duration-300 text-white ${
+                    className={`w-full py-2 lg:py-3 bg-teal-600  rounded-md duration-300 text-white ${
                       loading
                         ? "cursor-not-allowed"
                         : "cursor-pointer hover:bg-teal-700"

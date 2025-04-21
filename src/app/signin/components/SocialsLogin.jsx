@@ -24,16 +24,16 @@ const SocialsLogin = () => {
       <button
         type="button"
         onClick={() => handleSocialsLogin("google")}
-        className="p-2 md:px-4 border shadow-[2px_2px_25px_0px] flex items-center gap-2 shadow-black/20 roundedfull md:rounded-2xl cursor-pointer border-teal-200 bg-teal-300 text-black hover:scale-105 duration-300"
+        className="p-2 md:px-4 border shadow-[2px_2px_25px_0px] flex items-center gap-2 shadow-black/20 rounded-md cursor-pointer border-teal-500 bg-teal-200 text-black hover:scale-105 duration-300"
       >
-        <p className="md:block hidden">Google</p> <FcGoogle />
+        <FcGoogle /> <p className="md:block hidden">Google</p>
       </button>
       <button
         type="button"
         onClick={() => handleSocialsLogin("github")}
-        className="p-2 md:px-4 border shadow-[2px_2px_25px_0px] flex items-center gap-2 shadow-black/20 roundedfull md:rounded-2xl cursor-pointer border-teal-200 bg-teal-300 text-black hover:scale-105 duration-300"
+        className="p-2 md:px-4 border shadow-[2px_2px_25px_0px] flex items-center gap-2 shadow-black/20 rounded-md cursor-pointer border-teal-500 bg-teal-200 text-black hover:scale-105 duration-300"
       >
-        <p className="md:block hidden">GitHub</p> <LuGithub />
+        <LuGithub /> <p className="md:block hidden">GitHub</p>
       </button>
     </div>
   );

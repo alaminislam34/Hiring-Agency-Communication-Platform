@@ -82,7 +82,7 @@ const RegisterForm = ({ setIsSignUp }) => {
           <input
             type="email"
             name="email"
-            className="py-2 px-4 rounded-xl border border-teal-500/50 focus:outline-teal-600 bg-teal-100"
+            className="py-2 px-4 rounded-md border border-teal-500/50 focus:outline-teal-600 bg-teal-100"
           />
         </label>
         {/* Password */}
@@ -92,7 +92,7 @@ const RegisterForm = ({ setIsSignUp }) => {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              className="py-2 px-4 rounded-xl border border-teal-500/50 focus:outline-teal-600 bg-teal-100 w-full pr-10"
+              className="py-2 px-4 rounded-md border border-teal-500/50 focus:outline-teal-600 bg-teal-100 w-full pr-10"
             />
             <button
               type="button"
@@ -112,7 +112,7 @@ const RegisterForm = ({ setIsSignUp }) => {
         )}
         <button
           type="submit"
-          className={`py-2 lg:py-3 w-full bg-teal-600 text-white rounded-xl ${
+          className={`py-2 lg:py-3 w-full bg-teal-600 text-white rounded-md ${
             loading ? "cursor-not-allowed" : "cursor-pointer hover:bg-teal-700"
           }`}
         >

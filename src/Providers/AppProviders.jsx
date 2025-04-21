@@ -21,9 +21,14 @@ export const AppProvider = ({ children }) => {
   const [location, setLocation] = useState("");
 
   // bookmark state
-  const [bookmark, setBookmark] = useState(
-    () => JSON.parse(localStorage.getItem("bookmark")) || []
-  );
+  const [bookmark, setBookmark] = useState([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("bookmark");
+    if (stored) {
+      setBookmark(JSON.parse(stored));
+    }
+  }, []);
 
   // add bookmark to local storage
   useEffect(() => {

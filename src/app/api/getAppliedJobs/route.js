@@ -5,7 +5,6 @@ export const GET = async (req) => {
   try {
     const appliedCollection = dbConnect(collection.appliedCollection);
     const appliedJobs = await appliedCollection.find({}).toArray();
-    console.log("Fetched applied jobs:", appliedJobs);
     return NextResponse.json(appliedJobs);
   } catch (error) {
     console.error("Error fetching jobs:", error);

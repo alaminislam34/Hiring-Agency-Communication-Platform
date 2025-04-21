@@ -8,7 +8,7 @@ const ApplyButton = ({ job, modalId }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     candidateName: "",
-    candidatesEmail: "",
+    candidateEmail: "",
     resume: "",
     coverLetter: "",
   });

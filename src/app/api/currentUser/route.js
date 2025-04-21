@@ -24,7 +24,6 @@ export async function GET(req) {
   }
 
   const user = await userCollection.findOne(query);
-  console.log("verify user", user);
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }

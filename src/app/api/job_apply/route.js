@@ -22,8 +22,8 @@ export const POST = async (req) => {
       requirements,
     } = data;
 
-    const appliedJobs = await apply_jobCollection.find({ jobId: jobId });
-    const isApplied = appliedJobs.some((job) => job)
+    // const appliedJobs = await apply_jobCollection.find({ jobId: jobId });
+    // const isApplied = appliedJobs.some((job) => job)
     if (!name || !email || !resume || !jobId || !jobTitle) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),

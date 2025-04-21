@@ -17,12 +17,11 @@ const JobsPage = () => {
   const handleDeleteJob = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonColor: "teal",
+      width: "300px",
+      confirmButtonText: "Delete",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -34,12 +33,17 @@ const JobsPage = () => {
               title: "Deleted!",
               text: "Your job has been deleted.",
               icon: "success",
+              iconColor: "teal",
+              showConfirmButton: false,
+              timer: 2500,
             });
           } else {
             Swal.fire({
               title: "Failed!",
               text: "No job was deleted.",
               icon: "error",
+              showConfirmButton: false,
+              timer: 2500,
             });
           }
         } catch (err) {
@@ -48,6 +52,8 @@ const JobsPage = () => {
             title: "Error!",
             text: "Something went wrong.",
             icon: "error",
+            showConfirmButton: false,
+            timer: 2500,
           });
         }
       }
@@ -61,9 +67,9 @@ const JobsPage = () => {
 
         <JobAddModal />
       </div>
-      <div className="overflow-x-auto bg-white shadow-xl rounded-xl border border-[#00847D]">
+      <div className="overflow-x-auto bg-white shadow-xl rounded-xl border border-teal-500">
         <table className="w-full border-collapse text-sm table">
-          <thead className=" first-letter:uppercase text-sm text-left">
+          <thead className="uppercase text-sm text-left">
             <tr>
               <th>Job Title</th>
               <th>Company</th>
@@ -76,9 +82,9 @@ const JobsPage = () => {
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="">
             {jobs?.map((job) => (
-              <tr key={job._id} className="hover:bg-teal-50 *:border-b">
+              <tr key={job._id} className="hover:bg-teal-50 ">
                 <td className="font-medium">{job.jobTitle}</td>
                 <td>{job.companyName}</td>
                 <td>{job.location}</td>

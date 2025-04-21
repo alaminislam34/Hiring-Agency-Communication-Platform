@@ -36,7 +36,7 @@ const ApplyButton = ({ job, modalId }) => {
   //   };
 
   //   try {
-  //     const res = await fetch("http://localhost:3002/api/apply-job", {
+  //     const res = await fetch("https://jobhive-server.onrender.com/api/apply-job", {
   //       method: "POST",
   //       headers: {
   //         "Content-Type": "application/json",
@@ -96,7 +96,10 @@ const ApplyButton = ({ job, modalId }) => {
     };
 
     try {
-      const res = await axios.post("/api/apply-job", applicationData);
+      const res = await axios.post(
+        "https://jobhive-server.onrender.com/api/apply-job",
+        applicationData
+      );
       Swal.fire({
         icon: "success",
         title: "Application Submitted",
@@ -130,7 +133,7 @@ const ApplyButton = ({ job, modalId }) => {
     <div>
       <button
         onClick={() => document.getElementById(modalId).showModal()}
-        className="text-sm px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded cursor-pointer"
+        className="text-sm btn px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded cursor-pointer"
       >
         Easy Apply
       </button>

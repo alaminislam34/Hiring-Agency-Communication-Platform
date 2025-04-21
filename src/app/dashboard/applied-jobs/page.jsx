@@ -25,12 +25,11 @@ const AppliedJobs = () => {
   const handleDelete = async (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonColor: "teal",
+      confirmButtonText: "Delete",
+      width: "300px",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -41,15 +40,36 @@ const AppliedJobs = () => {
           const data = await res.json();
 
           if (!res.ok) {
-            toast.error(data?.error || "Delete failed");
+            Swal.fire({
+              title: "Failed!",
+              text: "Failed to delete job.",
+              width: "300px",
+              icon: "error",
+              showConfirmButton: false,
+              timer: 2500,
+            });
             return;
           }
 
           setJobs(jobs.filter((job) => job._id !== id));
-          toast.success("Job deleted successfully");
+          Swal.fire({
+            title: "Deleted!",
+            text: "Job has been deleted.",
+            width: "300px",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 2500,
+          });
         } catch (error) {
           console.error("Error deleting job:", error);
-          toast.error("Something went wrong");
+          Swal.fire({
+            title: "Failed!",
+            text: "Failed to delete job.",
+            width: "300px",
+            icon: "error",
+            showConfirmButton: false,
+            timer: 2500,
+          });
         }
       }
     });
@@ -65,9 +85,9 @@ const AppliedJobs = () => {
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="p-6 bg-white rounded-lg shadow">
         <h1 className="text-2xl font-bold mb-4">Applied Jobs</h1>
-        <div className="border rounded-lg overflow-x-auto">
-          <table className="w-full text-left text-sm text-gray-700">
-            <thead className="bg-teal-500 text-white">
+        <div className="border rounded-lg overflow-x-auto border-teal-500">
+          <table className="w-full table table-auto text-left text-sm text-gray-700">
+            <thead className="uppercase text-left bg-base-300">
               <tr>
                 <th className="p-4">Job Title</th>
                 <th className="p-4">Company</th>
@@ -82,7 +102,7 @@ const AppliedJobs = () => {
                 jobs.map((job, index) => (
                   <tr
                     key={index}
-                    className="border-b hover:bg-gray-50 text-sm text-gray-800"
+                    className=" hover:bg-gray-50 text-sm text-gray-800"
                   >
                     <td className="p-4 font-semibold">{job.jobTitle}</td>
                     <td className="p-4">{job.companyName}</td>

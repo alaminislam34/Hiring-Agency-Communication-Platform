@@ -49,11 +49,6 @@ const Navbar = () => {
       icon: <Bookmark size={18} />,
     },
     {
-      name: "Applied Jobs",
-      href: "/appliedJobs",
-      icon: <FileCheck size={18} />,
-    },
-    {
       name: "Blogs",
       href: "/blogs",
       icon: <GalleryVertical size={18} />,

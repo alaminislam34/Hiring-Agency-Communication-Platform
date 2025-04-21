@@ -20,6 +20,16 @@ export const AppProvider = ({ children }) => {
   const [jobTitle, setJobTitle] = useState("");
   const [location, setLocation] = useState("");
 
+  // bookmark state
+  const [bookmark, setBookmark] = useState(
+    () => JSON.parse(localStorage.getItem("bookmark")) || []
+  );
+
+  // add bookmark to local storage
+  useEffect(() => {
+    localStorage.setItem("bookmark", JSON.stringify(bookmark));
+  }, [bookmark]);
+
   // Zego Meeting State
   const [fullName, setFullName] = useState("");
   const [roomID, setRoomID] = useState("");
@@ -84,7 +94,7 @@ export const AppProvider = ({ children }) => {
 
   // 🔌 Initialize socket for notifications
   useEffect(() => {
-    const socket = io("http://localhost:3002");
+    const socket = io("https://jobhive-server.onrender.com");
     socket.connect();
 
     socket.on("connect", () => {
@@ -103,7 +113,7 @@ export const AppProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const socket = io("http://localhost:3002");
+    const socket = io("https://jobhive-server.onrender.com");
     socket.connect();
 
     if (currentUser?.email) {
@@ -134,12 +144,6 @@ export const AppProvider = ({ children }) => {
     );
     return res.data;
   };
-  // useEffect(() => {
-  //   if (currentUser === undefined) return; // এখনো load হয়নি
-  //   if (currentUser === null || !currentUser?.email) {
-  //     signOut(); // সত্যিই invalid user হলে
-  //   }
-  // }, [currentUser]);
 
   const {
     data: jobs = [],
@@ -195,6 +199,10 @@ export const AppProvider = ({ children }) => {
     totalUsers,
     totalUsersLoading,
     totalUsersRefetch,
+
+    // bookmark jobs store
+    setBookmark,
+    bookmark,
   };
 
   return (

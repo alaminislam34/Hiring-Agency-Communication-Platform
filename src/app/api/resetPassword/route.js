@@ -27,7 +27,8 @@ export const POST = async (req) => {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     const result = await userCollection.updateOne(
       { email: email },
-      { $set: { password: hashedPassword } }
+      { $set: { password: hashedPassword } },
+      { upsert: true }
     );
 
     return NextResponse.json({

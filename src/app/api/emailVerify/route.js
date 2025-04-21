@@ -11,7 +11,7 @@ export const POST = async (req) => {
   if (user) {
     const result = await userCollection.updateOne(
       { email: email },
-      { $set: { isVerified: true, role: "jobSeeker" } },
+      { $set: { isVerified: true } },
       { upsert: true }
     );
 

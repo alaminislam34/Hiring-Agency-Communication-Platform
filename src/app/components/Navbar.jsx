@@ -432,13 +432,14 @@ const Navbar = () => {
                 )}
               </Link>
             </div>
-
+            {/* <LogoutButton /> */}
             {currentUser && session?.data?.user ? (
               <div className="flex items-center gap-2 relative">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   src={currentUser?.image || "/fakeUser.jpg"}
-                  className="w-12 h-12 rounded-full border-teal-500 bg-accent border cursor-pointer"
+                  referrerPolicy="no-referrer"
+                  className="w-12 h-12 rounded-full object-cover bg-cover bg-center border-teal-500 bg-accent border cursor-pointer"
                   alt="User Profile"
                 />
                 <div

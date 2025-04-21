@@ -1,15 +1,10 @@
 "use client";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import JobDetailsModal from "./JobDetailsModal";
-import { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import JobAddModal from "./JobAddModal";
 import { useAppContext } from "@/Providers/AppProviders";
-// import { useQuery } from "@tanstack/react-query";
-// import Swal from "sweetalert2";
-// import "sweetalert2/src/sweetalert2.scss";
 
 const JobsPage = () => {
   const { jobs, refetchJobs } = useAppContext();
@@ -34,6 +29,7 @@ const JobsPage = () => {
               text: "Your job has been deleted.",
               icon: "success",
               iconColor: "teal",
+              width: "300px",
               showConfirmButton: false,
               timer: 2500,
             });
@@ -42,6 +38,7 @@ const JobsPage = () => {
               title: "Failed!",
               text: "No job was deleted.",
               icon: "error",
+              width: "300px",
               showConfirmButton: false,
               timer: 2500,
             });
@@ -52,6 +49,7 @@ const JobsPage = () => {
             title: "Error!",
             text: "Something went wrong.",
             icon: "error",
+            width: "300px",
             showConfirmButton: false,
             timer: 2500,
           });
@@ -83,6 +81,13 @@ const JobsPage = () => {
           </thead>
 
           <tbody className="">
+            {jobs?.length === 0 && (
+              <tr>
+                <td colSpan="8" className="text-center">
+                  No jobs found
+                </td>
+              </tr>
+            )}
             {jobs?.map((job) => (
               <tr key={job._id} className="hover:bg-teal-50 ">
                 <td className="font-medium">{job.jobTitle}</td>

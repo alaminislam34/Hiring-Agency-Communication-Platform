@@ -67,21 +67,23 @@ const Candidates = () => {
                     View
                   </a>
                 </td>
-                <td className="flex items-center justify-center gap-2">
-                  <button className="bg-teal-500 cursor-pointer text-white px-3 py-1 rounded-md hover:bg-opacity-80 transition">
-                    Contact
-                  </button>
-                  <div>
-                    <select
-                      defaultValue={""}
-                      className="border border-teal-500 select select-xs"
-                    >
-                      <option disabled value="">
-                        Select
-                      </option>
-                      <option value="Accepted">Accepted</option>
-                      <option value="Rejected">Rejected</option>
-                    </select>
+                <td>
+                  <div className="flex items-center justify-center gap-2">
+                    <button className="bg-teal-500 cursor-pointer text-white px-3 py-1 rounded-md hover:bg-opacity-80 transition">
+                      Contact
+                    </button>
+                    <div>
+                      <select
+                        defaultValue={""}
+                        className="border border-teal-500 select select-xs"
+                      >
+                        <option disabled value="">
+                          Select
+                        </option>
+                        <option value="Accepted">Accepted</option>
+                        <option value="Rejected">Rejected</option>
+                      </select>
+                    </div>
                   </div>
                 </td>
               </tr>

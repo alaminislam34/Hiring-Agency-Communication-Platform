@@ -448,7 +448,15 @@ const Navbar = () => {
           <div className="navbar-end space-x-4">
             <div className="relative">
               <Link
-                href={currentUser ? "/dashboard/notifications" : "/signin"}
+                href={
+                  currentUser?.role === "jobSeeker"
+                    ? "/jobSeeker/notifications"
+                    : currentUser?.role === "employer"
+                    ? "/employer/notifications"
+                    : currentUser?.role === "admin"
+                    ? "/admin/notifications"
+                    : "/signin"
+                }
                 className="flex items-center justify-center text-2xl hover:text-teal-700 cursor-pointer"
               >
                 <Bell />

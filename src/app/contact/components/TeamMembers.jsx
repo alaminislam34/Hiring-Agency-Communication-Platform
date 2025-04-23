@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { UserCircle2 } from "lucide-react";
 
 const teamMembers = [

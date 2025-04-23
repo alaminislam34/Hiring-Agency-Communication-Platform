@@ -21,7 +21,7 @@ const PageNotFound = () => {
           className="inline-flex items-center gap-2 bg-teal-600 text-white px-5 py-2.5 rounded-md hover:bg-teal-700 transition-all duration-200 ease-in-out"
         >
           <ArrowLeftCircle className="w-5 h-5" />
-          Go Back Home
+          Back to Home
         </Link>
       </div>
     </div>

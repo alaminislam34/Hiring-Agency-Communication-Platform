@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useRef } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import Swal from "sweetalert2";
 
-const ApplyButton = ({ job, modalId }) => {
+export default function ApplyButton({ job, modalId }) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     candidateName: "",
@@ -11,6 +12,9 @@ const ApplyButton = ({ job, modalId }) => {
     resume: "",
     coverLetter: "",
   });
+
+  // 👉 React ref দিয়ে মডাল হ্যান্ডেল
+  const modalRef = useRef(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,26 +37,25 @@ const ApplyButton = ({ job, modalId }) => {
     };
 
     try {
-      // 🔸 Get existing applications from localStorage
+      // SSR‑পাসে localStorage নেই, তাই গার্ড
+      if (typeof window === "undefined") return;
       const storedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
 
-      // 🔸 Check if already applied to this job
       const alreadyApplied = storedJobs.some(
         (appliedJob) => appliedJob.jobId === job.id
       );
 
       if (alreadyApplied) {
-        Swal.fire({
+        await Swal.fire({
           icon: "error",
           text: "You have already applied for this job.",
           timer: 2500,
         });
       } else {
-        // 🔸 Save new application
         const updatedJobs = [...storedJobs, applicationData];
         localStorage.setItem("appliedJobs", JSON.stringify(updatedJobs));
 
-        Swal.fire({
+        await Swal.fire({
           icon: "success",
           title: "Application Submitted",
           text: "Your job application has been submitted successfully!",
@@ -74,25 +77,32 @@ const ApplyButton = ({ job, modalId }) => {
       });
     } finally {
       setLoading(false);
-      document.getElementById(modalId).close();
+      modalRef.current?.close();
     }
   };
 
+  /* ---------- UI ---------- */
   return (
     <div>
       <button
-        onClick={() => document.getElementById(modalId).showModal()}
+        onClick={() => modalRef.current?.showModal()}
         className="text-sm btn px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded cursor-pointer"
       >
         Easy Apply
       </button>
 
-      <dialog id={modalId} className="modal modal-bottom sm:modal-middle">
+      <dialog
+        id={modalId}
+        ref={modalRef}
+        className="modal modal-bottom sm:modal-middle"
+      >
         <div className="modal-box bg-white shadow-lg rounded-lg p-6 max-w-xl mx-auto">
           <h3 className="font-bold text-2xl text-gray-800 mb-4">
             Apply for This Job
           </h3>
+
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Name */}
             <div>
               <label className="block text-sm text-gray-600">Full Name</label>
               <input
@@ -105,6 +115,7 @@ const ApplyButton = ({ job, modalId }) => {
               />
             </div>
 
+            {/* Email */}
             <div>
               <label className="block text-sm text-gray-600">
                 Email Address
@@ -119,6 +130,7 @@ const ApplyButton = ({ job, modalId }) => {
               />
             </div>
 
+            {/* Resume */}
             <div>
               <label className="block text-sm text-gray-600">
                 Resume Link (Google Drive, etc.)
@@ -134,6 +146,7 @@ const ApplyButton = ({ job, modalId }) => {
               />
             </div>
 
+            {/* Cover letter */}
             <div>
               <label className="block text-sm text-gray-600">
                 Cover Letter
@@ -147,14 +160,16 @@ const ApplyButton = ({ job, modalId }) => {
               ></textarea>
             </div>
 
+            {/* Buttons */}
             <div className="flex justify-end space-x-3 pt-4">
               <button
                 type="button"
                 className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 cursor-pointer"
-                onClick={() => document.getElementById(modalId).close()}
+                onClick={() => modalRef.current?.close()}
               >
                 Cancel
               </button>
+
               <button
                 type="submit"
                 className={`bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 ${
@@ -183,6 +198,4 @@ const ApplyButton = ({ job, modalId }) => {
       </dialog>
     </div>
   );
-};
-
-export default ApplyButton;
+}

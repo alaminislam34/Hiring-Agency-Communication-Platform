@@ -2,76 +2,67 @@
 
 import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
-const AddJobForm = () => {
+export default function AddJobForm() {
   const { currentUser, refetchJobs } = useAppContext();
   const [loading, setLoading] = useState(false);
 
-  //added for check realtime notification
+  // 👉 modal ref
+  const modalRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const form = e.target;
-    const jobTitle = form.jobTitle.value.trim();
-    const companyName = form.companyName.value.trim();
-    const location = form.location.value.trim();
-    const jobType = form.jobType.value;
-    const jobCategory = form.category.value;
-    const minSalary = parseInt(form.minSalary.value) || 0;
-    const maxSalary = parseInt(form.maxSalary.value) || 0;
-    const currency = form.currency.value;
-    const description = form.jobDetails.value.trim();
-    const requirements = form.requirements.value.trim();
-    const skills = form.skills.value.trim();
-    const contactEmail = form.contactEmail.value.trim();
-    const contactPhone = form.contactPhone.value.trim();
-    const postDate = new Date().toISOString();
-    const deadline = new Date(form.deadline.value).toISOString();
 
+    // ----- gather form data -----
     const jobData = {
-      jobTitle,
-      companyName,
-      location,
-      jobType,
+      jobTitle: form.jobTitle.value.trim(),
+      companyName: form.companyName.value.trim(),
+      location: form.location.value.trim(),
+      jobType: form.jobType.value,
+      jobCategory: form.category.value,
+      minSalary: parseInt(form.minSalary.value) || 0,
+      maxSalary: parseInt(form.maxSalary.value) || 0,
+      currency: form.currency.value,
+      description: form.jobDetails.value.trim(),
+      skills: form.skills.value.trim(),
+      requirements: form.requirements.value.trim(),
+      contactEmail: form.contactEmail.value.trim(),
+      contactPhone: form.contactPhone.value.trim(),
+      postDate: new Date().toISOString(),
+      deadline: new Date(form.deadline.value).toISOString(),
       employerEmail: currentUser?.email,
-      jobCategory,
-      minSalary,
-      maxSalary,
-      currency,
-      description,
-      skills,
-      requirements,
-      contactEmail,
-      contactPhone,
-      postDate,
-      deadline,
     };
 
     try {
       const res = await axios.post("/api/postJob", jobData);
+
       if (res.status === 201) {
+        // optional server notification
         await axios.post(
           "https://jobhive-server.onrender.com/api/notify-job-post",
           {
-            jobTitle,
-            companyName,
-            postDate,
+            jobTitle: jobData.jobTitle,
+            companyName: jobData.companyName,
+            postDate: jobData.postDate,
           }
         );
+
         refetchJobs();
         form.reset();
-        document.getElementById("my_modal_5").close();
-        Swal.fire("Job Posted Successfully!", "", "success");
+        modalRef.current?.close(); // 🔒 uses ref, safe in browser
+        await Swal.fire("Job Posted Successfully!", "", "success");
       } else {
         toast.error("Failed to post job. Please try again.");
       }
-    } catch (error) {
-      console.error("Error posting job:", error);
+    } catch (err) {
+      console.error("Error posting job:", err);
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -82,157 +73,177 @@ const AddJobForm = () => {
       <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-center text-teal-600">
         Post a Job
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Job Title & Company */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="jobTitle"
-            placeholder="Job Title"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-            required
-          />
-          <input
-            type="text"
-            name="companyName"
-            placeholder="Company Name"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-            required
-          />
-        </div>
 
-        {/* Location & Job Type */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="location"
-            placeholder="Location"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-            required
-          />
-          <div>
-            <select
-              name="jobType"
-              className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-              required
-            >
-              <option value="">Select Job Type</option>
-              <option value="Full-Time">Full-Time</option>
-              <option value="Part-Time">Part-Time</option>
-              <option value="Remote">Remote</option>
-              <option value="Internship">Internship</option>
-            </select>
-          </div>
-        </div>
+      {/* modal trigger */}
+      <button
+        onClick={() => modalRef.current?.showModal()}
+        className="btn bg-teal-500 hover:bg-teal-600 text-white mb-4"
+      >
+        Add Job
+      </button>
 
-        {/* Salary Range & Currency */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <input
-            type="number"
-            name="minSalary"
-            placeholder="Min Salary ($)"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-          />
-          <input
-            type="number"
-            name="maxSalary"
-            placeholder="Max Salary ($)"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-          />
-          <select
-            name="currency"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-          >
-            <option value="USD">$ USD</option>
-            <option value="BDT">৳ BDT</option>
-            <option value="EUR">€ EUR</option>
-            <option value="GBP">£ GBP</option>
-            <option value="INR">₹ INR</option>
-          </select>
-        </div>
+      {/* modal */}
+      <dialog
+        id="my_modal_5"
+        ref={modalRef}
+        className="modal modal-bottom sm:modal-middle"
+      >
+        <div className="modal-box bg-white shadow-lg rounded-lg p-6 max-w-xl mx-auto">
+          <h3 className="font-bold text-2xl text-gray-800 mb-6 text-center">
+            Job Details
+          </h3>
 
-        {/* Job Details & Required Skills */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <textarea
-            name="jobDetails"
-            placeholder="Job Description"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-            required
-          ></textarea>
-          <textarea
-            name="skills"
-            placeholder="Required Skills"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-            required
-          ></textarea>
-        </div>
-        {/* Application Deadline & Contact Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="date"
-            name="deadline"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full "
-            required
-          />
-          <input
-            type="email"
-            name="contactEmail"
-            placeholder="Contact Email"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-            required
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="contactPhone"
-            placeholder="Contact Phone"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-            required
-          />
-          <input
-            type="text"
-            name="category"
-            placeholder="Category"
-            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-          />
-        </div>
-        {/* Job Requirements */}
-        <textarea
-          name="requirements"
-          placeholder="Job Requirements & Responsibilities"
-          className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
-          required
-        ></textarea>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className={`${
-            loading ? "pointer-events-none " : "cursor-pointer"
-          } btn bg-teal-500 hover:bg-teal-600 rounded-md text-white w-full`}
-        >
-          {loading ? (
-            <div className="flex items-center gap-2">
-              Adding
-              <ThreeDots
-                height="20"
-                width="20"
-                radius="9"
-                color="#fff"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClassName=""
-                visible={true}
+          {/* ---------- FORM ---------- */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Job Title & Company */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="jobTitle"
+                placeholder="Job Title"
+                required
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              />
+              <input
+                type="text"
+                name="companyName"
+                placeholder="Company Name"
+                required
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
               />
             </div>
-          ) : (
-            "Add Job"
-          )}
-        </button>
-      </form>
+
+            {/* Location & Job Type */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="location"
+                placeholder="Location"
+                required
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              />
+              <select
+                name="jobType"
+                required
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              >
+                <option value="">Select Job Type</option>
+                <option>Full-Time</option>
+                <option>Part-Time</option>
+                <option>Remote</option>
+                <option>Internship</option>
+              </select>
+            </div>
+
+            {/* Salary Range & Currency */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <input
+                type="number"
+                name="minSalary"
+                placeholder="Min Salary"
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              />
+              <input
+                type="number"
+                name="maxSalary"
+                placeholder="Max Salary"
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              />
+              <select
+                name="currency"
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              >
+                <option value="USD">$ USD</option>
+                <option value="BDT">৳ BDT</option>
+                <option value="EUR">€ EUR</option>
+                <option value="GBP">£ GBP</option>
+                <option value="INR">₹ INR</option>
+              </select>
+            </div>
+
+            {/* Description & Skills */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <textarea
+                name="jobDetails"
+                placeholder="Job Description"
+                required
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              ></textarea>
+              <textarea
+                name="skills"
+                placeholder="Required Skills"
+                required
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              ></textarea>
+            </div>
+
+            {/* Deadline & Contact */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="date"
+                name="deadline"
+                required
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              />
+              <input
+                type="email"
+                name="contactEmail"
+                placeholder="Contact Email"
+                required
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="contactPhone"
+                placeholder="Contact Phone"
+                required
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              />
+              <input
+                type="text"
+                name="category"
+                placeholder="Category"
+                className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+              />
+            </div>
+
+            {/* Requirements */}
+            <textarea
+              name="requirements"
+              placeholder="Job Requirements & Responsibilities"
+              required
+              className="py-2 px-3 border border-teal-500/50 rounded-md w-full"
+            ></textarea>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className={`btn bg-teal-500 hover:bg-teal-600 text-white w-full ${
+                loading ? "pointer-events-none" : "cursor-pointer"
+              }`}
+            >
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  Adding
+                  <ThreeDots
+                    height="20"
+                    width="20"
+                    radius="9"
+                    color="#fff"
+                    ariaLabel="three-dots-loading"
+                    visible={true}
+                  />
+                </span>
+              ) : (
+                "Add Job"
+              )}
+            </button>
+          </form>
+        </div>
+      </dialog>
     </div>
   );
-};
-
-export default AddJobForm;
+}

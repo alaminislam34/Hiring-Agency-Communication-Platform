@@ -1,6 +1,6 @@
 "use server";
 import nodemailer from "nodemailer";
-import dbConnect, { collection } from "./dbConnect";
+// import dbConnect, { collection } from "./dbConnect";
 
 export const sendOTP = async (email) => {
   console.log("Sending OTP to:", email);

@@ -3,7 +3,7 @@
 import { Nunito } from "next/font/google";
 import TabJob from "./TabJob/TabJob";
 import EmployeeReview from "./employeeReview/EmployeeReview";
-import SectionTitle from "../components/SectionTitle";
+import SectionTitle from "../components/SharedComponents/SectionTitle";
 import FeaturesGrid from "./components/FeaturesGrid";
 import TeamCard from "./components/TeamCard";
 const nunito = Nunito({ subsets: ["latin"] });

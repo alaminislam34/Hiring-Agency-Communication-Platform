@@ -1,4 +1,4 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
+import { collection, getCollection } from "@/lib/mongodb";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -9,7 +9,7 @@ export const POST = async (req) => {
     return new Response("Unauthorized", { status: 401 });
   }
   try {
-    const userCollection = dbConnect(collection.user_collection);
+    const userCollection = await getCollection(collection.user_collection);
     const query = { email: session?.user.email };
     const update = { $set: body };
     const updatedUser = await userCollection.updateOne(query, update, {

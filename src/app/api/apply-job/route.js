@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 // import axios from "axios";
-import dbConnect, { collection } from "@/lib/dbConnect";
 import axios from "axios";
+import { collection, getCollection } from "@/lib/mongodb";
 
 export async function POST(req) {
   try {
     const body = await req.json();
     const { email, jobId } = body;
     await axios.post("https://jobhive-server.onrender.com/api/apply-job", body); // Your Socket.IO server API
-    const appliedCollection = dbConnect(collection.appliedCollection);
+    const appliedCollection = await getCollection(collection.appliedCollection);
     const exist = await appliedCollection.findOne({ jobId: jobId });
     if (exist?.email === email) {
       return NextResponse.json(

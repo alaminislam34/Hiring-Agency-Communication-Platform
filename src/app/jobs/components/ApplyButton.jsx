@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import Swal from "sweetalert2";
@@ -8,7 +7,7 @@ const ApplyButton = ({ job, modalId }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     candidateName: "",
-    candidatesEmail: "",
+    candidateEmail: "",
     resume: "",
     coverLetter: "",
   });
@@ -24,41 +23,53 @@ const ApplyButton = ({ job, modalId }) => {
 
     const applicationData = {
       ...formData,
-      jobId: job._id.toString(),
+      jobId: job.id,
       jobTitle: job.jobTitle,
-      companyName: job.companyName,
-      jobType: job.jobType,
-      postDate: job.postDate,
-      employerEmail: job.employerEmail,
-      deadline: job.deadline,
+      companyName: job.jobDetails.companyName,
+      jobType: job.jobDetails.jobType,
+      deadline: job.jobDetails.deadline,
+      jobDescription: job.jobDetails.jobDescription,
+      jobRequirements: job.jobDetails.jobRequirements,
     };
 
     try {
-      const res = await axios.post(
-        "https://jobhive-server.onrender.com/api/apply-job",
-        applicationData
-      );
-      Swal.fire({
-        icon: "success",
-        title: "Application Submitted",
-        text:
-          res.data.message ||
-          "Your job application has been submitted successfully!",
-      });
+      // 🔸 Get existing applications from localStorage
+      const storedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
 
-      setFormData({
-        name: "",
-        email: "",
-        resume: "",
-        coverLetter: "",
-      });
+      // 🔸 Check if already applied to this job
+      const alreadyApplied = storedJobs.some(
+        (appliedJob) => appliedJob.jobId === job.id
+      );
+
+      if (alreadyApplied) {
+        Swal.fire({
+          icon: "error",
+          text: "You have already applied for this job.",
+          timer: 2500,
+        });
+      } else {
+        // 🔸 Save new application
+        const updatedJobs = [...storedJobs, applicationData];
+        localStorage.setItem("appliedJobs", JSON.stringify(updatedJobs));
+
+        Swal.fire({
+          icon: "success",
+          title: "Application Submitted",
+          text: "Your job application has been submitted successfully!",
+        });
+
+        setFormData({
+          candidateName: "",
+          candidateEmail: "",
+          resume: "",
+          coverLetter: "",
+        });
+      }
     } catch (err) {
       console.error("❌ Submission error:", err);
-
       Swal.fire({
         icon: "error",
-        text: "You have already applied for this job.",
-        showCloseButton: false,
+        text: "Something went wrong. Please try again.",
         timer: 2500,
       });
     } finally {
@@ -100,8 +111,8 @@ const ApplyButton = ({ job, modalId }) => {
               </label>
               <input
                 type="email"
-                name="candidatesEmail"
-                value={formData.candidatesEmail}
+                name="candidateEmail"
+                value={formData.candidateEmail}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"
@@ -160,8 +171,6 @@ const ApplyButton = ({ job, modalId }) => {
                       color="#fff"
                       radius="9"
                       ariaLabel="three-dots-loading"
-                      wrapperStyle={{}}
-                      wrapperClass=""
                     />
                   </span>
                 ) : (

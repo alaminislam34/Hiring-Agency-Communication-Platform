@@ -1,7 +1,7 @@
 "use client";
 import { useAppContext } from "@/Providers/AppProviders";
-import JobDetailsModal from "../jobs/components/JobDetailsModal";
 import CandidatesDetails from "./components/CandidatesDetails";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 const Candidates = () => {
   const { jobs, currentUser, appliedJobsCollection } = useAppContext();

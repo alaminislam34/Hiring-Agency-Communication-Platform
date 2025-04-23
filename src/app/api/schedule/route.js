@@ -1,5 +1,6 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
+import { collection, getCollection } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+import { NextResponse } from "next/server";
 
 // POST — Create a new interview
 export async function POST(request) {
@@ -16,7 +17,9 @@ export async function POST(request) {
       );
     }
 
-    const interviewsCollection = dbConnect(collection.interviewsCollection);
+    const interviewsCollection = await getCollection(
+      collection.interviewsCollection
+    );
 
     const newInterview = {
       title,
@@ -29,7 +32,7 @@ export async function POST(request) {
 
     const result = await interviewsCollection.insertOne(newInterview);
 
-    return new Response(
+    return new NextResponse(
       JSON.stringify({
         message: "Interview scheduled!",
         id: result.insertedId,
@@ -38,16 +41,21 @@ export async function POST(request) {
     );
   } catch (error) {
     console.error("POST Error:", error);
-    return new Response(JSON.stringify({ error: "Internal server error" }), {
-      status: 500,
-    });
+    return new NextResponse(
+      JSON.stringify({ error: "Internal server error" }),
+      {
+        status: 500,
+      }
+    );
   }
 }
 
 // GET — Fetch all interviews
 export async function GET() {
   try {
-    const interviewsCollection = dbConnect(collection.interviewsCollection);
+    const interviewsCollection = await getCollection(
+      collection.interviewsCollection
+    );
     const interviews = await interviewsCollection.find().toArray();
 
     return new Response(JSON.stringify(interviews), { status: 200 });
@@ -77,7 +85,9 @@ export async function PUT(request) {
       );
     }
 
-    const interviewsCollection = dbConnect(collection.interviewsCollection);
+    const interviewsCollection = await getCollection(
+      collection.interviewsCollection
+    );
 
     const result = await interviewsCollection.updateOne(
       { _id: new ObjectId(id) },
@@ -119,7 +129,9 @@ export async function DELETE(request) {
       );
     }
 
-    const interviewsCollection = dbConnect(collection.interviewsCollection);
+    const interviewsCollection = await getCollection(
+      collection.interviewsCollection
+    );
     const result = await interviewsCollection.deleteOne({
       _id: new ObjectId(id),
     });

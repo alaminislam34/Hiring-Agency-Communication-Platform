@@ -75,10 +75,13 @@ const TeamCard = () => {
             { imgSrc, name, title, description, twitter, linkedin, portfolio },
             index
           ) => (
-            <div key={index} className="">
+            <div
+              key={index}
+              className="bg-gray-50 rounded-lg shadow-md hover:shadow-lg cursor-pointer border border-transparent hover:border-teal-500 p-6"
+            >
               <Link
                 href={{ pathname: "/about/name/", query: { name } }}
-                className="inline-block p-6 flex-col justify-between bg-gray-50 rounded-lg shadow-md hover:shadow-lg cursor-pointer border border-transparent hover:border-teal-500"
+                className="inline-block flex-col justify-between "
               >
                 <div>
                   <div className="w-28 h-28 border border-teal-500 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center overflow-hidden">

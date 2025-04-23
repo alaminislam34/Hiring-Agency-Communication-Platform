@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { createContext, useState, useContext, useEffect } from "react";
 import { io } from "socket.io-client";
 import Swal from "sweetalert2";
@@ -10,7 +10,8 @@ import Swal from "sweetalert2";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  // General App State
+  const { data: session } = useSession();
+
   const [showSidebar, setShowSidebar] = useState(false);
   const [showName, setShowName] = useState(true);
   const [type, setType] = useState("");
@@ -19,35 +20,55 @@ export const AppProvider = ({ children }) => {
   const [isVerified, setIsVerified] = useState(false);
   const [jobTitle, setJobTitle] = useState("");
   const [location, setLocation] = useState("");
+  const [bookmark, setBookmark] = useState([]);
+  const [fullName, setFullName] = useState("");
+  const [roomID, setRoomID] = useState("");
+  const [notificationCount, setNotificationCount] = useState(0);
 
-  // bookmark state
-  const [bookmark, setBookmark] = useState(
-    () => JSON.parse(localStorage.getItem("bookmark")) || []
-  );
+  useEffect(() => {
+    const stored = localStorage.getItem("bookmark");
+    if (stored) setBookmark(JSON.parse(stored));
+  }, []);
 
-  // add bookmark to local storage
   useEffect(() => {
     localStorage.setItem("bookmark", JSON.stringify(bookmark));
   }, [bookmark]);
 
-  // Zego Meeting State
-  const [fullName, setFullName] = useState("");
-  const [roomID, setRoomID] = useState("");
+  const markNotificationsAsSeen = () => setNotificationCount(0);
 
-  // 🔴 Notification Count for New Jobs
-  const [notificationCount, setNotificationCount] = useState(0);
-  const markNotificationsAsSeen = () => {
-    setNotificationCount(0); // resets badge
+  // ✅ API Calls: only when session exists
+  const fetchUser = async () => {
+    const res = await axios("/api/currentUser");
+    return res.data;
   };
+  const {
+    data: currentUser,
+    isLoading: userLoading,
+    refetch: userRefetch,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUser,
+    enabled: !!session,
+    refetchOnWindowFocus: false,
+  });
 
-  // fetch total applied jobs for admin
+  const fetchTotalUsers = async () => {
+    const res = await axios("/api/totalUsers");
+    return res.data;
+  };
+  const {
+    data: totalUsers = [],
+    isLoading: totalUsersLoading,
+    refetch: totalUsersRefetch,
+  } = useQuery({
+    queryKey: ["totalUsers"],
+    queryFn: fetchTotalUsers,
+    enabled: !!session,
+  });
+
   const fetchTotalAppliedJobs = async () => {
-    try {
-      const res = await axios("/api/totalAppliedJobs");
-      return res.data;
-    } catch (err) {
-      console.log(err);
-    }
+    const res = await axios("/api/totalAppliedJobs");
+    return res.data;
   };
   const {
     data: totalAppliedJobs = [],
@@ -56,41 +77,12 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["totalAppliedJobs"],
     queryFn: fetchTotalAppliedJobs,
+    enabled: !!session,
   });
 
-  // ✅ Fetch Current User
-  const fetchUser = async () => {
-    const res = await axios("/api/currentUser");
-    return res.data;
-  };
-
-  const {
-    data: currentUser,
-    isLoading: userLoading,
-    refetch: userRefetch,
-  } = useQuery({
-    queryKey: ["users"],
-    queryFn: fetchUser,
-  });
-
-  // ✅ Fetch total users
-  const fetchTotalUsers = async () => {
-    try {
-      const res = await axios("/api/totalUsers");
-      return res.data;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // ✅ Fetch applied jobs collection
   const fetchAppliedJobs = async () => {
-    try {
-      const res = await axios("/api/getAppliedJobs");
-      return res.data;
-    } catch (err) {
-      console.log(err);
-    }
+    const res = await axios("/api/getAppliedJobs");
+    return res.data;
   };
   const {
     data: appliedJobsCollection = [],
@@ -99,19 +91,34 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["appliedJobs"],
     queryFn: fetchAppliedJobs,
+    enabled: !!session,
   });
+  const fetchJobs = async () => {
+    const params = new URLSearchParams();
+
+    if (type) params.append("jobType", type);
+    if (jobTitle) params.append("jobTitle", jobTitle);
+    if (location) params.append("location", location);
+
+    const res = await axios(`/api/allJobs?${params.toString()}`);
+    console.log("jobs data:", res.data);
+    return res.data;
+  };
 
   const {
-    data: totalUsers = [],
-    isLoading: totalUsersLoading,
-    refetch: totalUsersRefetch,
+    data: jobs,
+    isLoading: jobsLoading,
+    refetch: refetchJobs,
   } = useQuery({
-    queryKey: ["totalUsers"],
-    queryFn: fetchTotalUsers,
+    queryKey: ["jobs", type, jobTitle, location],
+    queryFn: fetchJobs,
+    enabled: true, // Always enabled
   });
 
-  // 🔌 Initialize socket for notifications
+  // ✅ Socket with session check
   useEffect(() => {
+    if (!session) return;
+
     const socket = io("https://jobhive-server.onrender.com");
     socket.connect();
 
@@ -119,29 +126,16 @@ export const AppProvider = ({ children }) => {
       console.log("Connected to Socket.IO server");
     });
 
-    // 🔔 Listen for new job post notifications
     socket.on("newJobPosted", (notification) => {
       console.log("📢 New Job Notification:", notification);
       setNotificationCount((prev) => prev + 1);
     });
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    const socket = io("https://jobhive-server.onrender.com");
-    socket.connect();
-
-    if (currentUser?.email) {
-      socket.emit("registerUser", currentUser.email);
+    if (session?.user?.email) {
+      socket.emit("registerUser", session.user.email);
     }
 
-    // ✅ Employer receives job application notification
     socket.on("jobApplicationNotification", (data) => {
-      console.log("📬 Employer Notification Received:", data);
-
       Swal.fire({
         icon: "info",
         title: "New Job Application!",
@@ -153,29 +147,9 @@ export const AppProvider = ({ children }) => {
     return () => {
       socket.disconnect();
     };
-  }, [currentUser]);
+  }, [session]);
 
-  // ✅ Jobs fetch function
-  const fetchJobs = async () => {
-    const res = await axios(
-      `/api/allJobs?jobType=${type}&jobTitle=${jobTitle}&location=${location}`
-    );
-    return res.data;
-  };
-
-  const {
-    data: jobs = [],
-    isLoading: jobsLoading,
-    refetch: refetchJobs,
-  } = useQuery({
-    queryKey: ["jobs", type],
-    queryFn: fetchJobs,
-    enabled: true,
-  });
-
-  // Context Value
   const contextValue = {
-    // General App State
     showSidebar,
     setShowSidebar,
     showName,
@@ -183,8 +157,6 @@ export const AppProvider = ({ children }) => {
     currentUser,
     setType,
     type,
-
-    // Jobs Data
     jobs,
     jobsLoading,
     fullName,
@@ -202,27 +174,17 @@ export const AppProvider = ({ children }) => {
     setIsVerified,
     setJobTitle,
     setLocation,
-
-    // 🔴 Notification State
     notificationCount,
     setNotificationCount,
     markNotificationsAsSeen,
-
-    // ✅ applied jobs data
     totalAppliedJobs,
     totalAppliedJobsLoading,
     totalAppliedJobsRefetch,
-
-    // ✅ total users data
     totalUsers,
     totalUsersLoading,
     totalUsersRefetch,
-
-    // bookmark jobs store
     setBookmark,
     bookmark,
-
-    // applied jobs collection
     appliedJobsCollection,
     appliedJobsLoading,
     appliedJobsRefetch,

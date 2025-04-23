@@ -1,11 +1,11 @@
 "use server";
 
 import bcrypt from "bcryptjs";
-import dbConnect, { collection } from "@/lib/dbConnect";
 import { sendVerificationEmail } from "@/lib/sendVerificationEmail";
+import { collection, getCollection } from "@/lib/mongodb";
 
 export const register = async (user) => {
-  const userCollection = dbConnect(collection.user_collection);
+  const userCollection = await getCollection(collection.user_collection);
   const { email, password } = user;
 
   const isExistUser = await userCollection.findOne({ email });

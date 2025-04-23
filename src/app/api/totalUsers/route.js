@@ -1,4 +1,4 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
+import { collection, getCollection } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
@@ -9,7 +9,7 @@ export const GET = async (req) => {
     if (role) {
       query.role = role;
     }
-    const usersCollection = dbConnect(collection.user_collection);
+    const usersCollection = await getCollection(collection.user_collection);
     const users = await usersCollection.find(query).toArray();
 
     return NextResponse.json(users);

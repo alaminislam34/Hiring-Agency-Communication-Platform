@@ -18,7 +18,6 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { FaArrowTrendUp } from "react-icons/fa6";
 import CircleChart from "./CircleChart";
 import DashboardTitle from "./DashboardTitle";
 

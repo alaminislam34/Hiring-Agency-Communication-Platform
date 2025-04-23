@@ -4,12 +4,11 @@ import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
 import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
-import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const AddJobForm = () => {
-  const { currentUser } = useAppContext();
+  const { currentUser, refetchJobs } = useAppContext();
   const [loading, setLoading] = useState(false);
 
   //added for check realtime notification
@@ -56,7 +55,6 @@ const AddJobForm = () => {
     try {
       const res = await axios.post("/api/postJob", jobData);
       if (res.status === 201) {
-        // ✅ Notify jobseekers
         await axios.post(
           "https://jobhive-server.onrender.com/api/notify-job-post",
           {
@@ -65,7 +63,7 @@ const AddJobForm = () => {
             postDate,
           }
         );
-
+        refetchJobs();
         form.reset();
         document.getElementById("my_modal_5").close();
         Swal.fire("Job Posted Successfully!", "", "success");

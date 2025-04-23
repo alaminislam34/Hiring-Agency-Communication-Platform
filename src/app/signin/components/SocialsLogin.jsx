@@ -15,8 +15,8 @@ const SocialsLogin = () => {
   };
   useEffect(() => {
     if (session?.status === "authenticated") {
+      // toast.success("Login Successful! 🎉");
       route.push("/");
-      toast.success("Login Successful! 🎉");
     }
   }, [session?.status]);
   return (

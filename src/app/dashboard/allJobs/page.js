@@ -10,7 +10,7 @@ const AllJobs = () => {
 
       {/* Table */}
       <div className="overflow-x-auto border border-teal-600 rounded-xl shadow-xl ">
-        <table className="min-w-full table divide-y divide-gray-200 bg-white">
+        <table className="min-w-full table   bg-white">
           <thead>
             <tr className="text-left *:uppercase *:tracking-wider">
               <th className="">Job Title</th>

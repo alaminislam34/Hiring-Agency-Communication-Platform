@@ -1,11 +1,11 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
+import { collection, getCollection } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
   const body = await req.json();
   const email = body.email;
 
-  const userCollection = dbConnect(collection.user_collection); // ✅ await add
+  const userCollection = await getCollection(collection.user_collection);
   const user = await userCollection.findOne({ email: email });
 
   if (user) {

@@ -23,7 +23,7 @@ const EmployeeReview = () => {
         navigation={false}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         modules={[Autoplay]}
-        loop= {true}
+        loop={true}
         className="w-full mt-12"
       >
         {reviews.map((review, index) => (

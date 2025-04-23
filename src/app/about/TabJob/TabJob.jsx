@@ -58,9 +58,9 @@ const TabJob = () => {
       <div className="flex items-center justify-center">
         {/* Tabs */}
         <div className="tabs tabs-boxed flex justify-center overflow-hidden flex-wrap">
-          {Object.keys(categories).map((cat) => (
+          {Object.keys(categories).map((cat, i) => (
             <button
-              key={cat}
+              key={i}
               className={`py-2 px-4 ${
                 activeTab === cat
                   ? "text-teal-600 font-semibold border-x border-t rounded-t-lg"

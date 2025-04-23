@@ -1,11 +1,12 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
+import { collection, getCollection } from "@/lib/mongodb";
 import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
   const body = await req.json();
   const session = await getServerSession();
   const userEmail = session?.user?.email;
-  const applicationCollection = dbConnect(
+  const applicationCollection = getCollection(
     collection.applyForEmployerCollection
   );
   const existingApplication = await applicationCollection.findOne({

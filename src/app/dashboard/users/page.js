@@ -9,7 +9,7 @@ const AllUsers = async () => {
     <div className="">
       <h1 className="">Total Users: {users.length}</h1>
       <div className="overflow-x-auto mt-6 rounded-xl border border-teal-600 shadow-xl">
-        <table className="min-w-full table divide-y divide-gray-200 bg-white">
+        <table className="min-w-full table   bg-white">
           <thead className="">
             <tr className="*:uppercase *:tracking-wider">
               <th>Name</th>

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import CommonButton from "../components/CommonButton";
+import CommonButton from "../components/LandingPageComponents/CommonButton";
 import { FaChevronLeft } from "react-icons/fa6";
 import Link from "next/link";
 

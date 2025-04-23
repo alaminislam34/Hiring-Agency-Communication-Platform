@@ -15,6 +15,46 @@ body {
 }
 
 @theme {
+  --color-teal-primary: theme(colors.teal.500);
+  --color-teal-secondary: theme(colors.teal.600);
+  --color-teal-accent: theme(colors.teal.400);
+  --color-teal-neutral: theme(colors.gray.100);
+
+  --color-indigo-primary: theme(colors.indigo.500);
+  --color-indigo-secondary: theme(colors.indigo.600);
+  --color-indigo-accent: theme(colors.indigo.400);
+  --color-indigo-neutral: theme(colors.slate.100);
+
+  --color-emerald-primary: theme(colors.emerald.500);
+  --color-emerald-secondary: theme(colors.emerald.600);
+  --color-emerald-accent: theme(colors.emerald.400);
+  --color-emerald-neutral: theme(colors.gray.100);
+
+  --color-slate-dark-primary: theme(colors.slate.800);
+  --color-slate-dark-secondary: theme(colors.slate.700);
+  --color-slate-dark-accent: theme(colors.slate.600);
+  --color-slate-dark-neutral: theme(colors.slate.900);
+
+  --color-rose-primary: theme(colors.rose.500);
+  --color-rose-secondary: theme(colors.rose.600);
+  --color-rose-accent: theme(colors.rose.400);
+  --color-rose-neutral: theme(colors.gray.100);
+
+  --color-amber-dark-primary: theme(colors.amber.700);
+  --color-amber-dark-secondary: theme(colors.amber.600);
+  --color-amber-dark-accent: theme(colors.amber.500);
+  --color-amber-dark-neutral: theme(colors.gray.900);
+
+  --color-sky-primary: theme(colors.sky.500);
+  --color-sky-secondary: theme(colors.sky.600);
+  --color-sky-accent: theme(colors.sky.400);
+  --color-sky-neutral: theme(colors.gray.100);
+
+  --color-zinc-dark-primary: theme(colors.zinc.800);
+  --color-zinc-dark-secondary: theme(colors.zinc.700);
+  --color-zinc-dark-accent: theme(colors.zinc.600);
+  --color-zinc-dark-neutral: theme(colors.zinc.900);
+
   --font-gloria: "Gloria Hallelujah", cursive;
 }
 

@@ -2,7 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import { loginUser } from "@/app/actions/auth/loginUser";
-import dbConnect, { collection } from "./dbConnect";
+import { collection, getCollection } from "./mongodb";
 
 export const authOptions = {
   providers: [
@@ -14,11 +14,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         const user = await loginUser(credentials);
-        if (user) {
-          return user;
-        } else {
-          return null;
-        }
+        return user || null;
       },
     }),
     GoogleProvider({
@@ -43,7 +39,7 @@ export const authOptions = {
 
         if (!email) return false;
 
-        const userCollection = dbConnect(collection.user_collection);
+        const userCollection = await getCollection(collection.user_collection); // Added await
         const userExist = await userCollection.findOne({ email });
 
         if (!userExist) {
@@ -66,20 +62,22 @@ export const authOptions = {
     // Validate session: check if user still exists in DB
     async session({ session }) {
       try {
-        const userCollection = dbConnect(collection.user_collection);
+        const userCollection = await getCollection(collection.user_collection); // Added await
         const userExist = await userCollection.findOne({
           email: session?.user?.email,
         });
 
-        if (!userExist) {
-          // Session invalid since user was deleted
-          return null;
+        if (userExist) {
+          // Add user data to session
+          session.user.id = userExist._id?.toString();
+          session.user.role = userExist.role;
+          session.user.isVerified = userExist.isVerified;
         }
 
         return session;
       } catch (error) {
         console.error("Error in session callback:", error);
-        return null;
+        return session; // Return session even if DB fails
       }
     },
   },

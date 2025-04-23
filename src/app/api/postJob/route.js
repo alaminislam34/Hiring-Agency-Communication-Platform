@@ -1,5 +1,5 @@
+import { collection, getCollection } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
-import dbConnect, { collection } from "@/lib/dbConnect";
 
 export const POST = async (req) => {
   try {
@@ -9,7 +9,7 @@ export const POST = async (req) => {
       return NextResponse.json({ message: "Invalid data" }, { status: 400 });
     }
 
-    const jobsCollection = dbConnect(collection.jobsCollection);
+    const jobsCollection = await getCollection(collection.jobsCollection);
 
     const result = await jobsCollection.insertOne(data);
 

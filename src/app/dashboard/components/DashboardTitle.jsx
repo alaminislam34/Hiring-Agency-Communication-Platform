@@ -9,18 +9,11 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import { ThreeDots } from "react-loader-spinner";
 
 const DashboardTitle = () => {
-  const {
-    currentUser,
-    jobs,
-    totalAppliedJobs,
-    totalAppliedJobsLoading,
-    totalUsers,
-    totalUsersLoading,
-  } = useAppContext();
+  const { currentUser, jobs } = useAppContext();
   const adminStats = [
     {
       title: "Active Users",
-      value: totalUsers?.length || 0,
+      value: 0,
       icon: <Users size={24} />,
     },
     {
@@ -30,12 +23,12 @@ const DashboardTitle = () => {
     },
     {
       title: "Total Apply",
-      value: totalAppliedJobs?.length || 0,
+      value: 0,
       icon: <CircleCheck size={24} />,
     },
     {
       title: "Total Employers",
-      value: totalUsers?.filter((user) => user.role === "employer").length || 0,
+      value: 0,
       icon: <Users size={24} />,
     },
   ];
@@ -94,7 +87,7 @@ const DashboardTitle = () => {
             </div>
             <div className="flex items-center justify-between">
               <h2 className="text-base md:text-lg text-right lg:text-xl text-gray-800">
-                {totalAppliedJobsLoading || totalUsersLoading ? (
+                {/* {totalAppliedJobsLoading || totalUsersLoading ? (
                   <ThreeDots
                     visible={true}
                     height="20"
@@ -107,7 +100,8 @@ const DashboardTitle = () => {
                   />
                 ) : (
                   stat.value
-                )}
+                )} */}
+                {stat.value}
               </h2>
               <FaArrowTrendUp className="text-green-500 text-xl" />
             </div>

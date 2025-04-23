@@ -1,8 +1,10 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
+import { collection, getCollection } from "@/lib/mongodb";
 
 export const POST = async (req) => {
   try {
-    const apply_jobCollection = dbConnect(collection.appliedCollection);
+    const apply_jobCollection = await getCollection(
+      collection.appliedCollection
+    );
     const data = await req.json();
 
     const {

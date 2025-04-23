@@ -1,11 +1,227 @@
 "use client";
+
+// Job Seeker NavLinks
+
+const jobSeekerNavLink = [
+  {
+    name: "Home",
+    href: "/",
+    icon: <House size={18} />,
+  },
+  {
+    name: "Jobs",
+    href: "/jobs",
+    icon: <BriefcaseBusiness size={18} />,
+  },
+  {
+    name: "Free Courses",
+    href: "/courses",
+    icon: <SquareChevronRightIcon size={18} />,
+  },
+  {
+    name: "Saved Jobs",
+    href: "/savedJobs",
+    icon: <Bookmark size={18} />,
+  },
+  {
+    name: "Blogs",
+    href: "/blogs",
+    icon: <GalleryVertical size={18} />,
+  },
+];
+const NavLinks = [
+  {
+    name: "Home",
+    href: "/",
+    icon: <House size={18} />,
+  },
+  {
+    name: "Jobs",
+    href: "/jobs",
+    icon: <BriefcaseBusiness size={18} />,
+  },
+  {
+    name: "About Us",
+    href: "/about",
+    icon: <SquareChevronRight size={18} />,
+  },
+  {
+    name: "Free Courses",
+    href: "/courses",
+    icon: <SquareChevronRightIcon size={18} />,
+  },
+  {
+    name: "Blogs",
+    href: "/blogs",
+    icon: <GalleryVertical size={18} />,
+  },
+  {
+    name: "Contact Us",
+    href: "/contact",
+    icon: <Contact size={18} />,
+  },
+];
+const adminNavLinks = [
+  {
+    name: "Home",
+    href: "/",
+    icon: <House size={18} />,
+  },
+  {
+    name: "Jobs",
+    href: "/jobs",
+    icon: <BriefcaseBusiness size={18} />,
+  },
+  {
+    name: "About Us",
+    href: "/about",
+    icon: <SquareChevronRight size={18} />,
+  },
+  {
+    name: "Free Courses",
+    href: "/courses",
+    icon: <SquareChevronRightIcon size={18} />,
+  },
+  {
+    name: "Manage Users",
+    href: "/manageUsers",
+    icon: <Users size={18} />,
+  },
+  {
+    name: "Manage Jobs",
+    href: "/manageJobs",
+    icon: <BriefcaseBusiness size={18} />,
+  },
+];
+const employerNavLinks = [
+  {
+    name: "Home",
+    href: "/",
+    icon: <House size={18} />,
+  },
+  {
+    name: "Jobs",
+    href: "/jobs",
+    icon: <BriefcaseBusiness size={18} />,
+  },
+  {
+    name: "Post Job",
+    href: "/postJob",
+    icon: <SquarePlus size={18} />,
+  },
+  {
+    name: "Blogs",
+    href: "/blogs",
+    icon: <GalleryVertical size={18} />,
+  },
+];
+
+// jobSeeker links
+const jobSeekerLinks = [
+  {
+    name: "Profile",
+    href: "/jobSeeker/profile",
+    icon: <UserCog size={18} />,
+  },
+  {
+    name: "Dashboard Panel",
+    href: "/jobSeeker",
+    icon: <CircleGauge size={18} />,
+  },
+  {
+    name: "Saved Jobs",
+    href: "/jobSeeker/savedJobs",
+    icon: <Bookmark size={18} />,
+  },
+  {
+    name: "Applied Jobs",
+    href: "/jobSeeker/appliedJobs",
+    icon: <FileCheck size={18} />,
+  },
+  {
+    name: "Settings",
+    href: "/jobSeeker/settings",
+    icon: <Settings size={18} />,
+  },
+  // {
+  //   name: "Notifications",
+  //   href: "/jobSeeker/notifications",
+  //   icon: <Bell size={18} />,
+  // },
+];
+// employer links
+const employerLinks = [
+  {
+    name: "Profile",
+    href: "/employer/profile",
+    icon: <UserCog size={18} />,
+  },
+  {
+    name: "Dashboard Panel",
+    href: "/employer",
+    icon: <CircleGauge size={18} />,
+  },
+  {
+    name: "Add Job",
+    href: "/employer/addJob",
+    icon: <CirclePlus size={18} />,
+  },
+  {
+    name: "Manage Jobs",
+    href: "/employer/manageJobs",
+    icon: <BriefcaseBusiness size={18} />,
+  },
+  {
+    name: "Candidates",
+    href: "/employer/candidates",
+    icon: <Users size={18} />,
+  },
+  {
+    name: "Settings",
+    href: "/employer/settings",
+    icon: <Settings size={18} />,
+  },
+  // {
+  //   name: "Help",
+  //   href: "/employer/help",
+  //   icon: <CircleHelp size={18} />,
+  // },
+];
+// admin links
+const adminLinks = [
+  {
+    name: "Profile",
+    href: "/admin/profile",
+    icon: <UserCog size={18} />,
+  },
+  {
+    name: "Admin Panel",
+    href: "/admin",
+    icon: <CircleGauge size={18} />,
+  },
+  {
+    name: "Manage Users",
+    href: "/admin/manageUsers",
+    icon: <Users size={18} />,
+  },
+  {
+    name: "Manage Jobs",
+    href: "/admin/manageJobs",
+    icon: <BriefcaseBusiness size={18} />,
+  },
+  {
+    name: "Settings",
+    href: "/admin/settings",
+    icon: <Settings size={18} />,
+  },
+];
+
 import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
 import { useAppContext } from "@/Providers/AppProviders";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { IoIosNotificationsOutline } from "react-icons/io";
 import { RiMenu2Fill } from "react-icons/ri";
 import { GrClose } from "react-icons/gr";
 import { useSession } from "next-auth/react";
@@ -20,9 +236,11 @@ import { FileCheck } from "lucide-react";
 import { Bell } from "lucide-react";
 import { Users } from "lucide-react";
 import { Settings } from "lucide-react";
-import { CircleHelp } from "lucide-react";
 import { SquareChevronRight } from "lucide-react";
 import useValidateSession from "@/lib/unValidateSession";
+import { CirclePlus } from "lucide-react";
+import { Contact } from "lucide-react";
+import { SquareChevronRightIcon } from "lucide-react";
 
 const Navbar = () => {
   const session = useSession();
@@ -33,196 +251,9 @@ const Navbar = () => {
     useAppContext();
   useValidateSession();
 
-  // Job Seeker NavLinks
-  const jobSeekerNavLink = [
-    {
-      name: "Home",
-      href: "/",
-      icon: <House size={18} />,
-    },
-    {
-      name: "Jobs",
-      href: "/jobs",
-      icon: <BriefcaseBusiness size={18} />,
-    },
-    {
-      name: "Saved Jobs",
-      href: "/savedJobs",
-      icon: <Bookmark size={18} />,
-    },
-    {
-      name: "Blogs",
-      href: "/blogs",
-      icon: <GalleryVertical size={18} />,
-    },
-  ];
-  const NavLinks = [
-    {
-      name: "Home",
-      href: "/",
-      icon: <House size={18} />,
-    },
-    {
-      name: "Jobs",
-      href: "/jobs",
-      icon: <BriefcaseBusiness size={18} />,
-    },
-    {
-      name: "About Us",
-      href: "/about",
-      icon: <SquareChevronRight size={18} />,
-    },
-
-    {
-      name: "Blogs",
-      href: "/blogs",
-      icon: <GalleryVertical size={18} />,
-    },
-  ];
-  const adminNavLinks = [
-    {
-      name: "Home",
-      href: "/",
-      icon: <House size={18} />,
-    },
-    {
-      name: "Jobs",
-      href: "/jobs",
-      icon: <BriefcaseBusiness size={18} />,
-    },
-    {
-      name: "About Us",
-      href: "/about",
-      icon: <SquareChevronRight size={18} />,
-    },
-
-    {
-      name: "Manage Users",
-      href: "/manageUsers",
-      icon: <Users size={18} />,
-    },
-    {
-      name: "Manage Jobs",
-      href: "/manageJobs",
-      icon: <BriefcaseBusiness size={18} />,
-    },
-  ];
-  const employerNavLinks = [
-    {
-      name: "Home",
-      href: "/",
-      icon: <House size={18} />,
-    },
-    {
-      name: "Jobs",
-      href: "/jobs",
-      icon: <BriefcaseBusiness size={18} />,
-    },
-    {
-      name: "Post Job",
-      href: "/postJob",
-      icon: <SquarePlus size={18} />,
-    },
-    {
-      name: "Blogs",
-      href: "/blogs",
-      icon: <GalleryVertical size={18} />,
-    },
-  ];
-
-  // jobSeeker links
-  const jobSeekerLinks = [
-    {
-      name: "Profile",
-      href: "/dashboard/profile",
-      icon: <UserCog size={18} />,
-    },
-    {
-      name: "Dashboard",
-      href: "/dashboard",
-      icon: <CircleGauge size={18} />,
-    },
-    {
-      name: "Saved Jobs",
-      href: "/dashboard/saved-jobs",
-      icon: <Bookmark size={18} />,
-    },
-    {
-      name: "Applied Jobs",
-      href: "/dashboard/applied-jobs",
-      icon: <FileCheck size={18} />,
-    },
-    {
-      name: "Notifications",
-      href: "/dashboard/notifications",
-      icon: <Bell size={18} />,
-    },
-  ];
-  // employer links
-  const employerLinks = [
-    {
-      name: "Profile",
-      href: "/dashboard/profile",
-      icon: <UserCog size={18} />,
-    },
-    {
-      name: "Dashboard",
-      href: "/dashboard",
-      icon: <CircleGauge size={18} />,
-    },
-    {
-      name: "Jobs",
-      href: "/dashboard/jobs",
-      icon: <BriefcaseBusiness size={18} />,
-    },
-    {
-      name: "Candidates",
-      href: "/dashboard/candidates",
-      icon: <Users size={18} />,
-    },
-    {
-      name: "Settings",
-      href: "/dashboard/settings",
-      icon: <Settings size={18} />,
-    },
-    {
-      name: "Help",
-      href: "/dashboard/help",
-      icon: <CircleHelp size={18} />,
-    },
-  ];
-  // admin links
-  const adminLinks = [
-    {
-      name: "Profile",
-      href: "/dashboard/profile",
-      icon: <UserCog size={18} />,
-    },
-    {
-      name: "Admin Panel",
-      href: "/dashboard",
-      icon: <CircleGauge size={18} />,
-    },
-    {
-      name: "Users",
-      href: "/dashboard/users",
-      icon: <Users size={18} />,
-    },
-    {
-      name: "Jobs",
-      href: "/dashboard/jobs",
-      icon: <BriefcaseBusiness size={18} />,
-    },
-    {
-      name: "Settings",
-      href: "/dashboard/settings",
-      icon: <Settings size={18} />,
-    },
-  ];
-
   return (
     <div className="bg-base-100 h-[68px] md:h-[42px] relative">
-      <div className="w-full fixed top-0 left-0 z-50 bg-white shadow-xl">
+      <div className="w-full fixed top-0 left-0 z-50 bg-white shadow">
         <nav className="navbar w-full md:w-11/12 mx-auto flex justify-center items-center">
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">

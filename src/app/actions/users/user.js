@@ -1,9 +1,10 @@
 "use server";
-import dbConnect, { collection } from "@/lib/dbConnect";
+
+import { collection, getCollection } from "@/lib/mongodb";
 
 export const getUser = async (email) => {
   try {
-    const userCollection = dbConnect(collection.user_collection);
+    const userCollection = await getCollection(collection.user_collection);
     const user = await userCollection.findOne({ email: email });
     return user;
   } catch (error) {

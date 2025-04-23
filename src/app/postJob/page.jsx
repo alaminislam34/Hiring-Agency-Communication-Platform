@@ -1,6 +1,6 @@
 "use client";
 
-import AddJobForm from "../dashboard/components/JobAddForm";
+import AddJobForm from "./components/AddJobForm";
 
 const PostJob = () => {
   return (

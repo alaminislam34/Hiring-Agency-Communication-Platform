@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next dev --turbopack -p 3000\" \"nodemon server.js\"",
+    "dev": "concurrently \"next dev --turbopack -p 3000\"",
     "build": "next build",
     "postinstall": "flowbite-react patch"
   },

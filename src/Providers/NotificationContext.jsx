@@ -1,5 +1,5 @@
 "use client";
-import { socket } from "@/app/dashboard/chatbox/socket";
+import { socket } from "@/lib/socket";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const NotificationContext = createContext();

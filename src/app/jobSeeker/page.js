@@ -1,7 +1,5 @@
 "use client";
 
-import DashboardTitle from "@/app/components/dashboardComponents/DashboardTitle";
-import CircleChart from "@/app/dashboard/components/CircleChart";
 import { useAppContext } from "@/Providers/AppProviders";
 import {
   Chart as ChartJS,
@@ -13,12 +11,14 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import LineChartForPerDayApply from "./components/HomepageComponents/LineChartForPerDayApply";
-import TypeWiseApply from "./components/HomepageComponents/TypeWiseApply";
-import TopJobTitleApply from "./components/HomepageComponents/TopJobTitleApply";
 import { CircleCheck } from "lucide-react";
 import { BriefcaseBusiness } from "lucide-react";
 import { Bookmark } from "lucide-react";
+import DashboardTitle from "../components/dashboardComponents/DashboardTitle";
+import CircleChart from "../components/dashboardComponents/CircleChart";
+import LineChartForPerDayApply from "./components/HomepageComponents/LineChartForPerDayApply";
+import TypeWiseApply from "./components/HomepageComponents/TypeWiseApply";
+import TopJobTitleApply from "./components/HomepageComponents/TopJobTitleApply";
 
 ChartJS.register(
   CategoryScale,

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { socket } from "@/app/dashboard/chatbox/socket";
 import { FiEdit, FiTrash2, FiCheck, FiX } from "react-icons/fi";
+import { socket } from "@/lib/socket";
 
 // Utility to make links clickable
 function linkifyText(text) {

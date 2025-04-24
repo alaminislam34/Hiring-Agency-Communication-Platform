@@ -1,127 +1,128 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useAppContext } from "@/Providers/AppProviders";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useState } from "react";
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  EyeIcon,
+} from "@heroicons/react/24/outline";
 import Swal from "sweetalert2";
+import EditJobTwoStep from "./components/EditJob";
 
 const ManageJobs = () => {
-  const [jobs, setJobs] = useState([]);
-  const [editIndex, setEditIndex] = useState(null);
-  const [editData, setEditData] = useState({});
+  const { currentUser } = useAppContext();
 
-  useEffect(() => {
-    const storedJobs = localStorage.getItem("jobs");
-    if (storedJobs) {
-      const parsedJobs = JSON.parse(storedJobs);
-      setJobs(Array.isArray(parsedJobs) ? parsedJobs : [parsedJobs]);
-    }
-  }, []);
+  const [viewJob, setViewJob] = useState(null);
+  const [editJob, setEditJob] = useState(null); // ← এডিটের জন্য পুরো অবজেক্ট
 
-  const handleDelete = (index) => {
+  /* -------- fetch all jobs by employer -------- */
+  const fetchJobs = async () => {
+    const res = await axios.get("/api/allJobs", {
+      params: { postedBy: currentUser?.email },
+    });
+    return res.data; // array
+  };
+
+  const {
+    data: jobs = [],
+    isLoading,
+    refetch: refetchJobs,
+  } = useQuery({
+    queryKey: ["jobs", currentUser?.email],
+    queryFn: fetchJobs,
+    enabled: !!currentUser?.email,
+  });
+
+  /* -------- delete job -------- */
+  const deleteJob = useMutation({
+    mutationFn: (id) => axios.delete(`/api/job/${id}`),
+    onSuccess: () => {
+      Swal.fire("Deleted!", "Job removed successfully", "success");
+      refetchJobs();
+    },
+    onError: () => Swal.fire("Error", "Couldn’t delete job", "error"),
+  });
+
+  /* -------- handlers -------- */
+  const handleDelete = (job) => {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Delete?",
+      text: "Are you sure you want to remove this job?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "teal",
-      confirmButtonText: "Delete",
-      cancelButtonText: "Cancel",
-      width: "300px",
-    })
-      .then((result) => {
-        if (result.isConfirmed) {
-          const updatedJobs = [...jobs];
-          updatedJobs.splice(index, 1);
-          setJobs(updatedJobs);
-          localStorage.setItem("jobs", JSON.stringify(updatedJobs));
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your job has been deleted.",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 2500,
-            width: "300px",
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Error deleting job:", error);
-      });
+      confirmButtonColor: "#14b8a6",
+      cancelButtonColor: "#d33",
+    }).then((res) => res.isConfirmed && deleteJob.mutate(job._id));
   };
 
-  const openEditModal = (index) => {
-    setEditIndex(index);
-    setEditData(jobs[index].jobDetails);
-  };
-
-  const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditData({ ...editData, [name]: value });
-  };
-
-  const handleUpdate = () => {
-    const updatedJobs = [...jobs];
-    updatedJobs[editIndex].jobDetails = editData;
-    setJobs(updatedJobs);
-    localStorage.setItem("jobs", JSON.stringify(updatedJobs));
-    setEditIndex(null);
-  };
-
+  /* ------------- UI ------------- */
   return (
     <div className="p-6">
       <h1 className="text-2xl font-semibold text-teal-600 mb-6">
         📋 Manage Your Posted Jobs
       </h1>
 
-      <div className="overflow-x-auto rounded-lg shadow-md border border-gray-100 bg-white">
-        <table className="min-w-full table-auto text-sm text-left text-gray-700">
-          <thead className="bg-teal-50 text-teal-700 uppercase text-xs font-semibold">
-            <tr>
-              <th className="px-6 py-4">Job Title</th>
-              <th className="px-6 py-4">Company</th>
-              <th className="px-6 py-4">Salary</th>
-              <th className="px-6 py-4">Deadline</th>
-              <th className="px-6 py-4">Type</th>
-              <th className="px-6 py-4">Category</th>
-              <th className="px-6 py-4 text-center">Actions</th>
+      {/* ---------- Jobs Table ---------- */}
+      <div className="overflow-x-auto rounded-lg shadow bg-white">
+        <table className="min-w-full text-sm">
+          <thead className="bg-teal-50 text-teal-700 uppercase text-xs">
+            <tr className="*:px-4 *:py-2 text-left">
+              <th className="">Title</th>
+              <th className="">Company</th>
+              <th className="">Salary</th>
+              <th className="">Deadline</th>
+              <th className="">Type</th>
+              <th className="">Category</th>
+              <th className=" text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {jobs.map((job, index) => (
-              <tr
-                key={index}
-                className="border-b hover:bg-teal-50 transition duration-200"
-              >
-                <td className="px-6 py-4 font-medium">
-                  {job.jobDetails?.jobTitle}
-                </td>
-                <td className="px-6 py-4">{job.jobDetails?.companyName}</td>
-                <td className="px-6 py-4">
-                  {job.jobDetails?.salaryMin}k - {job.jobDetails?.salaryMax}k
-                </td>
-                <td className="px-6 py-4">{job.jobDetails?.deadline}</td>
-                <td className="px-6 py-4">{job.jobDetails?.jobType}</td>
-                <td className="px-6 py-4">{job.jobDetails?.jobCategory}</td>
-                <td className="px-6 py-4 flex gap-2 justify-center">
-                  <button
-                    onClick={() => openEditModal(index)}
-                    className="text-sm bg-teal-100 text-teal-700 px-3 py-1 rounded hover:bg-teal-200 transition"
-                  >
-                    Update
-                  </button>
-                  <button
-                    onClick={() => handleDelete(index)}
-                    className="text-sm bg-red-100 text-red-600 px-3 py-1 rounded hover:bg-red-200 transition"
-                  >
-                    Delete
-                  </button>
+            {isLoading ? (
+              <tr>
+                <td colSpan={7} className="py-8 text-center">
+                  Loading…
                 </td>
               </tr>
-            ))}
-            {jobs.length === 0 && (
-              <tr>
-                <td
-                  colSpan={7}
-                  className="text-center py-8 text-gray-500 italic"
+            ) : jobs.length ? (
+              jobs.map((job) => (
+                <tr
+                  key={job._id}
+                  className="border-b border-gray-300 hover:bg-teal-50 transition"
                 >
+                  <td className="px-5 py-3 font-medium">{job.title}</td>
+                  <td className="px-5 py-3">{job.company}</td>
+                  <td className="px-5 py-3">
+                    {job.salary.min}k – {job.salary.max}k
+                  </td>
+                  <td className="px-5 py-3">
+                    {new Date(job.meta.deadline).toLocaleDateString()}
+                  </td>
+                  <td className="px-5 py-3">{job.type}</td>
+                  <td className="px-5 py-3">{job.details.category}</td>
+                  <td className="px-5 py-3">
+                    <div className="flex justify-center gap-3">
+                      <EyeIcon
+                        onClick={() => setViewJob(job)}
+                        className="h-5 w-5 text-teal-600 cursor-pointer hover:scale-110 transition"
+                      />
+                      <PencilSquareIcon
+                        onClick={() => setEditJob(job)}
+                        className="h-5 w-5 text-amber-500 cursor-pointer hover:scale-110 transition"
+                      />
+                      <TrashIcon
+                        onClick={() => handleDelete(job)}
+                        className="h-5 w-5 text-red-500 cursor-pointer hover:scale-110 transition"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7} className="py-8 text-center text-gray-500">
                   No jobs posted yet.
                 </td>
               </tr>
@@ -130,83 +131,76 @@ const ManageJobs = () => {
         </table>
       </div>
 
-      {/* Edit Modal */}
-      {editIndex !== null && (
-        <div className="fixed inset-0 bg-black/10 bg-opacity-30 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-lg font-semibold text-teal-700 mb-4">
-              ✏️ Edit Job
-            </h2>
-            <div className="space-y-3">
-              <input
-                name="jobTitle"
-                value={editData.jobTitle || ""}
-                onChange={handleEditChange}
-                placeholder="Job Title"
-                className="w-full px-4 py-2 border rounded"
-              />
-              <input
-                name="companyName"
-                value={editData.companyName || ""}
-                onChange={handleEditChange}
-                placeholder="Company Name"
-                className="w-full px-4 py-2 border rounded"
-              />
-              <input
-                name="salaryMin"
-                value={editData.salaryMin || ""}
-                onChange={handleEditChange}
-                placeholder="Min Salary"
-                className="w-full px-4 py-2 border rounded"
-              />
-              <input
-                name="salaryMax"
-                value={editData.salaryMax || ""}
-                onChange={handleEditChange}
-                placeholder="Max Salary"
-                className="w-full px-4 py-2 border rounded"
-              />
-              <input
-                name="deadline"
-                type="date"
-                value={editData.deadline || ""}
-                onChange={handleEditChange}
-                className="w-full px-4 py-2 border rounded"
-              />
-              <input
-                name="jobType"
-                value={editData.jobType || ""}
-                onChange={handleEditChange}
-                placeholder="Job Type"
-                className="w-full px-4 py-2 border rounded"
-              />
-              <input
-                name="jobCategory"
-                value={editData.jobCategory || ""}
-                onChange={handleEditChange}
-                placeholder="Category"
-                className="w-full px-4 py-2 border rounded"
-              />
-            </div>
-            <div className="mt-4 flex justify-end gap-3">
-              <button
-                onClick={() => setEditIndex(null)}
-                className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleUpdate}
-                className="px-4 py-2 rounded bg-teal-500 text-white hover:bg-teal-600"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
+      {/* ---------- View Modal ---------- */}
+      {viewJob && (
+        <Modal onClose={() => setViewJob(null)}>
+          <h2 className="text-xl font-semibold text-teal-700 mb-4">
+            {viewJob.title}
+          </h2>
+          <p className="mb-2">
+            <span className="font-semibold">Company:</span> {viewJob.company}
+          </p>
+          <p className="mb-2">
+            <span className="font-semibold">Location:</span> {viewJob.location}
+          </p>
+          <p className="mb-2">
+            <span className="font-semibold">Salary:</span> {viewJob.salary.min}k
+            – {viewJob.salary.max}k
+          </p>
+          <p className="mb-2">
+            <span className="font-semibold">Deadline:</span>{" "}
+            {new Date(viewJob.meta.deadline).toLocaleDateString()}
+          </p>
+          <p className="mb-2">
+            <span className="font-semibold">Type:</span> {viewJob.type}
+          </p>
+          <p className="mb-4">
+            <span className="font-semibold">Category:</span>{" "}
+            {viewJob.details.category}
+          </p>
+          <h3 className="font-semibold text-teal-600 mb-1">Description</h3>
+          <p className="text-sm text-gray-700 whitespace-pre-line">
+            {viewJob.details.description}
+          </p>
+        </Modal>
+      )}
+
+      {/* ---------- Edit Modal ---------- */}
+      {editJob && (
+        <Modal onClose={() => setEditJob(null)}>
+          <EditJobTwoStep
+            job={editJob}
+            onSave={async (payload) => {
+              try {
+                await axios.put(`/api/editJob/${editJob._id}`, payload);
+                Swal.fire("Saved!", "Job updated successfully", "success");
+                setEditJob(null);
+                refetchJobs();
+              } catch {
+                Swal.fire("Error", "Update failed", "error");
+              }
+            }}
+            onCancel={() => setEditJob(null)}
+          />
+        </Modal>
       )}
     </div>
   );
 };
+
+/* ---------- Reusable Modal component ---------- */
+const Modal = ({ children, onClose }) => (
+  <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
+    <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 relative">
+      <button
+        onClick={onClose}
+        className="absolute top-2 right-3 text-gray-400 hover:text-gray-600"
+      >
+        ✕
+      </button>
+      {children}
+    </div>
+  </div>
+);
 
 export default ManageJobs;

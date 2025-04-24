@@ -97,7 +97,7 @@ export default function GeminiComponent() {
         <div
           className={`${
             open
-              ? "flex w-[300px] md:w-[350px] h-[400px] md:h-[480px] opacity-100 pointer-events-auto"
+              ? "flex w-[300px] md:w-[380px] h-[400px] md:h-[500px] opacity-100 pointer-events-auto"
               : "w-0 h-0 opacity-0 pointer-events-none"
           } duration-500 border overflow-hidden rounded-xl border-teal-600 bg-white shadow-xl flex-col relative`}
         >
@@ -137,33 +137,36 @@ export default function GeminiComponent() {
           {/* Messages */}
           <div
             style={{
-              backgroundImage: `url('/aiBot.jpg')`,
+              backgroundImage: `url('/aiBot.avif')`,
               backgroundPosition: "right",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
             }}
-            className="flex-1 overflow-y-auto space-y-3 p-4 shadow-inner"
+            className="flex-1 relative"
           >
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`py-1 px-2 text-sm max-w-2/3 w-auto shadow-2xl text-black ${
-                  msg.sender === "user"
-                    ? "bg-gradient-to-r from-teal-100/60 via-teal-200/60 to-teal-200/60 backdrop-blur-lg ml-auto text-right rounded-t-xl rounded-bl-xl"
-                    : "bg-gradient-to-l from-teal-100/60 via-teal-200/60 to-teal-200/60 backdrop-blur-lg mr-auto text-left rounded-t-xl rounded-br-xl"
-                }`}
-              >
-                {msg.text}
-              </div>
-            ))}
+            <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-10"></div>
+            <div className="overflow-y-auto space-y-3 p-4 z-20 shadow-inner absolute top-0 left-0 w-full h-full">
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`py-1 md:py-1.5 px-2 text-sm max-w-2/3 w-auto shadow-2xl text-white ${
+                    msg.sender === "user"
+                      ? "bg-transparent/50 backdrop-blur border border-gray-500 ml-auto text-right rounded-t-xl rounded-bl-xl"
+                      : "bg-transparent/50 backdrop-blur border border-gray-500 mr-auto text-left rounded-t-xl rounded-br-xl"
+                  }`}
+                >
+                  {msg.text}
+                </div>
+              ))}
 
-            {/* Loading bubble */}
-            {loading && (
-              <div className="py-1 px-2 flex items-center justify-center w-12 bg-gradient-to-l from-teal-400 via-teal-400 to-teal-500 mr-auto text-left rounded-t-xl rounded-br-xl ">
-                <span className="loading loading-dots loading-sm"></span>
-              </div>
-            )}
-            <div ref={bottomRef}></div>
+              {/* Loading bubble */}
+              {loading && (
+                <div className="py-1 px-2 flex items-center justify-center w-12 bg-gradient-to-l from-teal-400 via-teal-400 to-teal-500 mr-auto text-left rounded-t-xl rounded-br-xl ">
+                  <span className="loading loading-dots loading-sm"></span>
+                </div>
+              )}
+              <div ref={bottomRef}></div>
+            </div>
           </div>
 
           {/* Input Area */}
@@ -187,7 +190,7 @@ export default function GeminiComponent() {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Ask me anything..."
-                className="border border-gray-300 p-2 rounded-lg focus:outline-none bg-white w-[150px] md:w-[200px] "
+                className="border border-gray-300 p-2 rounded-lg focus:outline-none bg-white w-[150px] md:w-[230px] "
                 disabled={loading}
               />
             </label>

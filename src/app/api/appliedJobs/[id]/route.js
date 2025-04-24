@@ -1,4 +1,4 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
+import { collection, getCollection } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 
@@ -8,7 +8,7 @@ export async function DELETE(req, context) {
   console.log("🛑 ID from params:", id);
 
   try {
-    const appliedCollection = dbConnect(collection.appliedCollection);
+    const appliedCollection = await getCollection(collection.appliedCollection);
     const result = await appliedCollection.deleteOne({ _id: new ObjectId(id) });
 
     return NextResponse.json({

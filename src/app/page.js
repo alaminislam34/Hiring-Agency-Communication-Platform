@@ -1,20 +1,22 @@
 // import Image from "next/image";
 "use client";
-// import Chat from "./chatbox/components/chat";
-// import ChatPage from "./chatbox/components/ChatPage";
+
 import { ToastContainer } from "react-toastify";
-import Accordion from "./components/Accordion";
-import Banner from "./components/Banner";
-import CareerMove from "./components/CareerMove";
-import ConsultingSolutions from "./components/ConsultingSolutions";
-import FindJob from "./components/FindJob";
-import FindTalent from "./components/FindTalent";
-import SeekKit from "./components/SeekKit";
-import Testimonials from "./components/Testimonials";
-import TrendsCarousel from "./components/TrendsCarousel";
-import GeminiComponent from "./components/GeminiComponent";
+import Accordion from "./components/LandingPageComponents/Accordion";
+import Banner from "./components/LandingPageComponents/Banner";
+import CareerMove from "./components/LandingPageComponents/CareerMove";
+import ConsultingSolutions from "./components/LandingPageComponents/ConsultingSolutions";
+import FindJob from "./components/LandingPageComponents/FindJob";
+import FindTalent from "./components/LandingPageComponents/FindTalent";
+import GeminiComponent from "./components/LandingPageComponents/GeminiComponent";
+import SeekKit from "./components/LandingPageComponents/SeekKit";
+import Testimonials from "./components/LandingPageComponents/Testimonials";
+import TrendsCarousel from "./components/LandingPageComponents/TrendsCarousel";
 import ScheduleForm from "./components/scheduleInterview/ScheduleForm";
 import ScheduleList from "./components/scheduleInterview/ScheduleList";
+
+// import Chat from "./chatbox/components/chat";
+// import ChatPage from "./chatbox/components/ChatPage";
 
 export default function Home() {
   return (

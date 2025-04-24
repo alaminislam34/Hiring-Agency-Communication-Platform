@@ -1,6 +1,6 @@
 "use client";
 
-import Footer from "@/app/components/Footer";
+import Footer from "@/app/components/SharedComponents/Footer";
 import { usePathname } from "next/navigation";
 import React from "react";
 

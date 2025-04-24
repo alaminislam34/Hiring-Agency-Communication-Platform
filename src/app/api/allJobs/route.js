@@ -1,9 +1,9 @@
+import { collection, getCollection } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
-import dbConnect, { collection } from "@/lib/dbConnect";
 
 export async function GET(req) {
   try {
-    const jobsCollection = dbConnect(collection.jobsCollection);
+    const jobsCollection = await getCollection(collection.jobsCollection);
     const jobType = req.nextUrl.searchParams.get("jobType");
     const jobTitle = req.nextUrl.searchParams.get("jobTitle");
     const location = req.nextUrl.searchParams.get("location");
@@ -20,6 +20,7 @@ export async function GET(req) {
     }
 
     const jobs = await jobsCollection.find(query).toArray();
+    console.log("All Jobs here: ", jobs);
     return NextResponse.json(jobs);
   } catch (error) {
     console.error("Error fetching jobs:", error);

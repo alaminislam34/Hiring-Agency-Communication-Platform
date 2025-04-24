@@ -1,5 +1,5 @@
 import { authOptions } from "@/lib/authOptions";
-import dbConnect, { collection } from "@/lib/dbConnect";
+import { collection, getCollection } from "@/lib/mongodb";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -8,7 +8,7 @@ export async function GET(req) {
   const userEmail = session?.user?.email;
 
   const { searchParams } = new URL(req.url);
-  const emailFromQuery = searchParams.get("email");
+  const emailFromQuery = searchParams.get("senderEmail");
 
   const query = {};
   if (emailFromQuery) {
@@ -18,7 +18,7 @@ export async function GET(req) {
     query.email = userEmail;
   }
 
-  const userCollection = dbConnect(collection.user_collection);
+  const userCollection = await getCollection(collection.user_collection);
   if (!query.email) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }

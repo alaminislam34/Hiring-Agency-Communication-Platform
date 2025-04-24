@@ -1,11 +1,11 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
+import { collection, getCollection } from "@/lib/mongodb";
 
 export const POST = async (req) => {
   try {
-    const apply_jobCollection = dbConnect(collection.appliedCollection);
-
+    const apply_jobCollection = await getCollection(
+      collection.appliedCollection
+    );
     const data = await req.json();
-    console.log("Received application data:", data);
 
     const {
       name,
@@ -24,6 +24,8 @@ export const POST = async (req) => {
       requirements,
     } = data;
 
+    // const appliedJobs = await apply_jobCollection.find({ jobId: jobId });
+    // const isApplied = appliedJobs.some((job) => job)
     if (!name || !email || !resume || !jobId || !jobTitle) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),

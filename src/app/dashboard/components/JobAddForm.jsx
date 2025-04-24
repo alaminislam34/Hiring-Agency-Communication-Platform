@@ -2,18 +2,20 @@
 
 import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
-import { ToastContainer } from "react-toastify";
+import { useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const AddJobForm = () => {
-  const { currentUser } = useAppContext();
+  const { currentUser, refetchJobs } = useAppContext();
+  const [loading, setLoading] = useState(false);
 
   //added for check realtime notification
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const form = e.target;
     const jobTitle = form.jobTitle.value.trim();
     const companyName = form.companyName.value.trim();
@@ -53,13 +55,15 @@ const AddJobForm = () => {
     try {
       const res = await axios.post("/api/postJob", jobData);
       if (res.status === 201) {
-        // ✅ Notify jobseekers
-        await axios.post("http://localhost:3002/api/notify-job-post", {
-          jobTitle,
-          companyName,
-          postDate,
-        });
-
+        await axios.post(
+          "https://jobhive-server.onrender.com/api/notify-job-post",
+          {
+            jobTitle,
+            companyName,
+            postDate,
+          }
+        );
+        refetchJobs();
         form.reset();
         document.getElementById("my_modal_5").close();
         Swal.fire("Job Posted Successfully!", "", "success");
@@ -68,6 +72,8 @@ const AddJobForm = () => {
       }
     } catch (error) {
       console.error("Error posting job:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -83,14 +89,14 @@ const AddJobForm = () => {
             type="text"
             name="jobTitle"
             placeholder="Job Title"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
             required
           />
           <input
             type="text"
             name="companyName"
             placeholder="Company Name"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
             required
           />
         </div>
@@ -101,13 +107,13 @@ const AddJobForm = () => {
             type="text"
             name="location"
             placeholder="Location"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
             required
           />
           <div>
             <select
               name="jobType"
-              className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+              className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
               required
             >
               <option value="">Select Job Type</option>
@@ -125,17 +131,17 @@ const AddJobForm = () => {
             type="number"
             name="minSalary"
             placeholder="Min Salary ($)"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
           />
           <input
             type="number"
             name="maxSalary"
             placeholder="Max Salary ($)"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
           />
           <select
             name="currency"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
           >
             <option value="USD">$ USD</option>
             <option value="BDT">৳ BDT</option>
@@ -150,13 +156,13 @@ const AddJobForm = () => {
           <textarea
             name="jobDetails"
             placeholder="Job Description"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
             required
           ></textarea>
           <textarea
             name="skills"
             placeholder="Required Skills"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
             required
           ></textarea>
         </div>
@@ -165,14 +171,14 @@ const AddJobForm = () => {
           <input
             type="date"
             name="deadline"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full placeholder:text-gray-400"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full "
             required
           />
           <input
             type="email"
             name="contactEmail"
             placeholder="Contact Email"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
             required
           />
         </div>
@@ -181,30 +187,48 @@ const AddJobForm = () => {
             type="text"
             name="contactPhone"
             placeholder="Contact Phone"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
             required
           />
           <input
             type="text"
             name="category"
             placeholder="Category"
-            className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+            className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
           />
         </div>
         {/* Job Requirements */}
         <textarea
           name="requirements"
           placeholder="Job Requirements & Responsibilities"
-          className="py-2 px-3 border border-teal-300 focus:outline-teal-600 focus:ring-2 focus:ring-teal-600 rounded-lg w-full"
+          className="py-2 px-3 border border-teal-500/50 placeholder:text-gray-500 rounded-md w-full"
           required
         ></textarea>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className="btn bg-teal-500 hover:bg-teal-600 rounded-xl text-white btn-lg w-full"
+          className={`${
+            loading ? "pointer-events-none " : "cursor-pointer"
+          } btn bg-teal-500 hover:bg-teal-600 rounded-md text-white w-full`}
         >
-          Add Job
+          {loading ? (
+            <div className="flex items-center gap-2">
+              Adding
+              <ThreeDots
+                height="20"
+                width="20"
+                radius="9"
+                color="#fff"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+              />
+            </div>
+          ) : (
+            "Add Job"
+          )}
         </button>
       </form>
     </div>

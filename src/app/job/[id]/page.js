@@ -1,8 +1,9 @@
 // app/job/[id]/page.jsx
 import ApplyButton from "@/app/jobs/components/ApplyButton";
-import dbConnect, { collection } from "@/lib/dbConnect";
+
 import { ObjectId } from "mongodb";
 import BackButton from "./components/BackButton";
+import dbConnect, { collection } from "@/lib/dbConnect";
 
 const JobDetailsPage = async ({ params }) => {
   const jobsCollection = dbConnect(collection.jobsCollection);

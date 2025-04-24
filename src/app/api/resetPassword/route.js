@@ -1,13 +1,13 @@
-import dbConnect, { collection } from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { collection, getCollection } from "@/lib/mongodb";
 
 export const POST = async (req) => {
   try {
     const body = await req.json();
     const { password, newPassword, email } = body;
 
-    const userCollection = dbConnect(collection.user_collection);
+    const userCollection = await getCollection(collection.user_collection);
 
     const user = await userCollection.findOne({ email: email });
 
@@ -27,7 +27,8 @@ export const POST = async (req) => {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     const result = await userCollection.updateOne(
       { email: email },
-      { $set: { password: hashedPassword } }
+      { $set: { password: hashedPassword } },
+      { upsert: true }
     );
 
     return NextResponse.json({

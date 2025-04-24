@@ -31,7 +31,7 @@ export default function ChatPage() {
         <div className="py-3 px-4 border-b bg-gradient-to-br from-teal-500 to-teal-400 text-white">
           <h2 className="text-lg md:text-xl font-bold">Chats with</h2>
         </div>
-        <ul className="divide-y divide-gray-200 overflow-y-auto h-[440px]">
+        <ul className="  overflow-y-auto h-[440px]">
           {fakeUsers.map((user) => (
             <li
               key={user.id}

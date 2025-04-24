@@ -1,12 +1,13 @@
 "use client";
-import { socket } from "@/app/dashboard/chatbox/socket";
 import { useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import Swal from "sweetalert2";
 
 const ApplyButton = ({ job, modalId }) => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    candidateName: "",
+    candidateEmail: "",
     resume: "",
     coverLetter: "",
   });
@@ -16,127 +17,64 @@ const ApplyButton = ({ job, modalId }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const applicationData = {
-  //     ...formData,
-  //     jobId: job._id.toString(),
-  //     jobTitle: job.jobTitle,
-  //     companyName: job.companyName,
-  //     location: job.location,
-  //     jobType: job.jobType,
-  //     postDate: job.postDate,
-  //     deadline: job.deadline,
-  //     description: job.description,
-  //     skills: job.skills,
-  //     requirements: job.requirements,
-  //   };
-
-  //   try {
-  //     const res = await fetch("http://localhost:3002/api/apply-job", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(applicationData),
-  //     });
-
-  //     const result = await res.json();
-
-  //     if (res.ok) {
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Application Submitted",
-  //         text: "Your job application has been submitted successfully!",
-  //       });
-  //       setFormData({
-  //         name: "",
-  //         email: "",
-  //         resume: "",
-  //         coverLetter: "",
-  //       });
-  //       document.getElementById(modalId).close();
-  //     } else {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Submission Failed",
-  //         text: result.error || "Failed to submit application",
-  //       });
-  //     }
-  //   } catch (err) {
-  //     console.error("Submission error:", err);
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Error",
-  //       text: "Something went wrong while submitting your application.",
-  //     });
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const applicationData = {
       ...formData,
-      jobId: job._id.toString(),
+      jobId: job.id,
       jobTitle: job.jobTitle,
-      companyName: job.companyName,
-      location: job.location,
-      jobType: job.jobType,
-      postDate: job.postDate,
-      employerEmail: job.employerEmail,
-      deadline: job.deadline,
-      description: job.description,
-      skills: job.skills,
-      requirements: job.requirements,
+      companyName: job.jobDetails.companyName,
+      jobType: job.jobDetails.jobType,
+      deadline: job.jobDetails.deadline,
+      jobDescription: job.jobDetails.jobDescription,
+      jobRequirements: job.jobDetails.jobRequirements,
     };
 
     try {
-      const res = await fetch("http://localhost:3002/api/apply-job", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(applicationData),
-      });
+      // 🔸 Get existing applications from localStorage
+      const storedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
 
-      const result = await res.json();
+      // 🔸 Check if already applied to this job
+      const alreadyApplied = storedJobs.some(
+        (appliedJob) => appliedJob.jobId === job.id
+      );
 
-      if (res.ok) {
-        // ✅ Emit socket notification
-        socket.emit("jobApplication", {
-          employerEmail: job.employerEmail, // Ensure this exists in `job` object
-          jobTitle: job.jobTitle,
-          applicantName: formData.name,
+      if (alreadyApplied) {
+        Swal.fire({
+          icon: "error",
+          text: "You have already applied for this job.",
+          timer: 2500,
         });
+      } else {
+        // 🔸 Save new application
+        const updatedJobs = [...storedJobs, applicationData];
+        localStorage.setItem("appliedJobs", JSON.stringify(updatedJobs));
 
         Swal.fire({
           icon: "success",
           title: "Application Submitted",
           text: "Your job application has been submitted successfully!",
         });
+
         setFormData({
-          name: "",
-          email: "",
+          candidateName: "",
+          candidateEmail: "",
           resume: "",
           coverLetter: "",
         });
-        document.getElementById(modalId).close();
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Submission Failed",
-          text: result.error || "Failed to submit application",
-        });
       }
     } catch (err) {
-      console.error("Submission error:", err);
+      console.error("❌ Submission error:", err);
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text: "Something went wrong while submitting your application.",
+        text: "Something went wrong. Please try again.",
+        timer: 2500,
       });
+    } finally {
+      setLoading(false);
+      document.getElementById(modalId).close();
     }
   };
 
@@ -144,7 +82,7 @@ const ApplyButton = ({ job, modalId }) => {
     <div>
       <button
         onClick={() => document.getElementById(modalId).showModal()}
-        className="text-sm px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded cursor-pointer"
+        className="text-sm btn px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded cursor-pointer"
       >
         Easy Apply
       </button>
@@ -159,8 +97,8 @@ const ApplyButton = ({ job, modalId }) => {
               <label className="block text-sm text-gray-600">Full Name</label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="candidateName"
+                value={formData.candidateName}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"
@@ -173,8 +111,8 @@ const ApplyButton = ({ job, modalId }) => {
               </label>
               <input
                 type="email"
-                name="email"
-                value={formData.email}
+                name="candidateEmail"
+                value={formData.candidateEmail}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"
@@ -219,9 +157,25 @@ const ApplyButton = ({ job, modalId }) => {
               </button>
               <button
                 type="submit"
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer"
+                className={`bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 ${
+                  loading ? "pointer-events-none" : "cursor-pointer"
+                } btn`}
               >
-                Submit Application
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    Submitting
+                    <ThreeDots
+                      visible={true}
+                      height="20"
+                      width="20"
+                      color="#fff"
+                      radius="9"
+                      ariaLabel="three-dots-loading"
+                    />
+                  </span>
+                ) : (
+                  "Submit Application"
+                )}
               </button>
             </div>
           </form>

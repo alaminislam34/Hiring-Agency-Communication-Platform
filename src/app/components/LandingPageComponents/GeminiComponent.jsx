@@ -6,7 +6,6 @@ import { Smile } from "lucide-react";
 import { Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { BsCaretDown, BsCaretUp } from "react-icons/bs";
-import { FiSend } from "react-icons/fi";
 import { GrClose } from "react-icons/gr";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import { RiRobot3Line } from "react-icons/ri";

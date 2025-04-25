@@ -3,13 +3,6 @@ import { useEffect, useState } from "react";
 
 const EmployerRoleApplications = () => {
   const [applications, setApplications] = useState([]);
-
-  useEffect(() => {
-    const stored =
-      JSON.parse(localStorage.getItem("employerApplications")) || [];
-    setApplications(stored);
-  }, []);
-
   return (
     <div className="bg-gray-50 min-h-screen">
       <h1 className="text-2xl font-bold mb-6 text-gray-800 p-6">

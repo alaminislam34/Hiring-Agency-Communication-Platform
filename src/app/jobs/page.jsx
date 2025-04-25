@@ -8,13 +8,20 @@ import { Bookmark } from "lucide-react";
 import { BsBookmarkFill } from "react-icons/bs";
 
 const AllJobs = () => {
-  const { setBookmark, bookmark, jobs, jobsLoading } = useAppContext();
+  const {
+    setBookmark,
+    bookmark,
+    jobs,
+    jobsLoading,
+    appliedJobsCollection,
+    currentUser,
+  } = useAppContext();
 
-  // const handleSearch = (e) => {
-  //   e.preventDefault();
-  //   const searchJob = e.target.search.value;
-  //   setJobTitle(searchJob);
-  // };
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const searchJob = e.target.search.value;
+    setJobTitle(searchJob);
+  };
 
   return (
     <div className="bg-gray-50 p-4 md:p-6 max-w-7xl mx-auto">
@@ -33,14 +40,14 @@ const AllJobs = () => {
           {/* Search Bar */}
           <div className="sticky z-40 top-0 bg-white border-b rounded-2xl border-gray-200 p-4">
             <form
-              // onSubmit={handleSearch}
+              onSubmit={handleSearch}
               className="flex flex-col md:flex-row gap-3 md:items-center justify-between"
             >
               <input
                 type="text"
                 name="search"
                 placeholder="Search jobs..."
-                // onChange={(e) => setJobTitle(e.target.value)}
+                onChange={(e) => setJobTitle(e.target.value)}
                 className="flex-1 py-2 px-4 border border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-lg text-sm"
               />
               <button
@@ -68,8 +75,8 @@ const AllJobs = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {jobs?.map((job) => (
                     <div
-                      // key={job._id.toString()}
-                      key={job._id}
+                      key={job._id.toString()}
+                      // key={job._id}
                       className="bg-white border border-gray-200 hover:border-teal-500 rounded-2xl p-5 shadow-sm hover:shadow-md transition duration-300 relative"
                     >
                       {/* Bookmark */}
@@ -93,24 +100,23 @@ const AllJobs = () => {
 
                       <div>
                         <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                          {job.jobTitle}
+                          {job.title}
                         </h2>
                         <p className="text-sm text-gray-600 mb-1">
-                          <strong>🏢 Company:</strong> {job.companyName}
+                          <strong>🏢 Company:</strong> {job.company}
                         </p>
                         <p className="text-sm text-gray-600 mb-1">
                           <strong>📍 Location:</strong> {job.location}
                         </p>
                         <p className="text-sm text-gray-600 mb-1">
-                          <strong>🕒 Type:</strong> {job.jobType}
+                          <strong>🕒 Type:</strong> {job.type}
                         </p>
                         <p className="text-sm text-gray-600 mb-1">
-                          <strong>💰 Salary:</strong> {job.currency}{" "}
-                          {job.minSalary} - {job.maxSalary}
+                          {job.salary.min}k - {job.salary.max}k
                         </p>
                         <p className="text-sm text-gray-600 mb-1">
-                          <strong>🗓️ Posted:</strong>{" "}
-                          {new Date(job.postDate).toLocaleDateString()}
+                          <strong>🗓️ Deadline:</strong>{" "}
+                          {new Date(job.meta.deadline).toLocaleDateString()}
                         </p>
                       </div>
 
@@ -125,9 +131,14 @@ const AllJobs = () => {
                         </Link>
 
                         <ApplyButton
+                          alreadyApplied={appliedJobsCollection?.some(
+                            (a) =>
+                              a.jobId === job._id &&
+                              a.candidateEmail === currentUser?.email
+                          )}
                           job={job}
                           // todo
-                          modalId={`apply_modal_${job.id}`}
+                          modalId={`apply_modal_${job._id}`}
                         />
                       </div>
                     </div>

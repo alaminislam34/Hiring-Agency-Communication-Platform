@@ -1,5 +1,6 @@
 "use server";
 import nodemailer from "nodemailer";
+import { collection, getCollection } from "./mongodb";
 // import dbConnect, { collection } from "./dbConnect";
 
 export const sendOTP = async (email) => {
@@ -13,7 +14,7 @@ export const sendOTP = async (email) => {
     },
   });
   const otp = Math.floor(100000 + Math.random() * 900000);
-  const userCollection = dbConnect(collection.user_collection);
+  const userCollection = await getCollection(collection.user_collection);
   await userCollection.updateOne(
     { email: email },
     {

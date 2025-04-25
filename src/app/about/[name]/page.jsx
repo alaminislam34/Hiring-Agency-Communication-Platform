@@ -23,7 +23,7 @@ const AboutMember = ({ searchParams }) => {
         </button>
       </div>
       {name === "MD Al-Amin Islam" && <CEO />}
-      {name === "Rokonujjaman Rony" && <CTO />}
+      {name === "MD Rokonujjaman Rony" && <CTO />}
       {name === "Akash Muhammad Abrrar" && <COO />}
       {name === "Rakib Gazi" && <CFO />}
       {name === "Alvee Hasan" && <CMO />}

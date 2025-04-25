@@ -1,22 +1,24 @@
+// ---- JSX সংস্করণ ----
 "use client";
+
 import { useEffect, useRef } from "react";
 import { useAppContext } from "@/Providers/AppProviders";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function Room() {
   const { fullName, currentUser } = useAppContext();
-  const containerRef = useRef(null);
+  const { roomid } = useParams(); // generic সরালাম
+  const router = useRouter();
+  const containerRef = useRef(null); // <HTMLDivElement> সরালাম
   const initializedRef = useRef(false);
-  const { roomid } = useParams();
 
   useEffect(() => {
-    const initializeMeeting = async () => {
+    const init = async () => {
       if (initializedRef.current) return;
       initializedRef.current = true;
 
       const appID = process.env.NEXT_PUBLIC_ZEGOCLOUD_APP_ID;
       const serverSecret = process.env.NEXT_PUBLIC_ZEGOCLOUD_SERVER_SECRET;
-
       if (!appID || !serverSecret) {
         console.error("Zego credentials missing!");
         return;
@@ -24,6 +26,7 @@ export default function Room() {
 
       if (!roomid) {
         console.error("No room ID provided");
+        router.push("/not-found");
         return;
       }
 
@@ -31,22 +34,17 @@ export default function Room() {
         "@zegocloud/zego-uikit-prebuilt"
       );
 
-      const generateUUID = () => {
-        if (typeof crypto !== "undefined" && crypto.randomUUID) {
-          return crypto.randomUUID();
-        }
-        return (
-          Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
-        );
-      };
+      const uid =
+        crypto?.randomUUID?.() ||
+        Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
 
-      const userName = fullName || currentUser?.email || `User-${Date.now()}`;
+      const userName = fullName || currentUser?.email || `Guest-${uid}`;
 
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         Number(appID),
         serverSecret,
         roomid,
-        generateUUID(),
+        uid,
         userName,
         720
       );
@@ -55,9 +53,7 @@ export default function Room() {
 
       zp.joinRoom({
         container: containerRef.current,
-        scenario: {
-          mode: ZegoUIKitPrebuilt.VideoConference,
-        },
+        scenario: { mode: ZegoUIKitPrebuilt.VideoConference },
         sharedLinks: [
           {
             name: "Invite Link",
@@ -68,13 +64,11 @@ export default function Room() {
       });
     };
 
-    if (typeof window !== "undefined") {
-      initializeMeeting();
-    }
-  }, [roomid, fullName, currentUser]);
+    if (typeof window !== "undefined") init();
+  }, [roomid, fullName, currentUser, router]);
 
   return (
-    <div className="h-[200px] md:h-[90vh] pt-6">
+    <div className="min-h-[400px] md:h-[90vh] pt-6">
       <div ref={containerRef} className="w-full h-full" />
     </div>
   );

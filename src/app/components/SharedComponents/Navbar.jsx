@@ -30,115 +30,83 @@ import { SquareChevronRightIcon } from "lucide-react";
 
 const jobSeekerNavLink = [
   {
-    name: "Home",
-    href: "/",
-    icon: <House size={18} />,
-  },
-  {
     name: "Jobs",
     href: "/jobs",
-    icon: <BriefcaseBusiness size={18} />,
+  },
+  {
+    name: "Forum",
+    href: "/forum",
   },
   {
     name: "Free Courses",
     href: "/courses",
-    icon: <SquareChevronRightIcon size={18} />,
-  },
-  {
-    name: "Saved Jobs",
-    href: "/savedJobs",
-    icon: <Bookmark size={18} />,
   },
   {
     name: "Blogs",
     href: "/blogs",
-    icon: <GalleryVertical size={18} />,
+  },
+  {
+    name: "About Us",
+    href: "/about",
   },
 ];
 const NavLinks = [
   {
-    name: "Home",
-    href: "/",
-    icon: <House size={18} />,
-  },
-  {
     name: "Jobs",
     href: "/jobs",
-    icon: <BriefcaseBusiness size={18} />,
   },
   {
     name: "About Us",
     href: "/about",
-    icon: <SquareChevronRight size={18} />,
   },
   {
     name: "Free Courses",
     href: "/courses",
-    icon: <SquareChevronRightIcon size={18} />,
   },
   {
     name: "Blogs",
     href: "/blogs",
-    icon: <GalleryVertical size={18} />,
   },
   {
     name: "Contact Us",
     href: "/contact",
-    icon: <Contact size={18} />,
   },
 ];
 const adminNavLinks = [
   {
-    name: "Home",
-    href: "/",
-    icon: <House size={18} />,
+    name: "Forum",
+    href: "/forum",
   },
-  {
-    name: "Jobs",
-    href: "/jobs",
-    icon: <BriefcaseBusiness size={18} />,
-  },
+
   {
     name: "About Us",
     href: "/about",
-    icon: <SquareChevronRight size={18} />,
   },
   {
     name: "Free Courses",
     href: "/courses",
-    icon: <SquareChevronRightIcon size={18} />,
   },
   {
     name: "Manage Users",
     href: "/manageUsers",
-    icon: <Users size={18} />,
   },
   {
     name: "Manage Jobs",
     href: "/manageJobs",
-    icon: <BriefcaseBusiness size={18} />,
   },
 ];
 const employerNavLinks = [
   {
-    name: "Home",
-    href: "/",
-    icon: <House size={18} />,
-  },
-  {
     name: "Jobs",
     href: "/jobs",
-    icon: <BriefcaseBusiness size={18} />,
   },
   {
     name: "Post Job",
     href: "/postJob",
-    icon: <SquarePlus size={18} />,
   },
   {
     name: "Blogs",
     href: "/blogs",
-    icon: <GalleryVertical size={18} />,
   },
 ];
 

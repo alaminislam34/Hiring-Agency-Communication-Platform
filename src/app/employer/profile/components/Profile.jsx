@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "@/Providers/AppProviders";
 import { FaBookReader, FaGraduationCap, FaLink } from "react-icons/fa";
-import { PiAddressBookTabs } from "react-icons/pi";
 import { TbFileInfo } from "react-icons/tb";
 import AdditionalInfo from "./AdditionalInfo";
 import AddressInfo from "./AddressInfo";
@@ -17,10 +16,6 @@ const EmployerProfile = () => {
 
   // Info tab state (saved in localStorage)
   const [infoBtn, setInfoBtn] = useState("Profile Info");
-
-  useEffect(() => {
-    localStorage.setItem("infoLink", infoBtn);
-  }, [infoBtn]);
 
   useEffect(() => {
     localStorage.setItem("infoLink", infoBtn);

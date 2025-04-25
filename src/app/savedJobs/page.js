@@ -8,7 +8,7 @@ import ApplyButton from "../jobs/components/ApplyButton";
 
 const SavedJobs = () => {
   const { bookmark, jobs, setBookmark } = useAppContext();
-  const bookmarkJobs = jobs.filter((job) => bookmark.includes(job._id)) || [];
+  const bookmarkJobs = jobs?.filter((job) => bookmark.includes(job._id)) || [];
   return (
     <div className="min-h-[80vh] mt-6 max-w-7xl mx-auto w-11/12 py-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-center">
       {bookmarkJobs.length === 0 && (

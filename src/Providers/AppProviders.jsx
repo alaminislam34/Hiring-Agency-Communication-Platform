@@ -93,9 +93,11 @@ export const AppProvider = ({ children }) => {
     queryFn: fetchAppliedJobs,
     enabled: !!session,
   });
+
+  // all jobs fetching function
   const fetchJobs = async () => {
     const params = new URLSearchParams();
-
+    if (currentUser?.email) params.append("postedBy", currentUser?.email);
     if (type) params.append("jobType", type);
     if (jobTitle) params.append("jobTitle", jobTitle);
     if (location) params.append("location", location);
@@ -104,7 +106,6 @@ export const AppProvider = ({ children }) => {
     console.log("jobs data:", res.data);
     return res.data;
   };
-
   const {
     data: jobs,
     isLoading: jobsLoading,

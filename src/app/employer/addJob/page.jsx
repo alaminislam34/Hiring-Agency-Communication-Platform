@@ -1,7 +1,9 @@
 "use client";
+import axios from "axios";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const MultiStepJobForm = () => {
   const [step, setStep] = useState(1);
@@ -22,7 +24,6 @@ const MultiStepJobForm = () => {
     benefits: "",
     description: "",
   });
-  // formData থেকে ঠিক কোন কোন প্রপার্টি কোন স্টেপে আছে তা জানানোর জন্য
   const stepFields = {
     1: ["title", "company", "location", "category", "type"],
     2: [
@@ -36,13 +37,11 @@ const MultiStepJobForm = () => {
     3: ["responsibilities", "requirements", "benefits", "description"],
   };
 
-  // ➜ সব প্রয়োজনীয় ইনপুট ফাঁকা কি‑না চেক করা হেল্পার
   const isStepValid = (stepNo) =>
     stepFields[stepNo].every(
       (field) => formData[field]?.toString().trim().length > 0
     );
 
-  // existing handleNext কে বদলে দিলাম ↓
   const handleNext = () => {
     if (!isStepValid(step)) {
       toast.error("⚠️  এই স্টেপের সব ঘর পূরণ করুন!");
@@ -51,35 +50,52 @@ const MultiStepJobForm = () => {
     setStep((prev) => prev + 1);
   };
 
-  // submit‑এর আগে শেষ স্টেপও যাচাই
-
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => prev - 1);
 
-  const handleSubmit = (e) => {
+  const initialFormState = {
+    title: "",
+    company: "",
+    type: "",
+    location: "",
+    category: "",
+    minSalary: "",
+    maxSalary: "",
+    deadline: "",
+    experience: "",
+    education: "",
+    skills: "",
+    responsibilities: "",
+    requirements: "",
+    benefits: "",
+    description: "",
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!isStepValid(3)) {
-      alert("⚠️  শেষ স্টেপের সব ঘর পূরণ করুন!");
+      toast.error("⚠️  শেষ স্টেপের সব ঘর পূরণ করুন!");
       return;
     }
+
     const formattedData = {
       title: formData.title,
       company: formData.company,
       type: formData.type,
       location: formData.location,
       salary: {
-        min: parseInt(formData.minSalary),
-        max: parseInt(formData.maxSalary),
+        min: parseInt(formData.minSalary, 10),
+        max: parseInt(formData.maxSalary, 10),
       },
       qualifications: {
         experience: formData.experience,
         education: formData.education,
-        skills: formData.skills.split(",").map((skill) => skill.trim()),
+        skills: formData.skills.split(",").map((s) => s.trim()),
       },
       details: {
         category: formData.category,
@@ -98,8 +114,26 @@ const MultiStepJobForm = () => {
       },
     };
 
-    console.log("Submitted Data:", formattedData);
-    // API call or DB operation here
+    try {
+      const res = await axios.post("/api/postJob", formattedData);
+
+      if (res.status === 201) {
+        Swal.fire({
+          title: "Posted",
+          text: "Job Added Successfully",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2500,
+          width: "300px",
+        });
+        e.target.reset();
+        setFormData(initialFormState);
+        setStep(1);
+      }
+    } catch (err) {
+      console.error("Job post error:", err);
+      toast.error("something went wrong");
+    }
   };
 
   return (
@@ -160,9 +194,9 @@ const MultiStepJobForm = () => {
               className="w-full border px-4 py-2 rounded"
             >
               <option value={formData.type} disabled>
-                --Select Job category--
+                --Select Job type--
               </option>
-              <option value="Full Time">Software Development</option>
+              <option value="Full Time">Full Time</option>
               <option value="Part Time">Part Time</option>
               <option value="Remote">Remote</option>
               <option value="Internship">Internship</option>

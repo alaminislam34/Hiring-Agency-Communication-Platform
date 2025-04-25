@@ -5,7 +5,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 // Register Chart.js elements
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const CategoryWiseApply = () => {
+const TypeWiseApply = () => {
   // Dummy data: replace later with dynamic data
   const data = {
     labels: ["Remote", "Onsite", "Hybrid"],
@@ -50,4 +50,4 @@ const CategoryWiseApply = () => {
   );
 };
 
-export default CategoryWiseApply;
+export default TypeWiseApply;

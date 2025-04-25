@@ -3,10 +3,10 @@ import ApplyButton from "@/app/jobs/components/ApplyButton";
 
 import { ObjectId } from "mongodb";
 import BackButton from "./components/BackButton";
-import dbConnect, { collection } from "@/lib/dbConnect";
+import { collection, getCollection } from "@/lib/mongodb";
 
 const JobDetailsPage = async ({ params }) => {
-  const jobsCollection = dbConnect(collection.jobsCollection);
+  const jobsCollection = getCollection(collection.jobsCollection);
   const job = await jobsCollection.findOne({ _id: new ObjectId(params.id) });
 
   if (!job)

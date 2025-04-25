@@ -2,6 +2,32 @@
 
 // Job Seeker NavLinks
 
+import LoginButton from "@/components/LoginButton";
+import LogoutButton from "@/components/LogoutButton";
+import { useAppContext } from "@/Providers/AppProviders";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { RiMenu2Fill } from "react-icons/ri";
+import { GrClose } from "react-icons/gr";
+import { useSession } from "next-auth/react";
+import { House } from "lucide-react";
+import { BriefcaseBusiness } from "lucide-react";
+import { SquarePlus } from "lucide-react";
+import { GalleryVertical } from "lucide-react";
+import { UserCog } from "lucide-react";
+import { CircleGauge } from "lucide-react";
+import { Bookmark } from "lucide-react";
+import { FileCheck } from "lucide-react";
+import { Bell } from "lucide-react";
+import { Users } from "lucide-react";
+import { Settings } from "lucide-react";
+import { SquareChevronRight } from "lucide-react";
+import useValidateSession from "@/lib/unValidateSession";
+import { CirclePlus } from "lucide-react";
+import { Contact } from "lucide-react";
+import { SquareChevronRightIcon } from "lucide-react";
+
 const jobSeekerNavLink = [
   {
     name: "Home",
@@ -215,32 +241,6 @@ const adminLinks = [
     icon: <Settings size={18} />,
   },
 ];
-
-import LoginButton from "@/components/LoginButton";
-import LogoutButton from "@/components/LogoutButton";
-import { useAppContext } from "@/Providers/AppProviders";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { RiMenu2Fill } from "react-icons/ri";
-import { GrClose } from "react-icons/gr";
-import { useSession } from "next-auth/react";
-import { House } from "lucide-react";
-import { BriefcaseBusiness } from "lucide-react";
-import { SquarePlus } from "lucide-react";
-import { GalleryVertical } from "lucide-react";
-import { UserCog } from "lucide-react";
-import { CircleGauge } from "lucide-react";
-import { Bookmark } from "lucide-react";
-import { FileCheck } from "lucide-react";
-import { Bell } from "lucide-react";
-import { Users } from "lucide-react";
-import { Settings } from "lucide-react";
-import { SquareChevronRight } from "lucide-react";
-import useValidateSession from "@/lib/unValidateSession";
-import { CirclePlus } from "lucide-react";
-import { Contact } from "lucide-react";
-import { SquareChevronRightIcon } from "lucide-react";
 
 const Navbar = () => {
   const session = useSession();

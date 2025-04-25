@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { socket } from "../socket";
+
 import { Smile, Paperclip } from "lucide-react";
+import { socket } from "@/lib/socket";
 
 export default function Chat({ roomId, userType }) {
   const [messages, setMessages] = useState([]);

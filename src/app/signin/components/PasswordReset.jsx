@@ -21,12 +21,10 @@ const PasswordReset = ({ setResetPassword }) => {
   const [otpSent, setOtpSent] = useState(false);
   const [verify, setVerify] = useState(false);
   const [enterEmailError, setEnterEmailError] = useState(false);
-
   const [passError, setPassError] = useState("");
   const [loading, setLoading] = useState(false);
   const [otpLoading, setOtpLoading] = useState(false);
   const [verifyLoading, setVerifyLoading] = useState(false);
-
   const [otpSendCount, setOtpSendCount] = useState(
     () => parseInt(localStorage.getItem("otpSendCount")) || 0
   );
@@ -39,9 +37,11 @@ const PasswordReset = ({ setResetPassword }) => {
       return () => clearTimeout(timer);
     }
   }, [countdown]);
+
   useEffect(() => {
     localStorage.setItem("otpSendCount", otpSendCount);
   }, [otpSendCount]);
+
   const togglePasswordVisibility = (field) => {
     setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
   };
@@ -289,11 +289,12 @@ const PasswordInput = ({ label, name, show, toggle }) => (
         name={name}
         required
         className="input bg-teal-100 border-teal-500/50 w-full"
+        autoComplete="new-password"
       />
       <button
         type="button"
         onClick={toggle}
-        className="absolute top-1/2 right-3 -translate-y-1/2 text-lg text-gray-600"
+        className="absolute right-2 top-2 text-gray-500"
       >
         {show ? <LuEye /> : <LuEyeClosed />}
       </button>

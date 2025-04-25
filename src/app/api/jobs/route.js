@@ -24,7 +24,6 @@ export async function GET({ searchParams }) {
     }
 
     const jobs = await jobsCollection.find(query).toArray();
-    // console.log("All Jobs here: ", jobs);
     return NextResponse.json(jobs);
   } catch (error) {
     console.error("Error fetching jobs:", error);

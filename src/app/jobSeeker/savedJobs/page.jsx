@@ -1,19 +1,17 @@
 "use client";
+import { useAppContext } from "@/Providers/AppProviders";
 import React, { useEffect, useState } from "react";
 
 const SavedJobs = () => {
+  const { jobs } = useAppContext();
   const [savedJobs, setSavedJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
 
   useEffect(() => {
     const storedJobs = JSON.parse(localStorage.getItem("bookmark")) || []; // job IDs
+    const filtered = jobs.filter((job) => storedJobs.includes(job.id));
+    setFilteredJobs(filtered);
     setSavedJobs(storedJobs);
-
-    const allJobs = JSON.parse(localStorage.getItem("jobs")) || []; // all jobs
-
-    const matchedJobs = allJobs.filter((job) => storedJobs.includes(job.id));
-
-    setFilteredJobs(matchedJobs);
   }, []);
 
   return (

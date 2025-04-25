@@ -21,11 +21,6 @@ const EmployerProfile = () => {
   useEffect(() => {
     localStorage.setItem("infoLink", infoBtn);
   }, [infoBtn]);
-
-  useEffect(() => {
-    localStorage.setItem("infoLink", infoBtn);
-  }, [infoBtn]);
-
   // Profile edit mode and form data
 
   const info = [
@@ -91,8 +86,6 @@ const EmployerProfile = () => {
         </div>
         <div className="md:col-span-4 lg:col-span-6 border border-dashed border-teal-500 bg-gradient-to-br from-teal-50 via-teal-50 to-white rounded-xl shadow-xl p-4">
           {infoBtn === "Profile Info" && <ProfileInfo />}
-          {infoBtn === "Additional Info" && <AdditionalInfo />}
-          {infoBtn === "Address Info" && <AddressInfo />}
           {infoBtn === "Education Info" && <EducationalInfo />}
           {infoBtn === "Important Links" && <ImportantLinksInfo />}
           {infoBtn === "Job Experience" && <JobExperienceInfo />}

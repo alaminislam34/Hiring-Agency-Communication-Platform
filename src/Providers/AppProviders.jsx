@@ -7,11 +7,11 @@ import { createContext, useState, useContext, useEffect } from "react";
 import { io } from "socket.io-client";
 import Swal from "sweetalert2";
 
+// AppContext for global state management
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const { data: session } = useSession();
-
   const [showSidebar, setShowSidebar] = useState(false);
   const [showName, setShowName] = useState(true);
   const [type, setType] = useState("");
@@ -25,22 +25,28 @@ export const AppProvider = ({ children }) => {
   const [roomID, setRoomID] = useState("");
   const [notificationCount, setNotificationCount] = useState(0);
 
+  // Fetch bookmarks from localStorage ========================================================================
   useEffect(() => {
     const stored = localStorage.getItem("bookmark");
     if (stored) setBookmark(JSON.parse(stored));
   }, []);
 
+  // Update bookmarks in localStorage
   useEffect(() => {
-    localStorage.setItem("bookmark", JSON.stringify(bookmark));
+    if (bookmark.length > 0) {
+      localStorage.setItem("bookmark", JSON.stringify(bookmark));
+    }
   }, [bookmark]);
 
+  // Mark notifications as seen
   const markNotificationsAsSeen = () => setNotificationCount(0);
 
-  // ✅ API Calls: only when session exists
+  // Fetch current user
   const fetchUser = async () => {
     const res = await axios("/api/currentUser");
     return res.data;
   };
+
   const {
     data: currentUser,
     isLoading: userLoading,
@@ -48,14 +54,16 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: fetchUser,
-    enabled: !!session,
-    refetchOnWindowFocus: false,
+    enabled: !!session, // Only fetch when session exists
+    refetchOnWindowFocus: false, // Disable refetch on window focus
   });
 
+  // Fetch total users
   const fetchTotalUsers = async () => {
     const res = await axios("/api/totalUsers");
     return res.data;
   };
+
   const {
     data: totalUsers = [],
     isLoading: totalUsersLoading,
@@ -66,12 +74,16 @@ export const AppProvider = ({ children }) => {
     enabled: !!session,
   });
 
+  // Fetch total applied jobs
   const fetchTotalAppliedJobs = async () => {
-    const res = await axios("/api/totalAppliedJobs");
+    const res = await axios("/api/appliedJobs", {
+      params: { candidateEmail: currentUser?.email },
+    });
     return res.data;
   };
+
   const {
-    data: totalAppliedJobs = [],
+    data: totalAppliedJobs,
     isLoading: totalAppliedJobsLoading,
     refetch: totalAppliedJobsRefetch,
   } = useQuery({
@@ -80,12 +92,16 @@ export const AppProvider = ({ children }) => {
     enabled: !!session,
   });
 
+  // Fetch applied jobs
   const fetchAppliedJobs = async () => {
-    const res = await axios("/api/getAppliedJobs");
+    const res = await axios("/api/appliedJobs", {
+      params: { candidateEmail: currentUser?.email },
+    });
     return res.data;
   };
+
   const {
-    data: appliedJobsCollection = [],
+    data: appliedJobsCollection,
     refetch: appliedJobsRefetch,
     isLoading: appliedJobsLoading,
   } = useQuery({
@@ -94,7 +110,7 @@ export const AppProvider = ({ children }) => {
     enabled: !!session,
   });
 
-  // all jobs fetching function
+  // Fetch all jobs
   const fetchJobs = async () => {
     const params = new URLSearchParams();
     if (currentUser?.email) params.append("postedBy", currentUser?.email);
@@ -103,9 +119,9 @@ export const AppProvider = ({ children }) => {
     if (location) params.append("location", location);
 
     const res = await axios(`/api/allJobs?${params.toString()}`);
-    console.log("jobs data:", res.data);
     return res.data;
   };
+
   const {
     data: jobs,
     isLoading: jobsLoading,
@@ -116,7 +132,7 @@ export const AppProvider = ({ children }) => {
     enabled: true, // Always enabled
   });
 
-  // ✅ Socket with session check
+  // Socket connection with session check
   useEffect(() => {
     if (!session) return;
 
@@ -142,14 +158,18 @@ export const AppProvider = ({ children }) => {
         title: "New Job Application!",
         html: `<strong>${data.applicantName}</strong> applied to your job: <em>${data.jobTitle}</em>`,
         confirmButtonText: "Got it!",
+      }).catch((error) => {
+        console.error("SweetAlert Error:", error);
       });
     });
 
+    // Cleanup on socket disconnect
     return () => {
       socket.disconnect();
     };
   }, [session]);
 
+  // Context value for all components
   const contextValue = {
     showSidebar,
     setShowSidebar,
@@ -196,4 +216,5 @@ export const AppProvider = ({ children }) => {
   );
 };
 
+// Custom hook to access context
 export const useAppContext = () => useContext(AppContext);

@@ -1,19 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useAppContext } from "@/Providers/AppProviders";
+import { useQuery } from "@tanstack/react-query";
 
 const AppliedJobsPage = () => {
-  const [appliedJobs, setAppliedJobs] = useState([]);
-
-  useEffect(() => {
-    const storedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
-    setAppliedJobs(storedJobs);
-  }, []);
-
+  const { appliedJobsCollection } = useAppContext();
   return (
     <div className="px-4 lg:py-6">
       <h2 className="text-3xl font-bold text-gray-800 mb-6">Applied Jobs</h2>
 
-      {appliedJobs.length === 0 ? (
+      {appliedJobsCollection?.length === 0 ? (
         <p className="text-gray-500">You haven’t applied for any jobs yet.</p>
       ) : (
         <div className="overflow-x-auto bg-white shadow rounded-lg">
@@ -33,28 +28,34 @@ const AppliedJobsPage = () => {
                   Deadline
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                  Salary
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
                   Status
                 </th>
               </tr>
             </thead>
-            <tbody className=" ">
-              {appliedJobs.map((job, index) => (
-                <tr key={index} className="hover:bg-gray-50 *:border-b">
+            <tbody className="">
+              {appliedJobsCollection?.map((job) => (
+                <tr key={job._id} className="hover:bg-gray-50 *:border-b">
                   <td className="px-6 py-4 text-sm text-gray-800">
-                    {job.jobTitle}
+                    {job.title}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-800">
-                    {job.companyName}
+                    {job?.company}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-800">
                     {job.jobType}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-800">
-                    {job.deadline}
+                    {new Date(job.deadline).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-800">
+                    {job.salary.min}k - {job.salary.max}k
                   </td>
                   <td className="px-6 py-4 text-sm">
                     <span className="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs">
-                      Pending
+                      {job?.status || "Applied"}
                     </span>
                   </td>
                 </tr>

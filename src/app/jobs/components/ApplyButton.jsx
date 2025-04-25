@@ -1,10 +1,11 @@
 "use client";
 
+import axios from "axios";
 import { useState, useRef } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import Swal from "sweetalert2";
 
-export default function ApplyButton({ job, modalId }) {
+export default function ApplyButton({ job, modalId, alreadyApplied }) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     candidateName: "",
@@ -13,60 +14,46 @@ export default function ApplyButton({ job, modalId }) {
     coverLetter: "",
   });
 
-  // 👉 React ref দিয়ে মডাল হ্যান্ডেল
   const modalRef = useRef(null);
 
+  // -------- handlers --------
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     const applicationData = {
       ...formData,
-      jobId: job.id,
-      jobTitle: job.jobTitle,
-      companyName: job.jobDetails.companyName,
-      jobType: job.jobDetails.jobType,
-      deadline: job.jobDetails.deadline,
-      jobDescription: job.jobDetails.jobDescription,
-      jobRequirements: job.jobDetails.jobRequirements,
+      jobId: job._id,
+      title: job.title,
+      jobType: job.type,
+      deadline: job.meta.deadline,
+      salary: job.salary,
+      category: job.details.category,
+      company: job.company,
+      status: "Applied",
     };
 
     try {
-      // SSR‑পাসে localStorage নেই, তাই গার্ড
-      if (typeof window === "undefined") return;
-      const storedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
+      const res = await axios.post("/api/apply-job", applicationData);
+      if (res?.status === 200) {
+        // ✅ First close modal
+        modalRef.current?.close();
 
-      const alreadyApplied = storedJobs.some(
-        (appliedJob) => appliedJob.jobId === job.id
-      );
-
-      if (alreadyApplied) {
-        await Swal.fire({
-          icon: "error",
-          text: "You have already applied for this job.",
-          timer: 2500,
-        });
-      } else {
-        const updatedJobs = [...storedJobs, applicationData];
-        localStorage.setItem("appliedJobs", JSON.stringify(updatedJobs));
-
-        await Swal.fire({
-          icon: "success",
-          title: "Application Submitted",
-          text: "Your job application has been submitted successfully!",
-        });
-
-        setFormData({
-          candidateName: "",
-          candidateEmail: "",
-          resume: "",
-          coverLetter: "",
-        });
+        // ✅ Then show Swal
+        setTimeout(() => {
+          Swal.fire({
+            title: "Success!",
+            text: res.data?.message || "Application submitted successfully.",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 2500,
+            width: "300px",
+          });
+        }, 100); // small delay so modal closes first
       }
     } catch (err) {
       console.error("❌ Submission error:", err);
@@ -74,23 +61,29 @@ export default function ApplyButton({ job, modalId }) {
         icon: "error",
         text: "Something went wrong. Please try again.",
         timer: 2500,
+        showCloseButton: false,
       });
     } finally {
       setLoading(false);
-      modalRef.current?.close();
     }
   };
 
-  /* ---------- UI ---------- */
+  // -------- UI --------
   return (
     <div>
       <button
         onClick={() => modalRef.current?.showModal()}
-        className="text-sm btn px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded cursor-pointer"
+        disabled={alreadyApplied}
+        className={`text-sm btn px-4 py-2 rounded ${
+          alreadyApplied
+            ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+            : "bg-teal-600 hover:bg-teal-700 text-white"
+        }`}
       >
-        Easy Apply
+        {alreadyApplied ? "Applied" : "Easy Apply"}
       </button>
 
+      {/* Modal */}
       <dialog
         id={modalId}
         ref={modalRef}
@@ -155,7 +148,7 @@ export default function ApplyButton({ job, modalId }) {
                 name="coverLetter"
                 value={formData.coverLetter}
                 onChange={handleChange}
-                rows="4"
+                rows={4}
                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"
               ></textarea>
             </div>
@@ -164,7 +157,7 @@ export default function ApplyButton({ job, modalId }) {
             <div className="flex justify-end space-x-3 pt-4">
               <button
                 type="button"
-                className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 cursor-pointer"
+                className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300"
                 onClick={() => modalRef.current?.close()}
               >
                 Cancel
@@ -172,9 +165,12 @@ export default function ApplyButton({ job, modalId }) {
 
               <button
                 type="submit"
-                className={`bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 ${
-                  loading ? "pointer-events-none" : "cursor-pointer"
-                } btn`}
+                disabled={loading}
+                className={`px-4 py-2 rounded-lg btn ${
+                  loading
+                    ? "bg-teal-400 cursor-not-allowed text-gray-600"
+                    : "bg-teal-600 hover:bg-teal-700 text-white"
+                }`}
               >
                 {loading ? (
                   <span className="flex items-center gap-2">

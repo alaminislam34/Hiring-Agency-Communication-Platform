@@ -22,10 +22,6 @@ const EmployerProfile = () => {
     localStorage.setItem("infoLink", infoBtn);
   }, [infoBtn]);
 
-  useEffect(() => {
-    localStorage.setItem("infoLink", infoBtn);
-  }, [infoBtn]);
-
   // Profile edit mode and form data
 
   const info = [

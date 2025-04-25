@@ -11,10 +11,7 @@ import { useState } from "react";
 import { RiMenu2Fill } from "react-icons/ri";
 import { GrClose } from "react-icons/gr";
 import { useSession } from "next-auth/react";
-import { House } from "lucide-react";
 import { BriefcaseBusiness } from "lucide-react";
-import { SquarePlus } from "lucide-react";
-import { GalleryVertical } from "lucide-react";
 import { UserCog } from "lucide-react";
 import { CircleGauge } from "lucide-react";
 import { Bookmark } from "lucide-react";
@@ -22,123 +19,88 @@ import { FileCheck } from "lucide-react";
 import { Bell } from "lucide-react";
 import { Users } from "lucide-react";
 import { Settings } from "lucide-react";
-import { SquareChevronRight } from "lucide-react";
 import useValidateSession from "@/lib/unValidateSession";
 import { CirclePlus } from "lucide-react";
-import { Contact } from "lucide-react";
-import { SquareChevronRightIcon } from "lucide-react";
 
 const jobSeekerNavLink = [
   {
-    name: "Home",
-    href: "/",
-    icon: <House size={18} />,
-  },
-  {
     name: "Jobs",
     href: "/jobs",
-    icon: <BriefcaseBusiness size={18} />,
+  },
+  {
+    name: "Forum",
+    href: "/forum",
   },
   {
     name: "Free Courses",
     href: "/courses",
-    icon: <SquareChevronRightIcon size={18} />,
-  },
-  {
-    name: "Saved Jobs",
-    href: "/savedJobs",
-    icon: <Bookmark size={18} />,
   },
   {
     name: "Blogs",
     href: "/blogs",
-    icon: <GalleryVertical size={18} />,
+  },
+  {
+    name: "About Us",
+    href: "/about",
   },
 ];
 const NavLinks = [
   {
-    name: "Home",
-    href: "/",
-    icon: <House size={18} />,
-  },
-  {
     name: "Jobs",
     href: "/jobs",
-    icon: <BriefcaseBusiness size={18} />,
   },
   {
     name: "About Us",
     href: "/about",
-    icon: <SquareChevronRight size={18} />,
   },
   {
     name: "Free Courses",
     href: "/courses",
-    icon: <SquareChevronRightIcon size={18} />,
   },
   {
     name: "Blogs",
     href: "/blogs",
-    icon: <GalleryVertical size={18} />,
   },
   {
     name: "Contact Us",
     href: "/contact",
-    icon: <Contact size={18} />,
   },
 ];
 const adminNavLinks = [
   {
-    name: "Home",
-    href: "/",
-    icon: <House size={18} />,
+    name: "Forum",
+    href: "/forum",
   },
-  {
-    name: "Jobs",
-    href: "/jobs",
-    icon: <BriefcaseBusiness size={18} />,
-  },
+
   {
     name: "About Us",
     href: "/about",
-    icon: <SquareChevronRight size={18} />,
   },
   {
     name: "Free Courses",
     href: "/courses",
-    icon: <SquareChevronRightIcon size={18} />,
   },
   {
     name: "Manage Users",
     href: "/manageUsers",
-    icon: <Users size={18} />,
   },
   {
     name: "Manage Jobs",
     href: "/manageJobs",
-    icon: <BriefcaseBusiness size={18} />,
   },
 ];
 const employerNavLinks = [
   {
-    name: "Home",
-    href: "/",
-    icon: <House size={18} />,
-  },
-  {
     name: "Jobs",
     href: "/jobs",
-    icon: <BriefcaseBusiness size={18} />,
   },
   {
     name: "Post Job",
     href: "/postJob",
-    icon: <SquarePlus size={18} />,
   },
   {
     name: "Blogs",
     href: "/blogs",
-    icon: <GalleryVertical size={18} />,
   },
 ];
 

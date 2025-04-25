@@ -1,17 +1,16 @@
 "use client";
 
-import Footer from "@/app/components/SharedComponents/Footer";
+import DashboardFooter from "@/app/components/SharedComponents/DashboardFooter";
 import { usePathname } from "next/navigation";
-import React from "react";
 
-const ClientFooter = () => {
+const Footer = () => {
   const pathname = usePathname();
   const isDashboard =
     pathname.startsWith("/admin") ||
     pathname.startsWith("/employer") ||
     pathname.startsWith("/jobSeeker");
 
-  return !isDashboard && <Footer />;
+  return isDashboard && <DashboardFooter />;
 };
 
-export default ClientFooter;
+export default Footer;

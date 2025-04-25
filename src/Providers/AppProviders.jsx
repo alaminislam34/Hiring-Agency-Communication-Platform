@@ -112,13 +112,9 @@ export const AppProvider = ({ children }) => {
 
   // Fetch all jobs
   const fetchJobs = async () => {
-    const params = new URLSearchParams();
-    if (currentUser?.email) params.append("postedBy", currentUser?.email);
-    if (type) params.append("jobType", type);
-    if (jobTitle) params.append("jobTitle", jobTitle);
-    if (location) params.append("location", location);
-
-    const res = await axios(`/api/allJobs?${params.toString()}`);
+    const res = await axios(`/api/allJobs`, {
+      params: { jobTitle, location, type },
+    });
     return res.data;
   };
 
@@ -198,14 +194,19 @@ export const AppProvider = ({ children }) => {
     notificationCount,
     setNotificationCount,
     markNotificationsAsSeen,
+
+    // total applied jobs data
     totalAppliedJobs,
     totalAppliedJobsLoading,
     totalAppliedJobsRefetch,
+
+    // total users data
     totalUsers,
     totalUsersLoading,
     totalUsersRefetch,
     setBookmark,
     bookmark,
+    // applied jobs data
     appliedJobsCollection,
     appliedJobsLoading,
     appliedJobsRefetch,

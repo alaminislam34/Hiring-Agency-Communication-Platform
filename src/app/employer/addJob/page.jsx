@@ -1,4 +1,5 @@
 "use client";
+import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
@@ -6,6 +7,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const MultiStepJobForm = () => {
+  const { currentUser } = useAppContext();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     title: "",
@@ -109,7 +111,8 @@ const MultiStepJobForm = () => {
       meta: {
         deadline: new Date(formData.deadline).toISOString(),
         createdAt: new Date().toISOString(),
-        postedBy: "employerUserId",
+        postedBy: currentUser?.email,
+        postedById: currentUser?._id,
         status: "open",
       },
     };
@@ -319,7 +322,7 @@ const MultiStepJobForm = () => {
           ) : (
             <button
               type="submit"
-              className="px-4 py-2 bg-green-500 text-white rounded"
+              className="px-4 py-2 bg-green-500 text-white rounded cursor-pointer"
             >
               Submit
             </button>

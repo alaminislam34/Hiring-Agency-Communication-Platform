@@ -21,8 +21,8 @@ const DashboardSideBar = ({ isOpen }) => {
   return (
     <aside
       className={clsx(
-        "h-screen bg-white border-r border-gray-200 flex flex-col justify-between transition-all duration-300 ease-in-out shadow-sm",
-        isOpen ? "w-64" : "w-20"
+        "h-screen bg-white border-gray-900 flex flex-col justify-between transition-all duration-300 ease-in-out shadow-sm",
+        isOpen ? "w-[250px]" : " w-[100px]"
       )}
     >
       {/* Top Part */}

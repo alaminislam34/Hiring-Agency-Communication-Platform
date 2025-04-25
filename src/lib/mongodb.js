@@ -40,4 +40,5 @@ export const collection = {
   appliedCollection: "applied-jobs",
   interviewsCollection: "interviews",
   applyForEmployerCollection: "employerApply",
+  forumPostCollection: "forum-post",
 };

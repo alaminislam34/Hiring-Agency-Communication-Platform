@@ -29,7 +29,11 @@ export async function POST(req) {
       const result = await appliedCollection.insertOne(body);
       await jobsCollection.updateOne(
         { _id: new ObjectId(jobId) },
-        { $set: { "meta.appliedCount": findJob.meta.appliedCount + 1 } },
+        {
+          $set: {
+            "meta.appliedCount": parseInt(findJob.meta.appliedCount) + 1,
+          },
+        },
         {
           upsert: true,
         }

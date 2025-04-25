@@ -6,7 +6,7 @@ export const POST = async (req) => {
   const body = await req.json();
   const session = await getServerSession();
   const userEmail = session?.user?.email;
-  const applicationCollection = getCollection(
+  const applicationCollection = await getCollection(
     collection.applyForEmployerCollection
   );
   const existingApplication = await applicationCollection.findOne({

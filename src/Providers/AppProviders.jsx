@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { createContext, useState, useContext, useEffect } from "react";
 import { io } from "socket.io-client";
 import Swal from "sweetalert2";
@@ -165,6 +166,12 @@ export const AppProvider = ({ children }) => {
     };
   }, [session]);
 
+  const pathname = usePathname();
+  const isDashboard =
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/employer") ||
+    pathname.startsWith("/jobSeeker");
+
   // Context value for all components
   const contextValue = {
     showSidebar,
@@ -210,6 +217,9 @@ export const AppProvider = ({ children }) => {
     appliedJobsCollection,
     appliedJobsLoading,
     appliedJobsRefetch,
+
+    // isDashboard
+    isDashboard,
   };
 
   return (

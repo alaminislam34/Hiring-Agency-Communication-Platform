@@ -48,12 +48,13 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
         // ✅ Then show Swal
         setTimeout(() => {
           Swal.fire({
-            title: "Success!",
             text: res.data?.message || "Application submitted successfully.",
             icon: "success",
             showConfirmButton: false,
-            timer: 2500,
+            timer: 1500,
             width: "300px",
+            background: "#D5F5F6",
+            animation: true,
           });
         }, 100); // small delay so modal closes first
       }
@@ -62,8 +63,11 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       Swal.fire({
         icon: "error",
         text: "Something went wrong. Please try again.",
-        timer: 2500,
+        timer: 1500,
         showCloseButton: false,
+        width: "300px",
+        background: "#D5F5F6",
+        animation: true,
       });
     } finally {
       setLoading(false);

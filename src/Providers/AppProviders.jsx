@@ -155,6 +155,8 @@ export const AppProvider = ({ children }) => {
         title: "New Job Application!",
         html: `<strong>${data.applicantName}</strong> applied to your job: <em>${data.jobTitle}</em>`,
         confirmButtonText: "Got it!",
+        background: "#D5F5F6",
+        animation: true,
       }).catch((error) => {
         console.error("SweetAlert Error:", error);
       });

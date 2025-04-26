@@ -11,7 +11,7 @@ const AdminLayout = ({ children }) => {
   return (
     <div className="flex flex-row">
       <section
-        className={`duration-500 overflow-y-auto bg-teal-300 ${
+        className={`duration-500 overflow-y-auto bg-teal-200 ${
           isOpen ? "w-[250px] left-0" : "lg:w-[80px] lg:left-0 -left-24"
         } h-screen fixed z-50 top-0`}
       >
@@ -26,7 +26,7 @@ const AdminLayout = ({ children }) => {
           <DashboardNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
         </nav>
         {/* <MobileDrawer /> */}
-        <section className="overflow-hidden px-4 lg:px-8 grid grid-cols-1">
+        <section className="overflow-hidden px-4 lg:px-8 grid grid-cols-1 min-h-[80vh] h-full">
           {children}
         </section>
         <Footer />

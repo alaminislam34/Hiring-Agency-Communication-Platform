@@ -43,7 +43,9 @@ const DashboardSideBar = ({ isOpen, setIsOpen }) => {
               className="w-12 h-12 rounded-full border"
             />
             {isOpen && (
-              <p className="text-sm font-semibold">{currentUser?.name}</p>
+              <p className="text-sm font-medium py-2 text-gray-500">
+                {currentUser?.name}
+              </p>
             )}
           </div>
           {/* Top Part */}

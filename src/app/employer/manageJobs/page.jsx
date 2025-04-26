@@ -49,12 +49,16 @@ const ManageJobs = () => {
   /* -------- handlers -------- */
   const handleDelete = (job) => {
     Swal.fire({
-      title: "Delete?",
-      text: "Are you sure you want to remove this job?",
+      title: "Are you sure ?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#14b8a6",
       cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+      timer: 1500,
+      width: 300,
+      background: "#D5F5F6",
+      animation: true,
     }).then((res) => res.isConfirmed && deleteJob.mutate(job._id));
   };
 

@@ -4,13 +4,8 @@ import { useAppContext } from "@/Providers/AppProviders";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
-import {
-  PencilSquareIcon,
-  TrashIcon,
-  EyeIcon,
-} from "@heroicons/react/24/outline";
+import { TrashIcon, EyeIcon } from "@heroicons/react/24/outline";
 import Swal from "sweetalert2";
-import EditJobTwoStep from "./components/EditJob";
 
 const ManageJobs = () => {
   const { currentUser } = useAppContext();
@@ -46,12 +41,15 @@ const ManageJobs = () => {
   /* -------- handlers -------- */
   const handleDelete = (job) => {
     Swal.fire({
-      title: "Delete?",
-      text: "Are you sure you want to remove this job?",
+      title: "Are you sure ?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#14b8a6",
+      confirmButtonText: "Delete",
       cancelButtonColor: "#d33",
+      width: 300,
+      background: "#D5F5F6",
+      animation: true,
     }).then((res) => res.isConfirmed && deleteJob.mutate(job._id));
   };
 

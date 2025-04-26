@@ -57,7 +57,9 @@ const Candidates = () => {
         title: "Status Updated Successfully",
         showConfirmButton: false,
         timer: 1500,
-        width: "300px",
+        width: 300,
+        background: "#D5F5F6",
+        animation: true,
       });
       setIsReview(true);
     } catch (error) {
@@ -68,6 +70,10 @@ const Candidates = () => {
         title: "Failed to Send Email",
         text: "There was an error while sending the update email. Please try again later.",
         showConfirmButton: true,
+        timer: 1500,
+        width: 300,
+        background: "#D5F5F6",
+        animation: true,
       });
     }
   };

@@ -4,6 +4,7 @@ import { ChevronLeft } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import DashboardSideBar from "../components/dashboardComponents/DashboardSideBar";
+import MobileDrawer from "./components/Drawer/Drawer";
 
 const AdminLayout = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +20,7 @@ const AdminLayout = ({ children }) => {
         {/* Toggle Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="absolute top-0 -right-8 border shadow-2xl flex items-center justify-center bg-white h-12 w-8"
+          className="absolute z-30 top-0 -right-8 shadow-[8px_2px_15px_0px_rgb(0,0,0,0.2)] rounded-r-xl flex items-center justify-center bg-white h-12 w-8"
         >
           {isOpen ? <ChevronLeft /> : <ChevronRight />}
         </button>
@@ -29,11 +30,8 @@ const AdminLayout = ({ children }) => {
           isOpen ? "lg:col-span-10" : "lg:col-span-11"
         } h-screen overflow-y-auto p-4 relative`}
       >
-        {/* <div className="lg:hidden">
-          <button className="absolute lg:hidden top-0 -right-8 border-y border-r border-gray-400 shadow flex items-center justify-center bg-white h-12 w-8">
-            {isOpen ? <ChevronLeft /> : <ChevronRight />}
-          </button>
-        </div> */}
+        <MobileDrawer />
+
         {children}
       </section>
     </div>

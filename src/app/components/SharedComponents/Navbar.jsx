@@ -21,6 +21,8 @@ import { Users } from "lucide-react";
 import { Settings } from "lucide-react";
 import useValidateSession from "@/lib/unValidateSession";
 import { CirclePlus } from "lucide-react";
+import LoadingPage from "@/app/loadingPage/page";
+import { UserCheck } from "lucide-react";
 
 const jobSeekerNavLink = [
   {
@@ -91,12 +93,16 @@ const adminNavLinks = [
 ];
 const employerNavLinks = [
   {
-    name: "Jobs",
-    href: "/jobs",
+    name: "About Us",
+    href: "/about",
   },
   {
-    name: "Post Job",
-    href: "/postJob",
+    name: "Forum",
+    href: "/forum",
+  },
+  {
+    name: "Free Courses",
+    href: "/courses",
   },
   {
     name: "Blogs",
@@ -120,6 +126,11 @@ const jobSeekerLinks = [
     name: "Saved Jobs",
     href: "/jobSeeker/savedJobs",
     icon: <Bookmark size={18} />,
+  },
+  {
+    name: "Apply for Employer",
+    href: "/jobSeeker/applyForEmployer",
+    icon: <UserCheck size={18} />,
   },
   {
     name: "Applied Jobs",
@@ -209,8 +220,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { currentUser, notificationCount, markNotificationsAsSeen } =
-    useAppContext();
+  const { currentUser, notificationCount } = useAppContext();
   useValidateSession();
 
   return (

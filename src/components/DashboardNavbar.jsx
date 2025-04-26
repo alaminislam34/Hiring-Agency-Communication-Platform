@@ -64,7 +64,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
           </div>
           <div className=" text-sm">
             <p className="font-medium leading-4">
-              {currentUser?.name || currentUser?.email}
+              {(currentUser?.username || currentUser?.firstName).slice(0, 10)}
             </p>
             <p className="text-gray-400 text-xs">{currentUser?.role}</p>
           </div>

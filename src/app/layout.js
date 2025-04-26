@@ -16,7 +16,9 @@ export default function RootLayout({ children }) {
           <NotificationProvider>
             <AppProvider>
               <body>
-                <ClientNavbar />
+                <nav className="sticky top-0 z-50 w-full">
+                  <ClientNavbar />
+                </nav>
                 <section className="md:min-h-[500px] min-h-[350px] bg-teal-50">
                   {children}
                 </section>

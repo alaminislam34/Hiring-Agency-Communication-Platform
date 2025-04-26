@@ -223,8 +223,8 @@ const Navbar = () => {
   useValidateSession();
 
   return (
-    <div className="bg-base-100 h-[68px] md:h-[42px] relative">
-      <div className="w-full fixed top-0 left-0 z-50 bg-white shadow">
+    <div className="bg-base-100 relative">
+      <div className="w-full bg-white shadow">
         <nav className="navbar w-full md:w-11/12 mx-auto flex justify-center items-center">
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">
@@ -476,41 +476,24 @@ const Navbar = () => {
                     </li>
                     <li className="border-b border-gray-300"></li>
                     {/* Job Seeker Menu */}
-                    {currentUser?.role === "jobSeeker" &&
-                      jobSeekerLinks.map(({ name, href, icon }) => (
-                        <li
-                          key={name}
-                          className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-3 py-2 duration-300 transition-all cursor-pointer "
-                        >
-                          <Link href={href} className="flex items-center gap-2">
-                            {icon} {name}
-                          </Link>
-                        </li>
-                      ))}
-                    {/* Employer Menu */}
-                    {currentUser?.role === "employer" &&
-                      employerLinks.map(({ name, href, icon }) => (
-                        <li
-                          key={name}
-                          className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-3 py-2 duration-300 transition-all cursor-pointer "
-                        >
-                          <Link href={href} className="flex items-center gap-2">
-                            {icon} {name}
-                          </Link>
-                        </li>
-                      ))}
-                    {/* Admin Menu */}
-                    {currentUser?.role === "admin" &&
-                      adminLinks.map(({ name, href, icon }) => (
-                        <li
-                          key={name}
-                          className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-3 py-2 duration-300 transition-all cursor-pointer "
-                        >
-                          <Link href={href} className="flex items-center gap-2">
-                            {icon} {name}
-                          </Link>
-                        </li>
-                      ))}
+                    {(currentUser?.role === "jobSeeker"
+                      ? jobSeekerLinks
+                      : currentUser?.role === "employer"
+                      ? employerLinks
+                      : currentUser?.role === "admin"
+                      ? adminLinks
+                      : NavLinks
+                    ).map(({ name, href, icon }) => (
+                      <li
+                        key={name}
+                        className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-3 py-2 duration-300 transition-all cursor-pointer "
+                      >
+                        <Link href={href} className="flex items-center gap-2">
+                          {icon} {name}
+                        </Link>
+                      </li>
+                    ))}
+
                     <li className="border-b border-gray-300"></li>
                     <li className="py-2 px-3 hover:bg-red-300 hover:text-black duration-300 cursor-pointer">
                       <LogoutButton />
@@ -519,7 +502,9 @@ const Navbar = () => {
                 </div>
               </div>
             ) : (
-              <LoginButton />
+              <>
+                <LoginButton />
+              </>
             )}
           </div>
         </nav>

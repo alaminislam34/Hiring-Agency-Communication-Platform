@@ -45,41 +45,10 @@ const SignInComponent = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: "url(/loginShape.svg)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-      className="flex justify-center items-center max-w-5xl w-full rounded-2xl shadow-[4px_4px_50px_-5px] my-10 md:my-12 lg:my-16 shadow-black/25 bg-white"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="hidden p-4 lg:p-6 md:flex items-center justify-center">
-          <div className="md:space-y-2 lg:space-y-4">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold">
-              {isSignUp ? "Sign Up to JobHive" : "Welcome Back to JobHive"}
-            </h1>
-            <p className="text-gray-500">
-              {isSignUp
-                ? "Sign up to get started with JobHive. It's free and easy to use."
-                : "We’re glad to see you again. Please log in to access your dashboard."}
-            </p>
-            <p className="hidden md:block text-sm">
-              {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
-              <button
-                onClick={() => setIsSignUp(!isSignUp)}
-                className="text-teal-700 font-medium cursor-pointer underline"
-              >
-                {isSignUp ? "Sign In" : "Sign Up"}
-              </button>
-            </p>
-            <div className="hidden md:block">
-              <SocialsLogin />
-            </div>
-          </div>
-        </div>
+    <div className="flex justify-center items-center w-full bg-white">
+      <div className="">
         <div className="p-4 lg:p-6 rounded-xl w-full">
-          <div className="space-y-6 flex flex-col items-center justify-center duration-300">
+          <div className="space-y-6 flex flex-col duration-300">
             <h1 className="text-2xl md:text-3xl font-semibold text-center text-teal-700">
               {isSignUp ? "Sign Up" : resetPassword ? "" : "Sign In"}
             </h1>
@@ -94,7 +63,10 @@ const SignInComponent = () => {
                     {error}
                   </p>
                 )}
-                <form onSubmit={handleSignIn} className="flex flex-col gap-4">
+                <form
+                  onSubmit={handleSignIn}
+                  className="flex flex-col gap-4 p-4"
+                >
                   <label htmlFor="email" className="flex flex-col gap-2">
                     <span className="text-gray-500">Email</span>
                     <input
@@ -111,6 +83,8 @@ const SignInComponent = () => {
                       <input
                         type={showPassword ? "text" : "password"}
                         name="password"
+                        placeholder="Enter your password"
+                        required
                         className="py-2 px-4 rounded-md border border-teal-500/50 focus:outline-teal-600 bg-teal-100 w-full pr-10"
                       />
                       <button
@@ -157,7 +131,7 @@ const SignInComponent = () => {
                     )}
                   </button>
                 </form>
-                <p className="text-center text-sm md:hidden">
+                <p className="text-center text-sm py-2 ">
                   Don`t have an account?
                   <button
                     onClick={() => setIsSignUp(true)}
@@ -166,11 +140,9 @@ const SignInComponent = () => {
                     Sign up
                   </button>
                 </p>
+                <SocialsLogin />
               </div>
             )}
-            <div className="md:hidden block">
-              <SocialsLogin />
-            </div>
           </div>
         </div>
       </div>

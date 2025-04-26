@@ -45,7 +45,7 @@ export default function AddJobForm() {
       if (res.status === 201) {
         // optional server notification
         await axios.post(
-          "https://jobhive-server.onrender.com/api/notify-job-post",
+          "https://jobhive-server-1.onrender.com/api/notify-job-post",
           {
             jobTitle: jobData.jobTitle,
             companyName: jobData.companyName,

@@ -17,7 +17,8 @@ export const POST = async (req) => {
       companyName,
       location,
       jobType,
-      posted,
+      postedBy,
+      postedById,
       deadline,
       description,
       skills,
@@ -45,7 +46,8 @@ export const POST = async (req) => {
       jobType,
 
       // salary,
-      posted,
+      postedBy,
+      postedById,
       deadline,
       description,
       skills,
@@ -54,6 +56,14 @@ export const POST = async (req) => {
       appliedAt: new Date(),
       status: "Pending",
     });
+    const jobsCollection = await getCollection(collection.jobsCollection);
+    await jobsCollection.updateOne(
+      { _id: new ObjectId(jobId) },
+      { $inc: { "meta.appliedCount": parseInt(meta.appliedCount) + 1 } },
+      {
+        upsert: true,
+      }
+    );
 
     return new Response(
       JSON.stringify({

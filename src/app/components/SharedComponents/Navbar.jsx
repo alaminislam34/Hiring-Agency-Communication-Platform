@@ -21,7 +21,6 @@ import { Users } from "lucide-react";
 import { Settings } from "lucide-react";
 import useValidateSession from "@/lib/unValidateSession";
 import { CirclePlus } from "lucide-react";
-import LoadingPage from "@/app/loadingPage/page";
 import { UserCheck } from "lucide-react";
 
 const jobSeekerNavLink = [
@@ -354,20 +353,29 @@ const Navbar = () => {
             </div>
             {/* Logo */}
             <Link href="/" className="text-xl font-bold flex items-center">
-              <img src="/JobHive.png" alt="Logo" className="h-6 mr-2" />
+              <img
+                src="/jobhive.jpg"
+                alt="Logo"
+                className="h-16 md:block hidden mr-2"
+              />
+              <img
+                src="/jobhive2.jpg"
+                alt="Logo"
+                className="h-16 md:hidden mr-2"
+              />
             </Link>
           </div>
 
           {/* Navbar Center (Desktop Menu) */}
           <div className="navbar-center hidden lg:flex">
-            <ul className="flex flex-row gap-2 text-md">
+            <ul className="flex flex-row gap-6 text-md">
               {currentUser?.role === "jobSeeker"
                 ? jobSeekerNavLink.map(({ href, name, icon }) => (
                     <li key={href} className="relative">
                       <Link
                         href={href}
                         className={`relative flex items-center gap-2 px-4 py-2 text-sm md:text-base font-medium rounded-full transition-all duration-300 ${
-                          pathname === href ? "text-teal-500" : "text-gray-700 "
+                          pathname === href ? "text-teal-600" : "text-gray-700 "
                         }`}
                       >
                         {icon} {name}
@@ -391,9 +399,11 @@ const Navbar = () => {
                 ? adminNavLinks.map(({ href, name }) => (
                     <li
                       key={href}
-                      className={`hover:text-teal-600 ${
-                        pathname === href ? "text-teal-600" : ""
-                      } py-1 px-2`}
+                      className={`hover:text-teal-600 border-b-2 cursor-pointer hover:border-b-teal-500 duration-300 transition-all ease-in-out font-medium ${
+                        pathname === href
+                          ? "text-teal-600 border-b-[2px] border-teal-500"
+                          : "border-b-transparent"
+                      } py-1`}
                     >
                       <Link href={href} className="">
                         {name}

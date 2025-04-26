@@ -20,7 +20,7 @@ export default function ScheduleForm() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://jobhive-server.onrender.com/api/schedule",
+        "https://jobhive-server-1.onrender.com/api/schedule",
         formData
       );
       alert("Interview scheduled successfully!");

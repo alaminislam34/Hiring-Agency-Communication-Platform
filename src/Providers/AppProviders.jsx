@@ -132,7 +132,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     if (!session) return;
 
-    const socket = io("https://jobhive-server.onrender.com");
+    const socket = io("https://jobhive-server-1.onrender.com");
     socket.connect();
 
     socket.on("connect", () => {

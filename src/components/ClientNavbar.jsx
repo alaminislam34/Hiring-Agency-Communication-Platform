@@ -1,11 +1,11 @@
 "use client";
 import Navbar from "@/app/components/SharedComponents/Navbar";
+import { useAppContext } from "@/Providers/AppProviders";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 const ClientNavbar = () => {
-  const pathname = usePathname();
-  const isDashboard = pathname.startsWith("/dashboard");
+  const { isDashboard } = useAppContext();
   return !isDashboard && <Navbar />;
 };
 

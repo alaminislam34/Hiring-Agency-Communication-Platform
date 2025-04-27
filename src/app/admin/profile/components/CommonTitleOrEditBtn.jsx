@@ -8,7 +8,7 @@ const CommonTitleOrEditBtn = ({ title, showEdit }) => {
   return (
     <div className="flex justify-between items-center border-b border-dashed border-teal-500 pb-4 mb-4">
       <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-tr from-teal-600 to-teal-500 bg-clip-text text-transparent">
-        {title} {showEdit}
+        {title}
       </h2>
       {isEditingInfo ? (
         <button

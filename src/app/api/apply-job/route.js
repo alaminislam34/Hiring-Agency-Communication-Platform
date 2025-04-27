@@ -6,37 +6,17 @@ import { ObjectId } from "mongodb";
 
 export async function POST(req) {
   try {
-    //  jobId: job._id,
-    //   title: job.title,
-    //   jobType: job.type,
-    //   deadline: job.meta.deadline,
-    //   salary: job.salary,
-    //   category: job.details.category,
-    //   company: job.company,
-    //   postedById: job.meta.postedById,
-    //   status: "Applied",
     const body = await req.json();
-    const {
-      candidateName,
-      candidateEmail,
-      resume,
-      coverLetter,
-      jobId,
-      title,
-      jobType,
-      deadline,
-      salary,
-      company,
-      category,
-      postedById,
-      status,
-      postedBy,
-    } = body;
-    try {
-      await axios.post("http://localhost:3002/api/apply-job", body); // Your Socket.IO server API
-    } catch (err) {
-      console.log("socket server error", err);
-    }
+    console.log("apply button clicked");
+    const { candidateEmail, jobId } = body;
+    // try {
+    //   await axios.post(
+    //     "https://jobhive-server-1.onrender.com/api/apply-job",
+    //     body
+    //   ); // Your Socket.IO server API
+    // } catch (err) {
+    //   console.log("socket server error", err);
+    // }
     const appliedCollection = await getCollection(collection.appliedCollection);
     const jobsCollection = await getCollection(collection.jobsCollection);
     const findJob = await jobsCollection.findOne({ _id: new ObjectId(jobId) });

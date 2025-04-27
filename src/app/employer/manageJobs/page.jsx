@@ -209,6 +209,223 @@
 
 //2
 
+// "use client";
+
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import {
+//   EyeIcon,
+//   PencilSquareIcon,
+//   TrashIcon,
+// } from "@heroicons/react/24/solid";
+// import Swal from "sweetalert2";
+
+// const ManageJobs = () => {
+//   const [viewJob, setViewJob] = useState(null);
+//   const [editJob, setEditJob] = useState(null);
+//   const [selectedJobForApplicants, setSelectedJobForApplicants] =
+//     useState(null);
+//   const [applicants, setApplicants] = useState([]);
+//   const [isApplicantsModalOpen, setIsApplicantsModalOpen] = useState(false);
+
+//   const [jobs, setJobs] = useState([]);
+
+//   // Fetch all jobs (example: initial loading)
+//   useEffect(() => {
+//     const fetchJobs = async () => {
+//       try {
+//         const res = await axios.get("/api/allJobs"); // Make sure your backend has this endpoint
+//         setJobs(res.data);
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     };
+
+//     fetchJobs();
+//   }, []);
+
+//   // View Applicants Handler
+//   const handleViewApplicants = async (job) => {
+//     try {
+//       const res = await axios.get(`/applications?jobId=${job._id}`);
+//       setApplicants(res.data);
+//       setSelectedJobForApplicants(job);
+//       setIsApplicantsModalOpen(true);
+//     } catch (error) {
+//       console.error(error);
+//       Swal.fire({
+//         icon: "error",
+//         title: "Failed to load applicants!",
+//       });
+//     }
+//   };
+
+// <<<<<<< HEAD
+//   // Delete Job Handler
+//   const handleDelete = async (job) => {
+//     try {
+//       const res = await axios.delete(`/jobs/${job._id}`);
+//       if (res.data.deletedCount > 0) {
+//         Swal.fire({
+//           icon: "success",
+//           title: "Job Deleted Successfully!",
+//         });
+//         setJobs(jobs.filter((item) => item._id !== job._id));
+//       }
+//     } catch (error) {
+//       console.error(error);
+//       Swal.fire({
+//         icon: "error",
+//         title: "Failed to delete job!",
+//       });
+//     }
+// =======
+//   const {
+//     data: jobs = [],
+//     isLoading,
+//     refetch: refetchJobs,
+//   } = useQuery({
+//     queryKey: ["jobs", currentUser?.email],
+//     queryFn: fetchJobs,
+//     enabled: !!currentUser?.email,
+//   });
+
+//   /* -------- delete job -------- */
+//   const deleteJob = useMutation({
+//     mutationFn: (id) => axios.delete(`/api/job/${id}`),
+//     onSuccess: () => {
+//       Swal.fire("Deleted!", "Job removed successfully", "success");
+//       refetchJobs();
+//     },
+//     onError: () => Swal.fire("Error", "Couldn’t delete job", "error"),
+//   });
+
+//   /* -------- handlers -------- */
+//   const handleDelete = (job) => {
+//     Swal.fire({
+//       title: "Are you sure ?",
+//       icon: "warning",
+//       showCancelButton: true,
+//       confirmButtonColor: "#14b8a6",
+//       cancelButtonColor: "#d33",
+//       confirmButtonText: "Delete",
+//       timer: 1500,
+//       width: 300,
+//       background: "#D5F5F6",
+//       animation: true,
+//     }).then((res) => res.isConfirmed && deleteJob.mutate(job._id));
+// >>>>>>> 44dc98fa1cd84fa1d2a15eb215160d6f72b40da6
+//   };
+
+//   return (
+//     <div className="p-4">
+//       <h1 className="text-2xl font-semibold mb-6">Manage Jobs</h1>
+
+//       <div className="overflow-x-auto">
+//         <table className="table w-full">
+//           <thead>
+//             <tr className="bg-teal-100">
+//               <th>Title</th>
+//               <th>Company</th>
+//               <th>Category</th>
+//               <th>Type</th>
+//               <th>Salary</th>
+//               <th>Deadline</th>
+//               <th>Actions</th>
+//             </tr>
+//           </thead>
+
+//           <tbody>
+//             {jobs?.map((job) => (
+//               <tr key={job?._id}>
+//                 <td>{job?.title}</td>
+//                 <td>{job?.company}</td>
+//                 <td>{job?.category}</td>
+//                 <td>{job?.type}</td>
+//                 <td>
+//                   {job?.salary?.min}k – {job?.salary?.max}k
+//                 </td>
+//                 <td>{new Date(job?.meta?.deadline).toLocaleDateString()}</td>
+//                 <td>
+//                   <div className="flex justify-center gap-3">
+//                     {/* View Job Details */}
+//                     <EyeIcon
+//                       onClick={() => setViewJob(job)}
+//                       className="h-5 w-5 text-teal-600 cursor-pointer hover:scale-110 transition"
+//                     />
+//                     {/* Edit Job */}
+//                     <PencilSquareIcon
+//                       onClick={() => setEditJob(job)}
+//                       className="h-5 w-5 text-amber-500 cursor-pointer hover:scale-110 transition"
+//                     />
+//                     {/* Delete Job */}
+//                     <TrashIcon
+//                       onClick={() => handleDelete(job)}
+//                       className="h-5 w-5 text-red-500 cursor-pointer hover:scale-110 transition"
+//                     />
+//                     {/* View Applicants */}
+//                     <button
+//                       onClick={() => handleViewApplicants(job)}
+//                       className="bg-teal-100 text-teal-700 px-2 py-1 rounded text-xs hover:bg-teal-200 transition"
+//                     >
+//                       View Applicants
+//                     </button>
+//                   </div>
+//                 </td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+
+//       {/* Applicants Modal */}
+//       {isApplicantsModalOpen && (
+//         <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
+//           <div className="bg-white p-6 rounded-lg w-96 max-h-[80vh] overflow-y-auto">
+//             <h2 className="text-xl font-semibold mb-4">
+//               Applicants for: {selectedJobForApplicants?.jobTitle}
+//             </h2>
+
+//             {applicants.length === 0 ? (
+//               <p className="text-gray-500 text-center">No applicants yet.</p>
+//             ) : (
+//               <ul className="space-y-3">
+//                 {applicants.map((applicant) => (
+//                   <li
+//                     key={applicant._id}
+//                     className="p-2 border rounded flex justify-between items-center"
+//                   >
+//                     <div>
+//                       <p className="font-medium">{applicant.name}</p>
+//                       <p className="text-sm text-gray-500">{applicant.email}</p>
+//                     </div>
+//                     <button className="text-teal-600 hover:underline text-sm">
+//                       Chat
+//                     </button>
+//                   </li>
+//                 ))}
+//               </ul>
+//             )}
+
+//             <div className="text-right mt-6">
+//               <button
+//                 onClick={() => setIsApplicantsModalOpen(false)}
+//                 className="px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600 transition"
+//               >
+//                 Close
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ManageJobs;
+
+//3
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -228,7 +445,7 @@ const ManageJobs = () => {
   const [applicants, setApplicants] = useState([]);
   const [isApplicantsModalOpen, setIsApplicantsModalOpen] = useState(false);
 
-  const [jobs, setJobs] = useState([]);
+  // const [jobs, setJobs] = useState([]);
 
   // Fetch all jobs (example: initial loading)
   useEffect(() => {
@@ -260,24 +477,40 @@ const ManageJobs = () => {
     }
   };
 
-  // Delete Job Handler
-  const handleDelete = async (job) => {
-    try {
-      const res = await axios.delete(`/jobs/${job._id}`);
-      if (res.data.deletedCount > 0) {
-        Swal.fire({
-          icon: "success",
-          title: "Job Deleted Successfully!",
-        });
-        setJobs(jobs.filter((item) => item._id !== job._id));
-      }
-    } catch (error) {
-      console.error(error);
-      Swal.fire({
-        icon: "error",
-        title: "Failed to delete job!",
-      });
-    }
+  const {
+    data: jobs = [],
+    isLoading,
+    refetch: refetchJobs,
+  } = useQuery({
+    queryKey: ["jobs", currentUser?.email],
+    queryFn: fetchJobs,
+    enabled: !!currentUser?.email,
+  });
+
+  /* -------- delete job -------- */
+  const deleteJob = useMutation({
+    mutationFn: (id) => axios.delete(`/api/job/${id}`),
+    onSuccess: () => {
+      Swal.fire("Deleted!", "Job removed successfully", "success");
+      refetchJobs();
+    },
+    onError: () => Swal.fire("Error", "Couldn’t delete job", "error"),
+  });
+
+  /* -------- handlers -------- */
+  const handleDelete = (job) => {
+    Swal.fire({
+      title: "Are you sure ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#14b8a6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+      timer: 1500,
+      width: 300,
+      background: "#D5F5F6",
+      animation: true,
+    }).then((res) => res.isConfirmed && deleteJob.mutate(job._id));
   };
 
   return (

@@ -15,11 +15,9 @@ const ProfileInfo = () => {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: currentUser?.name || "",
-    userName: currentUser?.userName || "",
-    phone: currentUser?.phone || "",
-    location: currentUser?.location || "",
-    address: currentUser?.address || "",
+    firstName: currentUser?.firstName || "",
+    lastName: currentUser?.lastName || "",
+    username: currentUser?.username || "",
     image: currentUser?.image || "",
     bio: currentUser?.bio || "",
   });
@@ -30,20 +28,16 @@ const ProfileInfo = () => {
 
   useEffect(() => {
     setFormData({
-      name: currentUser?.name || "",
-      userName: currentUser?.userName || "",
-      phone: currentUser?.phone || "",
-      location: currentUser?.location || "",
-      address: currentUser?.address || "",
+      firstName: currentUser?.firstName || "",
+      lastName: currentUser?.lastName || "",
+      username: currentUser?.username || "",
       image: currentUser?.image || "",
       bio: currentUser?.bio || "",
     });
     setInitialData({
-      name: currentUser?.name || "",
-      userName: currentUser?.userName || "",
-      phone: currentUser?.phone || "",
-      location: currentUser?.location || "",
-      address: currentUser?.address || "",
+      firstName: currentUser?.firstName || "",
+      lastName: currentUser?.lastName || "",
+      username: currentUser?.username || "",
       image: currentUser?.image || "",
       bio: currentUser?.bio || "",
     });
@@ -130,20 +124,36 @@ const ProfileInfo = () => {
       {isEditing ? (
         <form onSubmit={handleEdit} className="space-y-2 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+            {/* First Name */}
             <label className="flex flex-col gap-2">
               <span className="flex items-center gap-2">
-                <LuUserRound /> Full Name
+                <LuUserRound /> First Name
               </span>
               <input
                 required
-                name="name"
+                name="firstName"
                 type="text"
-                value={formData.name}
+                value={formData.firstName}
+                onChange={handleChange}
+                className="p-2 border border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500"
+              />
+            </label>
+            {/* Last Name */}
+            <label className="flex flex-col gap-2">
+              <span className="flex items-center gap-2">
+                <LuUserRound /> Last Name
+              </span>
+              <input
+                required
+                name="lastName"
+                type="text"
+                value={formData.lastName}
                 onChange={handleChange}
                 className="p-2 border border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500"
               />
             </label>
 
+            {/* Email */}
             <label className="flex flex-col gap-2">
               <span className="flex items-center gap-2">
                 <MdOutlineMail /> Email
@@ -157,63 +167,8 @@ const ProfileInfo = () => {
             </label>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-            {/* Location */}
-            <label className="flex flex-col gap-2">
-              <span className="flex items-center gap-2">
-                <FaMapMarkerAlt /> Location
-              </span>
-              <input
-                required
-                name="location"
-                type="text"
-                value={formData.location}
-                onChange={handleChange}
-                className="p-2 border border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500"
-              />
-            </label>
-            {/* Phone */}
-            <label className="flex flex-col gap-2">
-              <span className="flex items-center gap-2 ">
-                <LuPhone /> Phone
-              </span>
-              <input
-                required
-                name="phone"
-                type="text"
-                value={formData.phone}
-                onChange={handleChange}
-                className="p-2 border border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500"
-              />
-            </label>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-            {/* User name */}
-            <label htmlFor="userName" className="flex flex-col gap-2">
-              <span className="">Username</span>
-              <input
-                type="text"
-                placeholder="Username"
-                required
-                name="userName"
-                value={formData.userName}
-                onChange={handleChange}
-                className="p-2 border border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500"
-              />
-            </label>
-            {/* Address */}
-            <label htmlFor="address" className="flex flex-col gap-2">
-              <span className="">Address (optional)</span>
-              <input
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                className="p-2 border border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500"
-              />
-            </label>
-          </div>
           <div className="">
+            {/* Bio */}
             <label htmlFor="bio" className="flex flex-col gap-2">
               <span className="">Bio</span>
               <textarea
@@ -229,6 +184,7 @@ const ProfileInfo = () => {
             </label>
           </div>
           <div className="flex justify-start">
+            {/* Profile Image */}
             <label className="flex flex-col gap-2 cursor-pointer">
               <span className="flex items-center gap-2">
                 <LuUpload /> Profile Image
@@ -276,39 +232,28 @@ const ProfileInfo = () => {
       ) : (
         <div className="w-full space-y-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            <div className="md:col-span-2">
-              <span className="text-sm text-gray-400">Bio</span>
-              <p>{currentUser?.bio || "No bio"}</p>
-            </div>
             <div>
               <span className="text-sm text-gray-400">Full Name</span>
-              <p>{currentUser?.name}</p>
+              <p>
+                {currentUser?.name ||
+                  currentUser?.firstName + " " + currentUser?.lastName}
+              </p>
             </div>
             <div>
               <span className="text-sm text-gray-400">Username</span>
-              <p>{currentUser?.userName}</p>
+              <p>{currentUser?.username || "No username"}</p>
             </div>
             <div>
               <span className="text-sm text-gray-400">Email</span>
               <p>{currentUser?.email}</p>
             </div>
             <div>
-              <span className="text-sm text-gray-400">Phone</span>
-              <p>{currentUser?.phone || "No phone"}</p>
+              <span className="text-sm text-gray-400">UserId</span>
+              <p>{currentUser?._id}</p>
             </div>
-            <div>
-              <span className="text-sm text-gray-400">Location</span>
-              <p className="flex items-center">
-                <FaMapMarkerAlt className="mr-2" />
-                {currentUser?.location || "No location"}
-              </p>
-            </div>
-            <div>
-              <span className="text-sm text-gray-400">Address</span>
-              <p className="flex items-center">
-                <FaMapMarkerAlt className="mr-2" />
-                {currentUser?.address || "N/A"}
-              </p>
+            <div className="md:col-span-2">
+              <span className="text-sm text-gray-400">Bio</span>
+              <p>{currentUser?.bio || "No bio"}</p>
             </div>
           </div>
           <ToastContainer position="top-center" autoClose={3000} />

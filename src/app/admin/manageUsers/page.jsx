@@ -26,13 +26,14 @@ const ManageUsers = () => {
   const deleteUser = async (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "teal",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#14b8a6",
       confirmButtonText: "Delete",
-      width: "300px",
+      cancelButtonColor: "#d33",
+      width: 300,
+      background: "#D5F5F6",
+      animation: true,
     })
       .then(async (result) => {
         if (result.isConfirmed) {

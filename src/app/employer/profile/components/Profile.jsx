@@ -10,10 +10,16 @@ import ImportantLinksInfo from "./ImportantLinksInfo";
 import JobExperienceInfo from "./JobExperienceInfo";
 import ProfileInfo from "./ProfileInfo";
 import { LucideVerified } from "lucide-react";
+import { ToastContainer } from "react-toastify";
+import { Building2 } from "lucide-react";
+import CompanyDetails from "./CompanyDetails";
 
 const EmployerProfile = () => {
-  const { currentUser } = useAppContext();
-
+  const { currentUser, calculateProfileCompletion } = useAppContext();
+  const profilePercentage = parseInt(
+    calculateProfileCompletion((currentUser && currentUser) || {})
+  );
+  console.log(profilePercentage); // Output: 100
   // Info tab state (saved in localStorage)
   const [infoBtn, setInfoBtn] = useState("Profile Info");
 
@@ -25,10 +31,14 @@ const EmployerProfile = () => {
 
   const info = [
     { name: "Profile Info", icon: <TbFileInfo /> },
-    // { name: "Additional Info", icon: <TbFileInfo /> },
+    { name: "Additional Info", icon: <TbFileInfo /> },
     { name: "Education Info", icon: <FaBookReader /> },
-    { name: "Important Links", icon: <FaLink /> },
-    { name: "Job Experience", icon: <FaGraduationCap /> },
+    ...(currentUser?.role === "jobSeeker"
+      ? [{ name: "Job Experience", icon: <FaGraduationCap /> }]
+      : []),
+    ...(currentUser?.role === "employer"
+      ? [{ name: "Company Details", icon: <Building2 /> }]
+      : []),
   ];
 
   return (
@@ -39,7 +49,10 @@ const EmployerProfile = () => {
             <div className="w-32 h-32 rounded-full relative">
               <img
                 src={currentUser?.image || "/fakeUser.jpg"}
-                alt={currentUser?.name}
+                alt={
+                  currentUser?.name ||
+                  currentUser?.firstName + " " + currentUser?.lastName
+                }
                 className="border-4 rounded-full border-teal-500 w-full h-full object-cover bg-cover bg-center"
               />
               {currentUser?.isVerified ? (
@@ -57,6 +70,16 @@ const EmployerProfile = () => {
               <p className="text-sm flex flex-row items-center gap-2 text-gray-500">
                 UserId: {currentUser?._id}
               </p>
+              <div
+                data-tip={`completion: ${profilePercentage}%`}
+                className="tooltip tooltip-accent w-full"
+              >
+                <progress
+                  className="progress progress-accent w-full cursor-pointer"
+                  value={profilePercentage}
+                  max="100"
+                ></progress>
+              </div>
             </div>
           </div>
           <ul className="duration-500 transition-all ease-in-out space-y-2 w-full">
@@ -90,9 +113,13 @@ const EmployerProfile = () => {
           {infoBtn === "Address Info" && <AddressInfo />}
           {infoBtn === "Education Info" && <EducationalInfo />}
           {infoBtn === "Important Links" && <ImportantLinksInfo />}
-          {infoBtn === "Job Experience" && <JobExperienceInfo />}
+          {currentUser?.role === "jobSeeker" &&
+            infoBtn === "Job Experience" && <JobExperienceInfo />}
+          {currentUser?.role === "employer" &&
+            infoBtn === "Company Details" && <CompanyDetails />}
         </div>
       </div>
+      <ToastContainer position="bottom-center" />
     </div>
   );
 };

@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { createContext, useState, useContext, useEffect } from "react";
 import { io } from "socket.io-client";
 import Swal from "sweetalert2";
@@ -128,6 +129,106 @@ export const AppProvider = ({ children }) => {
     enabled: true, // Always enabled
   });
 
+  // profile completed percentage
+  const calculateProfileCompletion = (userData) => {
+    if (!userData || !userData.role) {
+      return 0; // safe default
+    }
+
+    let requiredFields = [];
+
+    if (userData.role === "jobSeeker") {
+      requiredFields = [
+        // personal
+        "firstName",
+        "lastName",
+        "username",
+        "bio",
+        "email",
+        "image",
+        // additional info
+        "skills",
+        "phone",
+        "presentAddress",
+        "permanentAddress",
+        "country",
+        "city",
+        // experience
+        "jobTitle",
+        "jobType",
+        "jobDescription",
+        "startDate",
+        "endDate",
+        "companyName",
+        // education
+        "educationLevel",
+        "degreeTitle",
+        "institution",
+        "passingYear",
+      ];
+    } else if (userData.role === "employer") {
+      requiredFields = [
+        "firstName",
+        "lastName",
+        "username",
+        "bio",
+        "email",
+        "phone",
+        "image",
+        // education
+        "educationLevel",
+        "degreeTitle",
+        "institution",
+        "passingYear",
+        // company details
+        "companyName",
+        "companyWebsite",
+        "companyEmail",
+        "companyLogo",
+        "companyPhone",
+        "companySize",
+        "companyLocation",
+        "companyDescription",
+      ];
+    } else if (userData.role === "admin") {
+      requiredFields = [
+        "firstName",
+        "lastName",
+        "username",
+        "bio",
+        "email",
+        "phone",
+        "image",
+        // education
+        "educationLevel",
+        "degreeTitle",
+        "institution",
+        "passingYear",
+      ];
+    }
+
+    if (requiredFields.length === 0) {
+      return 0; // safe default
+    }
+
+    let filledFields = 0;
+
+    requiredFields.forEach((field) => {
+      if (Array.isArray(userData[field])) {
+        if (userData[field].length > 0) {
+          filledFields += 1;
+        }
+      } else {
+        if (userData[field] && userData[field] !== "") {
+          filledFields += 1;
+        }
+      }
+    });
+
+    const completion = (filledFields / requiredFields.length) * 100;
+    return Math.round(completion) || 0; // always return a valid number
+  };
+
   // Socket connection with session check
   useEffect(() => {
     if (!session) return;
@@ -154,6 +255,8 @@ export const AppProvider = ({ children }) => {
         title: "New Job Application!",
         html: `<strong>${data.applicantName}</strong> applied to your job: <em>${data.jobTitle}</em>`,
         confirmButtonText: "Got it!",
+        background: "#D5F5F6",
+        animation: true,
       }).catch((error) => {
         console.error("SweetAlert Error:", error);
       });
@@ -164,6 +267,12 @@ export const AppProvider = ({ children }) => {
       socket.disconnect();
     };
   }, [session]);
+
+  const pathname = usePathname();
+  const isDashboard =
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/employer") ||
+    pathname.startsWith("/jobSeeker");
 
   // Context value for all components
   const contextValue = {
@@ -210,6 +319,10 @@ export const AppProvider = ({ children }) => {
     appliedJobsCollection,
     appliedJobsLoading,
     appliedJobsRefetch,
+
+    // isDashboard
+    isDashboard,
+    calculateProfileCompletion,
   };
 
   return (

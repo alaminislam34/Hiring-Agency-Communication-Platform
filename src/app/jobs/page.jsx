@@ -1,161 +1,188 @@
 "use client";
+
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { useAppContext } from "@/Providers/AppProviders";
 import JobsFilterOptions from "./components/JobsFilterOptions";
 import ApplyButton from "./components/ApplyButton";
-import { useAppContext } from "@/Providers/AppProviders";
 import { TailSpin } from "react-loader-spinner";
 import { Bookmark } from "lucide-react";
 import { BsBookmarkFill } from "react-icons/bs";
+import axios from "axios";
+import JobsBanner from "./components/JobsBanner";
+import { useState } from "react";
+import { MapPin } from "lucide-react";
+import { Briefcase } from "lucide-react";
+import { GraduationCap } from "lucide-react";
+import { Clock } from "lucide-react";
+import { Calendar } from "lucide-react";
+import { Grid2X2 } from "lucide-react";
+import { Rows3 } from "lucide-react";
 
 const AllJobs = () => {
-  const {
-    setBookmark,
-    bookmark,
-    jobs,
-    jobsLoading,
-    appliedJobsCollection,
-    currentUser,
-  } = useAppContext();
-  console.log(jobs);
+  const [industry, setIndustry] = useState("");
+  const [grid, setGrid] = useState(true);
+  const [location, setLocation] = useState("");
+  const [keyword, setKeyword] = useState("");
+  const { bookmark, setBookmark, currentUser, appliedJobsCollection } =
+    useAppContext();
+
+  const { data: jobs, isLoading } = useQuery({
+    queryKey: ["jobs", industry, location, keyword],
+    queryFn: async () => {
+      const res = await axios.get("/api/activeJobs", {
+        params: { industry, location, keyword },
+      });
+      return res.data;
+    },
+  });
+
+  const handleBookmark = (jobId) => {
+    setBookmark((prev) =>
+      prev.includes(jobId)
+        ? prev.filter((id) => id !== jobId)
+        : [...prev, jobId]
+    );
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const searchJob = e.target.search.value;
-    setJobTitle(searchJob);
+    setKeyword(e.target.value);
   };
 
   return (
-    <div className="bg-gray-50 p-4 md:p-6 max-w-7xl mx-auto">
-      <h1 className="text-xl font-semibold text-gray-800 py-4">
-        {jobs?.length} Jobs
-      </h1>
-
+    <div className="max-w-7xl mx-auto p-4 md:p-6 bg-gray-50">
+      <JobsBanner
+        setIndustry={setIndustry}
+        setKeyword={setKeyword}
+        setLocation={setLocation}
+        handleSearch={handleSearch}
+        industry={industry}
+        location={location}
+        keyword={keyword}
+        jobs={jobs}
+      />
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-6">
-        {/* Left Side Filter */}
-        <aside className="md:col-span-1 bg-white border border-teal-500 rounded-2xl shadow-sm p-4">
+        {/* Filters Section */}
+        <aside className="md:col-span-1 bg-white border border-teal-500 rounded-2xl shadow-sm p-5">
           <JobsFilterOptions />
         </aside>
 
-        {/* Jobs List */}
-        <main className="md:col-span-3 lg:col-span-4 border border-teal-500 rounded-2xl shadow-sm  bg-white">
-          {/* Search Bar */}
-          <div className="sticky z-40 top-0 bg-white border-b rounded-2xl border-gray-200 p-4">
-            <form
-              onSubmit={handleSearch}
-              className="flex flex-col md:flex-row gap-3 md:items-center justify-between"
-            >
-              <input
-                type="text"
-                name="search"
-                placeholder="Search jobs..."
-                onChange={(e) => setJobTitle(e.target.value)}
-                className="flex-1 py-2 px-4 border border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-lg text-sm"
-              />
-              <button
-                type="submit"
-                className="px-4 py-2 bg-teal-500 hover:bg-teal-600 text-white font-medium rounded-lg transition duration-200"
-              >
-                Search Job
-              </button>
-            </form>
-          </div>
-
+        {/* Jobs Section */}
+        <main className="md:col-span-3 lg:col-span-4 bg-white border border-teal-500 rounded-2xl shadow-sm">
           {/* Job Cards */}
-          {jobsLoading ? (
-            <div className="flex items-center justify-center w-full min-h-[300px]">
-              <TailSpin
-                height="60"
-                width="60"
-                color="#00847d"
-                ariaLabel="loading"
-              />
-            </div>
-          ) : (
-            <div className="p-4">
-              {jobs?.length > 0 ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {jobs?.map((job) => (
-                    <div
-                      key={job._id.toString()}
-                      // key={job._id}
-                      className="bg-white border border-gray-200 hover:border-teal-500 rounded-2xl p-5 shadow-sm hover:shadow-md transition duration-300 relative"
-                    >
-                      {/* Bookmark */}
-                      <button
-                        onClick={() =>
-                          setBookmark((prev) =>
-                            prev.includes(job._id)
-                              ? prev.filter((id) => id !== job._id)
-                              : [...prev, job._id]
-                          )
-                        }
-                        className="absolute top-3 right-3 hover:text-teal-500"
-                        aria-label="Bookmark Job"
+          <div className="p-5">
+            {isLoading ? (
+              <div className="flex justify-center items-center min-h-[300px]">
+                <TailSpin height="60" width="60" color="#14b8a6" />
+              </div>
+            ) : (
+              <>
+                <div className="flex justify-end gap-2 mb-4">
+                  <button
+                    onClick={() => setGrid(false)}
+                    className={`p-2 rounded-xl shadow-2xl cursor-pointer border border-gray-300 ${
+                      !grid
+                        ? "bg-teal-500 text-white"
+                        : "text-teal-500 bg-white"
+                    }`}
+                  >
+                    <Rows3 size={18} />
+                  </button>
+                  <button
+                    onClick={() => setGrid(true)}
+                    className={`p-2 rounded-xl shadow-2xl cursor-pointer border border-gray-300 ${
+                      grid ? "bg-teal-500 text-white" : "bg-white text-teal-500"
+                    }`}
+                  >
+                    <Grid2X2 size={18} />
+                  </button>
+                </div>
+                {jobs?.length > 0 ? (
+                  <div
+                    className={`grid grid-cols-1 ${
+                      grid ? "md:grid-cols-2" : ""
+                    } gap-6`}
+                  >
+                    {jobs?.map((job) => (
+                      <div
+                        key={job._id}
+                        className="p-3 lg:p-4 rounded-lg shadow-md border border-teal-100 bg-white"
                       >
-                        {bookmark?.includes(job._id) ? (
-                          <BsBookmarkFill size={18} />
-                        ) : (
-                          <Bookmark size={18} />
-                        )}
-                      </button>
+                        {/* Header */}
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h2 className="text-xl font-medium text-teal-700">
+                              {job.industry}
+                            </h2>
+                            <p className="text-gray-600 flex items-center gap-1">
+                              <MapPin size={16} />
+                              {job.location} ({job.vacancy} openings)
+                            </p>
+                          </div>
+                          <span className="bg-teal-100 text-teal-800 text-xs px-2 py-1 rounded-full">
+                            {job.type}
+                          </span>
+                        </div>
 
-                      <div>
-                        <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                        {/* Job Title */}
+                        <h1 className="text-xl md:text-2xl font-bold mt-3 text-gray-800">
                           {job.title}
-                        </h2>
-                        <p className="text-sm text-gray-600 mb-1">
-                          <strong>🏢 Company:</strong> {job.company}
-                        </p>
-                        <p className="text-sm text-gray-600 mb-1">
-                          <strong>📍 Location:</strong> {job.location}
-                        </p>
-                        <p className="text-sm text-gray-600 mb-1">
-                          <strong>🕒 Type:</strong> {job.type}
-                        </p>
-                        <p className="text-sm text-gray-600 mb-1">
-                          {job?.salary?.min}k - {job?.salary?.max}k
-                        </p>
-                        <p className="text-sm text-gray-600 mb-1">
-                          <strong>🗓️ Deadline:</strong>{" "}
-                          {new Date(job?.meta?.deadline).toLocaleDateString()}
-                        </p>
-                      </div>
+                        </h1>
 
-                      {/* Actions */}
-                      <div className="flex justify-between items-center mt-5">
-                        <Link
-                          // todo
-                          href={`/job/${job._id}`}
-                          className="text-teal-600 text-sm font-medium hover:underline"
-                        >
-                          🔎 View Details
-                        </Link>
+                        {/* Description */}
+                        <p className="mt-4 text-gray-700">{job.description}</p>
 
-                        <ApplyButton
-                          alreadyApplied={appliedJobsCollection?.some(
-                            (a) =>
-                              a.jobId === job._id &&
-                              a.candidateEmail === currentUser?.email
-                          )}
-                          job={job}
-                          // todo
-                          modalId={`apply_modal_${job._id}`}
-                        />
+                        {/* Skills */}
+                        <div className="mt-4">
+                          <h3 className="font-semibold text-teal-700 flex flex-wrap items-center gap-2">
+                            Skills:{" "}
+                            <span className="text-sm flex flex-wrap gap-2 text-gray-700 font-normal">
+                              {" "}
+                              {job.skills.map((skill, index) => (
+                                <span key={index} className="">
+                                  {skill}
+                                </span>
+                              ))}
+                            </span>
+                          </h3>
+                        </div>
+
+                        {/* Footer */}
+                        <div className="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                          <div>
+                            <p className="font-bold text-teal-700">
+                              {job.minSalary +
+                                " - " +
+                                job.maxSalary +
+                                "tk/" +
+                                job.salaryType +
+                                ""}
+                            </p>
+                          </div>
+                          <ApplyButton
+                            job={job}
+                            alreadyApplied={false}
+                            modalId="apply-job-modal"
+                          />
+                          {/* <button className="btn btn-primary bg-teal-600 hover:bg-teal-700 border-none text-white w-full sm:w-auto">
+                            Apply Now
+                          </button> */}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex items-center justify-center min-h-[300px] text-center">
-                  <p className="text-base text-gray-700 font-medium">
-                    😕 No jobs found based on your selected filters.
-                    <br />
-                    Try adjusting your search criteria.
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-center min-h-[300px] text-center">
+                    <p className="text-gray-600 text-base font-medium">
+                      😔 No jobs found with your selected filters. <br />
+                      Try changing your search.
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </main>
       </div>
     </div>

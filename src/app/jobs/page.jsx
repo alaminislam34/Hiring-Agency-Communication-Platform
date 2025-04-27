@@ -16,6 +16,7 @@ const AllJobs = () => {
     appliedJobsCollection,
     currentUser,
   } = useAppContext();
+  console.log(jobs);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -112,11 +113,11 @@ const AllJobs = () => {
                           <strong>🕒 Type:</strong> {job.type}
                         </p>
                         <p className="text-sm text-gray-600 mb-1">
-                          {job.salary.min}k - {job.salary.max}k
+                          {job?.salary?.min}k - {job?.salary?.max}k
                         </p>
                         <p className="text-sm text-gray-600 mb-1">
                           <strong>🗓️ Deadline:</strong>{" "}
-                          {new Date(job.meta.deadline).toLocaleDateString()}
+                          {new Date(job?.meta?.deadline).toLocaleDateString()}
                         </p>
                       </div>
 

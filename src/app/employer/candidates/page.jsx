@@ -1,12 +1,15 @@
 "use client";
 
+import { sendApplicationReviewEmail } from "@/lib/sendApplicationReview";
 import { useAppContext } from "@/Providers/AppProviders";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const Candidates = () => {
   const { currentUser, jobs } = useAppContext();
+  const [isReview, setIsReview] = useState(false);
   const [myCandidates, setCandidates] = useState([]);
   const { data: appliedJobsCollection, isLoading } = useQuery({
     queryKey: ["appliedJobs"],
@@ -42,6 +45,33 @@ const Candidates = () => {
     setCandidates(filteredCandidates);
   }, [appliedJobsCollection, jobs, currentUser]);
 
+  const handleCandidates = async (id, status, email) => {
+    console.log("id, status, email", id, status, email, user);
+    try {
+      // Call sendUpdateEmployerRequest to send the email
+      await sendApplicationReviewEmail(id, email, status);
+
+      // Display success message
+      Swal.fire({
+        icon: "success",
+        title: "Status Updated Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+        width: "300px",
+      });
+      setIsReview(true);
+    } catch (error) {
+      // Handle any error that occurs while sending the email
+      console.error("Error sending email:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Failed to Send Email",
+        text: "There was an error while sending the update email. Please try again later.",
+        showConfirmButton: true,
+      });
+    }
+  };
+
   return (
     <div className="p-6">
       {isLoading ? (
@@ -62,8 +92,7 @@ const Candidates = () => {
                   <th>Email</th>
                   <th>Job Title</th>
                   <th>Job Type</th>
-                  <th>Expected Salary</th>
-                  <th>Applied Date</th>
+                  <th>Deadline</th>
                   <th>Resume</th>
                   <th className="text-center">Action</th>
                 </tr>
@@ -79,8 +108,7 @@ const Candidates = () => {
                     <td>{user.candidateEmail}</td>
                     <td>{user.title}</td>
                     <td>{user.jobType}</td>
-                    <td>{user.expectedSalary || "N/A"}</td>
-                    <td>{new Date(user.appliedDate).toLocaleDateString()}</td>
+                    <td>{new Date(user.deadline).toLocaleDateString()}</td>
                     <td>
                       <a
                         href={user.resume}
@@ -97,6 +125,14 @@ const Candidates = () => {
                           Contact
                         </button>
                         <select
+                          disabled={isReview}
+                          onChange={(e) =>
+                            handleCandidates(
+                              user._id,
+                              e.target.value,
+                              user.candidateEmail
+                            )
+                          }
                           defaultValue=""
                           className="border border-teal-500 select select-xs"
                         >

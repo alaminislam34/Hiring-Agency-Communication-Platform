@@ -6,6 +6,7 @@ import { ThreeDots } from "react-loader-spinner";
 import Swal from "sweetalert2";
 
 export default function ApplyButton({ job, modalId, alreadyApplied }) {
+  console.log("job data in apply button", job);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     candidateName: "",
@@ -30,10 +31,11 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       jobId: job._id,
       title: job.title,
       jobType: job.type,
-      deadline: job.meta.deadline,
+      deadline: job?.meta?.deadline,
       salary: job.salary,
       category: job.details.category,
       company: job.company,
+      postedById: job.meta.postedById,
       status: "Applied",
     };
 

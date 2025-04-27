@@ -1,6 +1,7 @@
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "https://jobhive-server.onrender.com";
+// const SOCKET_URL = "https://jobhive-server-1.onrender.com";
+const SOCKET_URL = "http://localhost:3002";
 
 // Export a single socket instance to be shared across your app
 export const socket = io(SOCKET_URL, {

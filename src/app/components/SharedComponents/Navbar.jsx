@@ -1,15 +1,13 @@
 "use client";
 
 // Job Seeker NavLinks
-
 import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
 import { useAppContext } from "@/Providers/AppProviders";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RiMenu2Fill } from "react-icons/ri";
-import { GrClose } from "react-icons/gr";
 import { useSession } from "next-auth/react";
 import { BriefcaseBusiness } from "lucide-react";
 import { UserCog } from "lucide-react";
@@ -22,6 +20,7 @@ import { Settings } from "lucide-react";
 import useValidateSession from "@/lib/unValidateSession";
 import { CirclePlus } from "lucide-react";
 import { UserCheck } from "lucide-react";
+import { X } from "lucide-react";
 
 const jobSeekerNavLink = [
   {
@@ -222,135 +221,75 @@ const Navbar = () => {
   const { currentUser, notificationCount } = useAppContext();
   useValidateSession();
 
+  const Dropdown = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (Dropdown.current && !Dropdown.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []); // <-- only empty array
+
   return (
     <div className="bg-base-100 relative">
       <div className="w-full bg-white shadow">
         <nav className="navbar w-full md:w-11/12 mx-auto flex justify-center items-center">
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">
-            {/* Mobile Dropdown Button */}
-            <div className="lg:hidden mr-2">
-              <button
-                onClick={() => setIsOpen(true)}
-                className="btn btn-sm bg-teal-500 hover:bg-teal-600 text-white"
-              >
-                <RiMenu2Fill className="text-xl text-white" />
-              </button>
-            </div>
             <div
-              className={`lg:hidden absolute top-0 duration-500 z-40 ${
-                isOpen
-                  ? "left-0 scale-100 opacity-100"
-                  : "-left-52 pointer-events-none opacity-0"
-              } w-screen h-screen md:w-1/2 bg-teal-600 p-4`}
+              className={`lg:hidden fixed top-0 left-0 z-50 w-3/4 md:w-1/2 h-screen bg-white shadow-lg transform duration-500 ease-in-out ${
+                isOpen ? "translate-x-0" : "-translate-x-full"
+              }`}
             >
-              <ul className="flex flex-col justify-start">
-                <li>
-                  <button onClick={() => setIsOpen(false)}>
-                    <GrClose />
-                  </button>
-                </li>
-                <li>
-                  <img
-                    src="/jobhive.png"
-                    alt="logo"
-                    className="w-32  py-2 my-2"
-                  />
-                </li>
+              <div className="flex flex-col gap-4 h-full">
+                {/* Logo */}
+                <div className="p-4">
+                  <img src="/jobhive.jpg" alt="logo" className="h-12" />
+                </div>
 
-                {currentUser?.role === "jobSeeker"
-                  ? jobSeekerNavLink.map(({ href, name, icon }) => (
-                      <li
-                        key={href}
-                        className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
-                          pathname === href ? "bg-white text-teal-800" : ""
+                {/* Navigation Links */}
+                <ul className="flex flex-col">
+                  {(currentUser?.role === "jobSeeker"
+                    ? jobSeekerNavLink
+                    : currentUser?.role === "employer"
+                    ? employerNavLinks
+                    : currentUser?.role === "admin"
+                    ? adminNavLinks
+                    : NavLinks
+                  ).map(({ href, name, icon }) => (
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        className={`flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-teal-100 transition ${
+                          pathname === href
+                            ? "bg-teal-50 text-teal-700 font-semibold"
+                            : "text-gray-700"
                         }`}
                       >
-                        <Link href={href} className="flex items-center gap-2">
-                          <span
-                            className={`p-1 ${
-                              pathname === href
-                                ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
-                                : ""
-                            } `}
-                          >
-                            {" "}
-                            {icon}
-                          </span>
-                          {name}
-                        </Link>
-                      </li>
-                    ))
-                  : currentUser?.role === "employer"
-                  ? employerNavLinks.map(({ href, name, icon }) => (
-                      <li
-                        key={href}
-                        className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
-                          pathname === href ? "bg-white text-teal-800" : ""
-                        }`}
-                      >
-                        <Link href={href} className="flex items-center gap-2">
-                          <span
-                            className={`p-1 ${
-                              pathname === href
-                                ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
-                                : ""
-                            } `}
-                          >
-                            {" "}
-                            {icon}
-                          </span>
-                          {name}
-                        </Link>
-                      </li>
-                    ))
-                  : currentUser?.role === "admin"
-                  ? adminNavLinks.map(({ href, name, icon }) => (
-                      <li
-                        key={href}
-                        className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
-                          pathname === href ? "bg-white text-teal-800" : ""
-                        }`}
-                      >
-                        <Link href={href} className="">
-                          <span
-                            className={`p-1 ${
-                              pathname === href
-                                ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
-                                : ""
-                            } `}
-                          >
-                            {" "}
-                            {icon}
-                          </span>
-                          {name}
-                        </Link>
-                      </li>
-                    ))
-                  : NavLinks.map(({ href, name, icon }) => (
-                      <li
-                        key={href}
-                        className={`relative after:content-[''] rounded-lg py-2 px-4 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all after:duration-300 hover:after:w-full ${
-                          pathname === href ? "bg-white text-teal-800" : ""
-                        }`}
-                      >
-                        <Link href={href} className="flex items-center gap-2">
-                          <span
-                            className={`p-1 ${
-                              pathname === href
-                                ? "border border-transparent rounded-full bg-gradient-to-br from-teal-500 to-teal-400 text-white"
-                                : ""
-                            } `}
-                          >
-                            {" "}
-                            {icon}
-                          </span>
-                          {name}
-                        </Link>
-                      </li>
-                    ))}
-              </ul>
+                        <span
+                          className={`text-xl ${
+                            pathname === href
+                              ? "bg-teal-500 text-white p-2 rounded-full"
+                              : "p-2"
+                          }`}
+                        >
+                          {icon}
+                        </span>
+                        <span className="text-base">{name}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
+
             {/* Logo */}
             <Link href="/" className="text-xl font-bold flex items-center">
               <img
@@ -368,61 +307,26 @@ const Navbar = () => {
 
           {/* Navbar Center (Desktop Menu) */}
           <div className="navbar-center hidden lg:flex">
-            <ul className="flex flex-row gap-6 text-md">
-              {currentUser?.role === "jobSeeker"
-                ? jobSeekerNavLink.map(({ href, name, icon }) => (
-                    <li key={href} className="relative">
-                      <Link
-                        href={href}
-                        className={`relative flex items-center gap-2 px-4 py-2 text-sm md:text-base font-medium rounded-full transition-all duration-300 ${
-                          pathname === href ? "text-teal-600" : "text-gray-700 "
-                        }`}
-                      >
-                        {icon} {name}
-                      </Link>
-                    </li>
-                  ))
+            <ul className="flex flex-row gap-4 text-md">
+              {(currentUser?.role === "jobSeeker"
+                ? jobSeekerNavLink
                 : currentUser?.role === "employer"
-                ? employerNavLinks.map(({ href, name }) => (
-                    <li
-                      key={href}
-                      className={`hover:text-teal-600 ${
-                        pathname === href ? "text-teal-600" : ""
-                      } py-1 px-2`}
-                    >
-                      <Link href={href} className="">
-                        {name}
-                      </Link>
-                    </li>
-                  ))
+                ? employerNavLinks
                 : currentUser?.role === "admin"
-                ? adminNavLinks.map(({ href, name }) => (
-                    <li
-                      key={href}
-                      className={`hover:text-teal-600 border-b-2 cursor-pointer hover:border-b-teal-500 duration-300 transition-all ease-in-out font-medium ${
-                        pathname === href
-                          ? "text-teal-600 border-b-[2px] border-teal-500"
-                          : "border-b-transparent"
-                      } py-1`}
-                    >
-                      <Link href={href} className="">
-                        {name}
-                      </Link>
-                    </li>
-                  ))
-                : NavLinks.map(({ href, name, icon }) => (
-                    <li
-                      key={href}
-                      className={`hover:text-teal-600 ${
-                        pathname === href ? "text-teal-600" : ""
-                      } py-1 px-2`}
-                    >
-                      <Link href={href} className="flex items-center gap-2">
-                        {icon}
-                        {name}
-                      </Link>
-                    </li>
-                  ))}
+                ? adminNavLinks
+                : NavLinks
+              ).map(({ href, name, icon }) => (
+                <li key={href} className="relative">
+                  <Link
+                    href={href}
+                    className={`relative flex items-center gap-2 px-4 py-2 text-sm md:text-base font-medium rounded-full transition-all duration-300 ${
+                      pathname === href ? "text-teal-600" : "text-gray-700 "
+                    }`}
+                  >
+                    {icon} {name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -452,7 +356,7 @@ const Navbar = () => {
             </div>
             {/* <LogoutButton /> */}
             {currentUser && session?.data?.user ? (
-              <div className="flex items-center gap-2 relative">
+              <div ref={Dropdown} className="flex items-center gap-2 relative">
                 <img
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   src={currentUser?.image || "/fakeUser.jpg"}
@@ -461,13 +365,13 @@ const Navbar = () => {
                   alt="User Profile"
                 />
                 <div
-                  className={`absolute top-[65px] right-0 z-50 overflow-hidden bg-white border border-gray-300 shadow-lg rounded-xl w-64 duration-300 transition-all ${
+                  className={`absolute top-[62px] right-0 z-50 overflow-hidden bg-white border border-gray-300 shadow-lg rounded-xl w-64 duration-300 transition-all ${
                     isDropdownOpen
                       ? "opacity-100 scale-100"
                       : "opacity-0 scale-50 pointer-events-none"
                   }`}
                 >
-                  <ul className=" text-gray-700">
+                  <ul className="text-gray-700">
                     <li className="p-4">
                       <p className="font-semibold">{currentUser?.name}</p>
                       <p className="text-sm text-gray-500">
@@ -486,7 +390,7 @@ const Navbar = () => {
                     ).map(({ name, href, icon }) => (
                       <li
                         key={name}
-                        className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-3 py-2 duration-300 transition-all cursor-pointer "
+                        className="hover:bg-[#cbfeff] text-[#105269]/80 hover:text-[#033649] px-4 py-2 duration-300 transition-all cursor-pointer "
                       >
                         <Link href={href} className="flex items-center gap-2">
                           {icon} {name}
@@ -506,6 +410,15 @@ const Navbar = () => {
                 <LoginButton />
               </>
             )}
+          </div>
+          {/* Mobile Dropdown Button */}
+          <div className="lg:hidden ml-2">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="btn bg-teal-500 hover:bg-teal-600 text-white"
+            >
+              {isOpen ? <X /> : <RiMenu2Fill className="text-xl text-white" />}
+            </button>
           </div>
         </nav>
       </div>

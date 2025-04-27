@@ -68,3 +68,11 @@ body {
   transition: background-color 0.2s ease-out;
   font-size: 16px;
 }
+
+/* globals.css */
+.form-label {
+  @apply block text-gray-700 font-medium mb-2;
+}
+.form-input {
+  @apply w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400;
+}

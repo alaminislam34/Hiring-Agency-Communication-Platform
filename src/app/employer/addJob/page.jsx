@@ -1,342 +1,401 @@
 "use client";
-import { useAppContext } from "@/Providers/AppProviders";
-import axios from "axios";
-import { useState } from "react";
-import { ToastContainer } from "react-toastify";
-import { toast } from "react-toastify";
-import Swal from "sweetalert2";
 
-const MultiStepJobForm = () => {
+import { useState } from "react";
+// import axios from "axios";
+import Swal from "sweetalert2";
+import { useAppContext } from "@/Providers/AppProviders";
+
+const categories = [
+  "IT and Developer",
+  "Designer",
+  "Marketing",
+  "Business",
+  "Mobile and Web Dev",
+  "Finance",
+  "Sales",
+  "Customer Support",
+  "Human Resources (HR)",
+  "Data Science",
+  "Content Writing",
+  "Video Editing",
+  "Project Management",
+  "Engineering",
+];
+
+const languagesList = [
+  "Bangla",
+  "English (Basic)",
+  "English (Fluent)",
+  "Japanese",
+  "Chinese",
+  "Hindi",
+  "Spanish",
+  "Arabic",
+  "French",
+  "German",
+];
+
+const JobPostForm = () => {
   const { currentUser } = useAppContext();
-  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     title: "",
-    company: "",
-    type: "",
-    location: "",
+    description: "",
     category: "",
+    skills: [],
+    requirements: [],
+    benefits: [],
+    type: "",
+    employmentStatus: "",
     minSalary: "",
     maxSalary: "",
-    deadline: "",
+    salaryType: "Monthly",
+    location: "",
     experience: "",
-    education: "",
-    skills: "",
-    responsibilities: "",
-    requirements: "",
-    benefits: "",
-    description: "",
+    educationLevel: "",
+    industry: "",
+    languages: [],
+    country: "",
+    state: "",
+    city: "",
+    gender: "",
+    vacancy: 1,
+    attachment: "",
+    meta: {
+      postedBy: currentUser?.email,
+      postedById: currentUser?._id,
+      postedByName: currentUser?.name,
+      postedByImage: currentUser?.image,
+      createdAt: new Date().toISOString(),
+      appliedCount: 0,
+    },
   });
-  const stepFields = {
-    1: ["title", "company", "location", "category", "type"],
-    2: [
-      "minSalary",
-      "maxSalary",
-      "deadline",
-      "experience",
-      "education",
-      "skills",
-    ],
-    3: ["responsibilities", "requirements", "benefits", "description"],
-  };
 
-  const isStepValid = (stepNo) =>
-    stepFields[stepNo].every(
-      (field) => formData[field]?.toString().trim().length > 0
-    );
+  const [imageLoading, setImageLoading] = useState(false);
 
-  const handleNext = () => {
-    if (!isStepValid(step)) {
-      toast.error("⚠️  এই স্টেপের সব ঘর পূরণ করুন!");
-      return;
+  const handleChange = (field, value) => {
+    if (field.includes(".")) {
+      const [parent, child] = field.split(".");
+      setFormData((prev) => ({
+        ...prev,
+        [parent]: { ...prev[parent], [child]: value },
+      }));
+    } else {
+      setFormData((prev) => ({ ...prev, [field]: value }));
     }
-    setStep((prev) => prev + 1);
   };
 
-  const handleChange = async (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  // const handleImageUpload = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file)
+  //     return Swal.fire("Warning", "Please select an image.", "warning");
 
-  const handleBack = () => setStep((prev) => prev - 1);
+  //   const imageData = new FormData();
+  //   imageData.append("image", file);
+  //   setImageLoading(true);
 
-  const initialFormState = {
-    title: "",
-    company: "",
-    type: "",
-    location: "",
-    category: "",
-    minSalary: "",
-    maxSalary: "",
-    deadline: "",
-    experience: "",
-    education: "",
-    skills: "",
-    responsibilities: "",
-    requirements: "",
-    benefits: "",
-    description: "",
-  };
+  //   try {
+  //     const res = await axios.post(
+  //       `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMG_API_KEY}`,
+  //       imageData
+  //     );
+  //     if (res.status === 200) {
+  //       handleChange("attachment", res.data.data.display_url);
+  //     }
+  //   } catch (err) {
+  //     console.error("Image upload failed:", err);
+  //     Swal.fire("Error", "Image upload failed!", "error");
+  //   } finally {
+  //     setImageLoading(false);
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!isStepValid(3)) {
-      toast.error("⚠️  শেষ স্টেপের সব ঘর পূরণ করুন!");
-      return;
-    }
-
-    const formattedData = {
-      title: formData.title,
-      company: formData.company,
-      type: formData.type,
-      location: formData.location,
-      salary: {
-        min: parseInt(formData.minSalary, 10),
-        max: parseInt(formData.maxSalary, 10),
-      },
-      qualifications: {
-        experience: formData.experience,
-        education: formData.education,
-        skills: formData.skills.split(",").map((s) => s.trim()),
-      },
-      details: {
-        category: formData.category,
-        responsibilities: formData.responsibilities
-          .split("\n")
-          .map((r) => r.trim()),
-        requirements: formData.requirements.split("\n").map((r) => r.trim()),
-        benefits: formData.benefits.split("\n").map((b) => b.trim()),
-        description: formData.description,
-      },
-      meta: {
-        deadline: new Date(formData.deadline).toISOString(),
-        createdAt: new Date().toISOString(),
-        postedBy: currentUser?.email,
-        postedById: currentUser?._id,
-        status: "open",
-      },
-    };
-
-    try {
-      const res = await axios.post("/api/postJob", formattedData);
-
-      if (res.status === 201) {
-        Swal.fire({
-          title: "Posted",
-          text: "Job Added Successfully",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 2500,
-          width: "300px",
-        });
-        e.target.reset();
-        setFormData(initialFormState);
-        setStep(1);
-      }
-    } catch (err) {
-      console.error("Job post error:", err);
-      toast.error("something went wrong");
-    }
+    console.table(formData);
+    Swal.fire("Success", "Job posted successfully!", "success");
+    e.target.reset();
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white rounded-2xl shadow-lg">
-      <h2 className="text-2xl font-semibold text-center mb-6">Post a Job</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="flex justify-between mb-6">
-          {[1, 2, 3].map((s) => (
-            <div
-              key={s}
-              className={`flex-1 h-2 mx-1 rounded-full ${
-                step >= s ? "bg-teal-500" : "bg-gray-300"
-              }`}
-            ></div>
-          ))}
+    <section className="w-full lg:px-6 py-4 md:py-6 my-4 md:my-6">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-8 bg-white shadow-2xl rounded-3xl p-4 lg:p-6 border border-gray-200"
+      >
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-teal-600">
+          Post a New Job
+        </h2>
+
+        {/* Job Title */}
+        <div>
+          <label className="form-label">Job Title</label>
+          <input
+            type="text"
+            placeholder="e.g., Frontend Developer"
+            value={formData.title}
+            onChange={(e) => handleChange("title", e.target.value)}
+            className="form-input"
+            required
+          />
         </div>
 
-        {/* Step 1 */}
-        {step === 1 && (
-          <div className="space-y-4">
-            <input
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              placeholder="Job Title"
-              className="w-full border px-4 py-2 rounded"
-              required
-            />
-            <input
-              name="company"
-              value={formData.company}
-              onChange={handleChange}
-              placeholder="Company Name"
-              className="w-full border px-4 py-2 rounded"
-              required
-            />
-
-            <input
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              placeholder="Job Location (e.g. Remote)"
-              className="w-full border px-4 py-2 rounded"
-              required
-            />
-            <input
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              placeholder="Job Category (e.g. Web Development)"
-              className="w-full border px-4 py-2 rounded"
-              required
-            />
+        {/* Category and Type */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="form-label">Category</label>
             <select
-              name="type"
-              onChange={handleChange}
-              defaultValue={""}
-              className="w-full border px-4 py-2 rounded"
+              value={formData.category}
+              onChange={(e) => handleChange("category", e.target.value)}
+              className="form-input"
+              required
             >
-              <option value={formData.type} disabled>
-                --Select Job type--
-              </option>
-              <option value="Full Time">Full Time</option>
-              <option value="Part Time">Part Time</option>
-              <option value="Remote">Remote</option>
-              <option value="Internship">Internship</option>
-              <option value="Hybrid">Hybrid</option>
+              <option value="">Select Category</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
             </select>
           </div>
-        )}
 
-        {/* Step 2 */}
-        {step === 2 && (
-          <div className="space-y-4">
+          <div>
+            <label className="form-label">Job Type</label>
+            <select
+              value={formData.type}
+              onChange={(e) => handleChange("type", e.target.value)}
+              className="form-input"
+              required
+            >
+              <option value="">Select Type</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Remote">Remote</option>
+              <option value="Freelance">Freelance</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Skills */}
+        <div>
+          <label className="form-label">Skills (comma separated)</label>
+          <input
+            type="text"
+            placeholder="e.g., React, Tailwind, Node.js"
+            value={formData.skills.join(", ")}
+            onChange={(e) =>
+              handleChange(
+                "skills",
+                e.target.value.split(",").map((s) => s.trim())
+              )
+            }
+            className="form-input"
+            required
+          />
+        </div>
+        <div>
+          <label className="form-label">Job Description</label>
+          <textarea
+            placeholder="Enter job description"
+            value={formData.description}
+            onChange={(e) => handleChange("description", e.target.value)}
+            className="form-input"
+            required
+          />
+        </div>
+        {/* job requirements */}
+        <div>
+          <label htmlFor="" className="form-label">
+            {" "}
+            Job Requirements
+          </label>
+          <textarea
+            placeholder="Enter job requirements"
+            value={formData.requirements}
+            onChange={(e) => handleChange("requirements", e.target.value)}
+            className="form-input"
+            required
+          />
+        </div>
+
+        {/* job benefits */}
+        <div>
+          <label htmlFor="benefits" className="form-label">
+            Job Benefits
+          </label>
+          <input
+            type="text"
+            name="benefits"
+            className="form-input"
+            placeholder="Enter job benefits"
+            required
+            onChange={(e) => handleChange("benefits", e.target.value)}
+          />
+        </div>
+        {/* Salary Range */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="form-label">Minimum Salary</label>
             <input
-              name="minSalary"
+              type="number"
+              placeholder="e.g., 30000"
               value={formData.minSalary}
-              onChange={handleChange}
-              placeholder="Minimum Salary"
-              className="w-full border px-4 py-2 rounded"
+              onChange={(e) => handleChange("minSalary", e.target.value)}
+              className="form-input"
               required
             />
+          </div>
+          <div>
+            <label className="form-label">Maximum Salary</label>
             <input
-              name="maxSalary"
+              type="number"
+              placeholder="e.g., 70000"
               value={formData.maxSalary}
-              onChange={handleChange}
-              placeholder="Maximum Salary"
-              className="w-full border px-4 py-2 rounded"
+              onChange={(e) => handleChange("maxSalary", e.target.value)}
+              className="form-input"
               required
             />
-            <input
-              name="deadline"
-              type="date"
-              value={formData.deadline}
-              onChange={handleChange}
-              className="w-full border px-4 py-2 rounded"
-              required
-            />
-            <input
-              name="experience"
+          </div>
+        </div>
+
+        {/* Location */}
+        <div>
+          <label className="form-label">Location</label>
+          <input
+            type="text"
+            placeholder="e.g., Dhaka, Bangladesh"
+            value={formData.location}
+            onChange={(e) => handleChange("location", e.target.value)}
+            className="form-input"
+            required
+          />
+        </div>
+
+        {/* Experience and Industry */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="form-label">Experience</label>
+            <select
               value={formData.experience}
-              onChange={handleChange}
-              placeholder="Experience (e.g. 2+ years)"
-              className="w-full border px-4 py-2 rounded"
+              onChange={(e) => handleChange("experience", e.target.value)}
+              className="form-input"
               required
-            />
+            >
+              <option value="">Select Experience</option>
+              {[...Array(11)].map((_, i) => (
+                <option key={i} value={`${i} years`}>
+                  {i === 0 ? "Fresher" : `${i} year${i > 1 ? "s" : ""}`}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="form-label">Industry</label>
             <input
-              name="education"
-              value={formData.education}
-              onChange={handleChange}
-              placeholder="Education (e.g. Bachelor in CSE)"
-              className="w-full border px-4 py-2 rounded"
-              required
-            />
-            <input
-              name="skills"
-              value={formData.skills}
-              onChange={handleChange}
-              placeholder="Skills (comma separated)"
-              className="w-full border px-4 py-2 rounded"
+              type="text"
+              placeholder="e.g., Information Technology"
+              value={formData.industry}
+              onChange={(e) => handleChange("industry", e.target.value)}
+              className="form-input"
               required
             />
           </div>
-        )}
+        </div>
 
-        {/* Step 3 */}
-        {step === 3 && (
-          <div className="space-y-4">
-            <textarea
-              name="responsibilities"
-              value={formData.responsibilities}
-              onChange={handleChange}
-              placeholder="Responsibilities (one per line)"
-              className="w-full border px-4 py-2 rounded"
+        {/* Languages */}
+        <div>
+          <label className="form-label mb-2">Languages</label>
+          <div className="flex flex-wrap gap-4">
+            {languagesList.map((lang) => (
+              <label
+                key={lang}
+                className="flex items-center text-xs gap-2 text-gray-600"
+              >
+                <input
+                  type="checkbox"
+                  value={lang}
+                  checked={formData.languages.includes(lang)}
+                  onChange={(e) => {
+                    const updated = e.target.checked
+                      ? [...formData.languages, lang]
+                      : formData.languages.filter((l) => l !== lang);
+                    handleChange("languages", updated);
+                  }}
+                  className="accent-teal-500"
+                />
+                {lang}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Address */}
+        <div>
+          <label className="form-label">Address</label>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <input
+              type="text"
+              placeholder="Country"
+              value={formData.country}
+              onChange={(e) => handleChange("country", e.target.value)}
+              className="form-input"
               required
             />
-            <textarea
-              name="requirements"
-              value={formData.requirements}
-              onChange={handleChange}
-              placeholder="Requirements (one per line)"
-              className="w-full border px-4 py-2 rounded"
+            <input
+              type="text"
+              placeholder="State"
+              value={formData.state}
+              onChange={(e) => handleChange("state", e.target.value)}
+              className="form-input"
               required
             />
-            <textarea
-              name="benefits"
-              value={formData.benefits}
-              onChange={handleChange}
-              placeholder="Benefits (one per line)"
-              className="w-full border px-4 py-2 rounded"
-              required
-            />
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Job Description"
-              className="w-full border px-4 py-2 rounded"
+            <input
+              type="text"
+              placeholder="City"
+              value={formData.city}
+              onChange={(e) => handleChange("city", e.target.value)}
+              className="form-input"
               required
             />
           </div>
-        )}
+        </div>
 
-        {/* Buttons */}
-        <div className="mt-6 flex justify-between">
-          {step > 1 && (
-            <button
-              type="button"
-              onClick={handleBack}
-              className="px-4 py-2 bg-gray-300 rounded"
-            >
-              Back
-            </button>
-          )}
-          {step < 3 ? (
-            <button
-              type="button"
-              onClick={handleNext}
-              className="px-4 py-2 bg-teal-500 text-white rounded"
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className="px-4 py-2 bg-green-500 text-white rounded cursor-pointer"
-            >
-              Submit
-            </button>
-          )}
+        {/* Deadline */}
+        <div>
+          <label className="form-label">Application Deadline</label>
+          <input
+            type="date"
+            name="deadline"
+            required
+            className="form-input"
+            onChange={(e) => handleChange("meta.deadline", e.target.value)}
+          />
+        </div>
+
+        {/* Image Upload */}
+        <div>
+          <label className="form-label">Attachment (Optional)</label>
+          <input
+            type="text"
+            placeholder="Share your attachment link"
+            accept="https://*"
+            onChange={(e) => handleChange("attachment", e.target.value)}
+            className="form-input cursor-pointer"
+          />
+        </div>
+
+        {/* Submit Button */}
+        <div className="text-center w-full flex justify-center">
+          <button
+            type="submit"
+            className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-6 cursor-pointer rounded-lg shadow-md transition duration-300"
+          >
+            Post Job
+          </button>
         </div>
       </form>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        theme="colored"
-        hideProgressBar={true}
-      />
-    </div>
+    </section>
   );
 };
 
-export default MultiStepJobForm;
+export default JobPostForm;

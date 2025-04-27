@@ -4,6 +4,7 @@ import { useState } from "react";
 // import axios from "axios";
 import Swal from "sweetalert2";
 import { useAppContext } from "@/Providers/AppProviders";
+import axios from "axios";
 
 const categories = [
   "IT and Developer",
@@ -45,7 +46,6 @@ const JobPostForm = () => {
     requirements: [],
     benefits: [],
     type: "",
-    employmentStatus: "",
     minSalary: "",
     maxSalary: "",
     salaryType: "Monthly",
@@ -83,37 +83,67 @@ const JobPostForm = () => {
       setFormData((prev) => ({ ...prev, [field]: value }));
     }
   };
-
-  // const handleImageUpload = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (!file)
-  //     return Swal.fire("Warning", "Please select an image.", "warning");
-
-  //   const imageData = new FormData();
-  //   imageData.append("image", file);
-  //   setImageLoading(true);
-
-  //   try {
-  //     const res = await axios.post(
-  //       `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMG_API_KEY}`,
-  //       imageData
-  //     );
-  //     if (res.status === 200) {
-  //       handleChange("attachment", res.data.data.display_url);
-  //     }
-  //   } catch (err) {
-  //     console.error("Image upload failed:", err);
-  //     Swal.fire("Error", "Image upload failed!", "error");
-  //   } finally {
-  //     setImageLoading(false);
-  //   }
-  // };
-
+  const initialState = {
+    title: "",
+    description: "",
+    category: "",
+    skills: [],
+    requirements: [],
+    benefits: [],
+    type: "",
+    minSalary: 0,
+    maxSalary: 0,
+    salaryType: "Monthly",
+    location: "",
+    experience: "",
+    educationLevel: "",
+    industry: "",
+    languages: [],
+    country: "",
+    state: "",
+    city: "",
+    gender: "",
+    vacancy: 0,
+    attachment: "",
+    meta: {
+      postedBy: "",
+      postedById: "",
+      postedByName: " ",
+      postedByImage: "",
+      createdAt: new Date().toISOString(),
+      appliedCount: 0,
+    },
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.table(formData);
-    Swal.fire("Success", "Job posted successfully!", "success");
-    e.target.reset();
+    try {
+      const res = await axios.post("/api/postJob", formData);
+      if (res.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Job posted successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+          width: 300,
+          background: "#D5F5F6",
+          animation: true,
+        });
+        e.target.reset();
+        setFormData(initialState);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Job posted failed!",
+          showConfirmButton: false,
+          timer: 1500,
+          width: 300,
+          background: "#D5F5F6",
+          animation: true,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -192,6 +222,7 @@ const JobPostForm = () => {
             required
           />
         </div>
+        {/* Job Description */}
         <div>
           <label className="form-label">Job Description</label>
           <textarea
@@ -231,8 +262,9 @@ const JobPostForm = () => {
             onChange={(e) => handleChange("benefits", e.target.value)}
           />
         </div>
+
         {/* Salary Range */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <label className="form-label">Minimum Salary</label>
             <input
@@ -255,6 +287,29 @@ const JobPostForm = () => {
               required
             />
           </div>
+          {/* Salary Type */}
+          <div>
+            <label htmlFor="salaryType" className="form-label">
+              Salary Type
+            </label>
+            <select
+              id="salaryType"
+              value={formData.salaryType}
+              defaultValue={""}
+              onChange={(e) => handleChange("salaryType", e.target.value)}
+              className="form-input"
+              required
+            >
+              <option value="" disabled>
+                Select Salary Type
+              </option>
+              <option value="Hourly">Hourly</option>
+              <option value="Daily">Daily</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Yearly">Yearly</option>
+            </select>
+          </div>
         </div>
 
         {/* Location */}
@@ -271,7 +326,8 @@ const JobPostForm = () => {
         </div>
 
         {/* Experience and Industry */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Experience */}
           <div>
             <label className="form-label">Experience</label>
             <select
@@ -288,7 +344,7 @@ const JobPostForm = () => {
               ))}
             </select>
           </div>
-
+          {/* Industry */}
           <div>
             <label className="form-label">Industry</label>
             <input
@@ -298,6 +354,18 @@ const JobPostForm = () => {
               onChange={(e) => handleChange("industry", e.target.value)}
               className="form-input"
               required
+            />
+          </div>
+          {/* educationLevel */}
+          <div>
+            <label className="form-label">Education Level</label>
+            <input
+              type="text"
+              placeholder="e.g., Bachelor's Degree"
+              value={formData.educationLevel}
+              required
+              onChange={(e) => handleChange("educationLevel", e.target.value)}
+              className="form-input"
             />
           </div>
         </div>
@@ -360,18 +428,30 @@ const JobPostForm = () => {
           </div>
         </div>
 
-        {/* Deadline */}
-        <div>
-          <label className="form-label">Application Deadline</label>
-          <input
-            type="date"
-            name="deadline"
-            required
-            className="form-input"
-            onChange={(e) => handleChange("meta.deadline", e.target.value)}
-          />
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Deadline */}
+          <div>
+            <label className="form-label">Application Deadline</label>
+            <input
+              type="date"
+              name="deadline"
+              required
+              className="form-input"
+              onChange={(e) => handleChange("meta.deadline", e.target.value)}
+            />
+          </div>
 
+          <div>
+            <label className="form-label">Vacancy</label>
+            <input
+              type="number"
+              required
+              className="form-input"
+              onChange={(e) => handleChange("vacancy", e.target.value)}
+              placeholder="Number of Vacancy"
+            />
+          </div>
+        </div>
         {/* Image Upload */}
         <div>
           <label className="form-label">Attachment (Optional)</label>
@@ -385,7 +465,7 @@ const JobPostForm = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="text-center w-full flex justify-center">
+        <div className="text-center w-full flex">
           <button
             type="submit"
             className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-6 cursor-pointer rounded-lg shadow-md transition duration-300"

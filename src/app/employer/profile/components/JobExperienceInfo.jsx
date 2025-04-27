@@ -18,12 +18,11 @@ const JobExperienceInfo = () => {
 
   const [jobExperience, setJobExperience] = useState({
     jobTitle: "",
-    companyName: "",
-    isItRelated: "",
-    years: "",
+    jobType: "",
+    jobDescription: "",
     startDate: "",
     endDate: "",
-    isPresent: false,
+    companyName: "",
   });
 
   const handleChange = (field, value) => {
@@ -59,32 +58,19 @@ const JobExperienceInfo = () => {
           onSubmit={handleJobUpdate}
           className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6"
         >
-          {/* Designation */}
+          {/* Job Title */}
           <label htmlFor="jobTitle" className="flex flex-col gap-2">
             <span className="text-gray-500">Job Title</span>
-            <select
+            <input
               className="border border-teal-500 focus:ring-2 focus:ring-teal-500 focus:outline-teal-500 p-2 rounded-lg"
               value={jobExperience.jobTitle}
-              defaultValue={""}
+              placeholder="Job Title"
+              type="text"
               onChange={(e) => handleChange("jobTitle", e.target.value)}
               required
-            >
-              <option value="" disabled>
-                Select Designation
-              </option>
-              <option value="Frontend Web Developer">
-                Frontend Web Developer
-              </option>
-              <option value="Backend Developer">Backend Developer</option>
-              <option value="Full-stack Web Developer">
-                Full-stack Web Developer
-              </option>
-              <option value="Product Manager">Product Manager</option>
-              <option value="SEO Expert">SEO Expert</option>
-              <option value="Designer">Designer</option>
-              <option value="Content Writer">Content Writer</option>
-            </select>
+            />
           </label>
+
           {/* Company Name */}
           <label htmlFor="companyName" className="flex flex-col gap-2">
             <span className="text-gray-500">Company Name</span>
@@ -97,32 +83,44 @@ const JobExperienceInfo = () => {
               required
             />
           </label>
-          {/* IT Related? */}
-          <label htmlFor="isItRelated" className="flex flex-col gap-2">
-            <span className="text-gray-500">Related to IT?</span>
+
+          {/* Job Type */}
+          <label htmlFor="jobType" className="flex flex-col gap-2">
+            <span className="text-gray-500">Job Type</span>
             <select
               className="border border-teal-500 focus:ring-2 focus:ring-teal-500 focus:outline-teal-500 p-2 rounded-lg"
-              value={jobExperience.isItRelated}
-              onChange={(e) => handleChange("isItRelated", e.target.value)}
+              value={jobExperience.jobType}
+              onChange={(e) => handleChange("jobType", e.target.value)}
               required
             >
-              <option value="">Related to IT?</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value="" disabled>
+                Select Job Type
+              </option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Freelance">Freelance</option>
+              <option value="Internship">Internship</option>
+              <option value="Contract">Contract</option>
+              <option value="On Site">On Site</option>
             </select>
           </label>
 
-          {/* Years of Experience */}
-          <label htmlFor="years" className="flex flex-col gap-2">
-            <span className="text-gray-500">Years of Experience</span>
-            <input
-              type="text"
-              placeholder="Years of Experience"
-              className="border border-teal-500 focus:ring-2 focus:ring-teal-500 focus:outline-teal-500 p-2 rounded-lg"
-              value={jobExperience.years}
-              onChange={(e) => handleChange("years", e.target.value)}
+          {/* Job Description */}
+          <label
+            htmlFor="jobDescription"
+            className="flex flex-col gap-2 md:col-span-2"
+          >
+            <span className="text-gray-500">Job Description</span>
+            <textarea
+              name="jobDescription"
+              placeholder="Enter Job Description"
               required
-            />
+              rows={5}
+              maxLength={500}
+              className="border border-teal-500 focus:ring-2 focus:ring-teal-500 focus:outline-teal-500 p-2 rounded-lg"
+              value={jobExperience.jobDescription}
+              onChange={(e) => handleChange("jobDescription", e.target.value)}
+            ></textarea>
           </label>
 
           {/* Start Date */}
@@ -139,47 +137,13 @@ const JobExperienceInfo = () => {
 
           {/* End Date */}
           <label htmlFor="endDate" className="flex flex-col gap-2">
-            <span className="text-gray-500"> End Date</span>
+            <span className="text-gray-500">End Date</span>
             <input
               type="date"
               className="border border-teal-500 focus:ring-2 focus:ring-teal-500 focus:outline-teal-500 p-2 rounded-lg"
               value={jobExperience.endDate}
               onChange={(e) => handleChange("endDate", e.target.value)}
-              disabled={jobExperience.isPresent}
             />
-          </label>
-
-          {/* Present Checkbox */}
-          <div className="flex items-center space-x-2 col-span-full">
-            <input
-              type="checkbox"
-              checked={jobExperience.isPresent}
-              className="checkbox checkbox-accent"
-              onChange={(e) =>
-                setJobExperience((prev) => ({
-                  ...prev,
-                  isPresent: e.target.checked,
-                  endDate: e.target.checked ? "" : prev.endDate,
-                }))
-              }
-            />
-            <label>Currently Working Here</label>
-          </div>
-
-          {/* Description */}
-          <label
-            htmlFor="description"
-            className="flex flex-col gap-2 md:col-span-2"
-          >
-            <span className="text-gray-500">Job Description</span>
-            <textarea
-              name="jobDescription"
-              placeholder="EnterJob Description"
-              required
-              rows={5}
-              maxLength={500}
-              className="border border-teal-500 focus:ring-2 focus:ring-teal-500 focus:outline-teal-500 p-2 rounded-lg"
-            ></textarea>
           </label>
 
           {/* Submit Button */}
@@ -201,52 +165,38 @@ const JobExperienceInfo = () => {
       ) : (
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-x-6">
           <li className="flex flex-col gap-2">
-            <p className="text-gray-500">Job Title</p>{" "}
+            <p className="text-gray-500">Job Title</p>
             <p className="md:text-lg">
-              {" "}
               {currentUser?.jobTitle || "Not Provided"}
             </p>
           </li>
           <li className="flex flex-col gap-2">
-            <p className="text-gray-500">Company Name</p>{" "}
+            <p className="text-gray-500">Company Name</p>
             <p className="md:text-lg">
-              {" "}
               {currentUser?.companyName || "Not Provided"}
             </p>
           </li>
           <li className="flex flex-col gap-2">
-            <p className="text-gray-500">IT Related</p>{" "}
+            <p className="text-gray-500">Job Type</p>
             <p className="md:text-lg">
-              {" "}
-              {currentUser?.isItRelated || "Not Provided"}
+              {currentUser?.jobType || "Not Provided"}
             </p>
           </li>
           <li className="flex flex-col gap-2">
-            <p className="text-gray-500">Experience</p>{" "}
-            <p className="md:text-lg">
-              {" "}
-              {currentUser?.years || "Not Provided"} years
-            </p>
+            <p className="text-gray-500">Job Description</p>
+            <p>{currentUser?.jobDescription || "Not Provided"}</p>
           </li>
           <li className="flex flex-col gap-2">
-            <p className="text-gray-500">Start Date</p>{" "}
+            <p className="text-gray-500">Start Date</p>
             <p className="md:text-lg">
-              {" "}
               {currentUser?.startDate || "Not Provided"}
             </p>
           </li>
           <li className="flex flex-col gap-2">
-            <p className="text-gray-500">End Date</p>{" "}
+            <p className="text-gray-500">End Date</p>
             <p className="md:text-lg">
-              {" "}
-              {currentUser?.isPresent
-                ? "Present"
-                : currentUser?.endDate || "Not Provided"}
+              {currentUser?.endDate || "Not Provided"}
             </p>
-          </li>
-          <li className="md:col-span-2">
-            <p className="text-gray-500">Job Description</p>
-            <p>{currentUser?.jobDescription || "N/A"}</p>
           </li>
         </ul>
       )}

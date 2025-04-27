@@ -129,6 +129,83 @@ export const AppProvider = ({ children }) => {
     enabled: true, // Always enabled
   });
 
+  // profile completed percentage
+  const calculateProfileCompletion = (userData) => {
+    let requiredFields = [];
+
+    if (userData.role === "jobSeeker") {
+      requiredFields = [
+        // personal
+        "firstName",
+        "lastName",
+        "username",
+        "bio",
+        "email",
+        "image",
+        // additional info
+        "skills",
+        "phone",
+        "presentAddress",
+        "permanentAddress",
+        "country",
+        "city",
+        // experience
+        "jobTitle",
+        "jobType",
+        "jobDescription",
+        "startDate",
+        "endDate",
+        "companyName",
+        // education
+        "educationLevel",
+        "degreeTitle",
+        "institution",
+        "passingYear",
+      ];
+    } else if (userData.role === "employer") {
+      requiredFields = [
+        "firstName",
+        "lastName",
+        "username",
+        "bio",
+        "email",
+        "phone",
+        "image",
+        "educationLevel",
+        "degreeTitle",
+        "institution",
+        "passingYear",
+        "companyName",
+        "companyWebsite",
+        "companyEmail",
+        "companyLogo",
+        "companyPhone",
+        "companySize",
+        "companyLocation",
+        "industry",
+      ];
+    } else {
+      requiredFields = ["firstName", "lastName", "username", "email", "phone"];
+    }
+
+    let filledFields = 0;
+
+    requiredFields.forEach((field) => {
+      if (Array.isArray(userData[field])) {
+        if (userData[field].length > 0) {
+          filledFields += 1;
+        }
+      } else {
+        if (userData[field] && userData[field] !== "") {
+          filledFields += 1;
+        }
+      }
+    });
+
+    const completion = (filledFields / requiredFields.length) * 100;
+    return Math.round(completion);
+  };
+
   // Socket connection with session check
   useEffect(() => {
     if (!session) return;
@@ -222,6 +299,7 @@ export const AppProvider = ({ children }) => {
 
     // isDashboard
     isDashboard,
+    calculateProfileCompletion,
   };
 
   return (

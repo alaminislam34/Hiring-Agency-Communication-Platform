@@ -76,3 +76,16 @@ body {
 .form-input {
   @apply w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400;
 }
+
+.profile-input-class {
+  padding: 0.5rem; /* p-2 */
+  border: 1px solid #14b8a6; /* border-teal-500 */
+  border-radius: 0.5rem; /* rounded-lg */
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.5); /* focus:ring-2 focus:ring-teal-500 */
+  transition: box-shadow 0.3s ease;
+}
+
+.profile-input-class:focus {
+  box-shadow: 0 0 0 2px #14b8a6; /* focus:ring-teal-500 */
+}

@@ -1,9 +1,9 @@
 "use client";
 import { useAppContext } from "@/Providers/AppProviders";
-import { useQuery } from "@tanstack/react-query";
 
 const AppliedJobsPage = () => {
   const { appliedJobsCollection } = useAppContext();
+
   return (
     <div className="px-4 lg:py-6">
       <h2 className="text-3xl font-bold text-gray-800 mb-6">Applied Jobs</h2>
@@ -12,14 +12,11 @@ const AppliedJobsPage = () => {
         <p className="text-gray-500">You haven’t applied for any jobs yet.</p>
       ) : (
         <div className="overflow-x-auto bg-white shadow rounded-lg">
-          <table className="min-w-full  ">
+          <table className="min-w-full">
             <thead className="bg-gray-100">
               <tr>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
                   Job Title
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
-                  Company
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
                   Job Type
@@ -35,14 +32,11 @@ const AppliedJobsPage = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className="">
+            <tbody>
               {appliedJobsCollection?.map((job) => (
                 <tr key={job._id} className="hover:bg-gray-50 *:border-b">
                   <td className="px-6 py-4 text-sm text-gray-800">
                     {job.title}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-800">
-                    {job?.company}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-800">
                     {job.jobType}
@@ -51,11 +45,11 @@ const AppliedJobsPage = () => {
                     {new Date(job.deadline).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-800">
-                    {job.salary.min}k - {job.salary.max}k
+                    {job.minSalary} - {job.maxSalary} {job.salaryType}
                   </td>
                   <td className="px-6 py-4 text-sm">
                     <span className="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs">
-                      {job?.status || "Applied"}
+                      {job.status || "Applied"}
                     </span>
                   </td>
                 </tr>

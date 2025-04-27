@@ -131,6 +131,10 @@ export const AppProvider = ({ children }) => {
 
   // profile completed percentage
   const calculateProfileCompletion = (userData) => {
+    if (!userData || !userData.role) {
+      return 0; // safe default
+    }
+
     let requiredFields = [];
 
     if (userData.role === "jobSeeker") {
@@ -186,6 +190,25 @@ export const AppProvider = ({ children }) => {
         "companyLocation",
         "companyDescription",
       ];
+    } else if (userData.role === "admin") {
+      requiredFields = [
+        "firstName",
+        "lastName",
+        "username",
+        "bio",
+        "email",
+        "phone",
+        "image",
+        // education
+        "educationLevel",
+        "degreeTitle",
+        "institution",
+        "passingYear",
+      ];
+    }
+
+    if (requiredFields.length === 0) {
+      return 0; // safe default
     }
 
     let filledFields = 0;
@@ -203,7 +226,7 @@ export const AppProvider = ({ children }) => {
     });
 
     const completion = (filledFields / requiredFields.length) * 100;
-    return Math.round(completion);
+    return Math.round(completion) || 0; // always return a valid number
   };
 
   // Socket connection with session check

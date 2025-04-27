@@ -153,23 +153,23 @@ const EducationalInfo = () => {
             </div>
           </form>
         ) : (
-          <ul className="space-y-2">
-            <li className="flex flex-row gap-2">
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <li className="flex flex-col gap-2">
               <p className="text-gray-500">Education Level:</p>{" "}
               <p className="md:text-lg">
                 {" "}
                 {currentUser?.educationLevel || "N/A"}
               </p>
             </li>
-            <li className="flex flex-row gap-2">
+            <li className="flex flex-col gap-2">
               <p className="text-gray-500">Degree Title:</p>{" "}
               <p className="md:text-lg"> {currentUser?.degreeTitle || "N/A"}</p>
             </li>
-            <li className="flex flex-row gap-2">
+            <li className="flex flex-col gap-2">
               <p className="text-gray-500">Institution:</p>{" "}
               <p className="md:text-lg"> {currentUser?.institution || "N/A"}</p>
             </li>
-            <li className="flex flex-row gap-2">
+            <li className="flex flex-col gap-2">
               <p className="text-gray-500">Passing Year:</p>{" "}
               {getPassingYearText()}
             </li>

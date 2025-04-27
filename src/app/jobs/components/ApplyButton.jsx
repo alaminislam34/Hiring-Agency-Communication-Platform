@@ -32,10 +32,13 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       title: job.title,
       jobType: job.type,
       deadline: job.meta.deadline,
-      salary: job.salary,
-      category: job.details.category,
-      company: job.company,
+      minSalary: job.minSalary,
+      maxSalary: job.maxSalary,
+      salaryType: job.salaryType,
+      category: job.category,
+      companyName: job.meta.companyName,
       postedById: job.meta.postedById,
+      postedBy: job.meta.postedBy,
       status: "Applied",
     };
 
@@ -80,10 +83,10 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       <button
         onClick={() => modalRef.current?.showModal()}
         disabled={alreadyApplied}
-        className={`text-sm btn px-4 py-2 rounded ${
+        className={`text-sm btn px-4 py-2 rounded  ${
           alreadyApplied
             ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-            : "bg-teal-600 hover:bg-teal-700 text-white"
+            : "hover:bg-teal-600 bg-white text-teal-500 hover:text-white border border-teal-500 hover:-translate-y-1 duration-300 transition ease-in-out hover:scale-105 hover:shadow-teal-300 hover:shadow-lg"
         }`}
       >
         {alreadyApplied ? "Applied" : "Easy Apply"}
@@ -96,42 +99,40 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
         className="modal modal-bottom sm:modal-middle"
       >
         <div className="modal-box bg-white shadow-lg rounded-lg p-6 max-w-xl mx-auto">
-          <h3 className="font-bold text-2xl text-gray-800 mb-4">
+          <h3 className="font-bold text-2xl text-teal-700 text-center mb-4">
             Apply for This Job
           </h3>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
-              <label className="block text-sm text-gray-600">Full Name</label>
+              <label className="form-label">Full Name</label>
               <input
                 type="text"
                 name="candidateName"
                 value={formData.candidateName}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"
+                className="form-input"
               />
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-sm text-gray-600">
-                Email Address
-              </label>
+              <label className="form-label">Email Address</label>
               <input
                 type="email"
                 name="candidateEmail"
                 value={formData.candidateEmail}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"
+                className="form-input"
               />
             </div>
 
             {/* Resume */}
             <div>
-              <label className="block text-sm text-gray-600">
+              <label className="form-label">
                 Resume Link (Google Drive, etc.)
               </label>
               <input
@@ -141,21 +142,19 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
                 onChange={handleChange}
                 required
                 placeholder="https://drive.google.com/..."
-                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"
+                className="form-input"
               />
             </div>
 
             {/* Cover letter */}
             <div>
-              <label className="block text-sm text-gray-600">
-                Cover Letter
-              </label>
+              <label className="form-label">Cover Letter</label>
               <textarea
                 name="coverLetter"
                 value={formData.coverLetter}
                 onChange={handleChange}
                 rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-300"
+                className="form-input"
               ></textarea>
             </div>
 

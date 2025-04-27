@@ -37,7 +37,10 @@ const languagesList = [
 ];
 
 const JobPostForm = () => {
-  const { currentUser } = useAppContext();
+  const { currentUser, calculateProfileCompletion } = useAppContext();
+  const profileCompletion = parseInt(
+    calculateProfileCompletion(currentUser ? currentUser : {})
+  );
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -48,29 +51,27 @@ const JobPostForm = () => {
     type: "",
     minSalary: "",
     maxSalary: "",
-    salaryType: "Monthly",
+    salaryType: "",
     location: "",
     experience: "",
     educationLevel: "",
     industry: "",
     languages: [],
-    country: "",
-    state: "",
-    city: "",
     gender: "",
     vacancy: 1,
     attachment: "",
     meta: {
       postedBy: currentUser?.email,
       postedById: currentUser?._id,
-      postedByName: currentUser?.name,
+      companyName: currentUser?.companyName,
+      postedByName:
+        currentUser?.name ||
+        currentUser?.firstName + " " + currentUser?.lastName,
       postedByImage: currentUser?.image,
       createdAt: new Date().toISOString(),
       appliedCount: 0,
     },
   });
-
-  const [imageLoading, setImageLoading] = useState(false);
 
   const handleChange = (field, value) => {
     if (field.includes(".")) {
@@ -116,33 +117,45 @@ const JobPostForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await axios.post("/api/postJob", formData);
-      if (res.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Job posted successfully!",
-          showConfirmButton: false,
-          timer: 1500,
-          width: 300,
-          background: "#D5F5F6",
-          animation: true,
-        });
-        e.target.reset();
-        setFormData(initialState);
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Job posted failed!",
-          showConfirmButton: false,
-          timer: 1500,
-          width: 300,
-          background: "#D5F5F6",
-          animation: true,
-        });
+    if (profileCompletion >= 80) {
+      try {
+        const res = await axios.post("/api/postJob", formData);
+        if (res.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Job posted successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+            width: 300,
+            background: "#D5F5F6",
+            animation: true,
+          });
+          e.target.reset();
+          setFormData(initialState);
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Job posted failed!",
+            showConfirmButton: false,
+            timer: 1500,
+            width: 300,
+            background: "#D5F5F6",
+            animation: true,
+          });
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "You need to complete your profile first",
+        showConfirmButton: false,
+        timer: 1500,
+        width: 300,
+        background: "#D5F5F6",
+        animation: true,
+      });
     }
   };
 
@@ -253,8 +266,9 @@ const JobPostForm = () => {
           <label htmlFor="benefits" className="form-label">
             Job Benefits
           </label>
-          <input
+          <textarea
             type="text"
+            rows={4}
             name="benefits"
             className="form-input"
             placeholder="Enter job benefits"
@@ -347,14 +361,23 @@ const JobPostForm = () => {
           {/* Industry */}
           <div>
             <label className="form-label">Industry</label>
-            <input
+            <select
               type="text"
               placeholder="e.g., Information Technology"
               value={formData.industry}
               onChange={(e) => handleChange("industry", e.target.value)}
               className="form-input"
               required
-            />
+            >
+              <option value="Software">Software</option>
+              <option value="Finance">Finance</option>
+              <option value="Development">Development</option>
+              <option value="Management">Management</option>
+              <option value="Recruiting">Recruiting</option>
+              <option value="Advertising">Advertising</option>
+              <option value="Health">Health</option>
+              <option value="Education">Education</option>
+            </select>
           </div>
           {/* educationLevel */}
           <div>
@@ -394,37 +417,6 @@ const JobPostForm = () => {
                 {lang}
               </label>
             ))}
-          </div>
-        </div>
-
-        {/* Address */}
-        <div>
-          <label className="form-label">Address</label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <input
-              type="text"
-              placeholder="Country"
-              value={formData.country}
-              onChange={(e) => handleChange("country", e.target.value)}
-              className="form-input"
-              required
-            />
-            <input
-              type="text"
-              placeholder="State"
-              value={formData.state}
-              onChange={(e) => handleChange("state", e.target.value)}
-              className="form-input"
-              required
-            />
-            <input
-              type="text"
-              placeholder="City"
-              value={formData.city}
-              onChange={(e) => handleChange("city", e.target.value)}
-              className="form-input"
-              required
-            />
           </div>
         </div>
 

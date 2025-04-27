@@ -187,7 +187,7 @@ const CompanyDetails = () => {
               value: currentUser?.companyDescription,
             },
           ].map((item, idx) => (
-            <li key={idx} className="flex flex-col gap-2 overflow-hidden">
+            <li key={idx} className="flex flex-col gap-2">
               <p className="text-gray-500">{item.label}</p>
               <p className="md:text-lg">{item.value || "Not Provided"}</p>
             </li>

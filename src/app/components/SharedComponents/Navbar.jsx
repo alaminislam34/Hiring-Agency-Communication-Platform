@@ -82,11 +82,11 @@ const adminNavLinks = [
   },
   {
     name: "Manage Users",
-    href: "/manageUsers",
+    href: "/admin/manageUsers",
   },
   {
     name: "Manage Jobs",
-    href: "/manageJobs",
+    href: "/admin/manageJobs",
   },
 ];
 const employerNavLinks = [

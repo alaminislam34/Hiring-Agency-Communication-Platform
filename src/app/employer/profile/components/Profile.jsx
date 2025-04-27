@@ -16,8 +16,8 @@ import CompanyDetails from "./CompanyDetails";
 
 const EmployerProfile = () => {
   const { currentUser, calculateProfileCompletion } = useAppContext();
-  const profilePercentage = calculateProfileCompletion(
-    (currentUser && currentUser) || {}
+  const profilePercentage = parseInt(
+    calculateProfileCompletion((currentUser && currentUser) || {})
   );
   console.log(profilePercentage); // Output: 100
   // Info tab state (saved in localStorage)

@@ -105,7 +105,10 @@ const AllJobs = () => {
                     } gap-6`}
                   >
                     {jobs.map((job) => (
-                      <div className="p-3 lg:p-4 rounded-lg shadow-md border border-teal-100 bg-white">
+                      <div
+                        key={job._id}
+                        className="p-3 lg:p-4 rounded-lg shadow-md border border-teal-100 bg-white"
+                      >
                         {/* Header */}
                         <div className="flex justify-between items-start">
                           <div>

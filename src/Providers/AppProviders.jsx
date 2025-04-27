@@ -171,10 +171,12 @@ export const AppProvider = ({ children }) => {
         "email",
         "phone",
         "image",
+        // education
         "educationLevel",
         "degreeTitle",
         "institution",
         "passingYear",
+        // company details
         "companyName",
         "companyWebsite",
         "companyEmail",
@@ -182,10 +184,8 @@ export const AppProvider = ({ children }) => {
         "companyPhone",
         "companySize",
         "companyLocation",
-        "industry",
+        "companyDescription",
       ];
-    } else {
-      requiredFields = ["firstName", "lastName", "username", "email", "phone"];
     }
 
     let filledFields = 0;

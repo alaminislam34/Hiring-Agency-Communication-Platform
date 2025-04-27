@@ -255,10 +255,7 @@ const ProfileInfo = () => {
               <span className="text-sm text-gray-400">Email</span>
               <p>{currentUser?.email}</p>
             </div>
-            <div>
-              <span className="text-sm text-gray-400">Phone</span>
-              <p>{currentUser?.phone || "No phone"}</p>
-            </div>
+
             <div>
               <span className="text-sm text-gray-400">Location</span>
               <p className="flex items-center">

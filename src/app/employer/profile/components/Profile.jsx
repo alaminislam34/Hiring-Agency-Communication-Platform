@@ -11,6 +11,8 @@ import JobExperienceInfo from "./JobExperienceInfo";
 import ProfileInfo from "./ProfileInfo";
 import { LucideVerified } from "lucide-react";
 import { ToastContainer } from "react-toastify";
+import { Building2 } from "lucide-react";
+import CompanyDetails from "./CompanyDetails";
 
 const EmployerProfile = () => {
   const { currentUser, calculateProfileCompletion } = useAppContext();
@@ -31,8 +33,12 @@ const EmployerProfile = () => {
     { name: "Profile Info", icon: <TbFileInfo /> },
     { name: "Additional Info", icon: <TbFileInfo /> },
     { name: "Education Info", icon: <FaBookReader /> },
-    { name: "Important Links", icon: <FaLink /> },
-    { name: "Job Experience", icon: <FaGraduationCap /> },
+    ...(currentUser?.role === "jobSeeker"
+      ? [{ name: "Job Experience", icon: <FaGraduationCap /> }]
+      : []),
+    ...(currentUser?.role === "employer"
+      ? [{ name: "Company Details", icon: <Building2 /> }]
+      : []),
   ];
 
   return (
@@ -107,7 +113,10 @@ const EmployerProfile = () => {
           {infoBtn === "Address Info" && <AddressInfo />}
           {infoBtn === "Education Info" && <EducationalInfo />}
           {infoBtn === "Important Links" && <ImportantLinksInfo />}
-          {infoBtn === "Job Experience" && <JobExperienceInfo />}
+          {currentUser?.role === "jobSeeker" &&
+            infoBtn === "Job Experience" && <JobExperienceInfo />}
+          {currentUser?.role === "employer" &&
+            infoBtn === "Company Details" && <CompanyDetails />}
         </div>
       </div>
       <ToastContainer position="bottom-center" />

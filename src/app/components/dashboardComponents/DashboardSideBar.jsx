@@ -25,9 +25,9 @@ const DashboardSideBar = ({ isOpen, setIsOpen }) => {
           <ChevronLeft onClick={() => setIsOpen(!isOpen)} />
         </button>
       </div>
-      <div className="overflow-y-auto flex h-full flex-col justify-between transition-all duration-300 ease-in-out">
+      <div className="overflow-y-auto overflow-x-hidden flex h-full flex-col justify-between transition-all duration-300 ease-in-out">
         <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-center py-2">
+          <div className="py-2 flex justify-center items-center">
             <Link href={"/"}>
               <img
                 src={isOpen ? "/jobhive.jpg" : "/jobhive2.jpg"}
@@ -40,19 +40,24 @@ const DashboardSideBar = ({ isOpen, setIsOpen }) => {
             <img
               src={currentUser?.image}
               alt="user"
-              className="w-12 h-12 rounded-full border"
+              className="w-12 h-12 rounded-full border object-cover bg-cover bg-center"
             />
             {isOpen && (
               <p className="text-sm font-medium py-2 text-gray-500">
-                {currentUser?.name}
+                {currentUser?.name ||
+                  currentUser?.firstName + " " + currentUser?.lastName}
               </p>
             )}
           </div>
           {/* Top Part */}
-          <div className="overflow-y-auto">
+          <div
+            className={`${
+              isOpen ? "justify-start" : " justify-center "
+            } w-full flex items-center`}
+          >
             {/* Navigation */}
-            <nav className="mt-6">
-              <ul className="">
+            <nav className="mt-6 w-full">
+              <ul className="w-full">
                 {(currentUser?.role === "jobSeeker"
                   ? jobSeekerSideBarLinks
                   : currentUser?.role === "employer"
@@ -63,13 +68,16 @@ const DashboardSideBar = ({ isOpen, setIsOpen }) => {
                 ).map(({ name, href, icon }, i) => {
                   const isActive = pathname === href;
                   return (
-                    <li key={i}>
-                      <Link href={href}>
+                    <li key={i} className="w-full">
+                      <Link href={href} className="w-full">
                         <div
                           className={clsx(
-                            "flex  gap-3 ml-4 pl-2 rounded-l-lg  py-3 transition-all duration-200",
+                            "flex gap-3 rounded-l-lg w-full py-3 transition-all duration-200",
+                            isOpen
+                              ? "pl-4"
+                              : "flex items-center  justify-center",
                             isActive
-                              ? "bg-white text-teal-700 font-semibold"
+                              ? "bg-white text-teal-700 font-semibold shadow-2xl border border-gray-300"
                               : "text-gray-600 hover:bg-teal-50 hover:text-teal-700"
                           )}
                         >

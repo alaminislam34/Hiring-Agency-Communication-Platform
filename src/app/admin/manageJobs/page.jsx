@@ -31,10 +31,25 @@ const ManageJobs = () => {
   const deleteJob = useMutation({
     mutationFn: (id) => axios.delete(`/api/jobDelete/${id}`),
     onSuccess: () => {
-      Swal.fire("Deleted!", "Job removed successfully", "success");
+      Swal.fire({
+        icon: "success",
+        text: "Job removed successfully",
+        timer: 1500,
+        showConfirmButton: false,
+        background: "#D5F5F6",
+        width: 300,
+      });
       refetchJobs();
     },
-    onError: () => Swal.fire("Error", "Couldn’t delete job", "error"),
+    onError: () =>
+      Swal.fire({
+        icon: "error",
+        text: "Couldn’t delete job",
+        timer: 1500,
+        showConfirmButton: false,
+        background: "#D5F5F6",
+        width: 300,
+      }),
   });
 
   // Update Status
@@ -51,7 +66,15 @@ const ManageJobs = () => {
       });
       refetchJobs();
     },
-    onError: () => Swal.fire("Error", "Couldn’t update job status", "error"),
+    onError: () =>
+      Swal.fire({
+        icon: "error",
+        text: "Couldn’t update job status",
+        timer: 1500,
+        showConfirmButton: false,
+        background: "#D5F5F6",
+        width: 300,
+      }),
   });
 
   // Handlers
@@ -95,17 +118,17 @@ const ManageJobs = () => {
 
       {/* Table */}
       <div className="overflow-x-auto shadow-md rounded-lg">
-        <table className="min-w-full bg-white">
-          <thead className="bg-teal-500 text-white">
-            <tr>
-              <th className="py-3 px-4 text-left">Title</th>
-              <th className="py-3 px-4 text-left">Company</th>
-              <th className="py-3 px-4 text-left">Salary</th>
-              <th className="py-3 px-4 text-left">Deadline</th>
-              <th className="py-3 px-4 text-left">Type</th>
-              <th className="py-3 px-4 text-left">Category</th>
-              <th className="py-3 px-4 text-left">Status</th>
-              <th className="py-3 px-4 text-center">Actions</th>
+        <table className="table-class">
+          <thead className="table-head-class">
+            <tr className="table-head-row-class">
+              <th className="">Title</th>
+              <th className="">Company</th>
+              <th className="">Salary</th>
+              <th className="">Deadline</th>
+              <th className="">Type</th>
+              <th className="">Category</th>
+              <th className="">Status</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -123,7 +146,7 @@ const ManageJobs = () => {
               </tr>
             ) : (
               jobs.map((job) => (
-                <tr key={job._id} className="border-b hover:bg-gray-100">
+                <tr key={job._id} className="table-row-class">
                   <td className="py-3 px-4">{job.title}</td>
                   <td className="py-3 px-4">{job.industry}</td>
                   <td className="py-3 px-4">
@@ -143,22 +166,22 @@ const ManageJobs = () => {
                     >
                       <Eye className="w-5 h-5" />
                     </button>
-
-                    {/* Accept */}
-                    <button
-                      onClick={() => handleStatus(job, "active")}
-                      className="w-8 h-8 flex items-center justify-center bg-green-100 text-green-600 rounded-full hover:bg-green-200"
-                    >
-                      <CheckCircle className="w-5 h-5" />
-                    </button>
-
-                    {/* Reject */}
-                    <button
-                      onClick={() => handleStatus(job, "deactivated")}
-                      className="w-8 h-8 flex items-center justify-center bg-yellow-100 text-yellow-600 rounded-full hover:bg-yellow-200"
-                    >
-                      <XCircle className="w-5 h-5" />
-                    </button>
+                    {job.status !== "active" && (
+                      <>
+                        <button
+                          onClick={() => handleStatus(job, "active")}
+                          className="w-8 h-8 flex items-center justify-center bg-green-100 text-green-600 rounded-full hover:bg-green-200"
+                        >
+                          <CheckCircle className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => handleStatus(job, "deactivated")}
+                          className="w-8 h-8 flex items-center justify-center bg-yellow-100 text-yellow-600 rounded-full hover:bg-yellow-200"
+                        >
+                          <XCircle className="w-5 h-5" />
+                        </button>
+                      </>
+                    )}
 
                     {/* Delete */}
                     <button

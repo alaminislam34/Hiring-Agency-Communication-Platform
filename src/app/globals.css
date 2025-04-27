@@ -70,10 +70,28 @@ body {
 }
 
 /* globals.css */
+
+/* table classes */
 .form-label {
   @apply block text-gray-700 font-medium mb-2;
 }
 
 .form-input {
   @apply p-2 border w-full border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500;
+}
+
+.table-class {
+  @apply min-w-full bg-white table-auto text-sm text-left text-gray-700 p-2 lg:p-4;
+}
+
+.table-head-class {
+  @apply text-teal-700 uppercase text-xs font-semibold;
+}
+
+.table-head-row-class {
+  @apply *:py-2 *:px-2;
+}
+
+.table-row-class {
+  @apply hover:bg-teal-50 *:py-2 *:px-2 transition duration-200;
 }

@@ -28,7 +28,7 @@ const AllJobs = () => {
     useAppContext();
 
   const { data: jobs, isLoading } = useQuery({
-    queryKey: ["jobs"],
+    queryKey: ["jobs", industry, location, keyword],
     queryFn: async () => {
       const res = await axios.get("/api/activeJobs", {
         params: { industry, location, keyword },
@@ -157,7 +157,11 @@ const AllJobs = () => {
                                 ""}
                             </p>
                           </div>
-                          <ApplyButton />
+                          <ApplyButton
+                            job={job}
+                            alreadyApplied={false}
+                            modalId="apply-job-modal"
+                          />
                           {/* <button className="btn btn-primary bg-teal-600 hover:bg-teal-700 border-none text-white w-full sm:w-auto">
                             Apply Now
                           </button> */}

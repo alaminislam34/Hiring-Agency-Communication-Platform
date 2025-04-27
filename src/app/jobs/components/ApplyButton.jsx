@@ -28,7 +28,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
 
     const applicationData = {
       ...formData,
-      jobId: job._id,
+      jobId: job?._id.toString() || null,
       title: job.title,
       jobType: job.type,
       deadline: job.meta.deadline,
@@ -45,10 +45,8 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
     try {
       const res = await axios.post("/api/apply-job", applicationData);
       if (res?.status === 200) {
-        // ✅ First close modal
         modalRef.current?.close();
 
-        // ✅ Then show Swal
         setTimeout(() => {
           Swal.fire({
             text: res.data?.message || "Application submitted successfully.",
@@ -59,7 +57,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
             background: "#D5F5F6",
             animation: true,
           });
-        }, 100); // small delay so modal closes first
+        }, 100);
       }
     } catch (err) {
       console.error("❌ Submission error:", err);

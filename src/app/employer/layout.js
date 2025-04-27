@@ -1,38 +1,34 @@
 "use client";
 
-import { ChevronLeft } from "lucide-react";
-import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import DashboardSideBar from "../components/dashboardComponents/DashboardSideBar";
-import MobileDrawer from "../admin/components/Drawer/Drawer";
+import DashboardNavbar from "@/components/DashboardNavbar";
+import Footer from "@/components/DashboardFooter";
 
 const AdminLayout = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="flex flex-row">
       <section
-        className={`hidden lg:block duration-500 ${
-          isOpen ? "w-[250px]" : " w-[100px]"
-        } h-screen bg-teal-200 relative shadow-xl`}
+        className={`duration-500 overflow-y-auto bg-white shadow-2xl border-r border-gray-300 ${
+          isOpen ? "w-[250px] left-0" : "lg:w-[80px] lg:left-0 -left-24"
+        } h-screen fixed z-50 top-0`}
       >
-        <DashboardSideBar isOpen={isOpen} />
-
-        {/* Toggle Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="absolute z-30 top-0 -right-8 shadow-[8px_2px_15px_0px_rgb(0,0,0,0.2)] rounded-r-xl flex items-center justify-center bg-white h-12 w-8"
-        >
-          {isOpen ? <ChevronLeft /> : <ChevronRight />}
-        </button>
+        <DashboardSideBar isOpen={isOpen} setIsOpen={setIsOpen} />
       </section>
       <section
-        className={`flex-1 duration-500 transition-transform ease-in-out ${
-          isOpen ? "lg:col-span-10" : "lg:col-span-11"
-        } h-screen overflow-y-auto p-4 relative`}
+        className={`flex-1 duration-500 rounded-tl-4xl ${
+          isOpen ? "lg:ml-[250px]" : "lg:ml-[80px]"
+        } relative`}
       >
-        <MobileDrawer />
-
-        {children}
+        <nav className="sticky top-0 z-40 w-full bg-white">
+          <DashboardNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
+        </nav>
+        {/* <MobileDrawer /> */}
+        <section className="overflow-hidden px-4 lg:px-8 grid grid-cols-1 min-h-[40vh]">
+          {children}
+        </section>
+        <Footer />
       </section>
     </div>
   );

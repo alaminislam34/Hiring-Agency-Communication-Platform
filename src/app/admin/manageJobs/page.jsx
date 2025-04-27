@@ -4,23 +4,17 @@ import { useAppContext } from "@/Providers/AppProviders";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
-import {
-  PencilSquareIcon,
-  TrashIcon,
-  EyeIcon,
-} from "@heroicons/react/24/outline";
 import Swal from "sweetalert2";
-import EditJobTwoStep from "./components/EditJob";
+import { CheckCircle, XCircle, Eye, Trash2 } from "lucide-react"; // optional icons
 
 const ManageJobs = () => {
   const { currentUser } = useAppContext();
-
   const [viewJob, setViewJob] = useState(null);
 
-  /* -------- fetch all jobs by employer -------- */
+  // Fetch Jobs
   const fetchJobs = async () => {
     const res = await axios.get("/api/allJobs");
-    return res.data; // array
+    return res.data;
   };
 
   const {
@@ -33,9 +27,9 @@ const ManageJobs = () => {
     enabled: !!currentUser?.email,
   });
 
-  /* -------- delete job -------- */
+  // Delete Job
   const deleteJob = useMutation({
-    mutationFn: (id) => axios.delete(`/api/job/${id}`),
+    mutationFn: (id) => axios.delete(`/api/jobDelete/${id}`),
     onSuccess: () => {
       Swal.fire("Deleted!", "Job removed successfully", "success");
       refetchJobs();
@@ -43,118 +37,173 @@ const ManageJobs = () => {
     onError: () => Swal.fire("Error", "Couldn’t delete job", "error"),
   });
 
-  /* -------- handlers -------- */
+  // Update Status
+  const updateJobStatus = useMutation({
+    mutationFn: ({ id, status }) => axios.put(`/api/job/${id}`, { status }),
+    onSuccess: () => {
+      Swal.fire({
+        icon: "success",
+        text: "Job status updated successfully",
+        timer: 1500,
+        showConfirmButton: false,
+        background: "#D5F5F6",
+        width: 300,
+      });
+      refetchJobs();
+    },
+    onError: () => Swal.fire("Error", "Couldn’t update job status", "error"),
+  });
+
+  // Handlers
   const handleDelete = (job) => {
     Swal.fire({
-      title: "Delete?",
-      text: "Are you sure you want to remove this job?",
+      title: "Are you sure?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#14b8a6",
       cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+      width: 300,
+      background: "#D5F5F6",
     }).then((res) => res.isConfirmed && deleteJob.mutate(job._id));
   };
 
-  /* ------------- UI ------------- */
+  const handleStatus = (job, status) => {
+    Swal.fire({
+      text: `Are you sure you want to ${
+        status === "active" ? "accept" : "reject"
+      } this job?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#14b8a6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: status === "active" ? "Approve" : "Reject",
+      width: 300,
+      background: "#D5F5F6",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        updateJobStatus.mutate({ id: job._id, status });
+      }
+    });
+  };
+
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-semibold text-teal-600 mb-6">
+      <h2 className="text-2xl font-bold mb-6 text-teal-700">
         📋 Manage Your Posted Jobs
-      </h1>
+      </h2>
 
-      {/* ---------- Jobs Table ---------- */}
-      <div className="overflow-x-auto rounded-lg shadow bg-white">
-        <table className="min-w-full text-sm">
-          <thead className="bg-teal-50 text-teal-700 uppercase text-xs">
-            <tr className="*:px-4 *:py-2 text-left">
-              <th className="">Title</th>
-              <th className="">Company</th>
-              <th className="">Salary</th>
-              <th className="">Deadline</th>
-              <th className="">Type</th>
-              <th className="">Category</th>
-              <th className=" text-center">Actions</th>
+      {/* Table */}
+      <div className="overflow-x-auto shadow-md rounded-lg">
+        <table className="min-w-full bg-white">
+          <thead className="bg-teal-500 text-white">
+            <tr>
+              <th className="py-3 px-4 text-left">Title</th>
+              <th className="py-3 px-4 text-left">Company</th>
+              <th className="py-3 px-4 text-left">Salary</th>
+              <th className="py-3 px-4 text-left">Deadline</th>
+              <th className="py-3 px-4 text-left">Type</th>
+              <th className="py-3 px-4 text-left">Category</th>
+              <th className="py-3 px-4 text-left">Status</th>
+              <th className="py-3 px-4 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={7} className="py-8 text-center">
-                  Loading…
+                <td colSpan="8" className="text-center py-6 text-gray-500">
+                  Loading jobs...
                 </td>
               </tr>
-            ) : jobs.length ? (
+            ) : jobs.length === 0 ? (
+              <tr>
+                <td colSpan="8" className="text-center py-6 text-gray-500">
+                  No jobs found.
+                </td>
+              </tr>
+            ) : (
               jobs.map((job) => (
-                <tr
-                  key={job._id}
-                  className="border-b border-gray-300 hover:bg-teal-50 transition"
-                >
-                  <td className="px-5 py-3 font-medium">{job.title}</td>
-                  <td className="px-5 py-3">{job.company}</td>
-                  <td className="px-5 py-3">
-                    {job.salary.min}k – {job.salary.max}k
+                <tr key={job._id} className="border-b hover:bg-gray-100">
+                  <td className="py-3 px-4">{job.title}</td>
+                  <td className="py-3 px-4">{job.industry}</td>
+                  <td className="py-3 px-4">
+                    {job.minSalary} – {job.maxSalary} ({job.salaryType})
                   </td>
-                  <td className="px-5 py-3">
+                  <td className="py-3 px-4">
                     {new Date(job.meta.deadline).toLocaleDateString()}
                   </td>
-                  <td className="px-5 py-3">{job.type}</td>
-                  <td className="px-5 py-3">{job.details.category}</td>
-                  <td className="px-5 py-3">
-                    <div className="flex justify-center gap-3">
-                      <EyeIcon
-                        onClick={() => setViewJob(job)}
-                        className="h-5 w-5 text-teal-600 cursor-pointer hover:scale-110 transition"
-                      />
+                  <td className="py-3 px-4">{job.type}</td>
+                  <td className="py-3 px-4">{job.category}</td>
+                  <td className="py-3 px-4 capitalize">{job.status}</td>
+                  <td className="py-3 px-4 flex items-center justify-center gap-2">
+                    {/* View */}
+                    <button
+                      onClick={() => setViewJob(job)}
+                      className="w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200"
+                    >
+                      <Eye className="w-5 h-5" />
+                    </button>
 
-                      <TrashIcon
-                        onClick={() => handleDelete(job)}
-                        className="h-5 w-5 text-red-500 cursor-pointer hover:scale-110 transition"
-                      />
-                    </div>
+                    {/* Accept */}
+                    <button
+                      onClick={() => handleStatus(job, "active")}
+                      className="w-8 h-8 flex items-center justify-center bg-green-100 text-green-600 rounded-full hover:bg-green-200"
+                    >
+                      <CheckCircle className="w-5 h-5" />
+                    </button>
+
+                    {/* Reject */}
+                    <button
+                      onClick={() => handleStatus(job, "deactivated")}
+                      className="w-8 h-8 flex items-center justify-center bg-yellow-100 text-yellow-600 rounded-full hover:bg-yellow-200"
+                    >
+                      <XCircle className="w-5 h-5" />
+                    </button>
+
+                    {/* Delete */}
+                    <button
+                      onClick={() => handleDelete(job)}
+                      className="w-8 h-8 flex items-center justify-center bg-red-100 text-red-600 rounded-full hover:bg-red-200"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
                   </td>
                 </tr>
               ))
-            ) : (
-              <tr>
-                <td colSpan={7} className="py-8 text-center text-gray-500">
-                  No jobs posted yet.
-                </td>
-              </tr>
             )}
           </tbody>
         </table>
       </div>
 
-      {/* ---------- View Modal ---------- */}
+      {/* View Modal */}
       {viewJob && (
         <Modal onClose={() => setViewJob(null)}>
           <h2 className="text-xl font-semibold text-teal-700 mb-4">
             {viewJob.title}
           </h2>
-          <p className="mb-2">
-            <span className="font-semibold">Company:</span> {viewJob.company}
+          <p>
+            <b>Company:</b> {viewJob.industry}
           </p>
-          <p className="mb-2">
-            <span className="font-semibold">Location:</span> {viewJob.location}
+          <p>
+            <b>Location:</b> {viewJob.location}
           </p>
-          <p className="mb-2">
-            <span className="font-semibold">Salary:</span> {viewJob.salary.min}k
-            – {viewJob.salary.max}k
+          <p>
+            <b>Salary:</b> {viewJob.minSalary} – {viewJob.maxSalary} (
+            {viewJob.salaryType})
           </p>
-          <p className="mb-2">
-            <span className="font-semibold">Deadline:</span>{" "}
+          <p>
+            <b>Deadline:</b>{" "}
             {new Date(viewJob.meta.deadline).toLocaleDateString()}
           </p>
-          <p className="mb-2">
-            <span className="font-semibold">Type:</span> {viewJob.type}
+          <p>
+            <b>Type:</b> {viewJob.type}
           </p>
-          <p className="mb-4">
-            <span className="font-semibold">Category:</span>{" "}
-            {viewJob.details.category}
+          <p>
+            <b>Category:</b> {viewJob.category}
           </p>
-          <h3 className="font-semibold text-teal-600 mb-1">Description</h3>
-          <p className="text-sm text-gray-700 whitespace-pre-line">
-            {viewJob.details.description}
+          <h3 className="font-semibold text-teal-600 mt-4">Description</h3>
+          <p className="text-gray-700 whitespace-pre-line mt-1">
+            {viewJob.description}
           </p>
         </Modal>
       )}
@@ -162,13 +211,12 @@ const ManageJobs = () => {
   );
 };
 
-/* ---------- Reusable Modal component ---------- */
 const Modal = ({ children, onClose }) => (
-  <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
-    <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 relative">
+  <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+    <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative">
       <button
         onClick={onClose}
-        className="absolute top-2 right-3 text-gray-400 hover:text-gray-600"
+        className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 text-xl"
       >
         ✕
       </button>

@@ -6,7 +6,7 @@ import ClientFooter from "@/components/ClientFooter";
 import { AppProvider } from "@/Providers/AppProviders";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NotificationProvider } from "@/Providers/NotificationContext";
-import Footer from "@/components/DashboardFooter";
+import WebsiteLandingPage from "./components/WebsiteLandingPage";
 
 const queryClient = new QueryClient();
 export default function RootLayout({ children }) {
@@ -17,11 +17,14 @@ export default function RootLayout({ children }) {
           <NotificationProvider>
             <AppProvider>
               <body>
-                <ClientNavbar />
-                <section className="md:min-h-[500px] min-h-[350px] mt-6 bg-teal-50">
+                <nav className="sticky top-0 z-50 w-full">
+                  <ClientNavbar />
+                </nav>
+                <section className="md:min-h-[500px] min-h-[350px] ">
                   {children}
                 </section>
-                <Footer />
+
+                <WebsiteLandingPage />
                 <ClientFooter />
               </body>
             </AppProvider>

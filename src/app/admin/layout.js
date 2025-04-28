@@ -25,7 +25,7 @@ const AdminLayout = ({ children }) => {
           <DashboardNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
         </nav>
         {/* <MobileDrawer /> */}
-        <section className="overflow-hidden px-4 lg:px-8 grid grid-cols-1 min-h-[80vh] bg-white">
+        <section className=" px-4 lg:px-8 grid grid-cols-1 min-h-[80vh] bg-white">
           {children}
         </section>
         <Footer />

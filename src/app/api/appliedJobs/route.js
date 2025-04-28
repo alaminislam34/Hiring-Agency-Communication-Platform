@@ -6,8 +6,10 @@ export async function GET(req) {
   const candidateId = searchParams.get("candidateId");
 
   try {
-    const query = { candidateId: candidateId };
-
+    const query = {};
+    if (candidateId) {
+      query.candidateId = candidateId;
+    }
     const appliedCollection = await getCollection(collection.appliedCollection);
     const appliedJobs = await appliedCollection.find(query).toArray();
 

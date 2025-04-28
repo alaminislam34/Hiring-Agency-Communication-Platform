@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useAppContext } from "@/Providers/AppProviders";
 
 // Register required components
 ChartJS.register(
@@ -20,27 +21,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-// Dummy Top Employers data
-const data = {
-  labels: [
-    "Tech Solutions Ltd.",
-    "HireX Bangladesh",
-    "DevNet Systems",
-    "JobEase",
-    "SkillBridge",
-    "NextGen Jobs",
-  ],
-  datasets: [
-    {
-      label: "Job Posts",
-      data: [45, 38, 30, 25, 20, 15],
-      backgroundColor: "teal",
-      borderRadius: 6,
-      barThickness: 24,
-    },
-  ],
-};
 
 // Chart Options
 const options = {
@@ -87,6 +67,28 @@ const options = {
 };
 
 const TopEmployersByJobPost = () => {
+  const { jobs } = useAppContext();
+  const company = jobs?.map((job) => job.meta.postedBy);
+  const uniqueCompany = [...new Set(company)];
+  const jobsCount = uniqueCompany?.map((name) => {
+    const count = jobs?.filter((job) => job.meta.postedBy === name)?.length;
+    return count;
+  });
+
+  // Dummy Top Employers data
+  const data = {
+    labels: uniqueCompany,
+    datasets: [
+      {
+        label: "Job Posts",
+        data: jobsCount,
+        backgroundColor: "teal",
+        borderRadius: 6,
+        barThickness: 24,
+      },
+    ],
+  };
+
   return (
     <div className="w-full h-full rounded-2xl border border-teal-200">
       <div className="rounded-2xl bg-white shadow-md w-full h-[300px] lg:h-[400px] p-4">

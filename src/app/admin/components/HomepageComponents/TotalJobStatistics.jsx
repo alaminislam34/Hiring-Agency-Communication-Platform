@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useAppContext } from "@/Providers/AppProviders";
 
 // Register chart elements
 ChartJS.register(
@@ -19,39 +20,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-// Chart Data
-const chartData = {
-  labels: [
-    "Software Engineering",
-    "Digital Marketing",
-    "Product Management",
-    "Customer Success",
-    "Design",
-    "Sales",
-    "Marketing",
-    "Finance",
-    "Human Resources",
-    "Operations",
-  ],
-  datasets: [
-    {
-      label: "Jobs Count",
-      data: [240, 120, 150, 145, 250, 300, 250, 200, 180, 190],
-      backgroundColor: [
-        "#4ade80", // Green
-        "#60a5fa", // Blue
-        "#facc15", // Yellow
-        "#f97316", // Orange
-        "#a78bfa", // Purple
-        "#f87171", // Red
-        "#34d399", // Emerald
-      ],
-      borderWidth: 1,
-      borderRadius: 6,
-    },
-  ],
-};
 
 // Chart Options
 const chartOptions = {
@@ -84,6 +52,35 @@ const chartOptions = {
 };
 
 const TotalJobStatistics = () => {
+  const { jobs } = useAppContext();
+  const jobsTitle = jobs?.map((job) => job.title);
+  const uniqueJobsTitle = [...new Set(jobsTitle)];
+  const jobsCount = uniqueJobsTitle?.map((title) => {
+    const count = jobs?.filter((job) => job.title === title)?.length;
+    return count;
+  });
+  // Chart Data
+  const chartData = {
+    labels: uniqueJobsTitle,
+    datasets: [
+      {
+        label: "Jobs Count",
+        data: jobsCount,
+        backgroundColor: [
+          "#4ade80", // Green
+          "#60a5fa", // Blue
+          "#facc15", // Yellow
+          "#f97316", // Orange
+          "#a78bfa", // Purple
+          "#f87171", // Red
+          "#34d399", // Emerald
+        ],
+        borderWidth: 1,
+        borderRadius: 6,
+      },
+    ],
+  };
+
   return (
     <div className="w-full h-full rounded-2xl border border-teal-200">
       <div className="rounded-2xl shadow-lg bg-white p-4 w-full h-[450px]">

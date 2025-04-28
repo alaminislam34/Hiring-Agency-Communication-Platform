@@ -90,9 +90,9 @@ const Candidates = () => {
             📝 Applied Candidates
           </h1>
           <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
-            <table className="min-w-full text-left text-sm">
-              <thead className="bg-gray-100 text-gray-600 uppercase font-semibold">
-                <tr className="*:px-4 text-teal-700 *:py-3">
+            <table className="table-class">
+              <thead className="table-head-class">
+                <tr className="table-head-row-class">
                   <th>#</th>
                   <th>Name</th>
                   <th>Email</th>
@@ -105,10 +105,7 @@ const Candidates = () => {
               </thead>
               <tbody>
                 {myCandidates?.map((user, index) => (
-                  <tr
-                    key={user._id || index}
-                    className="*:px-4 *:border-b md:*:py-4 *:py-2"
-                  >
+                  <tr key={user._id || index} className="table-row-class">
                     <td>{index + 1}</td>
                     <td>{user.candidateName}</td>
                     <td>{user.candidateEmail}</td>

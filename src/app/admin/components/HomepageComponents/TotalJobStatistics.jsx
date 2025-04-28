@@ -53,10 +53,10 @@ const chartOptions = {
 
 const TotalJobStatistics = () => {
   const { jobs } = useAppContext();
-  const jobsTitle = jobs?.map((job) => job.title);
+  const jobsTitle = jobs?.map((job) => job.category);
   const uniqueJobsTitle = [...new Set(jobsTitle)];
   const jobsCount = uniqueJobsTitle?.map((title) => {
-    const count = jobs?.filter((job) => job.title === title)?.length;
+    const count = jobs?.filter((job) => job.category === title)?.length;
     return count;
   });
   // Chart Data

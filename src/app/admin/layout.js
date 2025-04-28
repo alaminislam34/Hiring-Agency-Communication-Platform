@@ -10,7 +10,7 @@ const AdminLayout = ({ children }) => {
   return (
     <div className="flex flex-row">
       <section
-        className={`duration-500 overflow-y-auto bg-teal-200 ${
+        className={`duration-500 overflow-y-auto shadow border bg-white border-gray-300 ${
           isOpen ? "w-[250px] left-0" : "lg:w-[80px] lg:left-0 -left-24"
         } h-screen fixed z-50 top-0`}
       >

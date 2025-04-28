@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 export default function ApplyButton({ job, modalId, alreadyApplied }) {
   console.log("job data in apply button", job);
-  const { currentUser } = useAppContext();
+  const { currentUser, appliedJobsRefetch } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     candidateId: currentUser?._id,
@@ -16,6 +16,8 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
     candidateEmail: "",
     resume: "",
     coverLetter: "",
+    experience: "",
+    educationLevel: currentUser?.degreeTitle || "",
   });
 
   const modalRef = useRef(null);
@@ -42,6 +44,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       companyName: job.meta.companyName,
       postedById: job.meta.postedById,
       postedBy: job.meta.postedBy,
+      appliedAt: new Date().toISOString(),
       status: "Applied",
     };
 
@@ -49,7 +52,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       const res = await axios.post("/api/apply-job", applicationData);
       if (res?.status === 200) {
         modalRef.current?.close();
-
+        appliedJobsRefetch();
         setTimeout(() => {
           Swal.fire({
             text: res.data?.message || "Application submitted successfully.",
@@ -75,6 +78,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
         animation: true,
       });
     } finally {
+      appliedJobsRefetch();
       setLoading(false);
     }
   };
@@ -131,7 +135,30 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
                 className="form-input"
               />
             </div>
-
+            <div>
+              {/* experience */}
+              <label className="form-label">Experience</label>
+              <input
+                type="text"
+                name="experience"
+                value={formData.experience}
+                onChange={handleChange}
+                required
+                className="form-input"
+              />
+            </div>
+            <div>
+              {/* education level */}
+              <label className="form-label">Education Level</label>
+              <input
+                type="text"
+                name="degreeTitle"
+                value={formData.degreeTitle}
+                onChange={handleChange}
+                required
+                className="form-input"
+              />
+            </div>
             {/* Resume */}
             <div>
               <label className="form-label">

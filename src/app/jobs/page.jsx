@@ -129,7 +129,9 @@ const AllJobs = () => {
                         </h1>
 
                         {/* Description */}
-                        <p className="mt-4 text-gray-700">{job.description}</p>
+                        <p className="mt-4 text-gray-700">
+                          {job.description.slice(0, 100) + " ..."}
+                        </p>
 
                         {/* Skills */}
                         <div className="mt-4">

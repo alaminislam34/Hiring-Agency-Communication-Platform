@@ -98,11 +98,7 @@ export const adminSideBarLinks = [
     href: "/admin/manageJobs",
     icon: <BriefcaseBusiness size={18} />,
   },
-  {
-    name: "Manage Role Applications",
-    href: "/admin/manageRoleApplications",
-    icon: <FileUser size={18} />,
-  },
+
   {
     name: "Settings",
     href: "/admin/settings",

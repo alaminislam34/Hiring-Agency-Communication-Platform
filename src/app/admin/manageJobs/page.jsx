@@ -125,13 +125,13 @@ const ManageJobs = () => {
         <table className="table-class">
           <thead className="table-head-class">
             <tr className="table-head-row-class">
-              <th className="">Title</th>
-              <th className="">Company</th>
-              <th className="">Salary</th>
-              <th className="">Deadline</th>
-              <th className="">Type</th>
-              <th className="">Category</th>
-              <th className="">Status</th>
+              <th>Title</th>
+              <th>Company</th>
+              <th>Salary</th>
+              <th>Deadline</th>
+              <th>Type</th>
+              <th>Category</th>
+              <th>Status</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
@@ -151,18 +151,16 @@ const ManageJobs = () => {
             ) : (
               jobs.map((job) => (
                 <tr key={job._id} className="table-row-class">
-                  <td className="py-3 px-4">{job.title}</td>
-                  <td className="py-3 px-4">{job.industry}</td>
-                  <td className="py-3 px-4">
+                  <td>{job.title}</td>
+                  <td>{job.industry}</td>
+                  <td>
                     {job.minSalary} – {job.maxSalary} ({job.salaryType})
                   </td>
-                  <td className="py-3 px-4">
-                    {new Date(job.meta.deadline).toLocaleDateString()}
-                  </td>
-                  <td className="py-3 px-4">{job.type}</td>
-                  <td className="py-3 px-4">{job.category}</td>
-                  <td className="py-3 px-4 capitalize">{job.status}</td>
-                  <td className="py-3 px-4 flex items-center justify-center gap-2">
+                  <td>{new Date(job.meta.deadline).toLocaleDateString()}</td>
+                  <td>{job.type}</td>
+                  <td>{job.category}</td>
+                  <td>{job.status}</td>
+                  <td className="flex items-center justify-center gap-2">
                     {/* View */}
                     <button
                       onClick={() => setViewJob(job)}
@@ -191,7 +189,7 @@ const ManageJobs = () => {
                           <CheckCircle size={18} />
                         </button>
                         <button
-                          onClick={() => handleStatus(job, "deactivated")}
+                          onClick={() => handleStatus(job, "deactivate")}
                           className="reject-btn"
                         >
                           <XCircle size={18} />

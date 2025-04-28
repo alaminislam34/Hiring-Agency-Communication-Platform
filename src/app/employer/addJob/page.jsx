@@ -57,9 +57,8 @@ const JobPostForm = () => {
     educationLevel: "",
     industry: "",
     languages: [],
-    gender: "",
     vacancy: 1,
-    attachment: "",
+    status: "pending",
     meta: {
       postedBy: currentUser?.email,
       postedById: currentUser?._id,
@@ -369,6 +368,9 @@ const JobPostForm = () => {
               className="form-input"
               required
             >
+              <option value="" disabled>
+                Select Industry
+              </option>
               <option value="Software">Software Development</option>
               <option value="Finance">Finance</option>
               <option value="Design & Creative">Design & Creative</option>
@@ -444,17 +446,6 @@ const JobPostForm = () => {
               placeholder="Number of Vacancy"
             />
           </div>
-        </div>
-        {/* Image Upload */}
-        <div>
-          <label className="form-label">Attachment (Optional)</label>
-          <input
-            type="text"
-            placeholder="Share your attachment link"
-            accept="https://*"
-            onChange={(e) => handleChange("attachment", e.target.value)}
-            className="form-input cursor-pointer"
-          />
         </div>
 
         {/* Submit Button */}

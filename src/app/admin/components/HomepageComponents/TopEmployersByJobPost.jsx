@@ -68,10 +68,10 @@ const options = {
 
 const TopEmployersByJobPost = () => {
   const { jobs } = useAppContext();
-  const company = jobs?.map((job) => job.meta.postedBy);
+  const company = jobs?.map((job) => job.meta.postedByName);
   const uniqueCompany = [...new Set(company)];
   const jobsCount = uniqueCompany?.map((name) => {
-    const count = jobs?.filter((job) => job.meta.postedBy === name)?.length;
+    const count = jobs?.filter((job) => job.meta.postedByName === name)?.length;
     return count;
   });
 

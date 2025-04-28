@@ -50,19 +50,13 @@ const AppliedJobsPage = () => {
               ) : (
                 currentJobs?.map((job) => (
                   <tr key={job._id} className="table-row-class">
-                    <td className="px-6 py-4 text-sm text-gray-800">
-                      {job.title}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-800">
-                      {job.jobType}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-800">
-                      {new Date(job.deadline).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-800">
+                    <td>{job.title}</td>
+                    <td>{job.jobType}</td>
+                    <td>{new Date(job.deadline).toLocaleDateString()}</td>
+                    <td>
                       {job.minSalary} - {job.maxSalary} {job.salaryType}
                     </td>
-                    <td className="px-6 py-4 text-sm">
+                    <td>
                       <span className="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs">
                         {job.status || "Applied"}
                       </span>

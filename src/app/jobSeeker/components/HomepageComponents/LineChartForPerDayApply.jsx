@@ -9,6 +9,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useAppContext } from "@/Providers/AppProviders";
+import dayjs from "dayjs"; // dayjs ব্যবহার করে date formatting
 
 // Register Chart.js components
 ChartJS.register(
@@ -21,21 +23,30 @@ ChartJS.register(
 );
 
 const LineChartForPerDayApply = () => {
-  // Dummy data: Replace later with dynamic data
-  const data = {
-    labels: [
-      "Apr 15",
-      "Apr 16",
-      "Apr 17",
-      "Apr 18",
-      "Apr 19",
-      "Apr 20",
-      "Apr 21",
-    ],
+  const { appliedJobsCollection } = useAppContext();
+  const dailyApplications = {};
+
+  appliedJobsCollection?.forEach((job) => {
+    const date = dayjs(job.createdAt).format("MMM D");
+
+    if (!dailyApplications[date]) {
+      dailyApplications[date] = 1;
+    } else {
+      dailyApplications[date] += 1;
+    }
+  });
+
+  // Step 2: Prepare labels (dates) and data (counts)
+  const labels = Object.keys(dailyApplications).sort(); // Sort dates
+  const data = labels.map((date) => dailyApplications[date]);
+
+  // Step 3: Set up the chart data
+  const chartData = {
+    labels: labels,
     datasets: [
       {
         label: "Jobs Applied Per Day",
-        data: [1, 3, 2, 0, 5, 2, 4],
+        data: data,
         borderColor: "#4F46E5",
         backgroundColor: "rgba(79, 70, 229, 0.2)",
         tension: 0.4,
@@ -46,6 +57,7 @@ const LineChartForPerDayApply = () => {
     ],
   };
 
+  // Chart options
   const options = {
     responsive: true,
     plugins: {
@@ -87,7 +99,7 @@ const LineChartForPerDayApply = () => {
       <h2 className="text-xl font-semibold mb-4 text-center text-gray-800">
         Daily Job Application Overview
       </h2>
-      <Line data={data} options={options} />
+      <Line data={chartData} options={options} />
     </div>
   );
 };

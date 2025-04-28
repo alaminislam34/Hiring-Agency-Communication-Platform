@@ -8,6 +8,7 @@ export async function GET(req) {
     const industry = searchParams.get("industry");
     const location = searchParams.get("location");
     const keyword = searchParams.get("keyword");
+    const jobType = searchParams.get("jobType");
 
     const query = { status: "active" };
     if (industry) {
@@ -19,11 +20,12 @@ export async function GET(req) {
     if (keyword) {
       query.title = { $regex: keyword, $options: "i" };
     }
+    if (jobType) {
+      query.type = jobType;
+    }
 
     const jobs = await jobsCollection.find(query).toArray();
 
-    console.table("all jobs here server api allJobs: ");
-    console.table(jobs);
     return NextResponse.json(jobs);
   } catch (error) {
     console.error("Error fetching jobs:", error);

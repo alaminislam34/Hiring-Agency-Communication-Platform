@@ -120,7 +120,7 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["jobs", type, jobTitle, location],
     queryFn: fetchJobs,
-    enabled: true, // Always enabled
+    enabled: true,
   });
 
   // profile completed percentage

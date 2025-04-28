@@ -212,6 +212,9 @@ const JobPostForm = () => {
               <option value="Full-time">Full-time</option>
               <option value="Part-time">Part-time</option>
               <option value="Remote">Remote</option>
+              <option value="Internship">Internship</option>
+              <option value="Contract">Contract</option>
+              <option value="Hybrid">Hybrid</option>
               <option value="Freelance">Freelance</option>
             </select>
           </div>

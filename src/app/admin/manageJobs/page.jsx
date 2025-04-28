@@ -170,14 +170,16 @@ const ManageJobs = () => {
                     </button>
                     <div className="relative">
                       <button
-                        onClick={() => setActions(!actions)}
+                        onClick={() =>
+                          setActions(actions === job._id ? false : job._id)
+                        }
                         className="py-1 px-1 cursor-pointer bg-teal-200 hover:bg-teal-500 rounded-xl "
                       >
                         <EllipsisVertical size={18} />
                       </button>
                       <div
                         className={`${
-                          actions
+                          actions === job._id
                             ? "opacity-100"
                             : "opacity-0 scale-75 pointer-events-none"
                         } absolute duration-300 bottom-0 right-8 px-2 py-1 rounded-lg flex flex-row gap-2 shadow-md bg-white z-20 border border-gray-200 items-center justify-center`}
@@ -214,32 +216,41 @@ const ManageJobs = () => {
       {/* View Modal */}
       {viewJob && (
         <Modal onClose={() => setViewJob(null)}>
-          <h2 className="text-xl font-semibold text-teal-700 mb-4">
-            {viewJob.title}
-          </h2>
+          <h2 className=" text-teal-700 mb-4">{viewJob.title}</h2>
           <p>
-            <b>Company:</b> {viewJob.industry}
+            <span className="text-gray-600 mr-2">Company:</span>{" "}
+            {viewJob.meta.companyName}
           </p>
           <p>
-            <b>Location:</b> {viewJob.location}
+            <span className="text-gray-600 mr-2">Location:</span>{" "}
+            {viewJob.location}
           </p>
           <p>
-            <b>Salary:</b> {viewJob.minSalary} – {viewJob.maxSalary} (
-            {viewJob.salaryType})
+            <span className="text-gray-600 mr-2">Salary:</span>{" "}
+            {viewJob.minSalary} – {viewJob.maxSalary} ({viewJob.salaryType})
           </p>
           <p>
-            <b>Deadline:</b>{" "}
+            <span className="text-gray-600 mr-2">Deadline:</span>{" "}
             {new Date(viewJob.meta.deadline).toLocaleDateString()}
           </p>
           <p>
-            <b>Type:</b> {viewJob.type}
+            <span className="text-gray-600 mr-2">Type:</span> {viewJob.type}
           </p>
           <p>
-            <b>Category:</b> {viewJob.category}
+            <span className="text-gray-600 mr-2">Category:</span>{" "}
+            {viewJob.category}
           </p>
           <h3 className="font-semibold text-teal-600 mt-4">Description</h3>
           <p className="text-gray-700 whitespace-pre-line mt-1">
             {viewJob.description}
+          </p>
+          <h3 className="font-semibold text-teal-600 mt-4">Requirements: </h3>
+          <p className="text-gray-700 whitespace-pre-line mt-1">
+            {viewJob.requirements}
+          </p>
+          <h3 className="font-semibold text-teal-600 mt-4">Benefits: </h3>
+          <p className="text-gray-700 whitespace-pre-line mt-1">
+            {viewJob.benefits}
           </p>
         </Modal>
       )}
@@ -249,10 +260,10 @@ const ManageJobs = () => {
 
 const Modal = ({ children, onClose }) => (
   <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-    <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative">
+    <div className="bg-white rounded-lg shadow-lg max-w-2xl max-h-[500px] overflow-y-auto w-full p-6 relative">
       <button
         onClick={onClose}
-        className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 text-xl"
+        className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
       >
         ✕
       </button>

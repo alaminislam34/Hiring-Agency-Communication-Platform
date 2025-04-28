@@ -113,9 +113,7 @@ export const AppProvider = ({ children }) => {
 
   // Fetch all jobs
   const fetchJobs = async () => {
-    const res = await axios(`/api/allJobs`, {
-      params: { jobTitle, location, type },
-    });
+    const res = await axios(`/api/allJobs`);
     return res.data;
   };
 

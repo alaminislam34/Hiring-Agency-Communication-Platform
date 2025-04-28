@@ -1,6 +1,5 @@
 "use server";
 import nodemailer from "nodemailer";
-import { collection, getCollection } from "./mongodb";
 
 export const sendJobNotificationEmail = async (userEmails, userName, job) => {
   console.log(

@@ -79,7 +79,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
           >
             <div className="w-10 h-10 rounded-full overflow-hidden border border-teal-500">
               <img
-                src={currentUser?.image}
+                src={currentUser?.image || "/fakeUser.jpg"}
                 alt="Profile"
                 width={40}
                 height={40}
@@ -102,7 +102,9 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
           {/* dropdown */}
           <div
             className={`${
-              isDropdownOpen ? "top-14 h-[500px]" : "top-0 h-0"
+              isDropdownOpen
+                ? "top-14 h-[500px]"
+                : "top-0 h-0 opacity-0 pointer-events-none"
             } z-30 absolute right-0 bg-white border border-gray-300 rounded-xl shadow-2xl w-[280px] md:w-[300px]  overflow-hidden duration-300`}
           >
             <ul className=" p-4">
@@ -122,6 +124,16 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
                   Profile
                 </Link>
               </li>
+              {currentUser?.role === "jobSeeker" && (
+                <li>
+                  <Link
+                    href={`/${currentUser?.role}/savedJobs`}
+                    className="py-2 px-4 hover:bg-teal-300 inline-block w-full rounded-lg"
+                  >
+                    Saved Jobs
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link
                   href={"#"}

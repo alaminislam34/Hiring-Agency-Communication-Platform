@@ -6,18 +6,16 @@ import { useAppContext } from "@/Providers/AppProviders";
 import JobsFilterOptions from "./components/JobsFilterOptions";
 import ApplyButton from "./components/ApplyButton";
 import { TailSpin } from "react-loader-spinner";
-import { Bookmark } from "lucide-react";
-import { BsBookmarkFill } from "react-icons/bs";
+
 import axios from "axios";
 import JobsBanner from "./components/JobsBanner";
 import { useState } from "react";
 import { MapPin } from "lucide-react";
-import { Briefcase } from "lucide-react";
-import { GraduationCap } from "lucide-react";
-import { Clock } from "lucide-react";
-import { Calendar } from "lucide-react";
+
 import { Grid2X2 } from "lucide-react";
 import { Rows3 } from "lucide-react";
+
+import BookmarkButton from "./components/BookmarkButton";
 
 const AllJobs = () => {
   const [industry, setIndustry] = useState("");
@@ -147,18 +145,26 @@ const AllJobs = () => {
                             </span>
                           </h3>
                         </div>
-
+                        <div>
+                          <p className="font-semibold text-sm text-teal-700">
+                            {job.minSalary +
+                              " - " +
+                              job.maxSalary +
+                              "tk/" +
+                              job.salaryType +
+                              ""}
+                          </p>
+                        </div>
                         {/* Footer */}
                         <div className="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                          <div>
-                            <p className="font-bold text-teal-700">
-                              {job.minSalary +
-                                " - " +
-                                job.maxSalary +
-                                "tk/" +
-                                job.salaryType +
-                                ""}
-                            </p>
+                          <div className="flex flex-row gap-4 items-center">
+                            <Link
+                              href={`/jobs/${job._id}`}
+                              className="text-teal-600 hover:underline"
+                            >
+                              more..
+                            </Link>
+                            <BookmarkButton jobs={job} />
                           </div>
                           <ApplyButton
                             job={job}

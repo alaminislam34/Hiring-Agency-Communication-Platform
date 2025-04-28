@@ -57,11 +57,6 @@ export default function FindJob() {
           </button>
         </form>
       </div>
-
-      {/* image */}
-      <div>
-        <Image src={image} alt="image"></Image>
-      </div>
     </div>
   );
 }

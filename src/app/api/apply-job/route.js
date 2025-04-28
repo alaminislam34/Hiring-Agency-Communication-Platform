@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 // import axios from "axios";
-import axios from "axios";
+// import axios from "axios";
 import { collection, getCollection } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
@@ -8,7 +8,8 @@ export async function POST(req) {
   try {
     const body = await req.json();
     console.log("apply button clicked");
-    const { candidateEmail, jobId } = body;
+    const { candidateId, jobId } = body;
+
     // try {
     //   await axios.post(
     //     "https://jobhive-server-1.onrender.com/api/apply-job",
@@ -21,7 +22,7 @@ export async function POST(req) {
     const jobsCollection = await getCollection(collection.jobsCollection);
     const findJob = await jobsCollection.findOne({ _id: new ObjectId(jobId) });
     const exist = await appliedCollection.findOne({ jobId: jobId });
-    if (exist?.candidateEmail === candidateEmail) {
+    if (exist?.candidateId === candidateId) {
       return NextResponse.json(
         { message: "You have already applied for this job" },
         { status: 400 }

@@ -1,17 +1,18 @@
 import { collection, getCollection } from "@/lib/mongodb";
-import { AwardIcon } from "lucide-react";
-
-const { NextResponse } = require("next/server");
+import { NextResponse } from "next/server";
 
 export async function GET(req) {
-  const searchParams = new URL(req.url).searchParams;
-  const candidateEmail = searchParams.get("candidateEmail");
+  const { searchParams } = new URL(req.url);
+  const candidateId = searchParams.get("candidateId");
+
   try {
-    const query = {};
-    if (candidateEmail) query.candidateEmail = candidateEmail;
+    const query = { candidateId: candidateId };
+
     const appliedCollection = await getCollection(collection.appliedCollection);
     const appliedJobs = await appliedCollection.find(query).toArray();
-    // console.log("all applied jobs:", appliedJobs);
+
+    console.log("all applied jobs:", appliedJobs);
+
     return NextResponse.json(appliedJobs);
   } catch (error) {
     console.error("Error fetching jobs:", error);

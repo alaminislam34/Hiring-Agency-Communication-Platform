@@ -36,7 +36,7 @@ const LineChartForPerDayApply = () => {
       {
         label: "Jobs Applied Per Day",
         data: [1, 3, 2, 0, 5, 2, 4],
-        borderColor: "#4F46E5", // Indigo-600
+        borderColor: "#4F46E5",
         backgroundColor: "rgba(79, 70, 229, 0.2)",
         tension: 0.4,
         fill: true,

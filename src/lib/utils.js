@@ -11,6 +11,7 @@ import { MessageSquareText } from "lucide-react";
 import { ChartLine } from "lucide-react";
 import { FileUser } from "lucide-react";
 import { CirclePlus } from "lucide-react";
+import { BookmarkCheck } from "lucide-react";
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -59,6 +60,11 @@ export const jobSeekerSideBarLinks = [
     name: "Applied-Jobs",
     href: "/jobSeeker/appliedJobs",
     icon: <SquareCheckBig size={18} />,
+  },
+  {
+    name: "Saved Jobs",
+    href: "/jobSeeker/savedJobs",
+    icon: <BookmarkCheck size={18} />,
   },
   {
     name: "Notification",

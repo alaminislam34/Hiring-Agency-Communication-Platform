@@ -1,5 +1,6 @@
 "use client";
 
+import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
 import { useState, useRef } from "react";
 import { ThreeDots } from "react-loader-spinner";
@@ -7,8 +8,10 @@ import Swal from "sweetalert2";
 
 export default function ApplyButton({ job, modalId, alreadyApplied }) {
   console.log("job data in apply button", job);
+  const { currentUser } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
+    candidateId: currentUser?._id,
     candidateName: "",
     candidateEmail: "",
     resume: "",
@@ -61,9 +64,10 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       }
     } catch (err) {
       console.error("❌ Submission error:", err);
+      modalRef.current?.close();
       Swal.fire({
         icon: "error",
-        text: "Something went wrong. Please try again.",
+        text: "You have already apply this job.",
         timer: 1500,
         showCloseButton: false,
         width: "300px",

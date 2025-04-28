@@ -96,11 +96,10 @@ export const AppProvider = ({ children }) => {
   // Fetch applied jobs
   const fetchAppliedJobs = async () => {
     const res = await axios("/api/appliedJobs", {
-      params: { candidateEmail: currentUser?.email },
+      params: { candidateId: currentUser?._id },
     });
     return res.data;
   };
-
   const {
     data: appliedJobsCollection,
     refetch: appliedJobsRefetch,
@@ -108,7 +107,7 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["appliedJobs"],
     queryFn: fetchAppliedJobs,
-    enabled: !!session,
+    enabled: !!currentUser?._id,
   });
 
   // Fetch all jobs

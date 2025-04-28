@@ -6,7 +6,7 @@ import ApplyButton from "../components/ApplyButton";
 import BookmarkButton from "../components/BookmarkButton";
 
 const JobDetailsPage = ({ params }) => {
-  const id = params.id;
+  const id = params?.id;
   const { data: job } = useQuery({
     queryKey: ["job", id],
     queryFn: async () => {

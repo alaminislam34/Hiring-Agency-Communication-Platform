@@ -207,7 +207,7 @@ const ProfileInfo = () => {
                   <span className="loading loading-spinner"></span>
                 ) : (
                   <img
-                    src={formData.image}
+                    src={formData?.image}
                     alt="Profile"
                     className="object-cover w-full h-full bg-cover bg-center rounded-full"
                   />

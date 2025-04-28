@@ -6,9 +6,11 @@ import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { CheckCircle, XCircle, Eye, Trash2 } from "lucide-react"; // optional icons
+import { EllipsisVertical } from "lucide-react";
 
 const ManageJobs = () => {
   const { currentUser } = useAppContext();
+  const [actions, setActions] = useState(false);
   const [viewJob, setViewJob] = useState(null);
 
   // Fetch Jobs
@@ -39,6 +41,7 @@ const ManageJobs = () => {
         background: "#D5F5F6",
         width: 300,
       });
+      setActions(false);
       refetchJobs();
     },
     onError: () =>
@@ -64,6 +67,7 @@ const ManageJobs = () => {
         background: "#D5F5F6",
         width: 300,
       });
+      setActions(false);
       refetchJobs();
     },
     onError: () =>
@@ -162,34 +166,45 @@ const ManageJobs = () => {
                     {/* View */}
                     <button
                       onClick={() => setViewJob(job)}
-                      className="w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200"
+                      className="w-8 h-8 flex items-center cursor-pointer justify-center bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200"
                     >
-                      <Eye className="w-5 h-5" />
+                      <Eye size={18} />
                     </button>
-                    {job.status !== "active" && (
-                      <>
+                    <div className="relative">
+                      <button
+                        onClick={() => setActions(!actions)}
+                        className="py-1 px-1 cursor-pointer bg-teal-200 hover:bg-teal-500 rounded-xl "
+                      >
+                        <EllipsisVertical size={18} />
+                      </button>
+                      <div
+                        className={`${
+                          actions
+                            ? "opacity-100"
+                            : "opacity-0 scale-75 pointer-events-none"
+                        } absolute duration-300 bottom-0 right-8 px-2 py-1 rounded-lg flex flex-row gap-2 shadow-md bg-white z-20 border border-gray-200 items-center justify-center`}
+                      >
                         <button
                           onClick={() => handleStatus(job, "active")}
-                          className="w-8 h-8 flex items-center justify-center bg-green-100 text-green-600 rounded-full hover:bg-green-200"
+                          className="accept-btn"
                         >
-                          <CheckCircle className="w-5 h-5" />
+                          <CheckCircle size={18} />
                         </button>
                         <button
                           onClick={() => handleStatus(job, "deactivated")}
-                          className="w-8 h-8 flex items-center justify-center bg-yellow-100 text-yellow-600 rounded-full hover:bg-yellow-200"
+                          className="reject-btn"
                         >
-                          <XCircle className="w-5 h-5" />
+                          <XCircle size={18} />
                         </button>
-                      </>
-                    )}
-
-                    {/* Delete */}
-                    <button
-                      onClick={() => handleDelete(job)}
-                      className="w-8 h-8 flex items-center justify-center bg-red-100 text-red-600 rounded-full hover:bg-red-200"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
+                        {/* Delete */}
+                        <button
+                          onClick={() => handleDelete(job)}
+                          className="delete-btn"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ))

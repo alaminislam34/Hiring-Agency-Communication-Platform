@@ -11,18 +11,19 @@ export async function GET(req) {
 
     const query = { status: "active" };
     if (industry) {
-      query.title = { $regex: industry, $options: "i" };
+      query.industry = { $regex: industry, $options: "i" };
     }
     if (location) {
       query.location = { $regex: location, $options: "i" };
     }
     if (keyword) {
-      query.keyword = { $regex: keyword, $options: "i" };
+      query.title = { $regex: keyword, $options: "i" };
     }
 
     const jobs = await jobsCollection.find(query).toArray();
 
-    console.table("all jobs here server api allJobs: ", jobs);
+    console.table("all jobs here server api allJobs: ");
+    console.table(jobs);
     return NextResponse.json(jobs);
   } catch (error) {
     console.error("Error fetching jobs:", error);

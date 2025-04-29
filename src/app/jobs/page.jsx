@@ -6,45 +6,35 @@ import { useAppContext } from "@/Providers/AppProviders";
 import JobsFilterOptions from "./components/JobsFilterOptions";
 import ApplyButton from "./components/ApplyButton";
 import { TailSpin } from "react-loader-spinner";
-import { Bookmark } from "lucide-react";
-import { BsBookmarkFill } from "react-icons/bs";
+
 import axios from "axios";
 import JobsBanner from "./components/JobsBanner";
 import { useState } from "react";
 import { MapPin } from "lucide-react";
-import { Briefcase } from "lucide-react";
-import { GraduationCap } from "lucide-react";
-import { Clock } from "lucide-react";
-import { Calendar } from "lucide-react";
+
 import { Grid2X2 } from "lucide-react";
 import { Rows3 } from "lucide-react";
+
+import BookmarkButton from "./components/BookmarkButton";
 
 const AllJobs = () => {
   const [industry, setIndustry] = useState("");
   const [grid, setGrid] = useState(true);
   const [location, setLocation] = useState("");
   const [keyword, setKeyword] = useState("");
-  const { bookmark, setBookmark, currentUser, appliedJobsCollection } =
-    useAppContext();
+  const [jobType, setJobType] = useState("");
 
   const { data: jobs, isLoading } = useQuery({
-    queryKey: ["jobs", industry, location, keyword],
+    queryKey: ["jobs", industry, location, keyword, jobType],
     queryFn: async () => {
       const res = await axios.get("/api/activeJobs", {
-        params: { industry, location, keyword },
+        params: { industry, location, keyword, jobType },
       });
       return res.data;
     },
+    enabled: true,
   });
   console.log(jobs);
-
-  const handleBookmark = (jobId) => {
-    setBookmark((prev) =>
-      prev.includes(jobId)
-        ? prev.filter((id) => id !== jobId)
-        : [...prev, jobId]
-    );
-  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -63,14 +53,14 @@ const AllJobs = () => {
         keyword={keyword}
         jobs={jobs}
       />
-      <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-6 gap-6">
         {/* Filters Section */}
         <aside className="md:col-span-1 bg-white border border-teal-500 rounded-2xl shadow-sm p-5">
-          <JobsFilterOptions />
+          <JobsFilterOptions setJobType={setJobType} jobType={jobType} />
         </aside>
 
         {/* Jobs Section */}
-        <main className="md:col-span-3 lg:col-span-4 bg-white border border-teal-500 rounded-2xl shadow-sm">
+        <main className="md:col-span-4 lg:col-span-5 bg-white border border-teal-500 rounded-2xl shadow-sm">
           {/* Job Cards */}
           <div className="p-5">
             {isLoading ? (
@@ -102,57 +92,43 @@ const AllJobs = () => {
                 {jobs?.length > 0 ? (
                   <div
                     className={`grid grid-cols-1 ${
-                      grid ? "md:grid-cols-2" : ""
-                    } gap-6`}
+                      grid ? "md:grid-cols-2 lg:grid-cols-3" : ""
+                    } gap-6 lg:gap-8`}
                   >
                     {jobs?.map((job) => (
                       <div
                         key={job._id}
-                        className="p-3 lg:p-4 rounded-lg shadow-md border border-teal-100 bg-white"
+                        className="p-3 flex relative justify-between flex-col gap-2 lg:p-4 hover:-translate-y-1 duration-300 rounded-xl shadow-xl hover:shadow-teal-300 hover:shadow-2xl shadow-teal-100 border border-teal-300 bg-white overflow-hidden"
                       >
-                        {/* Header */}
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h2 className="text-xl font-medium text-teal-700">
-                              {job.industry}
-                            </h2>
-                            <p className="text-gray-600 flex items-center gap-1">
-                              <MapPin size={16} />
-                              {job.location} ({job.vacancy} openings)
-                            </p>
+                        <div className="absolute -right-[70px] rotate-45 w-[200px] h-[30px] bg-teal-600 flex items-center justify-center">
+                          <span className="text-xs text-white">{job.type}</span>
+                        </div>
+                        <div className="space-y-2">
+                          {/* Header */}
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <h2 className=" text-teal-700">{job.industry}</h2>
+                              <p className="text-gray-600 text-sm flex items-center gap-1">
+                                <MapPin size={16} />
+                                {job.location} ({job.vacancy} openings)
+                              </p>
+                            </div>
                           </div>
-                          <span className="bg-teal-100 text-teal-800 text-xs px-2 py-1 rounded-full">
-                            {job.type}
-                          </span>
+
+                          {/* Job Title */}
+                          <h1 className="lg:text-lg mt-3 font-medium text-teal-800">
+                            {job.title}
+                          </h1>
+
+                          {/* Description */}
+                          <p className="mt-4 text-sm text-gray-700">
+                            {job.description.slice(0, 100) + " ..."}
+                          </p>
                         </div>
-
-                        {/* Job Title */}
-                        <h1 className="text-xl md:text-2xl font-bold mt-3 text-gray-800">
-                          {job.title}
-                        </h1>
-
-                        {/* Description */}
-                        <p className="mt-4 text-gray-700">{job.description}</p>
-
-                        {/* Skills */}
-                        <div className="mt-4">
-                          <h3 className="font-semibold text-teal-700 flex flex-wrap items-center gap-2">
-                            Skills:{" "}
-                            <span className="text-sm flex flex-wrap gap-2 text-gray-700 font-normal">
-                              {" "}
-                              {job.skills.map((skill, index) => (
-                                <span key={index} className="">
-                                  {skill}
-                                </span>
-                              ))}
-                            </span>
-                          </h3>
-                        </div>
-
                         {/* Footer */}
-                        <div className="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div className="">
                           <div>
-                            <p className="font-bold text-teal-700">
+                            <p className="font-semibold text-sm text-teal-700">
                               {job.minSalary +
                                 " - " +
                                 job.maxSalary +
@@ -161,14 +137,22 @@ const AllJobs = () => {
                                 ""}
                             </p>
                           </div>
-                          <ApplyButton
-                            job={job}
-                            alreadyApplied={false}
-                            modalId="apply-job-modal"
-                          />
-                          {/* <button className="btn btn-primary bg-teal-600 hover:bg-teal-700 border-none text-white w-full sm:w-auto">
-                            Apply Now
-                          </button> */}
+                          <div className="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div className="flex flex-row gap-4 items-center">
+                              <Link
+                                href={`/jobs/${job._id}`}
+                                className="text-teal-600 hover:underline"
+                              >
+                                more..
+                              </Link>
+                              <BookmarkButton jobs={job} />
+                            </div>
+                            <ApplyButton
+                              job={job}
+                              alreadyApplied={false}
+                              modalId="apply-job-modal"
+                            />
+                          </div>
                         </div>
                       </div>
                     ))}

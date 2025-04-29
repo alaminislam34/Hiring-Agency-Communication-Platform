@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
                 <nav className="sticky top-0 z-50 w-full">
                   <ClientNavbar />
                 </nav>
-                <section className="md:min-h-[500px] min-h-[350px] ">
+                <section className="md:min-h-[500px] min-h-screen">
                   {children}
                 </section>
 

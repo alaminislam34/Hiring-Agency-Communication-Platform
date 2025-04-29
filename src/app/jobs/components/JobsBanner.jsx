@@ -38,9 +38,9 @@ const JobsBanner = ({
               className="bg-transparent outline-none text-sm px-2 text-gray-600 w-full"
             >
               <option value="">All Industries</option>
-              <option value="Software">Software</option>
+              <option value="Software">Software Development</option>
               <option value="Finance">Finance</option>
-              <option value="Development">Development</option>
+              <option value="Design & Creative">Design & Creative</option>
               <option value="Management">Management</option>
               <option value="Recruiting">Recruiting</option>
               <option value="Advertising">Advertising</option>

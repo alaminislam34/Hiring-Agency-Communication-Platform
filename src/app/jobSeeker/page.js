@@ -19,6 +19,7 @@ import CircleChart from "../components/dashboardComponents/CircleChart";
 import LineChartForPerDayApply from "./components/HomepageComponents/LineChartForPerDayApply";
 import TypeWiseApply from "./components/HomepageComponents/TypeWiseApply";
 import TopJobTitleApply from "./components/HomepageComponents/TopJobTitleApply";
+import { useEffect, useState } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -68,21 +69,68 @@ const chartOptions = {
 };
 
 const Overview = () => {
+  const { showName, appliedJobsCollection, jobs } = useAppContext();
+  const pendingApplications = appliedJobsCollection?.filter(
+    (job) => job.status === "Applied"
+  );
+  const totalInterviews = appliedJobsCollection?.filter(
+    (job) => job.status === "interview"
+  );
+  const [savedJobs, setSavedJobs] = useState([]);
+
+  // unique job type
+  const uniqueJobType = [
+    ...new Set(appliedJobsCollection?.map((job) => job.jobType)),
+  ];
+
+  // Count applications for each unique job type
+  const jobApplicationsCount = uniqueJobType?.map((type) => {
+    const count = appliedJobsCollection.filter(
+      (job) => job.jobType === type
+    )?.length;
+    return { type, applications: count };
+  });
+
+  // unique job title
+  const uniqueJobTitle = [
+    ...new Set(appliedJobsCollection?.map((job) => job.title)),
+  ];
+  // Count applications for each unique job title
+  const jobApplicationCountTitle = uniqueJobTitle?.map((title) => {
+    const count = appliedJobsCollection.filter(
+      (job) => job.title === title
+    )?.length;
+    return { title, count: count };
+  });
+
+  useEffect(() => {
+    const savedJobs = localStorage.getItem("bookmark") || [];
+    setSavedJobs(jobs?.filter((job) => savedJobs.includes(job._id)));
+  }, []);
+
   const stat = [
-    { title: "Applied Jobs", value: 5, icon: <CircleCheck size={24} /> },
+    {
+      title: "Total Apply",
+      value: appliedJobsCollection?.length || 0,
+      icon: <CircleCheck size={24} />,
+    },
     {
       title: "Pending Applications",
-      value: 24,
+      value: pendingApplications?.length || 0,
       icon: <BriefcaseBusiness size={24} />,
     },
     {
-      title: "Success Rate",
-      value: 12,
+      title: "Interviews",
+      value: totalInterviews?.length || 0,
       icon: <BriefcaseBusiness size={24} />,
     },
-    { title: "Saved Jobs", value: 145, icon: <Bookmark size={24} /> },
+    {
+      title: "Saved Jobs",
+      value: savedJobs?.length || 0,
+      icon: <Bookmark size={24} />,
+    },
   ];
-  const { currentUser, showName, jobs } = useAppContext();
+
   return (
     <div className="">
       <DashboardTitle stat={stat} />
@@ -95,13 +143,13 @@ const Overview = () => {
         </div>
         <div className="md:col-span-2 lg:col-span-3">
           {/* ToDo:  Job Apply for category overview */}
-          <TypeWiseApply />
+          <TypeWiseApply jobApplicationsCount={jobApplicationsCount} />
         </div>
       </section>
 
       {/* {/* ToDo:  Top Job Title Apply overview */}
       <section>
-        <TopJobTitleApply />
+        <TopJobTitleApply jobApplicationCountTitle={jobApplicationCountTitle} />
       </section>
 
       {/* Chart Comparison */}

@@ -118,7 +118,7 @@ const ManageJobs = () => {
                   <td>{job.category}</td>
                   <td>{job.type}</td>
                   <td>
-                    {job.salary?.min}k – {job.salary?.max}k
+                    {job.minSalary}k – {job.maxSalary}k
                   </td>
                   <td>{new Date(job.meta?.deadline).toLocaleDateString()}</td>
                   <td>

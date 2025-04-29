@@ -9,8 +9,9 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useAppContext } from "@/Providers/AppProviders";
 
-// Register chart elements
+// Chart.js রেজিস্ট্রেশন
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -20,40 +21,7 @@ ChartJS.register(
   Legend
 );
 
-// Chart Data
-const chartData = {
-  labels: [
-    "Software Engineering",
-    "Digital Marketing",
-    "Product Management",
-    "Customer Success",
-    "Design",
-    "Sales",
-    "Marketing",
-    "Finance",
-    "Human Resources",
-    "Operations",
-  ],
-  datasets: [
-    {
-      label: "Jobs Count",
-      data: [240, 120, 150, 145, 250, 300, 250, 200, 180, 190],
-      backgroundColor: [
-        "#4ade80", // Green
-        "#60a5fa", // Blue
-        "#facc15", // Yellow
-        "#f97316", // Orange
-        "#a78bfa", // Purple
-        "#f87171", // Red
-        "#34d399", // Emerald
-      ],
-      borderWidth: 1,
-      borderRadius: 6,
-    },
-  ],
-};
-
-// Chart Options
+// চার্ট অপশন
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -69,7 +37,7 @@ const chartOptions = {
     },
     title: {
       display: true,
-      text: "Job Statistics Overview",
+      text: "My Jobs by Type",
       color: "teal",
       font: {
         size: 18,
@@ -84,6 +52,31 @@ const chartOptions = {
 };
 
 const ApplicationsPerJob = () => {
+  const { jobs, currentUser } = useAppContext();
+
+  // আমার জবগুলো বের করা
+  const myJobs =
+    jobs?.filter((job) => job.meta.postedById === currentUser?._id) || [];
+  const jobTypes = myJobs?.map((job) => job.type) || [];
+  const uniqueType = [...new Set(jobTypes)];
+  const jobTypeCount = uniqueType?.map((type) => {
+    const count = myJobs?.filter((job) => job.type === type)?.length || 0;
+    return count;
+  });
+  console.log(jobTypes, jobTypeCount);
+  const chartData = {
+    labels: uniqueType,
+    datasets: [
+      {
+        label: "Jobs Count",
+        data: jobTypeCount,
+        backgroundColor: ["#60a5fa", "#facc15", "#34d399", "#f87171"],
+        borderWidth: 1,
+        borderRadius: 6,
+      },
+    ],
+  };
+
   return (
     <div className="w-full h-full rounded-2xl border border-teal-200">
       <div className="rounded-2xl shadow-lg bg-white p-4 w-full h-[450px]">

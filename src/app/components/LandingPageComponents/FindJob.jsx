@@ -57,6 +57,9 @@ export default function FindJob() {
           </button>
         </form>
       </div>
+      <div className="flex items-center justify-center p-4">
+        <img src="/image.webp" alt="" />
+      </div>
     </div>
   );
 }

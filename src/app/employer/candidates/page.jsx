@@ -80,6 +80,7 @@ const Candidates = () => {
 
   return (
     <div className="p-6">
+      {/* akane filter korar jonno candidate er experience jegulo fullfill ase tader filter korte parbo plus jader nei tader o korte parbo. arekta option takbe akta email send button takbe oikhane akta field takbe jeta email er body te takbe ar reject er jonno hoile akta reject subject takbe, ar accept er jonno hoilo accept  */}
       {isLoading ? (
         <div className="w-full h-[70vh] flex items-center justify-center">
           <span className="loading loading-spinner loading-lg"></span>
@@ -95,8 +96,9 @@ const Candidates = () => {
                 <tr className="table-head-row-class">
                   <th>#</th>
                   <th>Name</th>
-                  <th>Email</th>
                   <th>Job Title</th>
+                  <th>Experience</th>
+                  <th>Skills</th>
                   <th>Job Type</th>
                   <th>Deadline</th>
                   <th>Resume</th>
@@ -108,10 +110,13 @@ const Candidates = () => {
                   <tr key={user._id || index} className="table-row-class">
                     <td>{index + 1}</td>
                     <td>{user.candidateName}</td>
-                    <td>{user.candidateEmail}</td>
                     <td>{user.title}</td>
+                    <td>{user.experience}</td>
+                    {/* akane skills employer er requirement er sathe koto tuk match kortese tar perchantage ta dekhabo */}
+                    <td>{user.skills}</td>
                     <td>{user.jobType}</td>
                     <td>{new Date(user.deadline).toLocaleDateString()}</td>
+                    {/* akane user er resume ta scan kore job er requirement er sathe kototuk match korteche ata dekhabo.  */}
                     <td>
                       <a
                         href={user.resume}
@@ -123,29 +128,24 @@ const Candidates = () => {
                       </a>
                     </td>
                     <td>
-                      <div className="flex items-center justify-center gap-2">
-                        <button className="bg-teal-500 cursor-pointer text-white px-3 py-1 rounded-md hover:bg-opacity-80 transition">
-                          Contact
-                        </button>
-                        <select
-                          disabled={isReview}
-                          onChange={(e) =>
-                            handleCandidates(
-                              user._id,
-                              e.target.value,
-                              user.candidateEmail
-                            )
-                          }
-                          defaultValue=""
-                          className="border border-teal-500 select select-xs"
-                        >
-                          <option disabled value="">
-                            Select
-                          </option>
-                          <option value="Accepted">Accepted</option>
-                          <option value="Rejected">Rejected</option>
-                        </select>
-                      </div>
+                      <select
+                        disabled={isReview}
+                        onChange={(e) =>
+                          handleCandidates(
+                            user._id,
+                            e.target.value,
+                            user.candidateEmail
+                          )
+                        }
+                        defaultValue=""
+                        className="border border-teal-500 select select-sm"
+                      >
+                        <option disabled value="">
+                          Select
+                        </option>
+                        <option value="Accepted">Accepted</option>
+                        <option value="Rejected">Rejected</option>
+                      </select>
                     </td>
                   </tr>
                 ))}

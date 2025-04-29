@@ -1,16 +1,19 @@
 "use client";
 
-import { Facebook, Twitter, Linkedin } from "lucide-react";
-import { FaGoogle, FaGooglePlay } from "react-icons/fa6";
+import { Facebook, Linkedin } from "lucide-react";
+import Link from "next/link";
+import { FaGoogle, FaGooglePlay, FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
     <footer className="bg-base-300 text-[#333] pt-6 md:pt-10">
-      <div className="container mx-auto px-4 grid md:grid-cols-5 gap-8 pb-6">
+      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 pb-6">
         {/* Logo & Description */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <img src="/jobhive.jpg" alt="logo" className="h-12" />
+            <Link href="/">
+              <img src="/jobHive.png" alt="logo" className="h-12" />
+            </Link>
           </div>
           <p className="text-sm text-gray-500 leading-relaxed">
             JobHive is the heart of the design community and the best resource
@@ -22,8 +25,8 @@ const Footer = () => {
             <button className="btn btn-circle btn-sm bg-[#F2F4F7] hover:bg-teal-500 text-teal-500 hover:text-white">
               <Facebook size={18} />
             </button>
-            <button className="btn btn-circle btn-sm bg-[#F2F4F7] hover:bg-teal-500 text-teal-500 hover:text-white">
-              <Twitter size={18} />
+            <button className="btn btn-circle text-lg btn-sm bg-[#F2F4F7] hover:bg-teal-500 text-teal-500 hover:text-white">
+              <FaXTwitter />
             </button>
             <button className="btn btn-circle btn-sm bg-[#F2F4F7] hover:bg-teal-500 text-teal-500 hover:text-white">
               <Linkedin size={18} />
@@ -119,30 +122,34 @@ const Footer = () => {
             Download our Apps and get extra 15% Discount on your first Order…!
           </p>
           <div className="flex flex-col gap-2">
-            <a
-              href="#"
-              className="bg-teal-500 text-white hover:bg-teal-600 duration-300 flex flex-row gap-2 items-center p-2 border border-teal-500 rounded-lg"
-            >
-              <span>
-                <FaGooglePlay />
-              </span>
-              <div className="text-sm">
-                <span>Download on the</span> <br />
-                <span className="font-bold">App Store</span>
-              </div>
-            </a>
-            <a
-              href="#"
-              className="bg-teal-500 text-white hover:bg-teal-600 duration-300 flex flex-row gap-2 items-center p-2 border border-teal-500 rounded-lg"
-            >
-              <span>
-                <FaGoogle />
-              </span>
-              <div className="text-sm">
-                <span>Download on the</span> <br />
-                <span className="font-bold">Google Store</span>
-              </div>
-            </a>
+            <div className="flex justify-start">
+              <a
+                href="#"
+                className="bg-teal-600 text-white hover:bg-teal-700 duration-300 flex flex-row gap-2 items-center py-2 px-4 border border-teal-500 rounded-lg"
+              >
+                <span>
+                  <FaGooglePlay />
+                </span>
+                <div className="text-sm">
+                  <span className="text-xs">Download on the</span> <br />
+                  <span className="font-semibold">App Store</span>
+                </div>
+              </a>
+            </div>
+            <div className="flex justify-start">
+              <a
+                href="#"
+                className="bg-teal-600 text-white hover:bg-teal-700 duration-300 flex flex-row gap-2 items-center py-2 px-4 border border-teal-500 rounded-lg"
+              >
+                <span>
+                  <FaGoogle />
+                </span>
+                <div className="text-sm">
+                  <span className="text-xs">Download on the</span> <br />
+                  <span className="font-semibold">Google Store</span>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -251,7 +251,7 @@ const Navbar = () => {
               <div className="flex flex-col gap-4 h-full">
                 {/* Logo */}
                 <div className="p-4">
-                  <img src="/jobhive.jpg" alt="logo" className="h-12" />
+                  <img src="/jobHive.png" alt="logo" className="h-12" />
                 </div>
 
                 {/* Navigation Links */}
@@ -293,9 +293,9 @@ const Navbar = () => {
             {/* Logo */}
             <Link href="/" className="text-xl font-bold flex items-center">
               <img
-                src="/jobhive.jpg"
+                src="/jobHive.png"
                 alt="Logo"
-                className="h-16 md:block hidden mr-2"
+                className="h-16 md:block hidden mr-2 p-2"
               />
               <img
                 src="/jobhive2.jpg"

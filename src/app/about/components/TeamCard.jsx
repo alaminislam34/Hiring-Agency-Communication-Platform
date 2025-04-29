@@ -87,7 +87,7 @@ const TeamCard = () => {
                   <div className="w-28 h-28 border border-teal-500 bg-gray-300 rounded-full mx-auto mb-4 flex justify-center items-center overflow-hidden">
                     <img
                       className="object-cover bg-cover bg-center w-full h-full"
-                      src={imgSrc}
+                      src={imgSrc || 'https:c.b'}
                       alt="Team member"
                     />
                   </div>

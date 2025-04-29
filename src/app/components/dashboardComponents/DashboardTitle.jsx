@@ -1,12 +1,7 @@
 "use client";
 
 import { useAppContext } from "@/Providers/AppProviders";
-import { Bookmark } from "lucide-react";
-import { CircleCheck } from "lucide-react";
-import { BriefcaseBusiness } from "lucide-react";
-import { Users } from "lucide-react";
 import { FaArrowTrendUp } from "react-icons/fa6";
-import { ThreeDots } from "react-loader-spinner";
 
 const DashboardTitle = ({ stat }) => {
   const { currentUser } = useAppContext();

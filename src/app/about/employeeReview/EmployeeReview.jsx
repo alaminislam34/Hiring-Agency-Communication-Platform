@@ -39,7 +39,7 @@ const EmployeeReview = () => {
                 <p className="text-2xl font-semibold">"{review.testimonial}"</p>
                 <div className="flex items-center gap-3">
                   <img
-                    src={review.image}
+                    src={review.image || "https:c.b"}
                     alt={review.name}
                     className="w-10 h-10 rounded-full"
                   />
@@ -51,17 +51,17 @@ const EmployeeReview = () => {
               {/* Image Section (Placeholder Fancy Design) */}
               <div className="md:w-1/2 grid grid-cols-2 gap-4">
                 <img
-                  src={review.image}
+                  src={review.image || "https:c.b"}
                   alt="employee"
                   className="rounded-lg object-cover w-full h-[500px] row-span-2"
                 />
                 <img
-                  src={review.image}
+                  src={review.image || "https:c.b"}
                   alt="employee"
                   className="rounded-lg object-cover w-full h-[250px]"
                 />
                 <img
-                  src={review.image}
+                  src={review.image || "https:c.b"}
                   alt="employee"
                   className="rounded-lg object-cover w-full h-[250px]"
                 />

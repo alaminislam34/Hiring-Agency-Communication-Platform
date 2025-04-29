@@ -12,20 +12,16 @@ import { Bar } from "react-chartjs-2";
 // Register necessary Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const TopJobTitleApply = () => {
+const TopJobTitleApply = ({ jobApplicationCountTitle }) => {
+  const title = jobApplicationCountTitle?.map((title) => title.title);
+  const count = jobApplicationCountTitle?.map((title) => title.count);
   // Example static data: Replace with dynamic data if needed
   const data = {
-    labels: [
-      "Frontend Developer",
-      "React Developer",
-      "UI/UX Designer",
-      "Backend Developer",
-      "Full Stack Developer",
-    ],
+    labels: title,
     datasets: [
       {
         label: "Applications",
-        data: [8, 10, 4, 5, 6],
+        data: count,
         backgroundColor: "#4F46E5", // Indigo-600
         borderRadius: 6,
         barThickness: 20,

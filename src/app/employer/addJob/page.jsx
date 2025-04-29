@@ -57,9 +57,8 @@ const JobPostForm = () => {
     educationLevel: "",
     industry: "",
     languages: [],
-    gender: "",
     vacancy: 1,
-    attachment: "",
+    status: "pending",
     meta: {
       postedBy: currentUser?.email,
       postedById: currentUser?._id,
@@ -213,6 +212,9 @@ const JobPostForm = () => {
               <option value="Full-time">Full-time</option>
               <option value="Part-time">Part-time</option>
               <option value="Remote">Remote</option>
+              <option value="Internship">Internship</option>
+              <option value="Contract">Contract</option>
+              <option value="Hybrid">Hybrid</option>
               <option value="Freelance">Freelance</option>
             </select>
           </div>
@@ -369,10 +371,14 @@ const JobPostForm = () => {
               className="form-input"
               required
             >
-              <option value="Software">Software</option>
+              <option value="" disabled>
+                Select Industry
+              </option>
+              <option value="Software">Software Development</option>
               <option value="Finance">Finance</option>
-              <option value="Development">Development</option>
+              <option value="Design & Creative">Design & Creative</option>
               <option value="Management">Management</option>
+              <option value="Marketing">Marketing</option>
               <option value="Recruiting">Recruiting</option>
               <option value="Advertising">Advertising</option>
               <option value="Health">Health</option>
@@ -443,17 +449,6 @@ const JobPostForm = () => {
               placeholder="Number of Vacancy"
             />
           </div>
-        </div>
-        {/* Image Upload */}
-        <div>
-          <label className="form-label">Attachment (Optional)</label>
-          <input
-            type="text"
-            placeholder="Share your attachment link"
-            accept="https://*"
-            onChange={(e) => handleChange("attachment", e.target.value)}
-            className="form-input cursor-pointer"
-          />
         </div>
 
         {/* Submit Button */}

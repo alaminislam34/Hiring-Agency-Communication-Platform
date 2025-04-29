@@ -30,7 +30,7 @@ const DashboardSideBar = ({ isOpen, setIsOpen }) => {
           <div className="py-2 flex justify-center items-center">
             <Link href={"/"}>
               <img
-                src={isOpen ? "/jobhive.jpg" : "/jobhive2.jpg"}
+                src={isOpen ? "/jobhive.jpg" : "/jobhive2.jpg" || "https:c.b"}
                 alt="logo"
                 className="h-12"
               />
@@ -38,7 +38,7 @@ const DashboardSideBar = ({ isOpen, setIsOpen }) => {
           </div>
           <div className="text-center flex flex-col items-center justify-center">
             <img
-              src={currentUser?.image}
+              src={currentUser?.image || "/fakeUser.jpg"}
               alt="user"
               className="w-12 h-12 rounded-full border object-cover bg-cover bg-center"
             />

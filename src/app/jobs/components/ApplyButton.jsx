@@ -1,5 +1,6 @@
 "use client";
 
+import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
 import { useState, useRef } from "react";
 import { ThreeDots } from "react-loader-spinner";
@@ -7,12 +8,17 @@ import Swal from "sweetalert2";
 
 export default function ApplyButton({ job, modalId, alreadyApplied }) {
   console.log("job data in apply button", job);
+  const { currentUser, appliedJobsRefetch } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
+    candidateId: currentUser?._id,
     candidateName: "",
     candidateEmail: "",
     resume: "",
     coverLetter: "",
+    experience: "",
+    educationLevel: currentUser?.degreeTitle || "",
+    candidateSkills: currentUser?.skills || "",
   });
 
   const modalRef = useRef(null);
@@ -39,6 +45,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       companyName: job.meta.companyName,
       postedById: job.meta.postedById,
       postedBy: job.meta.postedBy,
+      appliedAt: new Date().toISOString(),
       status: "Applied",
     };
 
@@ -46,7 +53,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       const res = await axios.post("/api/apply-job", applicationData);
       if (res?.status === 200) {
         modalRef.current?.close();
-
+        appliedJobsRefetch();
         setTimeout(() => {
           Swal.fire({
             text: res.data?.message || "Application submitted successfully.",
@@ -61,9 +68,10 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       }
     } catch (err) {
       console.error("❌ Submission error:", err);
+      modalRef.current?.close();
       Swal.fire({
         icon: "error",
-        text: "Something went wrong. Please try again.",
+        text: "You have already apply this job.",
         timer: 1500,
         showCloseButton: false,
         width: "300px",
@@ -71,6 +79,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
         animation: true,
       });
     } finally {
+      appliedJobsRefetch();
       setLoading(false);
     }
   };
@@ -94,9 +103,9 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
       <dialog
         id={modalId}
         ref={modalRef}
-        className="modal modal-bottom sm:modal-middle"
+        className="modal modal-bottom my-auto"
       >
-        <div className="modal-box bg-white shadow-lg rounded-lg p-6 max-w-xl mx-auto">
+        <div className="modal-box bg-white shadow-lg rounded-lg p-6 w-10/12 md:w-8/12 lg:w-6/12 mx-auto my-auto">
           <h3 className="font-bold text-2xl text-teal-700 text-center mb-4">
             Apply for This Job
           </h3>
@@ -109,6 +118,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
                 type="text"
                 name="candidateName"
                 value={formData.candidateName}
+                placeholder="Enter your full name"
                 onChange={handleChange}
                 required
                 className="form-input"
@@ -121,13 +131,52 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
               <input
                 type="email"
                 name="candidateEmail"
+                placeholder="Enter your email address"
                 value={formData.candidateEmail}
                 onChange={handleChange}
                 required
                 className="form-input"
               />
             </div>
-
+            <div>
+              {/* experience */}
+              <label className="form-label">Experience</label>
+              <input
+                type="text"
+                name="experience"
+                value={formData.experience}
+                placeholder="Enter your experience"
+                onChange={handleChange}
+                required
+                className="form-input"
+              />
+            </div>
+            <div>
+              {/* education level */}
+              <label className="form-label">Education Level</label>
+              <input
+                type="text"
+                name="degreeTitle"
+                placeholder="Enter your degree title"
+                value={formData.degreeTitle}
+                onChange={handleChange}
+                required
+                className="form-input"
+              />
+            </div>
+            <div>
+              {/* skills */}
+              <label className="form-label">Skills</label>
+              <input
+                type="text"
+                name="skills"
+                value={formData.skills}
+                placeholder="Enter your skills"
+                onChange={handleChange}
+                required
+                className="form-input"
+              />
+            </div>
             {/* Resume */}
             <div>
               <label className="form-label">
@@ -150,6 +199,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
               <textarea
                 name="coverLetter"
                 value={formData.coverLetter}
+                placeholder="Enter your cover letter"
                 onChange={handleChange}
                 rows={4}
                 className="form-input"
@@ -160,7 +210,7 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
             <div className="flex justify-end space-x-3 pt-4">
               <button
                 type="button"
-                className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300"
+                className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 cursor-pointer"
                 onClick={() => modalRef.current?.close()}
               >
                 Cancel

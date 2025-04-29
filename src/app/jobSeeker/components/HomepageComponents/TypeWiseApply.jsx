@@ -5,14 +5,16 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 // Register Chart.js elements
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const TypeWiseApply = () => {
+const TypeWiseApply = ({ jobApplicationsCount }) => {
+  const labels = jobApplicationsCount?.map((item) => item.type);
+  const value = jobApplicationsCount?.map((item) => item.applications);
   // Dummy data: replace later with dynamic data
   const data = {
-    labels: ["Remote", "Onsite", "Hybrid"],
+    labels: labels,
     datasets: [
       {
         label: "Applications",
-        data: [10, 5, 3],
+        data: value,
         backgroundColor: [
           "#4F46E5", // Indigo
           "#22C55E", // Green

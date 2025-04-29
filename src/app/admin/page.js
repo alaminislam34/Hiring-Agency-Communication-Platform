@@ -9,28 +9,32 @@ import TotalJobStatistics from "./components/HomepageComponents/TotalJobStatisti
 import UserRoleDistribution from "./components/HomepageComponents/UsersRoleDistribution";
 import { CircleCheck } from "lucide-react";
 import { BriefcaseBusiness } from "lucide-react";
+import { useAppContext } from "@/Providers/AppProviders";
+import HomePage from "./components/HomePage";
 
 const Overview = () => {
+  const { totalAppliedJobs, totalUsers, jobs } = useAppContext();
+  const totalEmployer = totalUsers?.filter((user) => user.role === "employer");
   // Stat value
   const stat = [
     {
       title: "Total Users",
-      value: 0,
+      value: totalUsers?.length || 0,
       icon: <Users size={24} />,
     },
     {
       title: "Total Jobs",
-      value: 0,
+      value: jobs?.length || 0,
       icon: <BriefcaseBusiness size={24} />,
     },
     {
       title: "Total Apply",
-      value: 0,
+      value: totalAppliedJobs?.length || 0,
       icon: <CircleCheck size={24} />,
     },
     {
       title: "Total Employers",
-      value: 0,
+      value: totalEmployer?.length || 0,
       icon: <Users size={24} />,
     },
   ];
@@ -39,28 +43,11 @@ const Overview = () => {
     <div className="space-y-4 md:space-y-6">
       {/* Dashboard Title */}
       <DashboardTitle stat={stat} />
-      <div className="w-full h-full">
+      <div>
         {/* Job Statistics Overview */}
         <TotalJobStatistics />
       </div>
-      <section className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-8 gap-4">
-        <div className="md:col-span-4 lg:col-span-5 w-full h-full">
-          <MonthlyUserRegistrationChart />
-        </div>
-        <div className="md:col-span-2 lg:col-span-3 w-full h-full">
-          <UserRoleDistribution />
-        </div>
-      </section>
-      {/* Top Employers By Job Post */}
-      <div className="w-full h-full">
-        <TopEmployersByJobPost />
-      </div>
-      <div className="w-full h-full">
-        <DailyJobApplyLineChart />
-      </div>
-      <div className="w-full h-full">
-        <TopViewedJobsChart />
-      </div>
+      <HomePage />
     </div>
   );
 };

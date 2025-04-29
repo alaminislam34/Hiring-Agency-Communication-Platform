@@ -77,9 +77,7 @@ export const AppProvider = ({ children }) => {
 
   // Fetch total applied jobs
   const fetchTotalAppliedJobs = async () => {
-    const res = await axios("/api/appliedJobs", {
-      params: { candidateEmail: currentUser?.email },
-    });
+    const res = await axios.get("/api/appliedJobs");
     return res.data;
   };
 
@@ -90,17 +88,15 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["totalAppliedJobs"],
     queryFn: fetchTotalAppliedJobs,
-    enabled: !!session,
   });
 
   // Fetch applied jobs
   const fetchAppliedJobs = async () => {
     const res = await axios("/api/appliedJobs", {
-      params: { candidateEmail: currentUser?.email },
+      params: { candidateId: currentUser?._id },
     });
     return res.data;
   };
-
   const {
     data: appliedJobsCollection,
     refetch: appliedJobsRefetch,
@@ -108,14 +104,12 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["appliedJobs"],
     queryFn: fetchAppliedJobs,
-    enabled: !!session,
+    enabled: !!currentUser?._id,
   });
 
   // Fetch all jobs
   const fetchJobs = async () => {
-    const res = await axios(`/api/allJobs`, {
-      params: { jobTitle, location, type },
-    });
+    const res = await axios(`/api/allJobs`);
     return res.data;
   };
 
@@ -126,7 +120,7 @@ export const AppProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["jobs", type, jobTitle, location],
     queryFn: fetchJobs,
-    enabled: true, // Always enabled
+    enabled: true,
   });
 
   // profile completed percentage

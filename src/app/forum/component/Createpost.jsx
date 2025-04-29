@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { FaPhotoVideo } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import { imageUpload } from "@/lib/ImageUpload";
 
 export default function CreatePost() {
   const [showModal, setShowModal] = useState(false);
@@ -25,14 +26,26 @@ export default function CreatePost() {
     setPreviewUrl(null);
     setFormData({ title: "", type: "Courses Topics", content: "" });
   };
-
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
+    if (!file) return;
+
     setSelectedFile(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setPreviewUrl(reader.result);
-      reader.readAsDataURL(file);
+
+    try {
+      // Upload image to Cloudinary
+      const uploadedImageUrl = await imageUpload(file);
+      console.log("Uploaded Image URL:", uploadedImageUrl);
+
+      setPreviewUrl(uploadedImageUrl);
+      // // Preview for local UI (optional)
+      // const reader = new FileReader();
+      // reader.onloadend = () => setPreviewUrl(reader.result);
+      // reader.readAsDataURL(file);
+
+      // You can save uploadedImageUrl to your form, database, etc.
+    } catch (error) {
+      console.error("Image upload failed:", error.message);
     }
   };
 
@@ -87,7 +100,8 @@ export default function CreatePost() {
             <input
               type="file"
               ref={fileInputRef}
-              className="hidden"
+              className=""
+              placeholder="upload your photo"
               onChange={handleFileChange}
               accept="image/*,video/*"
             />

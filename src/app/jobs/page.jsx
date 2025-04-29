@@ -34,6 +34,7 @@ const AllJobs = () => {
     },
     enabled: true,
   });
+  console.log(jobs);
 
   const handleSearch = (e) => {
     e.preventDefault();

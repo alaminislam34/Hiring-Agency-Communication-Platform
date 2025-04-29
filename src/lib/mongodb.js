@@ -41,4 +41,5 @@ export const collection = {
   interviewsCollection: "interviews",
   applyForEmployerCollection: "employerApply",
   forumPostCollection: "forum-post",
+  messagesCollection: "messages",
 };

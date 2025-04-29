@@ -36,6 +36,7 @@ const AllJobs = () => {
       return res.data;
     },
   });
+  console.log(jobs);
 
   const handleBookmark = (jobId) => {
     setBookmark((prev) =>

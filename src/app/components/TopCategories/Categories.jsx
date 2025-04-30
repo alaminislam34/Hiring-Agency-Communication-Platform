@@ -94,7 +94,6 @@ const Categories = () => {
             <h2 className="text-lg font-sm text-center text-gray-800 transition-colors group-hover:text-teal-500">
               {category.title}
             </h2>
-            {/* <p className="text-sm text-teal-500 mt-1">{`(${category.count})`}</p> */}
           </div>
         ))}
       </div>

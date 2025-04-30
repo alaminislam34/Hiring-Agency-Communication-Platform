@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { set } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
+import { imageUpload } from "@/lib/ImageUpload";
 
 const ProfileInfo = () => {
   const { currentUser, isEditing, setIsEditing, userRefetch } = useAppContext();
@@ -61,6 +62,10 @@ const ProfileInfo = () => {
   const handleEdit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const img = await imageUpload(formData.image);
+    if (img) {
+      setFormData((prev) => ({ ...prev, image: img }));
+    }
     try {
       const res = await axios.post("/api/updateProfile", formData);
       if (res.data.modifiedCount > 0) {
@@ -200,7 +205,12 @@ const ProfileInfo = () => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageUpload}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    image: URL.createObjectURL(e.target.files[0]),
+                  })
+                }
               />
               <div className="w-20 h-20 rounded-full border-2 border-teal-500 mt-2 flex items-center justify-center overflow-hidden">
                 {imageLoading ? (

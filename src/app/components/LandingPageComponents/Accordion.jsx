@@ -47,7 +47,7 @@ export default function Accordion() {
               className="collapse collapse-plus border duration-500 border-gray-300 rounded-lg"
             >
               <input type="checkbox" className="" />
-              <div className="collapse-title text-gray-700 bg-teal-200 text-lg font-medium">
+              <div className="collapse-title text-gray-700 bg-teal-100 text-lg font-medium">
                 {faq.question}
               </div>
               <div className="collapse-content">

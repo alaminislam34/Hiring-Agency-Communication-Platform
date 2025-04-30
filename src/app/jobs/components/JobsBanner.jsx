@@ -11,6 +11,24 @@ const JobsBanner = ({
   location,
   keyword,
 }) => {
+  const categories = [
+    "Software Engineering",
+    "UI/UX & Product Design",
+    "Digital Marketing & SEO",
+    "Business Strategy & Consulting",
+    "Mobile App Development",
+    "Web Development & Frontend",
+    "Accounting & Financial Analysis",
+    "Sales & Business Development",
+    "Customer Success & Support",
+    "HR & Talent Acquisition",
+    "Data Analytics & AI",
+    "Content Creation & Copywriting",
+    "Video Production & Animation",
+    "Project & Product Management",
+    "Mechanical & Civil Engineering",
+  ];
+
   return (
     <section className="relative bg-[#f9fbfd] rounded-3xl p-8 md:p-12 overflow-hidden">
       {/* Content */}
@@ -38,14 +56,11 @@ const JobsBanner = ({
               className="bg-transparent outline-none text-sm px-2 text-gray-600 w-full"
             >
               <option value="">All Industries</option>
-              <option value="Software">Software Development</option>
-              <option value="Finance">Finance</option>
-              <option value="Design & Creative">Design & Creative</option>
-              <option value="Management">Management</option>
-              <option value="Recruiting">Recruiting</option>
-              <option value="Advertising">Advertising</option>
-              <option value="Health">Health</option>
-              <option value="Education">Education</option>
+              {categories.map((ca, i) => (
+                <option key={i} value={ca}>
+                  {ca}
+                </option>
+              ))}
             </select>
           </div>
 

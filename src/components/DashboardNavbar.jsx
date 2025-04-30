@@ -116,7 +116,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
                 <p className="text-gray-500 text-sm">{currentUser?.email}</p>
               </li>
               <li className="border-b border-gray-300 mb-4"></li>
-              <li>
+              <li onClick={() => setIsDropdownOpen(false)}>
                 <Link
                   href={`/${currentUser?.role}/profile`}
                   className="py-2 px-4 hover:bg-teal-300 inline-block w-full rounded-lg"
@@ -125,7 +125,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
                 </Link>
               </li>
               {currentUser?.role === "jobSeeker" && (
-                <li>
+                <li onClick={() => setIsDropdownOpen(false)}>
                   <Link
                     href={`/${currentUser?.role}/savedJobs`}
                     className="py-2 px-4 hover:bg-teal-300 inline-block w-full rounded-lg"
@@ -134,7 +134,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
                   </Link>
                 </li>
               )}
-              <li>
+              <li onClick={() => setIsDropdownOpen(false)}>
                 <Link
                   href={"#"}
                   className="py-2 px-4 hover:bg-teal-300 inline-block w-full rounded-lg"
@@ -142,7 +142,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
                   Help
                 </Link>
               </li>
-              <li>
+              <li onClick={() => setIsDropdownOpen(false)}>
                 <Link
                   href={"#"}
                   className="py-2 px-4 hover:bg-teal-300 inline-block w-full rounded-lg"
@@ -150,7 +150,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
                   Message
                 </Link>
               </li>
-              <li>
+              <li onClick={() => setIsDropdownOpen(false)}>
                 <Link
                   href={"#"}
                   className="py-2 px-4 hover:bg-teal-300 inline-block w-full rounded-lg"
@@ -158,7 +158,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
                   Notifications
                 </Link>
               </li>
-              <li>
+              <li onClick={() => setIsDropdownOpen(false)}>
                 <Link
                   href={"#"}
                   className="py-2 px-4 hover:bg-teal-300 inline-block w-full rounded-lg"
@@ -166,7 +166,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
                   Settings
                 </Link>
               </li>
-              <li>
+              <li onClick={() => setIsDropdownOpen(false)}>
                 <Link
                   href={"#"}
                   className="py-2 px-4 hover:bg-teal-300 inline-block w-full rounded-lg"
@@ -174,7 +174,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
                   Logout
                 </Link>
               </li>
-              <li>
+              <li onClick={() => setIsDropdownOpen(false)}>
                 <Link
                   href={"#"}
                   className="py-2 px-4 hover:bg-teal-300 inline-block w-full rounded-lg"
@@ -182,7 +182,7 @@ const DashboardNavbar = ({ isOpen, setIsOpen }) => {
                   Privacy Policy
                 </Link>
               </li>
-              <li>
+              <li onClick={() => setIsDropdownOpen(false)}>
                 <Link
                   href={"#"}
                   className="py-2 px-4 hover:bg-teal-300 inline-block w-full rounded-lg"

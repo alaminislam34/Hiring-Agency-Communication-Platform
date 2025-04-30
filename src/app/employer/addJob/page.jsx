@@ -7,20 +7,21 @@ import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
 
 const categories = [
-  "IT and Developer",
-  "Designer",
-  "Marketing",
-  "Business",
-  "Mobile and Web Dev",
-  "Finance",
-  "Sales",
-  "Customer Support",
-  "Human Resources (HR)",
-  "Data Science",
-  "Content Writing",
-  "Video Editing",
-  "Project Management",
-  "Engineering",
+  "Software Engineering",
+  "UI/UX & Product Design",
+  "Digital Marketing & SEO",
+  "Business Strategy & Consulting",
+  "Mobile App Development",
+  "Web Development & Frontend",
+  "Accounting & Financial Analysis",
+  "Sales & Business Development",
+  "Customer Success & Support",
+  "HR & Talent Acquisition",
+  "Data Analytics & AI",
+  "Content Creation & Copywriting",
+  "Video Production & Animation",
+  "Project & Product Management",
+  "Mechanical & Civil Engineering",
 ];
 
 const languagesList = [

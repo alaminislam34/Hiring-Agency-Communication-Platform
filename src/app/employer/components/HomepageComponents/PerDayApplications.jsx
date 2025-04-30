@@ -14,7 +14,6 @@ import {
 import { useAppContext } from "@/Providers/AppProviders";
 import { parseISO, isSameMonth, subMonths } from "date-fns";
 
-// Chart.js এর প্রয়োজনীয় কম্পোনেন্ট রেজিস্টার করা
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -25,7 +24,6 @@ ChartJS.register(
   Legend
 );
 
-// চার্টের অপশন সেটআপ
 const options = {
   responsive: true,
   maintainAspectRatio: false,
@@ -69,13 +67,12 @@ const options = {
   },
 };
 
-// হেল্পার ফাংশন: নির্দিষ্ট মাসের জন্য প্রতিদিনের অ্যাপ্লিকেশন সংখ্যা গণনা
 const getDailyApplicationCounts = (jobs, selectedMonth) => {
   const now = new Date();
   const targetMonth = selectedMonth === "current" ? now : subMonths(now, 1);
 
-  const filteredJobs = jobs.filter((job) =>
-    isSameMonth(parseISO(job.createdAt), targetMonth)
+  const filteredJobs = jobs?.filter(
+    (job) => job?.createdAt && isSameMonth(parseISO(job.createdAt), targetMonth)
   );
 
   const daysInMonth = new Date(
@@ -83,12 +80,19 @@ const getDailyApplicationCounts = (jobs, selectedMonth) => {
     targetMonth.getMonth() + 1,
     0
   ).getDate();
+
   const dailyCounts = Array(daysInMonth).fill(0);
 
   filteredJobs.forEach((job) => {
-    const date = parseISO(job.createdAt);
-    const day = date.getDate();
-    dailyCounts[day - 1]++;
+    try {
+      if (job?.createdAt) {
+        const date = parseISO(job.createdAt);
+        const day = date.getDate();
+        dailyCounts[day - 1]++;
+      }
+    } catch (error) {
+      console.error("Invalid job date:", job?.createdAt);
+    }
   });
 
   const labels = Array.from({ length: daysInMonth }, (_, i) => `${i + 1}`);
@@ -97,7 +101,7 @@ const getDailyApplicationCounts = (jobs, selectedMonth) => {
 
 const PerDayApplications = () => {
   const { totalAppliedJobs } = useAppContext();
-  const [selectedMonth, setSelectedMonth] = useState("current"); // ✅ এখানে ভুল ঠিক করা হয়েছে
+  const [selectedMonth, setSelectedMonth] = useState("current");
 
   const { labels, data: chartData } = useMemo(
     () => getDailyApplicationCounts(totalAppliedJobs || [], selectedMonth),

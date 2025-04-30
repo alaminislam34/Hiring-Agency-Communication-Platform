@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const letters = "JobHive".split("");
+const letters = "JobHive"?.split("");
 
 const WebsiteLandingPage = () => {
   const [hideLoader, setHideLoader] = useState(false);

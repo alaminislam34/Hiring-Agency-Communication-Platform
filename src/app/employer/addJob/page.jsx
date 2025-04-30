@@ -74,7 +74,7 @@ const JobPostForm = () => {
 
   const handleChange = (field, value) => {
     if (field.includes(".")) {
-      const [parent, child] = field.split(".");
+      const [parent, child] = field?.split(".");
       setFormData((prev) => ({
         ...prev,
         [parent]: { ...prev[parent], [child]: value },
@@ -230,7 +230,7 @@ const JobPostForm = () => {
             onChange={(e) =>
               handleChange(
                 "skills",
-                e.target.value.split(",").map((s) => s.trim())
+                e.target.value?.split(",").map((s) => s.trim())
               )
             }
             className="form-input"

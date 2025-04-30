@@ -22,7 +22,7 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
     ],
   };
   const get = (path) =>
-    path.split(".").reduce((acc, cur) => acc && acc[cur], data);
+    path?.split(".").reduce((acc, cur) => acc && acc[cur], data);
 
   const isStepValid = (n) =>
     stepFields[n].every((p) => get(p)?.toString().trim().length > 0);
@@ -31,7 +31,7 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
   const updateField = (path, value) => {
     setData((prev) => {
       const obj = deepClone(prev);
-      const keys = path.split(".");
+      const keys = path?.split(".");
       keys.slice(0, -1).reduce((acc, k) => acc[k], obj)[keys.at(-1)] = value;
       return obj;
     });
@@ -112,7 +112,7 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
         <div className="grid gap-4">
           <input
             type="date"
-            value={data.meta.deadline.split("T")[0]}
+            value={data.meta.deadline?.split("T")[0]}
             onChange={(e) =>
               updateField(
                 "meta.deadline",
@@ -142,7 +142,7 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
             onChange={(e) =>
               updateField(
                 "qualifications.skills",
-                e.target.value.split(",").map((s) => s.trim())
+                e.target.value?.split(",").map((s) => s.trim())
               )
             }
             placeholder="Skills (comma separated)"
@@ -160,7 +160,7 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
             onChange={(e) =>
               updateField(
                 "details.benefits",
-                e.target.value.split("\n").map((b) => b.trim())
+                e.target.value?.split("\n").map((b) => b.trim())
               )
             }
             placeholder="Benefits (one per line)"

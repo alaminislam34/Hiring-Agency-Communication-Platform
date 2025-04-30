@@ -68,7 +68,11 @@ const DashboardSideBar = ({ isOpen, setIsOpen }) => {
                 ).map(({ name, href, icon }, i) => {
                   const isActive = pathname === href;
                   return (
-                    <li key={i} className="w-full">
+                    <li
+                      key={i}
+                      className="w-full"
+                      onClick={() => setIsOpen(false)}
+                    >
                       <Link href={href} className="w-full">
                         <div
                           className={clsx(

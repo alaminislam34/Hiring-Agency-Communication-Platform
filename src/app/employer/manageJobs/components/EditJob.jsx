@@ -7,38 +7,49 @@ const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
 
 export default function EditJobTwoStep({ job, onSave, onCancel }) {
   const [step, setStep] = useState(1);
-
   const [data, setData] = useState(deepClone(job));
 
   /* ---------- validation ---------- */
   const stepFields = {
-    1: ["type", "location", "salary.min", "salary.max", "details.category"],
+    1: ["type", "location", "minSalary", "maxSalary", "category"],
     2: [
       "meta.deadline",
-      "qualifications.experience",
-      "qualifications.education",
-      "qualifications.skills",
-      "details.description",
+      "experience",
+      "education",
+      "skills",
+      "description",
+      "benefits",
     ],
   };
+
   const get = (path) =>
-    path.split(".").reduce((acc, cur) => acc && acc[cur], data);
+    path?.split(".").reduce((acc, cur) => acc && acc[cur], data);
 
   const isStepValid = (n) =>
-    stepFields[n].every((p) => get(p)?.toString().trim().length > 0);
+    stepFields[n].every((p) => {
+      const val = get(p);
+      return Array.isArray(val)
+        ? val.length > 0
+        : val?.toString().trim().length > 0;
+    });
 
-  /* ---------- change handler (deep) ---------- */
   const updateField = (path, value) => {
     setData((prev) => {
       const obj = deepClone(prev);
-      const keys = path.split(".");
-      keys.slice(0, -1).reduce((acc, k) => acc[k], obj)[keys.at(-1)] = value;
+      const keys = path?.split(".");
+      let ref = obj;
+      for (let i = 0; i < keys.length - 1; i++) {
+        if (!ref[keys[i]]) ref[keys[i]] = {};
+        ref = ref[keys[i]];
+      }
+      ref[keys.at(-1)] = value;
       return obj;
     });
   };
 
   const next = () =>
     isStepValid(step) ? setStep(step + 1) : toast.error("Fill all fields!");
+
   const back = () => setStep(step - 1);
 
   const handleSubmit = () => {
@@ -47,11 +58,10 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
     onSave(payload);
   };
 
-  /* ---------- UI ---------- */
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-xl">
       <h2 className="text-xl font-semibold text-teal-700 mb-4">
-        Edit “{data.title}”
+        Edit “{data.title}”
       </h2>
 
       {/* Step indicator */}
@@ -68,11 +78,9 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
 
       {step === 1 && (
         <div className="grid gap-4">
-          {/* read‑only fields */}
           <input disabled value={data.title} className="input opacity-70" />
           <input disabled value={data.company} className="input opacity-70" />
 
-          {/* editable */}
           <input
             value={data.type}
             onChange={(e) => updateField("type", e.target.value)}
@@ -87,21 +95,21 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
           />
           <div className="flex gap-3">
             <input
-              value={data.salary.min}
-              onChange={(e) => updateField("salary.min", e.target.value)}
+              value={data.minSalary}
+              onChange={(e) => updateField("minSalary", e.target.value)}
               placeholder="Min Salary"
               className="input flex-1"
             />
             <input
-              value={data.salary.max}
-              onChange={(e) => updateField("salary.max", e.target.value)}
+              value={data.maxSalary}
+              onChange={(e) => updateField("maxSalary", e.target.value)}
               placeholder="Max Salary"
               className="input flex-1"
             />
           </div>
           <input
-            value={data.details.category}
-            onChange={(e) => updateField("details.category", e.target.value)}
+            value={data.category}
+            onChange={(e) => updateField("category", e.target.value)}
             placeholder="Category"
             className="input"
           />
@@ -112,55 +120,50 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
         <div className="grid gap-4">
           <input
             type="date"
-            value={data.meta.deadline.split("T")[0]}
-            onChange={(e) =>
-              updateField(
-                "meta.deadline",
-                new Date(e.target.value).toISOString()
-              )
-            }
+            value={data.meta?.deadline?.slice(0, 10) || ""}
+            onChange={(e) => updateField("meta.deadline", e.target.value)}
             className="input"
           />
           <input
-            value={data.qualifications.experience}
-            onChange={(e) =>
-              updateField("qualifications.experience", e.target.value)
-            }
+            value={data.experience}
+            onChange={(e) => updateField("experience", e.target.value)}
             placeholder="Experience"
             className="input"
           />
           <input
-            value={data.qualifications.education}
-            onChange={(e) =>
-              updateField("qualifications.education", e.target.value)
-            }
+            value={data.education}
+            onChange={(e) => updateField("education", e.target.value)}
             placeholder="Education"
             className="input"
           />
           <input
-            value={data.qualifications.skills.join(", ")}
+            value={Array.isArray(data.skills) ? data.skills.join(", ") : ""}
             onChange={(e) =>
               updateField(
-                "qualifications.skills",
-                e.target.value.split(",").map((s) => s.trim())
+                "skills",
+                e.target.value
+                  ? e.target.value.split(",").map((s) => s.trim())
+                  : []
               )
             }
             placeholder="Skills (comma separated)"
             className="input"
           />
           <textarea
-            value={data.details.description}
-            onChange={(e) => updateField("details.description", e.target.value)}
+            value={data.description}
+            onChange={(e) => updateField("description", e.target.value)}
             placeholder="Description"
             rows={4}
             className="input resize-y"
           />
           <textarea
-            value={data.details.benefits.join("\n")}
+            value={Array.isArray(data.benefits) ? data.benefits.join("\n") : ""}
             onChange={(e) =>
               updateField(
-                "details.benefits",
-                e.target.value.split("\n").map((b) => b.trim())
+                "benefits",
+                e.target.value
+                  ? e.target.value.split("\n").map((b) => b.trim())
+                  : []
               )
             }
             placeholder="Benefits (one per line)"
@@ -171,7 +174,7 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
       )}
 
       {/* footer buttons */}
-      <div className="mt-6 flex justify-between">
+      <div className="mt-6 flex justify-between flex-wrap gap-2">
         {step > 1 ? (
           <button onClick={back} className="btn-secondary">
             Back
@@ -189,7 +192,7 @@ export default function EditJobTwoStep({ job, onSave, onCancel }) {
             Save
           </button>
         )}
-        <button onClick={onCancel} className="btn-secondary ml-2">
+        <button onClick={onCancel} className="btn-secondary ml-auto">
           Cancel
         </button>
       </div>

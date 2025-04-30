@@ -39,7 +39,8 @@ export const collection = {
   jobsCollection: "jobs",
   appliedCollection: "applied-jobs",
   interviewsCollection: "interviews",
-  forumPostCollection: "forum-post",
   messagesCollection: "messages",
   reviewsCollection: "reviews",
+  forumPostCollection: "forum-post",
+  forumCommentsCollection: "forum-Comments",
 };

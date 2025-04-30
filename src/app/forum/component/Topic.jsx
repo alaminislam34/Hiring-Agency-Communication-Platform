@@ -1,26 +1,26 @@
-export default function Topics() {
-  const topics = [
-    { label: "Bugs", count: 15 },
-    { label: "Feature Requests", count: 0 },
-    { label: "Others", count: 3 },
-    { label: "Announcements", count: 3 },
-    { label: "Resolved", count: 51 },
-    { label: "", count: 4 }, // Empty label for last item
-  ];
+export default function Topics({ posts = [], setFilter }) {
+  const typeCounts = posts.reduce((acc, post) => {
+    const key = post.type || "Other";
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+
+  const topics = Object.entries(typeCounts).map(([label, count]) => ({
+    label,
+    count,
+  }));
 
   return (
     <div className="border border-gray-200 rounded-lg p-6 max-w-[300px]">
-      {/* Header */}
       <h2 className="text-lg font-bold uppercase mb-4 text-gray-800">
-        Courses Topics
+        Discussion Topics
       </h2>
-
-      {/* Topics List */}
       <div className="space-y-4">
         {topics.map((topic, index) => (
           <div
             key={index}
-            className={`flex justify-between items-center ${
+            onClick={() => setFilter(topic.label)}
+            className={`flex justify-between items-center cursor-pointer hover:bg-gray-100 px-2 py-2 rounded ${
               index !== topics.length - 1 ? "pb-4 border-b border-gray-200" : ""
             }`}
           >

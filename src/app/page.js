@@ -23,6 +23,10 @@ const ConsultingSolutions = dynamic(
   () => import("./components/LandingPageComponents/ConsultingSolutions"),
   { ssr: false }
 );
+const TopCategories = dynamic(
+  () => import("./components/TopCategories/Categories"),
+  { ssr: false }
+);
 const FindJob = dynamic(
   () => import("./components/LandingPageComponents/FindJob"),
   { ssr: false }
@@ -62,6 +66,7 @@ export default function Home() {
       <Banner />
       <br />
       <section className="max-w-7xl mx-auto w-11/12 space-y-8 md:space-y-12">
+        <TopCategories></TopCategories>
         <TrendsCarousel />
         <FindJob />
         <GeminiComponent />

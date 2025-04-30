@@ -11,6 +11,8 @@ const Candidates = () => {
   const { currentUser, jobs } = useAppContext();
   const [isReview, setIsReview] = useState(false);
   const [myCandidates, setCandidates] = useState([]);
+  const [selectedCandidateIds, setSelectedCandidateIds] = useState([]);
+
   const { data: appliedJobsCollection, isLoading } = useQuery({
     queryKey: ["appliedJobs"],
     queryFn: async () => {
@@ -18,40 +20,26 @@ const Candidates = () => {
       return res.data;
     },
   });
+
   useEffect(() => {
     if (!currentUser?.email || !jobs?.length || !appliedJobsCollection?.length)
       return;
 
-    // Step 1: Filter jobs posted by the current user
     const myJobs = jobs?.filter(
       (job) => job?.meta?.postedBy === currentUser?.email
     );
-
-    // Step 2: Get IDs of my jobs
     const myJobIds = myJobs?.map((job) => job._id?.toString());
-
-    // Step 3: Filter candidates who applied to my jobs
     const filteredCandidates = appliedJobsCollection?.filter((candidate) =>
       myJobIds.includes(candidate.jobId?.toString())
     );
-    console.log(
-      "alJobs:",
-      jobs,
-      "jobsId:",
-      myJobIds,
-      "filtered candidates:",
-      filteredCandidates
-    );
+
     setCandidates(filteredCandidates);
   }, [appliedJobsCollection, jobs, currentUser]);
 
   const handleCandidates = async (id, status, email) => {
-    console.log("id, status, email", id, status, email, user);
     try {
-      // Call sendUpdateEmployerRequest to send the email
       await sendApplicationReviewEmail(id, email, status);
 
-      // Display success message
       Swal.fire({
         icon: "success",
         title: "Status Updated Successfully",
@@ -59,28 +47,39 @@ const Candidates = () => {
         timer: 1500,
         width: 300,
         background: "#D5F5F6",
-        animation: true,
       });
       setIsReview(true);
     } catch (error) {
-      // Handle any error that occurs while sending the email
-      console.error("Error sending email:", error);
       Swal.fire({
         icon: "error",
         title: "Failed to Send Email",
-        text: "There was an error while sending the update email. Please try again later.",
+        text: "There was an error while sending the update email.",
         showConfirmButton: true,
         timer: 1500,
         width: 300,
         background: "#D5F5F6",
-        animation: true,
       });
     }
   };
 
+  const getSkillMatchPercentage = (requiredSkills, candidateSkills) => {
+    if (!Array.isArray(requiredSkills) || !Array.isArray(candidateSkills))
+      return 0;
+    const matchCount = candidateSkills.filter((skill) =>
+      requiredSkills.includes(skill)
+    ).length;
+
+    return Math.round((matchCount / requiredSkills.length) * 100);
+  };
+
+  const handleSelectCandidate = (id) => {
+    setSelectedCandidateIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
   return (
     <div className="p-6">
-      {/* akane filter korar jonno candidate er experience jegulo fullfill ase tader filter korte parbo plus jader nei tader o korte parbo. arekta option takbe akta email send button takbe oikhane akta field takbe jeta email er body te takbe ar reject er jonno hoile akta reject subject takbe, ar accept er jonno hoilo accept  */}
       {isLoading ? (
         <div className="w-full h-[70vh] flex items-center justify-center">
           <span className="loading loading-spinner loading-lg"></span>
@@ -91,14 +90,16 @@ const Candidates = () => {
             📝 Applied Candidates
           </h1>
           <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
-            <table className="table-class">
-              <thead className="table-head-class">
-                <tr className="table-head-row-class">
+            <table className="table w-full">
+              <thead>
+                <tr className="bg-teal-100 text-left">
+                  <th>Select</th>
                   <th>#</th>
                   <th>Name</th>
                   <th>Job Title</th>
                   <th>Experience</th>
-                  <th>Skills</th>
+                  <th>Match</th>
+                  <th>Skills Match %</th>
                   <th>Job Type</th>
                   <th>Deadline</th>
                   <th>Resume</th>
@@ -106,49 +107,76 @@ const Candidates = () => {
                 </tr>
               </thead>
               <tbody>
-                {myCandidates?.map((user, index) => (
-                  <tr key={user._id || index} className="table-row-class">
-                    <td>{index + 1}</td>
-                    <td>{user.candidateName}</td>
-                    <td>{user.title}</td>
-                    <td>{user.experience}</td>
-                    {/* akane skills employer er requirement er sathe koto tuk match kortese tar perchantage ta dekhabo */}
-                    <td>{user.skills}</td>
-                    <td>{user.jobType}</td>
-                    <td>{new Date(user.deadline).toLocaleDateString()}</td>
-                    {/* akane user er resume ta scan kore job er requirement er sathe kototuk match korteche ata dekhabo.  */}
-                    <td>
-                      <a
-                        href={user.resume}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
-                        View
-                      </a>
-                    </td>
-                    <td>
-                      <select
-                        disabled={isReview}
-                        onChange={(e) =>
-                          handleCandidates(
-                            user._id,
-                            e.target.value,
-                            user.candidateEmail
-                          )
-                        }
-                        defaultValue=""
-                        className="border border-teal-500 select select-sm"
-                      >
-                        <option disabled value="">
-                          Select
-                        </option>
-                        <option value="Accepted">Accepted</option>
-                        <option value="Rejected">Rejected</option>
-                      </select>
-                    </td>
-                  </tr>
-                ))}
+                {myCandidates?.map((user, index) => {
+                  const job = jobs.find((j) => j._id === user.jobId);
+                  const requiredSkills = job?.requiredSkills || [];
+                  const candidateSkills = Array.isArray(user?.skills)
+                    ? user.skills
+                    : [];
+                  const experienceMatch =
+                    parseInt(user?.experience) >= parseInt(job?.experience);
+                  const matchPercentage = getSkillMatchPercentage(
+                    requiredSkills,
+                    candidateSkills
+                  );
+
+                  return (
+                    <tr key={user._id || index} className="hover:bg-teal-50">
+                      <td>
+                        <input
+                          type="checkbox"
+                          className="checkbox checkbox-sm"
+                          checked={selectedCandidateIds.includes(user._id)}
+                          onChange={() => handleSelectCandidate(user._id)}
+                        />
+                      </td>
+                      <td>{index + 1}</td>
+                      <td>{user.candidateName}</td>
+                      <td>{user.title}</td>
+                      <td>{user.experience} yrs</td>
+                      <td>
+                        {experienceMatch ? (
+                          <span className="text-green-600 font-bold">✔️</span>
+                        ) : (
+                          <span className="text-red-500 font-bold">❌</span>
+                        )}
+                      </td>
+                      <td className="font-semibold">{matchPercentage}%</td>
+                      <td>{user.jobType}</td>
+                      <td>{new Date(user.deadline).toLocaleDateString()}</td>
+                      <td>
+                        <a
+                          href={user.resume}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 underline"
+                        >
+                          View
+                        </a>
+                      </td>
+                      <td>
+                        <select
+                          disabled={isReview}
+                          onChange={(e) =>
+                            handleCandidates(
+                              user._id,
+                              e.target.value,
+                              user.candidateEmail
+                            )
+                          }
+                          defaultValue=""
+                          className="border border-teal-500 select select-sm"
+                        >
+                          <option disabled value="">
+                            Select
+                          </option>
+                          <option value="Accepted">Accepted</option>
+                          <option value="Rejected">Rejected</option>
+                        </select>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
             {!myCandidates?.length && (
@@ -157,6 +185,17 @@ const Candidates = () => {
               </p>
             )}
           </div>
+
+          {selectedCandidateIds?.length > 0 && (
+            <div className="mt-4">
+              <p className="text-sm text-gray-600">
+                ✅ Selected Candidate IDs:{" "}
+                <span className="text-teal-600 font-semibold">
+                  {selectedCandidateIds.join(", ")}
+                </span>
+              </p>
+            </div>
+          )}
         </>
       )}
     </div>

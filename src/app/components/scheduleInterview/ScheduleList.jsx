@@ -8,7 +8,7 @@ import { socket } from "@/lib/socket";
 // Utility to make links clickable
 function linkifyText(text) {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
-  return text.split(urlRegex).map((part, index) =>
+  return text?.split(urlRegex).map((part, index) =>
     urlRegex.test(part) ? (
       <a
         key={index}

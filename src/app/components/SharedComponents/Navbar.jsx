@@ -240,7 +240,7 @@ const Navbar = () => {
   return (
     <div className="bg-base-100 relative">
       <div className="w-full bg-white shadow">
-        <nav className="navbar w-full md:w-11/12 mx-auto flex justify-center items-center">
+        <nav className="navbar w-full px-4 max-w-7xl mx-auto flex justify-center items-center">
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">
             <div
@@ -264,7 +264,7 @@ const Navbar = () => {
                     ? adminNavLinks
                     : NavLinks
                   ).map(({ href, name, icon }) => (
-                    <li key={href}>
+                    <li key={href} onClick={() => setIsOpen(false)}>
                       <Link
                         href={href}
                         className={`flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-teal-100 transition ${
@@ -300,7 +300,7 @@ const Navbar = () => {
               <img
                 src="/jobhive2.jpg"
                 alt="Logo"
-                className="h-16 md:hidden mr-2"
+                className="h-14 md:hidden mr-2"
               />
             </Link>
           </div>
@@ -365,10 +365,10 @@ const Navbar = () => {
                   alt="User Profile"
                 />
                 <div
-                  className={`absolute top-[62px] right-0 z-50 overflow-hidden bg-white border border-gray-300 shadow-lg rounded-xl w-64 duration-300 transition-all ${
+                  className={`absolute -right-6 z-50 overflow-hidden bg-white border border-gray-300 shadow-lg rounded-xl w-64 duration-500 transition-all ${
                     isDropdownOpen
-                      ? "opacity-100 scale-100"
-                      : "opacity-0 scale-50 pointer-events-none"
+                      ? "opacity-100 top-[62px]"
+                      : "opacity-0 -top-[62px] pointer-events-none"
                   }`}
                 >
                   <ul className="text-gray-700">

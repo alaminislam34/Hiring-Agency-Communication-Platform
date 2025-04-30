@@ -54,7 +54,6 @@ const chartOptions = {
 const ApplicationsPerJob = () => {
   const { jobs, currentUser } = useAppContext();
 
-  // আমার জবগুলো বের করা
   const myJobs =
     jobs?.filter((job) => job.meta.postedById === currentUser?._id) || [];
   const jobTypes = myJobs?.map((job) => job.type) || [];

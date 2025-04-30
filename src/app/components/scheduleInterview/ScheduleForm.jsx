@@ -80,7 +80,7 @@ export default function ScheduleForm() {
         onChange={handleChange}
         required
       />
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+      <button type="submit" className="bg-teal-500 text-white p-2 rounded">
         Schedule Interview
       </button>
     </form>

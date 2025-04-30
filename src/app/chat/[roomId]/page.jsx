@@ -112,7 +112,7 @@ const ChatRoomPage = () => {
 
   const handleSendMessage = () => {
     if (message.trim() === "") return;
-    const [email1, email2] = roomId.split("_");
+    const [email1, email2] = roomId?.split("_");
     const receiverEmail = email1 === currentUser.email ? email2 : email1;
 
     const messageData = {

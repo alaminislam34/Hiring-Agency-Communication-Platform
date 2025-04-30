@@ -42,7 +42,7 @@ export const PUT = async (req, { params }) => {
       // Loop through all users to find matching skills
       for (const user of users) {
         // Split the user's skills string into an array
-        const userSkillsArray = user.skills ? user.skills.split(",") : [];
+        const userSkillsArray = user.skills ? user.skills?.split(",") : [];
 
         // Check if any of the user's skills match the job's skills
         const matchingSkills = userSkillsArray.filter((skill) =>

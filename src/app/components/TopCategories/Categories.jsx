@@ -6,46 +6,95 @@ import { GrUserWorker } from "react-icons/gr";
 import { GrTechnology } from "react-icons/gr";
 import { FaMountainCity } from "react-icons/fa6";
 import { RiPagesLine } from "react-icons/ri";
+import SectionTitle from "../SharedComponents/SectionTitle";
+import { useAppContext } from "@/Providers/AppProviders";
+import { ChartNetwork } from "lucide-react";
+import { CodeXml } from "lucide-react";
+import { Palette } from "lucide-react";
 const Categories = () => {
+  const { jobs } = useAppContext();
+  const uniqueJobCategory = Array.from(
+    new Set(jobs?.map((job) => job.category))
+  );
+  const categoryJobsCount = uniqueJobCategory?.map(
+    (cate) => jobs?.filter((job) => job.category === cate)?.length || 0
+  );
+  [
+    "Software Engineering",
+    "UI/UX & Product Design",
+    "Digital Marketing & SEO",
+    "Mobile App Development",
+    "Web Development & Frontend",
+    "Sales & Business Development",
+    "Data Analytics & AI",
+    "Content Creation & Copywriting",
+
+    // "Accounting & Financial Analysis",
+    // "Customer Success & Support",
+    // "Business Strategy & Consulting",
+    // "HR & Talent Acquisition",
+    // "Video Production & Animation",
+    // "Project & Product Management",
+    // "Mechanical & Civil Engineering",
+  ];
+
   return (
     <div className="py-10 px-4">
-      <h1 className="text-4xl font-bold text-center mb-10">
-        Browse Top Categories
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+      <SectionTitle title={"Browse Top Categories"} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 pt-4 md:pt-6">
         {[
-          { icon: <FaUserGraduate />, title: "Design & Creative", count: 699 },
-          { icon: <LuMonitorCog />, title: "Design & Development", count: 655 },
+          {
+            icon: <FaUserGraduate />,
+            title: "Software Engineering",
+            count: 699,
+          },
+          {
+            icon: <Palette size={56} />,
+            title: "UI/UX & Product Design",
+            count: 655,
+          },
           {
             icon: <FaFileInvoiceDollar />,
-            title: "Sales & Marketing",
+            title: "Digital Marketing & SEO",
             count: 632,
           },
           {
             icon: <TbDeviceMobileCog />,
-            title: "Mobile Application",
+            title: "Mobile App Development",
             count: 685,
           },
-          { icon: <GrUserWorker />, title: "Construction", count: 665 },
           {
-            icon: <GrTechnology />,
-            title: "Information Technology",
+            icon: <GrUserWorker />,
+            title: "Sales & Business Development",
+            count: 665,
+          },
+          {
+            icon: <CodeXml size={56} />,
+            title: "Web Development & Frontend",
             count: 658,
           },
-          { icon: <FaMountainCity />, title: "Real Estate", count: 699 },
-          { icon: <RiPagesLine />, title: "Content Writer", count: 685 },
+          {
+            icon: <ChartNetwork size={56} />,
+            title: "Data Analytics & AI",
+            count: 699,
+          },
+          {
+            icon: <RiPagesLine />,
+            title: "Content Creation & Copywriting",
+            count: 685,
+          },
         ].map((category, index) => (
           <div
             key={index}
-            className="flex flex-col items-center justify-center border border-[#d4f5f8] space-y-2 py-12 px-6 rounded-lg transition-all hover:shadow-md hover:shadow-gray-400 hover:-translate-y-1 hover:text-red-500 group"
+            className="flex flex-col items-center justify-center border border-[#d4f5f8] space-y-2 p-4 rounded-xl transition-all hover:shadow-md hover:shadow-gray-400 hover:-translate-y-1 h-40 duration-300 hover:text-red-500 group"
           >
-            <div className="text-6xl font-sm mb-4 text-black transition-colors group-hover:text-red-500">
+            <div className="text-6xl font-sm mb-4 text-black transition-colors group-hover:text-teal-500">
               <h2>{category.icon}</h2>
             </div>
-            <h2 className="text-lg font-sm text-gray-800 transition-colors group-hover:text-red-500">
+            <h2 className="text-lg font-sm text-center text-gray-800 transition-colors group-hover:text-teal-500">
               {category.title}
             </h2>
-            <p className="text-sm text-red-500 mt-1">{`(${category.count})`}</p>
+            {/* <p className="text-sm text-teal-500 mt-1">{`(${category.count})`}</p> */}
           </div>
         ))}
       </div>

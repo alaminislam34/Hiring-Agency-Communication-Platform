@@ -39,7 +39,7 @@ export const collection = {
   jobsCollection: "jobs",
   appliedCollection: "applied-jobs",
   interviewsCollection: "interviews",
-  applyForEmployerCollection: "employerApply",
   forumPostCollection: "forum-post",
   messagesCollection: "messages",
+  reviewsCollection: "reviews",
 };

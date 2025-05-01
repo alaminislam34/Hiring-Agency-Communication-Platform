@@ -36,7 +36,7 @@ const PageNotFound = () => {
 
         {/* Subtext */}
         <p className="text-gray-100 mb-6 text-base md:text-lg text-balance">
-          The page you are looking for doesn't exist or has been moved.
+          The page you are looking for doesn`t exist or has been moved.
         </p>
 
         {/* Button */}

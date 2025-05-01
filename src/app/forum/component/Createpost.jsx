@@ -4,9 +4,11 @@ import { useRef, useState } from "react";
 import { FaPhotoVideo } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import { useAppContext } from "@/Providers/AppProviders";
 import { imageUpload } from "@/lib/ImageUpload";
 
 export default function CreatePost() {
+  const { currentUser } = useAppContext();
   const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -38,12 +40,6 @@ export default function CreatePost() {
       console.log("Uploaded Image URL:", uploadedImageUrl);
 
       setPreviewUrl(uploadedImageUrl);
-      // // Preview for local UI (optional)
-      // const reader = new FileReader();
-      // reader.onloadend = () => setPreviewUrl(reader.result);
-      // reader.readAsDataURL(file);
-
-      // You can save uploadedImageUrl to your form, database, etc.
     } catch (error) {
       console.error("Image upload failed:", error.message);
     }
@@ -59,6 +55,7 @@ export default function CreatePost() {
     postData.append("title", formData.title);
     postData.append("type", formData.type);
     postData.append("content", formData.content);
+    postData.append("email", currentUser?.email);
     if (selectedFile) {
       postData.append("media", selectedFile);
     }
@@ -79,7 +76,7 @@ export default function CreatePost() {
         <div className="flex items-center gap-4">
           <div className="avatar">
             <div className="w-10 rounded-full">
-              <img src="https://i.ibb.co/ZYW3VTp/brown-brim.png" alt="user" />
+              <img src={currentUser?.image} alt="user" />
             </div>
           </div>
           <div
@@ -161,6 +158,7 @@ export default function CreatePost() {
                 className="w-full border border-gray-300 px-3 py-2 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option>Courses Topics</option>
+                <option>Error</option>
                 <option>General Discussion</option>
                 <option>Feedback</option>
               </select>

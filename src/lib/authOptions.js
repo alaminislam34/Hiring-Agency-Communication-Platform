@@ -5,7 +5,6 @@ import { loginUser } from "@/app/actions/auth/loginUser";
 import { collection, getCollection } from "./mongodb";
 
 export const authOptions = {
-  // ✅ JWT use korchi
   session: {
     strategy: "jwt",
   },
@@ -18,14 +17,16 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const user = await loginUser(credentials); // DB theke login check
+        const user = await loginUser(credentials);
         return user || null;
       },
     }),
+
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
+
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
@@ -37,7 +38,6 @@ export const authOptions = {
   },
 
   callbacks: {
-    // Sign-in callback (Google/GitHub)
     async signIn({ user }) {
       try {
         const { name, email } = user;
@@ -47,6 +47,7 @@ export const authOptions = {
         const userExist = await userCollection.findOne({ email });
 
         if (!userExist) {
+          // New social login user → insert without password
           await userCollection.insertOne({
             name,
             email,
@@ -54,6 +55,13 @@ export const authOptions = {
             isVerified: true,
             createdAt: new Date(),
           });
+
+          user.role = "jobSeeker";
+          user.isVerified = true;
+        } else {
+          // Existing user → use role and verified status
+          user.role = userExist.role;
+          user.isVerified = userExist.isVerified;
         }
 
         return true;
@@ -62,6 +70,7 @@ export const authOptions = {
         return false;
       }
     },
+
     async jwt({ token, user }) {
       if (user) {
         token.id = user._id?.toString() || user.id;
@@ -71,6 +80,7 @@ export const authOptions = {
       }
       return token;
     },
+
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id;

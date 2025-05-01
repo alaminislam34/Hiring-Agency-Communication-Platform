@@ -124,7 +124,7 @@ const JobPostForm = () => {
         if (res.status === 200) {
           Swal.fire({
             icon: "success",
-            title: "Job posted successfully!",
+            text: "Job posted successfully!",
             showConfirmButton: false,
             timer: 1500,
             width: 300,

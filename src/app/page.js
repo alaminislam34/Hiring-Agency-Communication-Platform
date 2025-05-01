@@ -69,7 +69,6 @@ export default function Home() {
         <Testimonials />
         <Accordion />
       </section>
-
       <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );

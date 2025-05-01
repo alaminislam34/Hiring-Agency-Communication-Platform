@@ -12,7 +12,7 @@ const Footer = () => {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Link href="/">
-              <img src="/jobHive.png" alt="logo" className="h-12" />
+              <img src="/JobHive.png" alt="logo" className="h-12" />
             </Link>
           </div>
           <p className="text-sm text-gray-500 leading-relaxed">

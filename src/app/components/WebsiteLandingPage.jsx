@@ -21,7 +21,7 @@ const WebsiteLandingPage = () => {
       <div className="flex items-center space-x-4">
         {/* Image */}
         <motion.img
-          src="/jobHive2.jpg"
+          src={"/jobhive2.jpg"}
           alt="Logo"
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}

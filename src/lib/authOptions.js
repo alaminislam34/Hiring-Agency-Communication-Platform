@@ -5,6 +5,11 @@ import { loginUser } from "@/app/actions/auth/loginUser";
 import { collection, getCollection } from "./mongodb";
 
 export const authOptions = {
+  // ✅ JWT use korchi
+  session: {
+    strategy: "jwt",
+  },
+
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -13,7 +18,7 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const user = await loginUser(credentials);
+        const user = await loginUser(credentials); // DB theke login check
         return user || null;
       },
     }),
@@ -32,14 +37,13 @@ export const authOptions = {
   },
 
   callbacks: {
-    // When user signs in via Google/GitHub
+    // Sign-in callback (Google/GitHub)
     async signIn({ user }) {
       try {
         const { name, email } = user;
-
         if (!email) return false;
 
-        const userCollection = await getCollection(collection.user_collection); // Added await
+        const userCollection = await getCollection(collection.user_collection);
         const userExist = await userCollection.findOne({ email });
 
         if (!userExist) {
@@ -58,27 +62,25 @@ export const authOptions = {
         return false;
       }
     },
-
-    // Validate session: check if user still exists in DB
-    async session({ session }) {
-      try {
-        const userCollection = await getCollection(collection.user_collection); // Added await
-        const userExist = await userCollection.findOne({
-          email: session?.user?.email,
-        });
-
-        if (userExist) {
-          // Add user data to session
-          session.user.id = userExist._id?.toString();
-          session.user.role = userExist.role;
-          session.user.isVerified = userExist.isVerified;
-        }
-
-        return session;
-      } catch (error) {
-        console.error("Error in session callback:", error);
-        return session; // Return session even if DB fails
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user._id?.toString() || user.id;
+        token.role = user.role || "jobSeeker";
+        token.isVerified = user.isVerified ?? true;
+        token.email = user.email;
       }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+        session.user.isVerified = token.isVerified;
+        session.user.email = token.email;
+      }
+      return session;
     },
   },
+
+  secret: process.env.NEXTAUTH_SECRET,
 };

@@ -1,75 +1,77 @@
 "use client";
+
 import { useAppContext } from "@/Providers/AppProviders";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaUserTie, FaBriefcase } from "react-icons/fa6";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
-const images = ["/team1.png", "/team2.png", "/team3.png"]; // image list
+const images = ["/team2.png", "/team4.png", "/team3.png", "/team5.png"];
 
 const Banner = () => {
   const router = useRouter();
   const { currentUser } = useAppContext();
   const [currentImage, setCurrentImage] = useState(0);
 
-  // Image slider logic
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 7000); // Change image every 5 seconds
+    }, 7000);
     return () => clearInterval(interval);
   }, []);
 
   const handleClick = () => {
     if (currentUser?.role === "employer") {
-      router.push("/employer/candidates");
+      router.push("/employer/addJob");
     } else {
-      router.push(`/signin`);
+      toast.warning("Employers only");
     }
   };
 
   return (
-    <div className="mb-0">
+    <div className="relative h-[90vh] overflow-hidden">
+      {/* Background Image */}
       <div
-        className="hero min-h-[90vh] bg-cover bg-center relative transition-all duration-1000"
+        className="absolute inset-0 bg-cover bg-center transition-all duration-1000"
         style={{ backgroundImage: `url('${images[currentImage]}')` }}
-      >
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative z-10 flex items-center justify-center text-left px-4 w-full h-full">
-          <div>
-            <h1
-              style={{
-                textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-              }}
-              className="text-3xl md:text-5xl font-extrabold text-white leading-tight max-w-3xl"
-            >
-              Unlock Opportunities. Connect With Top Talent or Your Dream Job.
-            </h1>
-            <p className="mt-4 text-gray-200 text-lg max-w-xl">
-              Discover skilled professionals or land the perfect role for your
-              future. Search. Connect. Hire or Get Hired — effortlessly.
-            </p>
+      ></div>
 
-            <div className="mt-10 flex flex-col md:flex-row items-center gap-4">
-              <Link
-                href="/jobs"
-                className="flex items-center gap-2 bg-white text-teal-600 font-semibold px-6 py-3 rounded-full shadow hover:bg-teal-100 transition duration-300"
-              >
-                <FaBriefcase />
-                Find Your Next Job
-              </Link>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/60 z-10"></div>
 
-              <button
-                onClick={handleClick}
-                className="flex items-center gap-2 border border-white text-white hover:bg-teal-600 hover:text-white font-semibold px-6 py-3 rounded-full transition duration-300 cursor-pointer"
-              >
-                <FaUserTie />
-                Hire Top Talent
-              </button>
-            </div>
-          </div>
+      {/* Content */}
+      <div className="relative z-20 flex flex-col justify-center items-center text-center h-full px-4">
+        <h1 className="text-3xl md:text-6xl font-extrabold text-white max-w-4xl leading-tight">
+          Connecting Ambition <br className="hidden md:block" />
+          <span className="text-teal-400">with Opportunity</span>
+        </h1>
+
+        <p className="mt-6 text-lg md:text-xl text-gray-200 max-w-2xl">
+          Whether you're a job seeker aiming for your dream role or an employer
+          looking to hire top talent — we bring the right people together.
+        </p>
+
+        <div className="mt-10 flex flex-col md:flex-row gap-4">
+          <Link
+            href="/jobs"
+            className="flex items-center gap-2 bg-white text-teal-600 font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition duration-300"
+          >
+            <FaBriefcase />
+            Explore Jobs
+          </Link>
+
+          <button
+            onClick={handleClick}
+            className="flex items-center cursor-pointer gap-2 border-2 border-white text-white hover:bg-white hover:text-teal-600 font-semibold px-6 py-3 rounded-full transition duration-300"
+          >
+            <FaUserTie />
+            Post a Job
+          </button>
         </div>
       </div>
+      <ToastContainer position="bottom-right" autoClose={2000} limit={3} />
     </div>
   );
 };

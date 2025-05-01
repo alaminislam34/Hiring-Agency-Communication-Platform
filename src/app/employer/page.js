@@ -4,6 +4,7 @@ import { BriefcaseBusiness } from "lucide-react";
 import { CircleCheck } from "lucide-react";
 import Homepage from "./components/HomepageComponents/Homepage";
 import { useAppContext } from "@/Providers/AppProviders";
+import Head from "next/head";
 
 const EmployerOverview = () => {
   const { jobs, appliedJobsCollection, currentUser } = useAppContext();

@@ -41,7 +41,7 @@ const Categories = () => {
   return (
     <div className="py-10 px-4">
       <SectionTitle title={"Browse Top Categories"} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 pt-4 md:pt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 pt-4 md:pt-6">
         {[
           {
             icon: <FaUserGraduate />,
@@ -63,16 +63,7 @@ const Categories = () => {
             title: "Mobile App Development",
             count: 685,
           },
-          {
-            icon: <GrUserWorker />,
-            title: "Sales & Business Development",
-            count: 665,
-          },
-          {
-            icon: <CodeXml size={56} />,
-            title: "Web Development & Frontend",
-            count: 658,
-          },
+
           {
             icon: <ChartNetwork size={56} />,
             title: "Data Analytics & AI",

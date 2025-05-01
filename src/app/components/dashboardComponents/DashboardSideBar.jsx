@@ -30,7 +30,7 @@ const DashboardSideBar = ({ isOpen, setIsOpen }) => {
           <div className="py-2 flex justify-center items-center">
             <Link href={"/"}>
               <img
-                src={isOpen ? "/jobhive.jpg" : "/jobhive2.jpg" || "https:c.b"}
+                src={isOpen ? "/JobHive.png" : "/jobhive2.jpg" || "https:c.b"}
                 alt="logo"
                 className="h-12"
               />

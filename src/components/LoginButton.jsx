@@ -7,7 +7,7 @@ const LoginButton = () => {
     <div>
       <button
         onClick={() => signIn()}
-        className="text-white md:font-medium btn lg:btn-lg  bg-teal-500 hover:bg-teal-600 duration-300 rounded-md cursor-pointer "
+        className="text-white btn md:font-medium truncate lg:btn-lg  bg-teal-500 hover:bg-teal-600 duration-300 rounded-md cursor-pointer "
       >
         Sign In
       </button>

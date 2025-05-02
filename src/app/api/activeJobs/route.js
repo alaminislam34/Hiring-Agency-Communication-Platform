@@ -5,14 +5,14 @@ export async function GET(req) {
   try {
     const jobsCollection = await getCollection(collection.jobsCollection);
     const searchParams = new URL(req.url).searchParams;
-    const industry = searchParams.get("industry");
+    const category = searchParams.get("category");
     const location = searchParams.get("location");
     const keyword = searchParams.get("keyword");
     const jobType = searchParams.get("jobType");
 
     const query = { status: "active" };
-    if (industry) {
-      query.industry = { $regex: industry, $options: "i" };
+    if (category) {
+      query.category = { $regex: category, $options: "i" };
     }
     if (location) {
       query.location = { $regex: location, $options: "i" };

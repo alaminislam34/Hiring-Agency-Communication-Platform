@@ -1,54 +1,52 @@
 "use client";
 
 import { useState } from "react";
-import {
-  EyeIcon,
-  PencilSquareIcon,
-  TrashIcon,
-} from "@heroicons/react/24/solid";
+import { EyeIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useAppContext } from "@/Providers/AppProviders";
 import { Dialog } from "@headlessui/react";
 import Chat from "@/app/jobSeeker/chatbox/components/chat";
+import { Edit } from "lucide-react";
+import EditJob from "./components/EditJob";
 
 const ManageJobs = () => {
-  const [viewJob, setViewJob] = useState(null);
-  const [selectedJobForApplicants, setSelectedJobForApplicants] =
-    useState(null);
-  const [applicants, setApplicants] = useState([]);
-  const [isApplicantsModalOpen, setIsApplicantsModalOpen] = useState(false);
+  const [edit, setEdit] = useState(null);
+  // const [selectedJobForApplicants, setSelectedJobForApplicants] =
+  //   useState(null);
+  // const [applicants, setApplicants] = useState([]);
+  // const [isApplicantsModalOpen, setIsApplicantsModalOpen] = useState(false);
   const [chatApplicant, setChatApplicant] = useState(null);
   const { currentUser } = useAppContext();
 
   const fetchJobs = async () => {
-    const res = await axios.get("/api/allJobs", {
-      params: { postedBy: currentUser?.email },
+    const res = await axios("/api/allJobs", {
+      params: { postedById: currentUser?._id },
     });
     return res.data;
   };
 
   const {
-    data: jobs = [],
+    data: jobs,
     isLoading,
     refetch: refetchJobs,
   } = useQuery({
-    queryKey: ["jobs", currentUser?.email],
+    queryKey: ["jobs", currentUser?._id],
     queryFn: fetchJobs,
-    enabled: !!currentUser?.email,
+    enabled: !!currentUser?._id,
   });
 
   const deleteJob = useMutation({
-    mutationFn: (id) => axios.delete(`/api/job/${id}`),
+    mutationFn: (id) => axios.delete(`/api/jobDelete/${id}`),
     onSuccess: () => {
       Swal.fire("Deleted!", "Job removed successfully", "success");
       refetchJobs();
     },
     onError: () => Swal.fire("Error", "Couldn’t delete job", "error"),
   });
-
-  const handleDelete = (job) => {
+  console.log("this is my jobs", jobs);
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       icon: "warning",
@@ -58,20 +56,20 @@ const ManageJobs = () => {
       confirmButtonText: "Delete",
       background: "#D5F5F6",
       width: 300,
-    }).then((res) => res.isConfirmed && deleteJob.mutate(job._id));
+    }).then((res) => res.isConfirmed && deleteJob.mutate(id));
   };
 
-  const handleViewApplicants = async (job) => {
-    try {
-      const res = await axios.get(`/api/employer/applicants/${job._id}`);
-      setApplicants(res.data || []);
-      setSelectedJobForApplicants(job);
-      setIsApplicantsModalOpen(true);
-    } catch (error) {
-      console.error(error);
-      Swal.fire({ icon: "error", title: "Failed to load applicants!" });
-    }
-  };
+  // const handleViewApplicants = async (job) => {
+  //   try {
+  //     const res = await axios.get(`/api/employer/applicants/${job._id}`);
+  //     setApplicants(res.data || []);
+  //     setSelectedJobForApplicants(job);
+  //     setIsApplicantsModalOpen(true);
+  //   } catch (error) {
+  //     console.error(error);
+  //     Swal.fire({ icon: "error", title: "Failed to load applicants!" });
+  //   }
+  // };
 
   const handleStartChat = (applicant) => {
     console.log("Starting chat with applicant:", applicant);
@@ -90,53 +88,66 @@ const ManageJobs = () => {
     <div className="p-4">
       <h1 className="text-2xl font-semibold mb-6">Manage Jobs</h1>
       <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
-            <tr className="bg-teal-100">
+        <table className="table-class">
+          <thead className="table-head-class">
+            <tr className="table-head-row-class">
               <th>Title</th>
-              <th>Company</th>
               <th>Category</th>
               <th>Type</th>
               <th>Salary</th>
               <th>Deadline</th>
+              <th>AppliedCount</th>
               <th>Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {jobs.length === 0 ? (
+            {jobs?.length === 0 ? (
               <tr>
                 <td colSpan="7" className="text-center py-10 text-gray-400">
                   No jobs posted yet.
                 </td>
               </tr>
             ) : (
-              jobs.map((job) => (
-                <tr key={job._id}>
+              jobs?.map((job) => (
+                <tr key={job._id} className="table-row-class">
                   <td>{job.title}</td>
-                  <td>{job.company}</td>
                   <td>{job.category}</td>
                   <td>{job.type}</td>
                   <td>
                     {job.minSalary}k – {job.maxSalary}k
                   </td>
                   <td>{new Date(job.meta?.deadline).toLocaleDateString()}</td>
+                  <td>{job.meta.appliedCount}</td>
                   <td>
                     <div className="flex flex-wrap justify-center gap-2">
-                      <EyeIcon
-                        onClick={() => setViewJob(job)}
+                      <Edit
+                        onClick={() => setEdit(job._id)}
                         className="h-5 w-5 text-teal-600 cursor-pointer hover:scale-110 transition"
                       />
+                      <div
+                        className={`${
+                          edit === job._id ? "block" : "hidden"
+                        } fixed w-screen h-screen top-0 left-0 bg-black/50 flex items-center justify-center`}
+                      >
+                        <div className="max-w-4xl mx-auto h-3/4 overflow-y-auto  bg-white shadow-2xl rounded-3xl p-4 lg:p-6 border ">
+                          <EditJob
+                            job={job}
+                            setEdit={setEdit}
+                            refetchJobs={refetchJobs}
+                          />
+                        </div>
+                      </div>
                       <TrashIcon
-                        onClick={() => handleDelete(job)}
+                        onClick={() => handleDelete(job._id)}
                         className="h-5 w-5 text-red-500 cursor-pointer hover:scale-110 transition"
                       />
-                      <button
+                      {/* <button
                         onClick={() => handleViewApplicants(job)}
                         className="bg-teal-100 text-teal-700 px-2 py-1 rounded text-xs hover:bg-teal-200 transition"
                       >
                         View Applicants
-                      </button>
+                      </button> */}
                     </div>
                   </td>
                 </tr>
@@ -146,7 +157,7 @@ const ManageJobs = () => {
         </table>
       </div>
       {/* Applicants Modal */}
-      <Dialog
+      {/* <Dialog
         open={isApplicantsModalOpen}
         onClose={() => setIsApplicantsModalOpen(false)}
         className="relative z-50"
@@ -196,9 +207,9 @@ const ManageJobs = () => {
             </div>
           </Dialog.Panel>
         </div>
-      </Dialog>
+      </Dialog> */}
       {/* Chat Modal */}
-      <Dialog
+      {/* <Dialog
         open={!!chatApplicant}
         onClose={() => setChatApplicant(null)}
         className="relative z-50"
@@ -228,7 +239,7 @@ const ManageJobs = () => {
             </div>
           </Dialog.Panel>
         </div>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 };
@@ -236,6 +247,6 @@ const ManageJobs = () => {
 export default ManageJobs;
 
 // Helper function
-function generateRoomId(email1, email2) {
-  return [email1, email2].sort().join("_");
-}
+// function generateRoomId(email1, email2) {
+//   return [email1, email2].sort().join("_");
+// }

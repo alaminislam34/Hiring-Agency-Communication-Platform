@@ -67,9 +67,11 @@ const Candidates = () => {
     }
   };
 
-  const handleSelectCandidate = (id) => {
+  const handleSelectCandidate = (email) => {
     setSelectedCandidateIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes(email)
+        ? prev.filter((item) => item !== email)
+        : [...prev, email]
     );
   };
 
@@ -224,8 +226,12 @@ const Candidates = () => {
                         <input
                           type="checkbox"
                           className="checkbox checkbox-sm"
-                          checked={selectedCandidateIds.includes(user._id)}
-                          onChange={() => handleSelectCandidate(user._id)}
+                          checked={selectedCandidateIds.includes(
+                            user.candidateEmail
+                          )}
+                          onChange={() =>
+                            handleSelectCandidate(user.candidateEmail)
+                          }
                         />
                       </td>
                       <td>{index + 1}</td>

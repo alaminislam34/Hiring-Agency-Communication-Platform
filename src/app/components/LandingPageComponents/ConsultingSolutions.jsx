@@ -21,7 +21,7 @@ export default function ConsultingSolutions() {
           <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900 leading-snug">
             Consulting solutions to drive business impact
           </h2>
-          <ul className="mt-4 space-y-4 text-gray-700">
+          <ul className="mt-4 space-y-4 ">
             <li className="flex items-start gap-3">
               <p>
                 <CheckCircle2Icon className="text-teal-500" />
@@ -78,7 +78,7 @@ export default function ConsultingSolutions() {
               How to Get Consulting Solutions with JobHive
             </ModalHeader>
             <ModalBody className="space-y-5 px-6 py-4">
-              <p className="text-gray-700 text-base">
+              <p className="">
                 At <strong>JobHive</strong>, our consulting solutions are
                 crafted to help employers streamline their hiring strategies,
                 boost team productivity, and achieve long-term staffing success.
@@ -86,7 +86,7 @@ export default function ConsultingSolutions() {
                 here’s how to get started:
               </p>
 
-              <ol className="list-decimal list-inside space-y-3 text-gray-700">
+              <ol className="list-decimal list-inside space-y-3 ">
                 <li>
                   <strong>Create an Employer Account:</strong> Sign up on
                   JobHive as an employer to unlock access to our expert hiring

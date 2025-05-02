@@ -30,7 +30,7 @@ export default function FindTalent() {
 
   const handleFindHireClick = () => {
     if (currentUser?.role === "employer") {
-      router.push("/dashboard/jobs");
+      router.push("/jobs");
     } else {
       router.push("/signin");
     }
@@ -58,7 +58,7 @@ export default function FindTalent() {
 
           <div className="mt-6 flex gap-4 flex-wrap">
             <button
-              onClick={handleFindHireClick}
+              // onClick={handleFindHireClick}
               className="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-full text-sm md:text-base transition"
             >
               Find your next hire
@@ -74,10 +74,15 @@ export default function FindTalent() {
       </div>
 
       {/* Modal */}
-      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal
+        className="bg-white"
+        dismissible
+        show={openModal}
+        onClose={() => setOpenModal(false)}
+      >
         <ModalHeader>How to Find Talented Job Seekers Using Job</ModalHeader>
         <ModalBody>
-          <article className="prose max-w-none prose-headings:text-teal-600 prose-p:text-gray-700 prose-li:text-gray-600">
+          <article className="">
             <p>
               Welcome to <strong>JobHive</strong> — your trusted platform for
               hiring top talent across all industries.

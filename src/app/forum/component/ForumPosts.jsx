@@ -74,7 +74,7 @@ export default function ForumPosts({ filter }) {
         .map((post) => (
           <div
             key={post._id}
-            className="bg-gray-50 border rounded-xl p-4 space-y-4 shadow-sm"
+            className="bg-gray-50 border border-gray-300 rounded-xl p-4 space-y-4 shadow-sm"
           >
             {/* Header */}
             <div className="flex items-center justify-between">
@@ -113,7 +113,7 @@ export default function ForumPosts({ filter }) {
               <img
                 src={post.media}
                 alt="Post Media"
-                className="w-full max-h-80 object-cover rounded-md border"
+                className="w-full max-h-80 object-cover rounded-md border border-gray-300"
               />
             )}
 
@@ -129,7 +129,7 @@ export default function ForumPosts({ filter }) {
             </div>
             {/* Comment Section (Toggle) */}
             {activeComments[post._id] && (
-              <div className="space-y-3 border-t pt-3">
+              <div className="space-y-3 border-t border-gray-300 pt-3">
                 {/* Existing comments */}
                 {comments[post._id]?.map((c, idx) => (
                   <div key={idx} className="flex gap-3 items-start">
@@ -154,11 +154,11 @@ export default function ForumPosts({ filter }) {
                     onChange={(e) =>
                       handleCommentChange(post._id, e.target.value)
                     }
-                    className="flex-grow px-3 py-2 border rounded-md text-sm"
+                    className="flex-grow px-3 py-2 border border-gray-300 focus:outline-teal-500 rounded-md text-sm w-3/4"
                   />
                   <button
                     onClick={() => handleCommentSubmit(post._id)}
-                    className="px-4 py-2 bg-teal-500 text-white text-sm rounded-md hover:bg-teal-600"
+                    className="px-4 py-2 w-1/4 bg-teal-500 text-white text-sm rounded-md hover:bg-teal-600"
                   >
                     Send
                   </button>

@@ -143,13 +143,13 @@ export default function CreatePost({ allPostsRefetch }) {
       <AnimatePresence>
         {showModal && (
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-30 z-50 flex justify-center items-start pt-20 px-4 overflow-y-auto"
+            className="fixed inset-0 bg-black/40 bg-opacity-30 z-50 flex justify-center items-start pt-20 px-4 overflow-y-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="bg-white rounded-xl p-6 w-full max-w-xl shadow-lg relative"
+              className="bg-white rounded-xl space-y-2 p-6 w-full max-w-xl shadow-lg relative"
               initial={{ y: -50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -50, opacity: 0 }}
@@ -157,31 +157,33 @@ export default function CreatePost({ allPostsRefetch }) {
             >
               <button
                 onClick={handleModalClose}
-                className="absolute top-2 right-3 text-gray-400 hover:text-red-500 text-lg"
+                className="absolute top-2 right-3 text-gray-400 hover:text-teal-500 text-lg cursor-pointer"
               >
                 ✕
               </button>
 
               <h2 className="text-xl font-semibold mb-4">Create Post</h2>
 
-              <label className="block text-sm font-medium mb-1">Title</label>
+              <label className="block text-sm font-medium mb-1 text-gray-500">
+                Title
+              </label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={handleInputChange}
                 placeholder="Post title"
-                className="w-full border border-gray-300 px-3 py-2 rounded-md mb-4 focus:ring-2 focus:ring-teal-500"
+                className="form-input"
               />
 
-              <label className="block text-sm font-medium mb-1">
+              <label className="block text-sm font-medium mb-1 text-gray-500">
                 Post Type
               </label>
               <select
                 name="type"
                 value={formData.type}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 px-3 py-2 rounded-md mb-4 focus:ring-2 focus:ring-teal-500"
+                className="form-input"
               >
                 <option>Courses Topics</option>
                 <option>Error</option>
@@ -189,14 +191,16 @@ export default function CreatePost({ allPostsRefetch }) {
                 <option>Feedback</option>
               </select>
 
-              <label className="block text-sm font-medium mb-1">Content</label>
+              <label className="block text-sm font-medium mb-1 text-gray-500">
+                Content
+              </label>
               <textarea
                 name="content"
                 value={formData.content}
                 onChange={handleInputChange}
                 placeholder="Write your post..."
                 rows="5"
-                className="w-full border border-gray-300 px-3 py-2 rounded-md mb-4 focus:ring-2 focus:ring-teal-500"
+                className="form-input"
               ></textarea>
 
               {previewUrl && (
@@ -218,7 +222,7 @@ export default function CreatePost({ allPostsRefetch }) {
 
                 <button
                   onClick={handleSubmit}
-                  className="bg-gradient-to-r from-purple-400 to-pink-500 text-white px-4 py-2 rounded-lg hover:from-teal-500 hover:to-teal-600"
+                  className="bg-gradient-to-r from-teal-400 to-teal-500 cursor-pointer text-white px-4 py-2 rounded-lg hover:from-teal-500 hover:to-teal-600"
                 >
                   Submit Post
                 </button>

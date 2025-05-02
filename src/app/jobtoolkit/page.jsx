@@ -186,7 +186,7 @@ const JobToolkit = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="max-w-7xl mx-auto w-11/12 bg-gray-100 p-6">
       <div className="mx-auto">
         <div>
           <Link href={"/"}>Back Home</Link>

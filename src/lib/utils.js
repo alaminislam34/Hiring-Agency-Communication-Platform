@@ -12,6 +12,7 @@ import { ChartLine } from "lucide-react";
 import { FileUser } from "lucide-react";
 import { CirclePlus } from "lucide-react";
 import { BookmarkCheck } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -32,6 +33,11 @@ export const employerSideBarLinks = [
     name: "Manage Jobs",
     href: "/employer/manageJobs",
     icon: <BriefcaseBusiness size={18} />,
+  },
+  {
+    name: "Schedule",
+    href: "/employer/schedule",
+    icon: <Calendar size={18} />,
   },
   {
     name: "Candidates",

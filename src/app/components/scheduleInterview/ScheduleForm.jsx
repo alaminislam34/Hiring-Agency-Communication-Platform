@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function ScheduleForm() {
   const [formData, setFormData] = useState({
@@ -19,11 +20,10 @@ export default function ScheduleForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:3002/api/schedule",
-        formData
-      );
-      alert("Interview scheduled successfully!");
+      const res = await axios.post("/api/schedule", formData);
+      if (res.status === 201) {
+        toast.success("Interview scheduled successfully!");
+      }
       setFormData({
         title: "",
         dateTime: "",
@@ -32,7 +32,7 @@ export default function ScheduleForm() {
         roomId: "",
       });
     } catch (error) {
-      alert("Error scheduling interview");
+      toast.error("Error scheduling interview");
       console.error(error);
     }
   };

@@ -6,28 +6,38 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { useAppContext } from "@/Providers/AppProviders";
 import { imageUpload } from "@/lib/ImageUpload";
+import { toast } from "react-toastify";
 
-export default function CreatePost() {
+export default function CreatePost({ allPostsRefetch }) {
   const { currentUser } = useAppContext();
+  const fileInputRef = useRef();
   const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const fileInputRef = useRef();
 
   const [formData, setFormData] = useState({
     title: "",
-    type: "Courses Topics",
     content: "",
+    type: "Courses Topics",
   });
 
-  const handlePhotoClick = () => fileInputRef.current?.click();
-  const handleModalOpen = () => setShowModal(true);
-  const handleModalClose = () => {
-    setShowModal(false);
+  const resetForm = () => {
+    setFormData({ title: "", content: "", type: "Courses Topics" });
     setSelectedFile(null);
     setPreviewUrl(null);
-    setFormData({ title: "", type: "Courses Topics", content: "" });
   };
+
+  const handleModalOpen = () => setShowModal(true);
+  const handleModalClose = () => {
+    resetForm();
+    setShowModal(false);
+  };
+
+  const handlePhotoClick = () => {
+    fileInputRef.current?.click();
+    setShowModal(true);
+  };
+
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -35,10 +45,7 @@ export default function CreatePost() {
     setSelectedFile(file);
 
     try {
-      // Upload image to Cloudinary
       const uploadedImageUrl = await imageUpload(file);
-      console.log("Uploaded Image URL:", uploadedImageUrl);
-
       setPreviewUrl(uploadedImageUrl);
     } catch (error) {
       console.error("Image upload failed:", error.message);
@@ -51,21 +58,41 @@ export default function CreatePost() {
   };
 
   const handleSubmit = async () => {
-    const postData = new FormData();
-    postData.append("title", formData.title);
-    postData.append("type", formData.type);
-    postData.append("content", formData.content);
-    postData.append("email", currentUser?.email);
-    if (selectedFile) {
-      postData.append("media", selectedFile);
+    if (!formData.title || !formData.content) {
+      alert("Please fill in title and content.");
+      return;
     }
 
+    const postPayload = {
+      ...formData,
+      postedBy:
+        currentUser?.name ||
+        `${currentUser?.firstName} ${currentUser?.lastName}`,
+      postedId: currentUser?._id,
+      image: currentUser?.image,
+      media: previewUrl || "",
+      postedAt: new Date().toISOString(),
+    };
+
     try {
-      const res = await axios.post("/api/forum-posts", postData);
-      console.log("Success:", res.data);
+      const res = await axios.post("/api/forum-posts", postPayload);
+      if (res.status === 200) {
+        toast.success({
+          title: "Post created successfully",
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+      allPostsRefetch();
       handleModalClose();
     } catch (error) {
-      console.error("Error submitting post:", error);
+      console.error("Error creating post:", error.message);
     }
   };
 
@@ -81,13 +108,13 @@ export default function CreatePost() {
           </div>
           <div
             onClick={handleModalOpen}
-            className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 flex-1 cursor-pointer hover:border hover:border-teal-500"
+            className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 flex-1 cursor-pointer border border-gray-300 duration-300 hover:border-teal-500"
           >
             Share or Ask Something to Everyone?
           </div>
         </div>
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-end gap-2 lg:gap-4 items-center">
           <div
             onClick={handlePhotoClick}
             className="flex items-center gap-2 text-pink-500 cursor-pointer hover:text-teal-500"
@@ -97,16 +124,15 @@ export default function CreatePost() {
             <input
               type="file"
               ref={fileInputRef}
-              className=""
-              placeholder="upload your photo"
               onChange={handleFileChange}
               accept="image/*,video/*"
+              className="hidden"
             />
           </div>
 
           <button
             onClick={handleModalOpen}
-            className="bg-teal-300 text-white px-4 py-2 rounded-lg hover:from-teal-500 hover:to-teal-600"
+            className="bg-white border border-teal-500 cursor-pointer hover:text-white px-4 py-2 rounded-lg duration-300 hover:bg-gradient-to-r hover:from-teal-500 hover:to-teal-600"
           >
             Create Post
           </button>
@@ -128,7 +154,6 @@ export default function CreatePost() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -50, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              onAnimationComplete={() => {}} // <- input fields will no longer trigger animation
             >
               <button
                 onClick={handleModalClose}
@@ -136,6 +161,7 @@ export default function CreatePost() {
               >
                 ✕
               </button>
+
               <h2 className="text-xl font-semibold mb-4">Create Post</h2>
 
               <label className="block text-sm font-medium mb-1">Title</label>
@@ -144,8 +170,8 @@ export default function CreatePost() {
                 name="title"
                 value={formData.title}
                 onChange={handleInputChange}
-                placeholder="Title"
-                className="w-full border border-gray-300 px-3 py-2 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                placeholder="Post title"
+                className="w-full border border-gray-300 px-3 py-2 rounded-md mb-4 focus:ring-2 focus:ring-teal-500"
               />
 
               <label className="block text-sm font-medium mb-1">
@@ -155,7 +181,7 @@ export default function CreatePost() {
                 name="type"
                 value={formData.type}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 px-3 py-2 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full border border-gray-300 px-3 py-2 rounded-md mb-4 focus:ring-2 focus:ring-teal-500"
               >
                 <option>Courses Topics</option>
                 <option>Error</option>
@@ -168,27 +194,20 @@ export default function CreatePost() {
                 name="content"
                 value={formData.content}
                 onChange={handleInputChange}
-                placeholder="Write your post here..."
+                placeholder="Write your post..."
                 rows="5"
-                className="w-full border border-gray-300 px-3 py-2 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full border border-gray-300 px-3 py-2 rounded-md mb-4 focus:ring-2 focus:ring-teal-500"
               ></textarea>
 
               {previewUrl && (
                 <img
                   src={previewUrl}
-                  alt="Preview"
+                  alt="preview"
                   className="w-full max-h-60 object-contain mb-4 rounded-lg"
                 />
               )}
 
-              <p className="text-green-600 text-xs mb-3">
-                You can now paste images directly from your clipboard.
-                <br />
-                Click on any input field and press Ctrl+V (Windows) or Cmd+V
-                (Mac) to paste.
-              </p>
-
-              <div className="flex items-center justify-between">
+              <div className="flex justify-between items-center">
                 <div
                   onClick={handlePhotoClick}
                   className="flex items-center gap-2 text-green-600 cursor-pointer hover:text-teal-600"

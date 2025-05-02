@@ -268,6 +268,15 @@ export const AppProvider = ({ children }) => {
     pathname.startsWith("/employer") ||
     pathname.startsWith("/jobSeeker");
 
+  // forum post data
+  const { data: allPosts, refetch: allPostsRefetch } = useQuery({
+    queryKey: ["posts"],
+    queryFn: async () => {
+      const res = await axios.get("/api/forum-posts");
+      return res.data;
+    },
+  });
+
   // Context value for all components
   const contextValue = {
     showSidebar,
@@ -317,6 +326,10 @@ export const AppProvider = ({ children }) => {
     // isDashboard
     isDashboard,
     calculateProfileCompletion,
+
+    // forum data
+    allPosts,
+    allPostsRefetch,
   };
 
   return (

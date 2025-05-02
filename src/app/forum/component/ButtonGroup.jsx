@@ -1,17 +1,25 @@
 "use client";
 
-export default function ButtonGroup({ setFilter }) {
+import { useAppContext } from "@/Providers/AppProviders";
+
+export default function ButtonGroup({ filter, setFilter }) {
   return (
     <div className="flex gap-2 mb-4">
       <button
-        onClick={() => setFilter("all")}
-        className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm rounded"
+        onClick={() => setFilter("")}
+        className={` ${
+          filter === "" ? "bg-teal-500 text-white" : "border-teal-500 border"
+        } px-4 py-2 text-sm rounded`}
       >
         All Posts
       </button>
       <button
-        onClick={() => setFilter("mine")}
-        className="px-4 py-2 bg-blue-200 hover:bg-blue-300 text-sm rounded"
+        onClick={() => setFilter("myPosts")}
+        className={` ${
+          filter === "myPosts"
+            ? "bg-teal-500 text-white"
+            : "border-teal-500 border"
+        } px-4 py-2 text-sm rounded`}
       >
         My Posts
       </button>

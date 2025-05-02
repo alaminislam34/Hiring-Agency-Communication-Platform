@@ -11,7 +11,7 @@ export default function Topics({ posts = [], setFilter }) {
   }));
 
   return (
-    <div className="border border-gray-200 rounded-lg p-6 max-w-[300px]">
+    <div className="border border-gray-200 rounded-lg p-6 max-w-[300px] sticky top-16">
       <h2 className="text-lg font-bold uppercase mb-4 text-gray-800">
         Discussion Topics
       </h2>

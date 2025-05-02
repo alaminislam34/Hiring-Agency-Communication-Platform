@@ -14,8 +14,6 @@ export async function GET(req) {
 
     const jobsCollection = await getCollection(collection.jobsCollection);
     const jobs = await jobsCollection.find(query).toArray();
-
-    console.log("All jobs from server API /allJobs:", jobs);
     return NextResponse.json(jobs);
   } catch (error) {
     console.error("Error fetching jobs:", error);

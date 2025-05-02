@@ -127,11 +127,6 @@ const jobSeekerLinks = [
     icon: <Bookmark size={18} />,
   },
   {
-    name: "Apply for Employer",
-    href: "/jobSeeker/applyForEmployer",
-    icon: <UserCheck size={18} />,
-  },
-  {
     name: "Applied Jobs",
     href: "/jobSeeker/appliedJobs",
     icon: <FileCheck size={18} />,

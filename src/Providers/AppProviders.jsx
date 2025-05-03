@@ -227,7 +227,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     if (!session) return;
 
-    const socket = io("https://jobhive-server-1.onrender.com");
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL);
     socket.connect();
 
     socket.on("connect", () => {

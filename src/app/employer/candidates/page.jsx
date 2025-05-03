@@ -4,6 +4,7 @@ import { sendApplicationReviewEmail } from "@/lib/sendApplicationReview";
 import { useAppContext } from "@/Providers/AppProviders";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -12,6 +13,11 @@ const Candidates = () => {
   const [isReview, setIsReview] = useState(false);
   const [myCandidates, setCandidates] = useState([]);
   const [selectedCandidateIds, setSelectedCandidateIds] = useState([]);
+  const [filteredCandidates, setFilteredCandidates] = useState({
+    skills: "",
+    location: "",
+    experience: "",
+  });
 
   const { data: appliedJobsCollection, isLoading } = useQuery({
     queryKey: ["appliedJobs"],
@@ -25,21 +31,20 @@ const Candidates = () => {
     if (!currentUser?.email || !jobs?.length || !appliedJobsCollection?.length)
       return;
 
-    const myJobs = jobs?.filter(
-      (job) => job?.meta?.postedBy === currentUser?.email
+    const myJobs = jobs.filter(
+      (job) => job.meta?.postedBy === currentUser.email
     );
-    const myJobIds = myJobs?.map((job) => job._id?.toString());
-    const filteredCandidates = appliedJobsCollection?.filter((candidate) =>
+    const myJobIds = myJobs.map((job) => job._id?.toString());
+    const filtered = appliedJobsCollection.filter((candidate) =>
       myJobIds.includes(candidate.jobId?.toString())
     );
 
-    setCandidates(filteredCandidates);
+    setCandidates(filtered);
   }, [appliedJobsCollection, jobs, currentUser]);
 
-  const handleCandidates = async (id, status, email) => {
+  const handleReviewUpdate = async (id, status, email) => {
     try {
       await sendApplicationReviewEmail(id, email, status);
-
       Swal.fire({
         icon: "success",
         title: "Status Updated Successfully",
@@ -62,24 +67,68 @@ const Candidates = () => {
     }
   };
 
-  const getSkillMatchPercentage = (requiredSkills, candidateSkills) => {
-    if (!Array.isArray(requiredSkills) || !Array.isArray(candidateSkills))
-      return 0;
-    const matchCount = candidateSkills.filter((skill) =>
-      requiredSkills.includes(skill)
-    ).length;
-
-    return Math.round((matchCount / requiredSkills.length) * 100);
-  };
-
   const handleSelectCandidate = (id) => {
     setSelectedCandidateIds((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
+  const handleFilter = (e) => {
+    e.preventDefault();
+    const { skills, location, experience } = filteredCandidates;
+
+    const myJobs = jobs.filter(
+      (job) => job.meta?.postedBy === currentUser?.email
+    );
+    const myJobIds = myJobs.map((job) => job._id?.toString());
+
+    const filtered = appliedJobsCollection.filter((candidate) => {
+      const job = jobs.find(
+        (j) => j._id?.toString() === candidate.jobId?.toString()
+      );
+      const jobExperience = parseInt(job?.experience || 0);
+      const candidateExperience = parseInt(candidate.experience || 0);
+
+      // Experience must be less than or equal to job requirement
+      const matchExperience = candidateExperience <= jobExperience;
+
+      // Partial match (if any letter matches, allow)
+      const matchSkills = skills
+        ? candidate.skills?.toLowerCase().includes(skills.toLowerCase())
+        : true;
+      const matchLocation = location
+        ? candidate.location?.toLowerCase().includes(location.toLowerCase())
+        : true;
+
+      const isMyCandidate = myJobIds.includes(candidate.jobId?.toString());
+
+      return isMyCandidate && matchSkills && matchLocation && matchExperience;
+    });
+
+    setCandidates(filtered);
+  };
+
+  const clearFilter = () => {
+    setFilteredCandidates({ skills: "", location: "", experience: "" });
+
+    const myJobs = jobs.filter(
+      (job) => job.meta?.postedBy === currentUser?.email
+    );
+    const myJobIds = myJobs.map((job) => job._id?.toString());
+
+    const filtered = appliedJobsCollection.filter((candidate) =>
+      myJobIds.includes(candidate.jobId?.toString())
+    );
+
+    setCandidates(filtered);
+  };
+
   return (
     <div className="p-6">
+      <Head>
+        <title>Applied Candidates</title>
+      </Head>
+
       {isLoading ? (
         <div className="w-full h-[70vh] flex items-center justify-center">
           <span className="loading loading-spinner loading-lg"></span>
@@ -89,6 +138,69 @@ const Candidates = () => {
           <h1 className="text-2xl font-semibold text-center mb-6">
             📝 Applied Candidates
           </h1>
+
+          {/* Filter Form */}
+          <div className="flex items-center justify-end mb-6">
+            <form
+              onSubmit={handleFilter}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 items-center shadow-md border border-gray-300 rounded-xl p-4 w-full lg:w-4/5"
+            >
+              <input
+                type="text"
+                name="skills"
+                placeholder="Filter by skills"
+                className="input input-bordered input-sm"
+                value={filteredCandidates.skills}
+                onChange={(e) =>
+                  setFilteredCandidates({
+                    ...filteredCandidates,
+                    skills: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                name="location"
+                placeholder="Filter by location"
+                className="input input-bordered input-sm"
+                value={filteredCandidates.location}
+                onChange={(e) =>
+                  setFilteredCandidates({
+                    ...filteredCandidates,
+                    location: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="number"
+                name="experience"
+                placeholder="Minimum experience (years)"
+                className="input input-bordered input-sm"
+                value={filteredCandidates.experience}
+                onChange={(e) =>
+                  setFilteredCandidates({
+                    ...filteredCandidates,
+                    experience: e.target.value,
+                  })
+                }
+              />
+              <button
+                type="submit"
+                className="btn btn-sm bg-teal-500 text-white"
+              >
+                Filter
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm bg-gray-300"
+                onClick={clearFilter}
+              >
+                Clear
+              </button>
+            </form>
+          </div>
+
+          {/* Candidates Table */}
           <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
             <table className="table w-full">
               <thead>
@@ -98,8 +210,6 @@ const Candidates = () => {
                   <th>Name</th>
                   <th>Job Title</th>
                   <th>Experience</th>
-                  <th>Match</th>
-                  <th>Skills Match %</th>
                   <th>Job Type</th>
                   <th>Deadline</th>
                   <th>Resume</th>
@@ -108,18 +218,6 @@ const Candidates = () => {
               </thead>
               <tbody>
                 {myCandidates?.map((user, index) => {
-                  const job = jobs.find((j) => j._id === user.jobId);
-                  const requiredSkills = job?.requiredSkills || [];
-                  const candidateSkills = Array.isArray(user?.skills)
-                    ? user.skills
-                    : [];
-                  const experienceMatch =
-                    parseInt(user?.experience) >= parseInt(job?.experience);
-                  const matchPercentage = getSkillMatchPercentage(
-                    requiredSkills,
-                    candidateSkills
-                  );
-
                   return (
                     <tr key={user._id || index} className="hover:bg-teal-50">
                       <td>
@@ -133,15 +231,7 @@ const Candidates = () => {
                       <td>{index + 1}</td>
                       <td>{user.candidateName}</td>
                       <td>{user.title}</td>
-                      <td>{user.experience} yrs</td>
-                      <td>
-                        {experienceMatch ? (
-                          <span className="text-green-600 font-bold">✔️</span>
-                        ) : (
-                          <span className="text-red-500 font-bold">❌</span>
-                        )}
-                      </td>
-                      <td className="font-semibold">{matchPercentage}%</td>
+                      <td>{user.experience}</td>
                       <td>{user.jobType}</td>
                       <td>{new Date(user.deadline).toLocaleDateString()}</td>
                       <td>
@@ -158,7 +248,7 @@ const Candidates = () => {
                         <select
                           disabled={isReview}
                           onChange={(e) =>
-                            handleCandidates(
+                            handleReviewUpdate(
                               user._id,
                               e.target.value,
                               user.candidateEmail
@@ -179,6 +269,7 @@ const Candidates = () => {
                 })}
               </tbody>
             </table>
+
             {!myCandidates?.length && (
               <p className="text-center text-gray-500 py-4">
                 No candidates found.
@@ -186,7 +277,8 @@ const Candidates = () => {
             )}
           </div>
 
-          {selectedCandidateIds?.length > 0 && (
+          {/* Selected Candidates */}
+          {selectedCandidateIds.length > 0 && (
             <div className="mt-4">
               <p className="text-sm text-gray-600">
                 ✅ Selected Candidate IDs:{" "}

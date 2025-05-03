@@ -5,6 +5,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const categories = [
   "Software Engineering",
@@ -123,7 +124,7 @@ const JobPostForm = () => {
         if (res.status === 200) {
           Swal.fire({
             icon: "success",
-            title: "Job posted successfully!",
+            text: "Job posted successfully!",
             showConfirmButton: false,
             timer: 1500,
             width: 300,
@@ -145,6 +146,7 @@ const JobPostForm = () => {
         }
       } catch (err) {
         console.log(err);
+        toast.error(err.message);
       }
     } else {
       Swal.fire({
@@ -209,7 +211,9 @@ const JobPostForm = () => {
               className="form-input"
               required
             >
-              <option value="">Select Type</option>
+              <option value="" disabled>
+                Select Type
+              </option>
               <option value="Full-time">Full-time</option>
               <option value="Part-time">Part-time</option>
               <option value="Remote">Remote</option>

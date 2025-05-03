@@ -106,7 +106,7 @@ const Overview = () => {
   useEffect(() => {
     const savedJobs = localStorage.getItem("bookmark") || [];
     setSavedJobs(jobs?.filter((job) => savedJobs.includes(job._id)));
-  }, []);
+  }, [jobs]);
 
   const stat = [
     {

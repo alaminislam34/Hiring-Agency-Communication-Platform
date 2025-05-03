@@ -2,7 +2,7 @@ import React from "react";
 import ApplicationsPerJobChart from "./ApplicationsPerJob";
 import PerDayApplications from "./PerDayApplications";
 import ApplicationStatusChart from "./ApplicationStatusChart";
-import Leaderboard from "./Leaderboard";
+// import Leaderboard from "./Leaderboard";
 
 const Homepage = () => {
   return (
@@ -18,9 +18,9 @@ const Homepage = () => {
       <div>
         <ApplicationsPerJobChart />
       </div>
-      <div>
+      {/* <div>
         <Leaderboard />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -25,7 +25,7 @@ export async function POST(req) {
 
     if (file && typeof file === "object" && file.size > 0) {
       const buffer = Buffer.from(await file.arrayBuffer());
-      const ext = file.name.split(".").pop();
+      const ext = file.name?.split(".").pop();
       const fileName = `${uuidv4()}.${ext}`;
       const uploadPath = path.join(
         process.cwd(),

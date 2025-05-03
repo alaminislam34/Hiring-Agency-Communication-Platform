@@ -4,6 +4,7 @@ import { useAppContext } from "@/Providers/AppProviders";
 import axios from "axios";
 import { useState, useRef } from "react";
 import { ThreeDots } from "react-loader-spinner";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 export default function ApplyButton({ job, modalId, alreadyApplied }) {
@@ -50,21 +51,25 @@ export default function ApplyButton({ job, modalId, alreadyApplied }) {
     };
 
     try {
-      const res = await axios.post("/api/apply-job", applicationData);
-      if (res?.status === 200) {
-        modalRef.current?.close();
-        appliedJobsRefetch();
-        setTimeout(() => {
-          Swal.fire({
-            text: res.data?.message || "Application submitted successfully.",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500,
-            width: "300px",
-            background: "#D5F5F6",
-            animation: true,
-          });
-        }, 100);
+      if (currentUser?.role === "jobSeeker") {
+        const res = await axios.post("/api/apply-job", applicationData);
+        if (res?.status === 200) {
+          modalRef.current?.close();
+          appliedJobsRefetch();
+          setTimeout(() => {
+            Swal.fire({
+              text: res.data?.message || "Application submitted successfully.",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+              width: "300px",
+              background: "#D5F5F6",
+              animation: true,
+            });
+          }, 100);
+        } else {
+          toast.warning("You can't apply because you are not jobSeeker");
+        }
       }
     } catch (err) {
       console.error("❌ Submission error:", err);

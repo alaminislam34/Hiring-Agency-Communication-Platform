@@ -21,6 +21,7 @@ import useValidateSession from "@/lib/unValidateSession";
 import { CirclePlus } from "lucide-react";
 import { UserCheck } from "lucide-react";
 import { X } from "lucide-react";
+import { useRouter } from "next/router";
 
 const jobSeekerNavLink = [
   {
@@ -71,7 +72,7 @@ const adminNavLinks = [
     name: "Forum",
     href: "/forum",
   },
-
+  { name: "Jobs", href: "/jobs" },
   {
     name: "About Us",
     href: "/about",
@@ -81,18 +82,18 @@ const adminNavLinks = [
     href: "/courses",
   },
   {
-    name: "Manage Users",
-    href: "/admin/manageUsers",
-  },
-  {
-    name: "Manage Jobs",
-    href: "/admin/manageJobs",
+    name: "Blogs",
+    href: "/blogs",
   },
 ];
 const employerNavLinks = [
   {
     name: "About Us",
     href: "/about",
+  },
+  {
+    name: "Jobs",
+    href: "/jobs",
   },
   {
     name: "Forum",
@@ -219,6 +220,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { currentUser, notificationCount } = useAppContext();
+
   useValidateSession();
 
   const Dropdown = useRef(null);
@@ -250,8 +252,9 @@ const Navbar = () => {
             >
               <div className="flex flex-col gap-4 h-full">
                 {/* Logo */}
+
                 <div className="p-4">
-                  <img src="/jobHive.png" alt="logo" className="h-12" />
+                  <img src="/JobHive.png" alt="logo" className="h-12" />
                 </div>
 
                 {/* Navigation Links */}
@@ -293,7 +296,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link href="/" className="text-xl font-bold flex items-center">
               <img
-                src="/jobHive.png"
+                src="/JobHive.png"
                 alt="Logo"
                 className="h-16 md:block hidden mr-2 p-2"
               />
@@ -307,7 +310,7 @@ const Navbar = () => {
 
           {/* Navbar Center (Desktop Menu) */}
           <div className="navbar-center hidden lg:flex">
-            <ul className="flex flex-row gap-4 text-md">
+            <ul className="flex flex-row gap-2 text-md">
               {(currentUser?.role === "jobSeeker"
                 ? jobSeekerNavLink
                 : currentUser?.role === "employer"

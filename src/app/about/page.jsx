@@ -1,8 +1,6 @@
 "use client";
 
 import { Nunito } from "next/font/google";
-import TabJob from "./TabJob/TabJob";
-import EmployeeReview from "./employeeReview/EmployeeReview";
 import SectionTitle from "../components/SharedComponents/SectionTitle";
 import FeaturesGrid from "./components/FeaturesGrid";
 import TeamCard from "./components/TeamCard";
@@ -105,9 +103,6 @@ const Page = () => {
         {/* contents-section */}
         <TeamCard />
       </div>
-
-      {/* Employee Review Slider- section-5 */}
-      <EmployeeReview></EmployeeReview>
 
       {/* newsletter section-6 */}
 

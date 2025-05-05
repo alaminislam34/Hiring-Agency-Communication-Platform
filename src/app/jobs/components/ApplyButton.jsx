@@ -7,6 +7,7 @@ import { ThreeDots } from "react-loader-spinner";
 import Swal from "sweetalert2";
 
 export default function ApplyButton({ job, modalId, alreadyApplied }) {
+  console.log(job);
   const { currentUser, appliedJobsRefetch } = useAppContext();
   const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);

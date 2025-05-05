@@ -19,14 +19,13 @@ export const AppProvider = ({ children }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingInfo, setIsEditingInfo] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
-  const [jobTitle, setJobTitle] = useState("");
   const [location, setLocation] = useState("");
   const [bookmark, setBookmark] = useState([]);
   const [fullName, setFullName] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
   const [roomID, setRoomID] = useState("");
   const [notificationCount, setNotificationCount] = useState(0);
 
-  // Fetch bookmarks from localStorage ========================================================================
   useEffect(() => {
     const stored = localStorage.getItem("bookmark");
     if (stored) setBookmark(JSON.parse(stored));
@@ -242,19 +241,6 @@ export const AppProvider = ({ children }) => {
     if (session?.user?.email) {
       socket.emit("registerUser", session.user.email);
     }
-
-    socket.on("jobApplicationNotification", (data) => {
-      Swal.fire({
-        icon: "info",
-        title: "New Job Application!",
-        html: `<strong>${data.applicantName}</strong> applied to your job: <em>${data.jobTitle}</em>`,
-        confirmButtonText: "Got it!",
-        background: "#D5F5F6",
-        animation: true,
-      }).catch((error) => {
-        console.error("SweetAlert Error:", error);
-      });
-    });
 
     // Cleanup on socket disconnect
     return () => {

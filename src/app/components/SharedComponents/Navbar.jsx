@@ -22,6 +22,8 @@ import { CirclePlus } from "lucide-react";
 import { UserCheck } from "lucide-react";
 import { X } from "lucide-react";
 import { useRouter } from "next/router";
+import { useNotifications } from "@/Providers/NotificationContext";
+import { socket } from "@/lib/socket";
 
 const jobSeekerNavLink = [
   {
@@ -214,25 +216,43 @@ const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { currentUser, notificationCount } = useAppContext();
+  const notificationRef = useRef(null);
+  const profileRef = useRef(null);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const { currentUser } = useAppContext();
+
+  const { notifications, clearNotifications, notificationCount } =
+    useNotifications();
 
   useValidateSession();
+
+  useEffect(() => {
+    if (currentUser?.email) {
+      socket.connect();
+      socket.emit("registerUser", currentUser.email);
+      console.log("✅ Registered user on socket:", currentUser.email);
+    }
+  }, [currentUser?.email]);
 
   const Dropdown = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (Dropdown.current && !Dropdown.current.contains(event.target)) {
-        setIsDropdownOpen(false);
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setIsProfileOpen(false);
+      }
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target)
+      ) {
+        setIsNotificationOpen(false);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []); // <-- only empty array
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="bg-base-100 relative">
@@ -330,33 +350,65 @@ const Navbar = () => {
 
           {/* Navbar End (Search & Sign In) */}
           <div className="navbar-end space-x-4">
-            <div className="relative">
-              <Link
-                href={
-                  currentUser?.role === "jobSeeker"
-                    ? "/jobSeeker/notifications"
-                    : currentUser?.role === "employer"
-                    ? "/employer/notifications"
-                    : currentUser?.role === "admin"
-                    ? "/admin/notifications"
-                    : "/signin"
-                }
-                className="flex items-center justify-center text-2xl hover:text-teal-700 cursor-pointer"
+            {/* Notification Icon */}
+            <div className="relative" ref={notificationRef}>
+              <button
+                onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                className="relative mr-3"
               >
-                <Bell />
-                {/* Badge - only shown if count > 0 */}
+                <Bell size={22} />
                 {notificationCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full animate-bounce">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
                     {notificationCount}
                   </span>
                 )}
-              </Link>
+              </button>
+              {isNotificationOpen && (
+                <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-white shadow-md rounded-lg z-50">
+                  <div className="flex justify-between items-center p-3 border-b">
+                    <h4 className="font-semibold text-gray-800">
+                      Notifications
+                    </h4>
+                    <button
+                      onClick={() => {
+                        clearNotifications();
+                        setIsDropdownOpen(false);
+                      }}
+                      className="text-sm text-red-500 hover:underline"
+                    >
+                      Clear All
+                    </button>
+                  </div>
+                  <ul className="divide-y max-h-[300px] overflow-y-auto">
+                    {notifications.length > 0 ? (
+                      notifications.map((note) => (
+                        <li key={note.id} className="p-3 hover:bg-gray-50">
+                          <div className="text-sm font-medium text-gray-800">
+                            {note.message}
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">
+                            {new Date(note.time).toLocaleString()}
+                          </div>
+                        </li>
+                      ))
+                    ) : (
+                      <li className="p-3 text-sm text-gray-500 text-center">
+                        No new notifications
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
             </div>
+
             {/* <LogoutButton /> */}
             {currentUser && session?.data?.user ? (
-              <div ref={Dropdown} className="flex items-center gap-2 relative">
+              <div
+                ref={profileRef}
+                className="flex items-center gap-2 relative"
+              >
                 <img
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
                   src={currentUser?.image || "/fakeUser.jpg"}
                   referrerPolicy="no-referrer"
                   className="w-12 h-12 rounded-full object-cover bg-cover bg-center border-teal-500 bg-accent border cursor-pointer"
@@ -364,7 +416,7 @@ const Navbar = () => {
                 />
                 <div
                   className={`absolute -right-6 z-50 overflow-hidden bg-white border border-gray-300 shadow-lg rounded-xl w-64 duration-500 transition-all ${
-                    isDropdownOpen
+                    isProfileOpen
                       ? "opacity-100 top-[62px]"
                       : "opacity-0 -top-[62px] pointer-events-none"
                   }`}

@@ -40,6 +40,8 @@ const languagesList = [
 
 const JobPostForm = () => {
   const { currentUser, calculateProfileCompletion } = useAppContext();
+  if (!currentUser) return <div>Loading...</div>;
+
   const profileCompletion = parseInt(
     calculateProfileCompletion(currentUser ? currentUser : {})
   );
@@ -73,7 +75,7 @@ const JobPostForm = () => {
       appliedCount: 0,
     },
   });
-
+  console.log(formData);
   const handleChange = (field, value) => {
     if (field.includes(".")) {
       const [parent, child] = field?.split(".");

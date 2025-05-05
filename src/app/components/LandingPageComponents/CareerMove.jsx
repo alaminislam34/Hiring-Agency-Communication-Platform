@@ -17,7 +17,7 @@ export default function CareerMove() {
   const router = useRouter();
 
   return (
-    <section className="py-10">
+    <section className="py-10 px-4 md:px-8 lg:px-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <img
           src="/career.webp"
@@ -65,8 +65,33 @@ export default function CareerMove() {
       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
         <ModalHeader>Make the Career Move You Want with JobHive</ModalHeader>
 
-        <ModalBody className="space-y-6 px-6 py-4 text-gray-700 text-base">
-          {/* … unchanged modal content … */}
+        <ModalBody className="space-y-6 px-6 py-4 text-gray-700 text-base leading-relaxed">
+          <p>
+            At <strong>JobHive</strong>, we go beyond job listings — we empower
+            your entire career journey. Whether you're a fresh graduate, career
+            switcher, or experienced professional, our platform is tailored to
+            support your next step.
+          </p>
+
+          <ul className="list-disc pl-5 space-y-2">
+            <li>
+              🌐 Personalized job feeds that match your preferences and
+              qualifications.
+            </li>
+            <li>
+              🎯 Integrated tools like resume builders, mock interviews, and
+              skill assessments to sharpen your edge.
+            </li>
+            <li>
+              🚀 Explore our curated projects designed to elevate your profile
+              and demonstrate your abilities to top employers.
+            </li>
+          </ul>
+
+          <p>
+            Join thousands of users finding better jobs and growing faster with
+            JobHive. Your next opportunity is just a click away.
+          </p>
         </ModalBody>
 
         <ModalFooter className="flex justify-end space-x-3">
@@ -74,7 +99,7 @@ export default function CareerMove() {
             Close
           </Button>
           <Button
-            onClick={() => router.push("/jobs")} // ⬅️ SPA push
+            onClick={() => router.push("/jobs")}
             className="bg-[#084049] hover:bg-[#02282E] text-white"
           >
             Get Job Matches

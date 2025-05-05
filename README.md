@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Here's your _Final Presentation (6-minute) English script_ for _JobHive_, structured to match your time constraints and highlight all key points, with _your role as the team leader giving the overview_.
 
-## Getting Started
+---
 
-First, run the development server:
+🎤 _[Leader – You Start | Duration: ~1.5 mins]_
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Hello everyone,  
+We are _Team JobHive_, and welcome to our final presentation. Today, we’ll quickly walk you through our project, which is a _real-time hiring agency and communication platform_.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Let’s start with a short _project overview_.  
+JobHive is built to solve the _fragmented and time-consuming recruitment process_ by connecting _job seekers, employers, freelancers, and recruiters_ in one single platform.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+💡 Through our platform, users can:
+Post and search jobs  
+Apply and track applications  
+Schedule and attend live interviews  
+Communicate in real-time  
+And get career support via free resources
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🎯 _The problem we solve:_  
+In today’s remote-first world, recruitment needs to be _fast, efficient, and centralized_. Traditional platforms often lack real-time communication or integrated interview systems.  
+_JobHive_ brings all these together in one platform, saving time and boosting hiring success.
 
-## Learn More
+👥 _Targeted Audience:_
 
-To learn more about Next.js, take a look at the following resources:
+- _Job Seekers_ (freshers & professionals)
+- _Employers & Recruiters_
+- _Freelancers_ looking for flexible roles
+- Especially focused on _remote jobs_ and _freelance opportunities_
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🎤 _[Next Part – You Again as Leader | Duration: ~2 mins]_
 
-## Deploy on Vercel
+Now I’ll quickly highlight _5 of our core features_ out of many:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. _Job Posting & Search_  
+   Employers can post jobs with full details, and job seekers can filter jobs by category, location, or salary.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. _Profile & Resume Management_  
+   Users can build detailed profiles, upload resumes, and even add 1-minute video introductions to showcase soft skills.
+
+3. _Application & Hiring Workflow_  
+   Users can apply directly, track their status, schedule interviews, and receive offer letters — all inside the platform.
+
+4. _Multi-role Dashboards_  
+   We created separate panels for Admins, Employers, and Job Seekers — each with tailored tools and access.
+
+5. _Interview Scheduling with ZegoCloud_  
+   Real-time video interview system — employers and job seekers can schedule and conduct interviews inside the site.
+
+✅ We also planned _real-time chat (Socket.IO)_ and _live notifications_, but due to time constraints, these features are still under development. We’ve kept the backend prepared for them and will complete them post-presentation.
+
+---
+
+🎤 _[Last Part – You Finish Strong | Duration: ~1.5 mins]_
+
+🔮 _Future Plans:_
+
+- _Stripe Payment Integration_ – for freelancer transactions
+- _AI Resume Review System_ – to guide job seekers better
+- _Gamified Courses with Certificates_ – to make learning fun and rewarding
+- And finally, we aim to launch a _Mobile App_ version soon
+
+---
+
+✅ In conclusion,  
+_JobHive_ is not just a job board — it's a _complete recruitment ecosystem_, combining real-time communication, smart tools, and career support for modern hiring needs.
+
+We’re proud of the journey — from concept to execution — and though not all features are 100% complete, our base is strong, scalable, and ready for future upgrades.
+
+Thank you!
+
+Socket.IO

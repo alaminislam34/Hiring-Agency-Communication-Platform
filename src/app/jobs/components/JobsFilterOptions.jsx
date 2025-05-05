@@ -12,7 +12,7 @@ const JobsFilterOptions = ({ setJobType, jobType }) => {
   ];
 
   return (
-    <div className=" w-full">
+    <div className="w-full sticky top-24 z-40 bg-white">
       <div>
         <h2 className="text-gray-800">Find By Job Type</h2>
         <div className="flex flex-wrap gap-3 overflow-x-auto py-4 md:py-6 scrollbar-hide">

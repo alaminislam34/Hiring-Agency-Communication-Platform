@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET({ searchParams }) {
   try {
     const jobsCollection = await getCollection(collection.jobsCollection);
+    const category = searchParams.get("category");
     const jobType = searchParams.get("jobType");
     const postedBy = searchParams.get("postedBy");
     const jobTitle = searchParams.get("jobTitle");
@@ -21,6 +22,9 @@ export async function GET({ searchParams }) {
     }
     if (postedBy) {
       query.meta.postedBy = postedBy;
+    }
+    if (category) {
+      query.category = { $regex: category, $options: "i" };
     }
 
     const jobs = await jobsCollection.find(query).toArray();

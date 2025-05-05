@@ -1,13 +1,13 @@
 import { ChevronDown, Search } from "lucide-react";
-import { useState } from "react";
+// import { useState } from "react";
 
 const JobsBanner = ({
   jobs,
-  setIndustry,
+  setCategory,
   setLocation,
   setKeyword,
   handleSearch,
-  industry,
+  category,
   location,
   keyword,
 }) => {
@@ -50,12 +50,12 @@ const JobsBanner = ({
           <div className="flex items-center gap-2 px-4 py-3 border-b md:border-b-0 md:border-r border-gray-200">
             <select
               type="text"
-              value={industry}
-              onChange={(e) => setIndustry(e.target.value)}
-              placeholder="Industry"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              placeholder="Categories"
               className="bg-transparent outline-none text-sm px-2 text-gray-600 w-full"
             >
-              <option value="">All Industries</option>
+              <option value="">All categories</option>
               {categories.map((ca, i) => (
                 <option key={i} value={ca}>
                   {ca}

@@ -18,17 +18,17 @@ import { Rows3 } from "lucide-react";
 import BookmarkButton from "./components/BookmarkButton";
 
 const AllJobs = () => {
-  const [industry, setIndustry] = useState("");
+  const [category, setCategory] = useState("");
   const [grid, setGrid] = useState(true);
   const [location, setLocation] = useState("");
   const [keyword, setKeyword] = useState("");
   const [jobType, setJobType] = useState("");
 
   const { data: jobs, isLoading } = useQuery({
-    queryKey: ["jobs", industry, location, keyword, jobType],
+    queryKey: ["jobs", category, location, keyword, jobType],
     queryFn: async () => {
       const res = await axios.get("/api/activeJobs", {
-        params: { industry, location, keyword, jobType },
+        params: { category, location, keyword, jobType },
       });
       return res.data;
     },
@@ -44,11 +44,11 @@ const AllJobs = () => {
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-6 bg-gray-50">
       <JobsBanner
-        setIndustry={setIndustry}
+        setCategory={setCategory}
         setKeyword={setKeyword}
         setLocation={setLocation}
         handleSearch={handleSearch}
-        industry={industry}
+        category={category}
         location={location}
         keyword={keyword}
         jobs={jobs}

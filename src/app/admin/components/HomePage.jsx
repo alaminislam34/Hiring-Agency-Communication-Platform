@@ -24,7 +24,7 @@ const HomePage = () => {
       <div className="w-full h-full">
         <DailyJobApplyLineChart />
       </div>
-      <div className="w-full h-full">
+      <div className="w-full h-full hidden">
         <TopViewedJobsChart />
       </div>
     </div>

@@ -40,6 +40,8 @@ const languagesList = [
 
 const JobPostForm = () => {
   const { currentUser, calculateProfileCompletion } = useAppContext();
+  if (!currentUser) return <div>Loading...</div>;
+
   const profileCompletion = parseInt(
     calculateProfileCompletion(currentUser ? currentUser : {})
   );
@@ -73,7 +75,7 @@ const JobPostForm = () => {
       appliedCount: 0,
     },
   });
-
+  console.log(formData);
   const handleChange = (field, value) => {
     if (field.includes(".")) {
       const [parent, child] = field?.split(".");
@@ -165,7 +167,7 @@ const JobPostForm = () => {
     <section className="w-full lg:px-6 py-4 md:py-6 my-4 md:my-6">
       <form
         onSubmit={handleSubmit}
-        className="space-y-8 bg-white shadow-2xl rounded-3xl p-4 lg:p-6 border border-gray-200"
+        className="space-y-8 bg-white shadow-2xl rounded-3xl p-4 lg:p-6 border max-w-3xl mx-auto border-gray-200"
       >
         <h2 className="text-2xl md:text-3xl font-bold text-center text-teal-600">
           Post a New Job

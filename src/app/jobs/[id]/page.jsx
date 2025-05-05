@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import ApplyButton from "../components/ApplyButton";
 import BookmarkButton from "../components/BookmarkButton";
+import SameTypeJob from "./components/SameTypeJob";
 
 const JobDetailsPage = ({ params }) => {
   const id = params?.id;
@@ -24,12 +25,18 @@ const JobDetailsPage = ({ params }) => {
     );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="max-w-7xl mx-auto px-4">
       {/* Header Section */}
-      <div className="bg-white rounded-2xl shadow-md p-8 md:p-12">
-        <div className="flex flex-row gap-2 items-center">
-          <Link href={"/"}>Home</Link>/<Link href={"/jobs"}>Jobs</Link> /
-          details
+      <div className="bg-white rounded-2xl shadow-md p-8">
+        <div className="flex flex-row gap-2 items-center pb-4">
+          <Link href={"/"} className="hover:underline">
+            Home
+          </Link>{" "}
+          {">"}
+          <Link href={"/jobs"} className="hover:underline">
+            Jobs
+          </Link>{" "}
+          {">"} <span className="text-teal-500">Details</span>
         </div>
         <div className="flex flex-col md:flex-row justify-between md:items-center gap-6">
           <div>
@@ -108,87 +115,10 @@ const JobDetailsPage = ({ params }) => {
 
         {/* Right Content: Ready to Apply Form */}
         <div className="bg-white shadow-md rounded-2xl p-8 h-fit sticky top-24">
-          <h2 className="text-2xl md:text-3xl font-bold text-teal-700 mb-6">
-            Ready To Apply?
-          </h2>
-          <form className="space-y-5">
-            {/* Name */}
-            <div>
-              <label className="block text-gray-700 mb-2 font-medium">
-                Name
-              </label>
-              <input
-                type="text"
-                className="w-full border border-gray-300 rounded-lg p-3 focus:border-teal-500 focus:outline-none"
-                placeholder="Enter your name"
-              />
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className="block text-gray-700 mb-2 font-medium">
-                Email
-              </label>
-              <input
-                type="email"
-                className="w-full border border-gray-300 rounded-lg p-3 focus:border-teal-500 focus:outline-none"
-                placeholder="Enter your email"
-              />
-            </div>
-
-            {/* Upload Resume */}
-            <div>
-              <label className="block text-gray-700 mb-2 font-medium">
-                Upload Resume
-              </label>
-              <input
-                type="file"
-                className="w-full border border-gray-300 rounded-lg p-3"
-              />
-            </div>
-
-            {/* Authorization */}
-            <div>
-              <p className="text-gray-700 mb-2 font-medium">
-                Are you authorized to work?
-              </p>
-              <div className="flex gap-6">
-                <label className="flex items-center gap-2">
-                  <input type="radio" name="authorized" value="yes" />
-                  <span>Yes</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="radio" name="authorized" value="no" />
-                  <span>No</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Degree */}
-            <div>
-              <p className="text-gray-700 mb-2 font-medium">
-                Do you have a master's degree?
-              </p>
-              <div className="flex gap-6">
-                <label className="flex items-center gap-2">
-                  <input type="radio" name="masters" value="yes" />
-                  <span>Yes</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="radio" name="masters" value="no" />
-                  <span>No</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-lg font-semibold mt-4"
-            >
-              Submit Application
-            </button>
-          </form>
+          <h1 className="pb-4 text-xl md:text-2xl font-bold text-teal-700">
+            Related Jobs
+          </h1>
+          <SameTypeJob category={job.category} id={job._id} />
         </div>
       </div>
     </div>

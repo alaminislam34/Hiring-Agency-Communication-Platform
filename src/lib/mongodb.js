@@ -1,6 +1,20 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
+const dbName = process.env.DB_NAME;
+
+if (!uri) {
+  throw new Error(
+    "❌ Please define the MONGODB_URI environment variable in .env.local"
+  );
+}
+
+if (!dbName) {
+  throw new Error(
+    "❌ Please define the DB_NAME environment variable in .env.local"
+  );
+}
+
 const options = {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -12,26 +26,20 @@ const options = {
 let client;
 let clientPromise;
 
-if (!process.env.MONGODB_URI) {
-  throw new Error("Please add your Mongo URI to .env.local");
-}
-
 if (process.env.NODE_ENV === "development") {
-  // For dev: Use global to prevent hot-reload causing multiple clients
   if (!global._mongoClientPromise) {
     client = new MongoClient(uri, options);
     global._mongoClientPromise = client.connect();
   }
   clientPromise = global._mongoClientPromise;
 } else {
-  // For prod: Just create once
   client = new MongoClient(uri, options);
   clientPromise = client.connect();
 }
 
 export const getCollection = async (collectionName) => {
   const client = await clientPromise;
-  return client.db(process.env.DB_NAME).collection(collectionName);
+  return client.db(dbName).collection(collectionName);
 };
 
 export const collection = {
@@ -42,5 +50,5 @@ export const collection = {
   messagesCollection: "messages",
   reviewsCollection: "reviews",
   forumPostCollection: "forum-post",
-  forumCommentsCollection: "forum-Comments",
+  forumCommentsCollection: "forum-comments", // ✅ casing fixed
 };

@@ -1,209 +1,419 @@
 "use client";
-import { useState } from "react";
+
+import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
+import { X } from "lucide-react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
-/* ---------- helper ---------- */
-const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
+const categories = [
+  "Software Engineering",
+  "UI/UX & Product Design",
+  "Digital Marketing & SEO",
+  "Business Strategy & Consulting",
+  "Mobile App Development",
+  "Web Development & Frontend",
+  "Accounting & Financial Analysis",
+  "Sales & Business Development",
+  "Customer Success & Support",
+  "HR & Talent Acquisition",
+  "Data Analytics & AI",
+  "Content Creation & Copywriting",
+  "Video Production & Animation",
+  "Project & Product Management",
+  "Mechanical & Civil Engineering",
+];
 
-export default function EditJobTwoStep({ job, onSave, onCancel }) {
-  const [step, setStep] = useState(1);
-  const [data, setData] = useState(deepClone(job));
+const languagesList = [
+  "Bangla",
+  "English (Basic)",
+  "English (Fluent)",
+  "Japanese",
+  "Chinese",
+  "Hindi",
+  "Spanish",
+  "Arabic",
+  "French",
+  "German",
+];
 
-  /* ---------- validation ---------- */
-  const stepFields = {
-    1: ["type", "location", "minSalary", "maxSalary", "category"],
-    2: [
-      "meta.deadline",
-      "experience",
-      "education",
-      "skills",
-      "description",
-      "benefits",
-    ],
-  };
+const EditJob = ({ job, setEdit, refetchJobs }) => {
+  const { control, handleSubmit, register } = useForm({
+    defaultValues: {
+      title: job.title,
+      category: job.category,
+      type: job.type,
+      skills: job.skills.join(", "),
+      description: job.description,
+      requirements: job.requirements,
+      benefits: job.benefits,
+      minSalary: job.minSalary,
+      maxSalary: job.maxSalary,
+      salaryType: job.salaryType,
+      location: job.location,
+      experience: job.experience,
+      industry: job.industry,
+      educationLevel: job.educationLevel,
+      languages: job.languages,
+      deadline: job.deadline,
+      vacancy: job.vacancy,
+    },
+  });
+  console.log(job);
 
-  const get = (path) =>
-    path?.split(".").reduce((acc, cur) => acc && acc[cur], data);
-
-  const isStepValid = (n) =>
-    stepFields[n].every((p) => {
-      const val = get(p);
-      return Array.isArray(val)
-        ? val.length > 0
-        : val?.toString().trim().length > 0;
-    });
-
-  const updateField = (path, value) => {
-    setData((prev) => {
-      const obj = deepClone(prev);
-      const keys = path?.split(".");
-      let ref = obj;
-      for (let i = 0; i < keys.length - 1; i++) {
-        if (!ref[keys[i]]) ref[keys[i]] = {};
-        ref = ref[keys[i]];
+  const handleFormSubmit = async (data) => {
+    try {
+      const updatedJob = {
+        ...data,
+        skills: data.skills.split(",").map((s) => s.trim()),
+      };
+      const res = await axios.put(`/api/updateJob/${job._id}`, updatedJob);
+      console.log("jobs update response:", res);
+      if (res.status === 200) {
+        Swal.fire({
+          icon: "success",
+          text: "Job updated successfully",
+          showConfirmButton: false,
+          timer: 1500,
+          width: 350,
+          background: "#D5F5F6",
+          animation: true,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          text: "Job updated failed",
+          showConfirmButton: false,
+          timer: 1500,
+          width: 350,
+          background: "#D5F5F6",
+          animation: true,
+        });
       }
-      ref[keys.at(-1)] = value;
-      return obj;
-    });
-  };
-
-  const next = () =>
-    isStepValid(step) ? setStep(step + 1) : toast.error("Fill all fields!");
-
-  const back = () => setStep(step - 1);
-
-  const handleSubmit = () => {
-    if (!isStepValid(2)) return toast.error("Form incomplete!");
-    const { _id, ...payload } = data;
-    onSave(payload);
+    } catch (error) {
+      toast.error("Failed to update the job.");
+    } finally {
+      setEdit(null);
+      refetchJobs();
+    }
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-xl">
-      <h2 className="text-xl font-semibold text-teal-700 mb-4">
-        Edit “{data.title}”
-      </h2>
+    <section className="w-full">
+      <form
+        onSubmit={handleSubmit(handleFormSubmit)}
+        className="space-y-8 border-gray-200 relative"
+      >
+        <div className="flex justify-end">
+          <button
+            onClick={() => setEdit(null)}
+            className="btn btn-sm border border-teal-500 absolute top-5 right-5"
+          >
+            <X />
+          </button>
+        </div>
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-teal-600">
+          Update Job
+        </h2>
 
-      {/* Step indicator */}
-      <div className="flex mb-6">
-        {[1, 2].map((n) => (
-          <div
-            key={n}
-            className={`flex-1 h-2 ${
-              step >= n ? "bg-teal-500" : "bg-teal-100"
-            } rounded`}
+        {/* Job Title */}
+        <div>
+          <label className="form-label">Job Title</label>
+          <Controller
+            name="title"
+            control={control}
+            render={({ field }) => (
+              <input
+                type="text"
+                placeholder="e.g., Frontend Developer"
+                {...field}
+                className="form-input"
+              />
+            )}
           />
-        ))}
-      </div>
+        </div>
 
-      {step === 1 && (
-        <div className="grid gap-4">
-          <input disabled value={data.title} className="input opacity-70" />
-          <input disabled value={data.company} className="input opacity-70" />
-
-          <input
-            value={data.type}
-            onChange={(e) => updateField("type", e.target.value)}
-            placeholder="Job Type"
-            className="input"
-          />
-          <input
-            value={data.location}
-            onChange={(e) => updateField("location", e.target.value)}
-            placeholder="Location"
-            className="input"
-          />
-          <div className="flex gap-3">
-            <input
-              value={data.minSalary}
-              onChange={(e) => updateField("minSalary", e.target.value)}
-              placeholder="Min Salary"
-              className="input flex-1"
-            />
-            <input
-              value={data.maxSalary}
-              onChange={(e) => updateField("maxSalary", e.target.value)}
-              placeholder="Max Salary"
-              className="input flex-1"
+        {/* Category and Type */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="form-label">Category</label>
+            <Controller
+              name="category"
+              control={control}
+              render={({ field }) => (
+                <select {...field} className="form-input" required>
+                  <option value="">Select Category</option>
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              )}
             />
           </div>
-          <input
-            value={data.category}
-            onChange={(e) => updateField("category", e.target.value)}
-            placeholder="Category"
-            className="input"
+
+          <div>
+            <label className="form-label">Job Type</label>
+            <Controller
+              name="type"
+              control={control}
+              render={({ field }) => (
+                <select {...field} className="form-input" required>
+                  <option value="">Select Type</option>
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                  <option value="Remote">Remote</option>
+                  <option value="Internship">Internship</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Hybrid">Hybrid</option>
+                  <option value="Freelance">Freelance</option>
+                </select>
+              )}
+            />
+          </div>
+        </div>
+
+        {/* Skills */}
+        <div>
+          <label className="form-label">Skills (comma separated)</label>
+          <Controller
+            name="skills"
+            control={control}
+            render={({ field }) => (
+              <input
+                type="text"
+                placeholder="e.g., React, Tailwind, Node.js"
+                {...field}
+                className="form-input"
+              />
+            )}
           />
         </div>
-      )}
 
-      {step === 2 && (
-        <div className="grid gap-4">
-          <input
-            type="date"
-            value={data.meta?.deadline?.slice(0, 10) || ""}
-            onChange={(e) => updateField("meta.deadline", e.target.value)}
-            className="input"
-          />
-          <input
-            value={data.experience}
-            onChange={(e) => updateField("experience", e.target.value)}
-            placeholder="Experience"
-            className="input"
-          />
-          <input
-            value={data.education}
-            onChange={(e) => updateField("education", e.target.value)}
-            placeholder="Education"
-            className="input"
-          />
-          <input
-            value={Array.isArray(data.skills) ? data.skills.join(", ") : ""}
-            onChange={(e) =>
-              updateField(
-                "skills",
-                e.target.value
-                  ? e.target.value.split(",").map((s) => s.trim())
-                  : []
-              )
-            }
-            placeholder="Skills (comma separated)"
-            className="input"
-          />
-          <textarea
-            value={data.description}
-            onChange={(e) => updateField("description", e.target.value)}
-            placeholder="Description"
-            rows={4}
-            className="input resize-y"
-          />
-          <textarea
-            value={Array.isArray(data.benefits) ? data.benefits.join("\n") : ""}
-            onChange={(e) =>
-              updateField(
-                "benefits",
-                e.target.value
-                  ? e.target.value.split("\n").map((b) => b.trim())
-                  : []
-              )
-            }
-            placeholder="Benefits (one per line)"
-            rows={3}
-            className="input resize-y"
+        {/* Job Description */}
+        <div>
+          <label className="form-label">Job Description</label>
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <textarea
+                placeholder="Enter job description"
+                {...field}
+                className="form-input"
+              />
+            )}
           />
         </div>
-      )}
 
-      {/* footer buttons */}
-      <div className="mt-6 flex justify-between flex-wrap gap-2">
-        {step > 1 ? (
-          <button onClick={back} className="btn-secondary">
-            Back
-          </button>
-        ) : (
-          <span />
-        )}
-        {step === 1 && (
-          <button onClick={next} className="btn-primary">
-            Next
-          </button>
-        )}
-        {step === 2 && (
-          <button onClick={handleSubmit} className="btn-primary">
-            Save
-          </button>
-        )}
-        <button onClick={onCancel} className="btn-secondary ml-auto">
-          Cancel
+        {/* Job Requirements */}
+        <div>
+          <label className="form-label">Job Requirements</label>
+          <Controller
+            name="requirements"
+            control={control}
+            render={({ field }) => (
+              <textarea
+                placeholder="Enter job requirements"
+                {...field}
+                className="form-input"
+                required
+              />
+            )}
+          />
+        </div>
+
+        {/* Job Benefits */}
+        <div>
+          <label className="form-label">Job Benefits</label>
+          <Controller
+            name="benefits"
+            control={control}
+            render={({ field }) => (
+              <textarea
+                {...field}
+                className="form-input"
+                placeholder="Enter job benefits"
+                required
+              />
+            )}
+          />
+        </div>
+
+        {/* Salary Range */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label className="form-label">Minimum Salary</label>
+            <Controller
+              name="minSalary"
+              control={control}
+              render={({ field }) => (
+                <input
+                  type="number"
+                  placeholder="e.g., 30000"
+                  {...field}
+                  className="form-input"
+                />
+              )}
+            />
+          </div>
+          <div>
+            <label className="form-label">Maximum Salary</label>
+            <Controller
+              name="maxSalary"
+              control={control}
+              render={({ field }) => (
+                <input
+                  type="number"
+                  placeholder="e.g., 70000"
+                  {...field}
+                  className="form-input"
+                />
+              )}
+            />
+          </div>
+
+          {/* Salary Type */}
+          <div>
+            <label className="form-label">Salary Type</label>
+            <Controller
+              name="salaryType"
+              control={control}
+              render={({ field }) => (
+                <select {...field} className="form-input" required>
+                  <option value="" disabled>
+                    Select Salary Type
+                  </option>
+                  <option value="Hourly">Hourly</option>
+                  <option value="Daily">Daily</option>
+                  <option value="Weekly">Weekly</option>
+                  <option value="Monthly">Monthly</option>
+                  <option value="Yearly">Yearly</option>
+                </select>
+              )}
+            />
+          </div>
+        </div>
+
+        {/* Location */}
+        <div>
+          <label className="form-label">Location</label>
+          <Controller
+            name="location"
+            control={control}
+            render={({ field }) => (
+              <input
+                type="text"
+                placeholder="e.g., Dhaka, Bangladesh"
+                {...field}
+                className="form-input"
+                required
+              />
+            )}
+          />
+        </div>
+
+        {/* Experience and Industry */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label className="form-label">Experience</label>
+            <Controller
+              name="experience"
+              control={control}
+              render={({ field }) => (
+                <select {...field} className="form-input" required>
+                  <option value="">Select Experience</option>
+                  {[...Array(11)].map((_, i) => (
+                    <option key={i} value={`${i} years`}>
+                      {i === 0 ? "Fresher" : `${i} year${i > 1 ? "s" : ""}`}
+                    </option>
+                  ))}
+                </select>
+              )}
+            />
+          </div>
+          <div>
+            <label className="form-label">Industry</label>
+            <Controller
+              name="industry"
+              control={control}
+              render={({ field }) => (
+                <select {...field} className="form-input" required>
+                  <option value="" disabled>
+                    Select Industry
+                  </option>
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              )}
+            />
+          </div>
+
+          <div>
+            <label className="form-label">Education Level</label>
+            <input
+              type="text"
+              value={job.educationLevel}
+              {...register("educationLevel")}
+              className="form-input"
+            />
+          </div>
+        </div>
+
+        {/* Languages */}
+        <div>
+          <label className="form-label mb-2">Languages</label>
+          <div className="flex flex-wrap gap-4">
+            {languagesList.map((lang) => (
+              <label
+                key={lang}
+                className="flex items-center text-xs gap-2 text-gray-600"
+              >
+                <input
+                  type="checkbox"
+                  value={lang}
+                  {...register("languages")}
+                  className="accent-teal-500"
+                />
+                {lang}
+              </label>
+            ))}
+          </div>
+        </div>
+        {/* Deadline */}
+        <div>
+          <label className="form-label">Deadline</label>
+          <Controller
+            name="deadline"
+            control={control}
+            render={({ field }) => (
+              <input type="date" {...field} className="form-input" required />
+            )}
+          />
+        </div>
+
+        {/* Vacancy */}
+        <div>
+          <label className="form-label">Vacancy</label>
+          <Controller
+            name="vacancy"
+            control={control}
+            render={({ field }) => (
+              <input type="number" {...field} className="form-input" required />
+            )}
+          />
+        </div>
+
+        <button type="submit" className="bg-teal-500 text-white btn">
+          Update Job
         </button>
-      </div>
-    </div>
+      </form>
+    </section>
   );
-}
+};
 
-/* ---------- Tailwind helpers ---------- */
-const base =
-  "w-full px-4 py-2 border border-teal-400 rounded focus:outline-none focus:ring-2 focus:ring-teal-400";
-export const input = base;
-export const btnBase = "px-4 py-2 rounded transition";
-export const btnPrimary = `${btnBase} bg-teal-500 text-white hover:bg-teal-600`;
-export const btnSecondary = `${btnBase} bg-gray-200 hover:bg-gray-300`;
+export default EditJob;

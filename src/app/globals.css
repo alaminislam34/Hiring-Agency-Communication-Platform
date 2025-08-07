@@ -1,6 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap");
 
 @import "tailwindcss";
+@plugin "flowbite-react/plugin/tailwindcss";
+@source "../../.flowbite-react/class-list.json";
 @plugin "daisyui";
 /* using react slick slider for testimonials */
 @import "slick-carousel/slick/slick.css";
@@ -9,4 +12,97 @@
 
 body {
   font-family: "Poppins", sans-serif;
+}
+
+@theme {
+  --color-teal-primary: theme(colors.teal.500);
+  --color-teal-secondary: theme(colors.teal.600);
+  --color-teal-accent: theme(colors.teal.400);
+  --color-teal-neutral: theme(colors.gray.100);
+
+  --color-indigo-primary: theme(colors.indigo.500);
+  --color-indigo-secondary: theme(colors.indigo.600);
+  --color-indigo-accent: theme(colors.indigo.400);
+  --color-indigo-neutral: theme(colors.slate.100);
+
+  --color-emerald-primary: theme(colors.emerald.500);
+  --color-emerald-secondary: theme(colors.emerald.600);
+  --color-emerald-accent: theme(colors.emerald.400);
+  --color-emerald-neutral: theme(colors.gray.100);
+
+  --color-slate-dark-primary: theme(colors.slate.800);
+  --color-slate-dark-secondary: theme(colors.slate.700);
+  --color-slate-dark-accent: theme(colors.slate.600);
+  --color-slate-dark-neutral: theme(colors.slate.900);
+
+  --color-rose-primary: theme(colors.rose.500);
+  --color-rose-secondary: theme(colors.rose.600);
+  --color-rose-accent: theme(colors.rose.400);
+  --color-rose-neutral: theme(colors.gray.100);
+
+  --color-amber-dark-primary: theme(colors.amber.700);
+  --color-amber-dark-secondary: theme(colors.amber.600);
+  --color-amber-dark-accent: theme(colors.amber.500);
+  --color-amber-dark-neutral: theme(colors.gray.900);
+
+  --color-sky-primary: theme(colors.sky.500);
+  --color-sky-secondary: theme(colors.sky.600);
+  --color-sky-accent: theme(colors.sky.400);
+  --color-sky-neutral: theme(colors.gray.100);
+
+  --color-zinc-dark-primary: theme(colors.zinc.800);
+  --color-zinc-dark-secondary: theme(colors.zinc.700);
+  --color-zinc-dark-accent: theme(colors.zinc.600);
+  --color-zinc-dark-neutral: theme(colors.zinc.900);
+
+  --font-gloria: "Gloria Hallelujah", cursive;
+}
+
+.collapse-title {
+  grid-column-start: 1;
+  grid-row-start: 1;
+  position: relative;
+  width: 100%;
+  padding: 8px;
+  min-height: 2rem;
+  transition: background-color 0.2s ease-out;
+  font-size: 16px;
+}
+
+/* globals.css */
+
+/* table classes */
+.form-label {
+  @apply block text-gray-700 font-medium mb-2;
+}
+
+.form-input {
+  @apply py-1.5 px-2 text-sm border w-full border-teal-500 rounded-lg focus:outline-teal-500 focus:ring-2 focus:ring-teal-500;
+}
+
+.table-class {
+  @apply min-w-full bg-white table-auto text-sm text-left text-gray-700 p-2 lg:p-4;
+}
+
+.table-head-class {
+  @apply text-teal-700 uppercase text-xs font-semibold;
+}
+
+.table-head-row-class {
+  @apply *:py-2 *:px-2;
+}
+
+.table-row-class {
+  @apply hover:bg-teal-50 *:py-2 *:px-2 transition duration-200;
+}
+
+.delete-btn {
+  @apply w-7 h-7 flex items-center justify-center cursor-pointer bg-red-100 text-red-600 rounded-full hover:bg-red-200;
+}
+
+.reject-btn {
+  @apply w-7 h-7 flex items-center justify-center cursor-pointer bg-yellow-100 text-yellow-600 rounded-full hover:bg-yellow-200;
+}
+.accept-btn {
+  @apply w-7 h-7 flex items-center justify-center cursor-pointer bg-green-100 text-green-600 rounded-full hover:bg-green-200;
 }

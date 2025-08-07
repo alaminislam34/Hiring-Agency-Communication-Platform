@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import CommonButton from "../components/CommonButton";
+import CommonButton from "../components/LandingPageComponents/CommonButton";
 import { FaChevronLeft } from "react-icons/fa6";
 import Link from "next/link";
 
@@ -30,7 +30,7 @@ const AddResume = () => {
   };
   const [currentlyWorking, setCurrentlyWorking] = React.useState(false);
   return (
-    <div className="flex justify-center items-center min-h-screen max-w-6xl mx-auto w-11/12">
+    <div className="flex justify-center items-center min-h-screen w-11/12">
       <div className="bg-white p-4 md:p-6 lg:p-8 rounded-2xl shadow-[0px_0px_25px_0px_rgb(0,0,0,0.2)] w-full max-w-5xl mx-auto space-y-4 my-6">
         <h2 className="text-xl lg:text-2xl text-gray-900">Work Experience</h2>
         <p className="text-sm lg:text-base text-green-950 mb-4">

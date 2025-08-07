@@ -1,0 +1,99 @@
+
+> jobhive-hiring-agency-platform@0.1.0 build C:\Projects\jobhive-hiring-agency-platform
+> next build
+
+   ▲ Next.js 15.2.2
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+Generating .flowbite-react\class-list.json file...
+Generating .flowbite-react\class-list.json file...
+Generating .flowbite-react\class-list.json file...
+/*! 🌼 daisyUI 5.0.6 */
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/59) ...
+   Generating static pages (14/59) 
+   Generating static pages (29/59) 
+   Generating static pages (44/59) 
+ ✓ Generating static pages (59/59)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                     157 kB         359 kB
+├ ○ /_not-found                            988 B         102 kB
+├ ○ /about                               32.4 kB         143 kB
+├ ƒ /about/[name]                        4.16 kB         109 kB
+├ ○ /addResume                           2.23 kB         110 kB
+├ ○ /admin                               4.85 kB         259 kB
+├ ○ /admin/manageJobs                    4.99 kB         185 kB
+├ ○ /admin/manageRoleApplications          759 B         102 kB
+├ ○ /admin/manageUsers                   2.08 kB         108 kB
+├ ○ /admin/profile                       4.97 kB         195 kB
+├ ○ /admin/settings                        508 B         105 kB
+├ ƒ /api/allJobs                           208 B         102 kB
+├ ƒ /api/appliedJobs                       208 B         102 kB
+├ ƒ /api/appliedJobs/[id]                  208 B         102 kB
+├ ƒ /api/apply-job                         208 B         102 kB
+├ ƒ /api/applyForEmployer                  208 B         102 kB
+├ ƒ /api/auth/[...nextauth]                208 B         102 kB
+├ ƒ /api/currentUser                       208 B         102 kB
+├ ƒ /api/editJob/[id]                      208 B         102 kB
+├ ƒ /api/emailVerify                       208 B         102 kB
+├ ƒ /api/getAppliedJobs                    208 B         102 kB
+├ ƒ /api/job_apply                         208 B         102 kB
+├ ƒ /api/job/[id]                          208 B         102 kB
+├ ƒ /api/jobDelete/[id]                    208 B         102 kB
+├ ƒ /api/jobs                              208 B         102 kB
+├ ƒ /api/postJob                           208 B         102 kB
+├ ƒ /api/resetPassword                     208 B         102 kB
+├ ƒ /api/schedule                          208 B         102 kB
+├ ƒ /api/totalAppliedJobs                  208 B         102 kB
+├ ƒ /api/totalUsers                        208 B         102 kB
+├ ƒ /api/updateProfile                     208 B         102 kB
+├ ƒ /api/userDelete/[id]                   208 B         102 kB
+├ ○ /blogs                               6.46 kB         108 kB
+├ ○ /consulting                          39.1 kB         154 kB
+├ ○ /courses                               263 B         102 kB
+├ ○ /create-meeting                       1.7 kB         123 kB
+├ ○ /employer                            4.23 kB         258 kB
+├ ○ /employer/addJob                     1.99 kB         153 kB
+├ ○ /employer/candidates                 1.06 kB         102 kB
+├ ○ /employer/manageJobs                 6.16 kB         186 kB
+├ ○ /employer/notifications                264 B         102 kB
+├ ○ /employer/profile                    5.85 kB         196 kB
+├ ○ /employer/settings                     881 B         105 kB
+├ ƒ /job/[id]                            1.66 kB         138 kB
+├ ○ /jobs                                5.45 kB         192 kB
+├ ƒ /jobs/[id]                             208 B         102 kB
+├ ○ /jobSeeker                           4.44 kB         258 kB
+├ ○ /jobSeeker/appliedJobs                 755 B         102 kB
+├ ○ /jobSeeker/applyForEmployer          2.96 kB         195 kB
+├ ○ /jobSeeker/chatbox                   3.69 kB         119 kB
+├ ○ /jobSeeker/meeting                   2.54 kB         173 kB
+├ ○ /jobSeeker/notifications             3.72 kB         175 kB
+├ ○ /jobSeeker/profile                   5.85 kB         196 kB
+├ ○ /jobSeeker/savedJobs                 2.02 kB         173 kB
+├ ○ /jobSeeker/settings                    208 B         102 kB
+├ ○ /jobtoolkit                           2.2 kB         107 kB
+├ ○ /loadingPage                           403 B         114 kB
+├ ○ /not-found                             177 B         105 kB
+├ ○ /postJob                             2.95 kB         195 kB
+├ ○ /resumeDropZone                      2.02 kB         110 kB
+├ ƒ /room/[roomid]                       2.13 kB         173 kB
+├ ○ /savedJobs                           4.84 kB         191 kB
+├ ○ /signin                              6.01 kB         208 kB
+├ ○ /signup                               2.8 kB         205 kB
+├ ƒ /test                                  208 B         102 kB
+└ ƒ /verifyEmail                         1.44 kB         126 kB
++ First Load JS shared by all             101 kB
+  ├ chunks/033c31d1-33ac528c1c882b40.js  53.3 kB
+  ├ chunks/4828-8e9430d9dbfe2513.js      46.1 kB
+  └ other shared chunks (total)          2.05 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

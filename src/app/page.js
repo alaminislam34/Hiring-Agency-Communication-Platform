@@ -57,7 +57,7 @@ export default function Home() {
     <div className="space-y-8 lg:space-y-12 w-full">
       <Banner />
       <br />
-      <section className="max-w-7xl mx-auto w-11/12 space-y-8 md:space-y-12">
+      <section className="max-w-[1440px] mx-auto w-11/12 space-y-8 md:space-y-12">
         <TopCategories></TopCategories>
         {/* <TrendsCarousel /> */}
         <FindJob />

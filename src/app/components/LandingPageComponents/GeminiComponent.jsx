@@ -4,6 +4,7 @@ import { generativeText } from "@/app/utils/gemini";
 import { Send } from "lucide-react";
 import { Smile } from "lucide-react";
 import { Plus } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { BsCaretDown, BsCaretUp } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
@@ -88,7 +89,7 @@ export default function GeminiComponent() {
         <div className="flex items-center justify-end">
           <button
             onClick={() => setOpen(!open)}
-            className="w-12 h-10 rounded-xl bg-teal-500 btn text-white text-xl border-none"
+            className="w-12 h-10 mb-4 rounded-xl bg-teal-200 btn text-teal-600 text-xl border-none"
           >
             {open ? <GrClose /> : <IoChatbubbleEllipsesSharp />}
           </button>
@@ -96,62 +97,35 @@ export default function GeminiComponent() {
         <div
           className={`${
             open
-              ? "flex w-[300px] md:w-[380px] h-[400px] md:h-[500px] opacity-100 pointer-events-auto"
+              ? "flex w-[300px] md:w-[400px] h-[400px] md:h-[650px] opacity-100 pointer-events-auto"
               : "w-0 h-0 opacity-0 pointer-events-none"
-          } duration-500 border overflow-hidden rounded-xl border-teal-600 bg-white shadow-xl flex-col relative`}
+          } duration-500 border overflow-hidden rounded border-teal-200 bg-white shadow-xl flex-col relative`}
         >
           <div className="relative">
             {/* Title */}
-            <h2 className="text-xl font-semibold text-center text-teal-50 bg-gradient-to-tr from-teal-500 via-teal-600 to-teal-600 py-3 flex items-center justify-center gap-2 z-10 relative">
+            <h2 className="text-xl font-semibold text-center text-teal-700 bg-gradient-to-tr from-teal-200 via-teal-300 to-teal-300 py-3 flex items-center justify-center gap-2 z-10 relative">
               <RiRobot3Line className="text-2xl" /> JobHive Gemini AI
             </h2>
-
-            {/* Custom Q&A */}
-
-            <div
-              className={`overflow-y-auto duration-300 ${
-                showQ ? "h-24 py-2" : "h-0"
-              } flex flex-wrap gap-2 justify-center bg-gradient-to-tr from-teal-500 via-teal-600 to-teal-600 border-teal-400 px-2 border-b`}
-            >
-              {customQA.map((item, idx) => (
-                <button
-                  key={idx}
-                  title={item.hint}
-                  onClick={() => handleCustomClick(item)}
-                  className="border border-teal-50 cursor-pointer text-xs text-teal-950 bg-white py-1.5 px-3 rounded-xl hover:bg-teal-500 hover:text-white transition duration-300"
-                >
-                  {item.question}
-                </button>
-              ))}
-            </div>
-            <div className="absolute right-0 bottom-0 z-20">
-              <button
-                onClick={() => setShowQ(!showQ)}
-                className="py-1 px-3 rounded-t-lg bg-gradient-to-l from-teal-200 via-teal-200 to-teal-300 cursor-pointer"
-              >
-                {showQ ? <BsCaretUp /> : <BsCaretDown />}
-              </button>
-            </div>
           </div>
           {/* Messages */}
-          <div
-            style={{
-              backgroundImage: `url('/aiBot.avif')`,
-              backgroundPosition: "right",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }}
-            className="flex-1 relative"
-          >
-            <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-10"></div>
+          <div className="flex-1 relative">
+            <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full">
+              <Image
+                src={"/assistant.png"}
+                alt="Bot image"
+                height={400}
+                width={300}
+                className="h-[150] w-auto mx-auto"
+              />
+            </div>
             <div className="overflow-y-auto space-y-3 p-4 z-20 shadow-inner absolute top-0 left-0 w-full h-full">
               {messages.map((msg, index) => (
                 <div
                   key={index}
-                  className={`py-1 md:py-1.5 px-2 text-sm max-w-2/3 w-auto shadow-2xl text-white ${
+                  className={`py-1 md:py-1.5 px-2 text-sm max-w-5/6 w-auto shadow-2xl  ${
                     msg.sender === "user"
-                      ? "bg-transparent/50 backdrop-blur border border-gray-500 ml-auto text-right rounded-t-xl rounded-bl-xl"
-                      : "bg-transparent/50 backdrop-blur border border-gray-500 mr-auto text-left rounded-t-xl rounded-br-xl"
+                      ? "bg-transparent/80 backdrop-blur-3xl border border-gray-300 ml-auto text-right rounded-t-xl rounded-bl-xl"
+                      : "bg-transparent/80 backdrop-blur-3xl border border-gray-300 mr-auto text-left rounded-t-xl rounded-br-xl"
                   }`}
                 >
                   {msg.text}
@@ -168,40 +142,53 @@ export default function GeminiComponent() {
             </div>
           </div>
 
-          {/* Input Area */}
-
+          {/* Chat Input Area */}
           <form
             onSubmit={handleGenerate}
-            className="flex flex-row items-center gap-2 bg-gradient-to-l from-teal-500 via-teal-600 to-teal-600 rounded-b-xl rounded-br-xl w-full p-2"
+            className="flex items-center gap-3 bg-gradient-to-r from-teal-100 via-teal-200 to-teal-300 p-3 shadow-inner"
           >
+            {/* Left action buttons */}
             <div className="flex items-center gap-2">
-              <button className="cursor-pointer text-white">
-                <Plus />
+              <button
+                type="button"
+                className="p-2 bg-white rounded-full shadow-sm hover:shadow-md hover:bg-teal-50 active:scale-95 transition"
+                title="Add new"
+              >
+                <Plus className="text-teal-600 w-5 h-5" />
               </button>
-              <button className="cursor-pointer text-white">
-                <Smile />
+              <button
+                type="button"
+                className="p-2 bg-white rounded-full shadow-sm hover:shadow-md hover:bg-teal-50 active:scale-95 transition"
+                title="Insert emoji"
+              >
+                <Smile className="text-teal-600 w-5 h-5" />
               </button>
             </div>
-            <label htmlFor="file">
+
+            {/* Input box */}
+            <div className="flex-1 relative">
               <input
                 type="text"
-                rows={1}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Ask me anything..."
-                className="border border-gray-300 p-2 rounded-lg focus:outline-none bg-white w-[150px] md:w-[230px] "
                 disabled={loading}
+                className="w-full bg-white border border-gray-300 text-gray-800 rounded-full px-4 py-2 pl-4 focus:ring-2 focus:ring-teal-400 focus:border-transparent outline-none transition"
               />
-            </label>
+            </div>
+
+            {/* Send button */}
             <button
-              className={`rounded-lg btn border-none ${
+              type="submit"
+              disabled={loading}
+              className={`flex items-center justify-center p-3 rounded-full transition shadow-sm ${
                 loading
                   ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-gradient-to-br from-teal-100 to-teal-200"
+                  : "bg-teal-500 hover:bg-teal-600 active:scale-95 text-white"
               }`}
-              disabled={loading}
+              title="Send message"
             >
-              <Send className="text-xl hover:scale-95 duration-300" />
+              <Send className="w-5 h-5" />
             </button>
           </form>
         </div>

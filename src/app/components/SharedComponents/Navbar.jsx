@@ -257,7 +257,7 @@ const Navbar = () => {
   return (
     <div className="bg-base-100 relative">
       <div className="w-full bg-white shadow">
-        <nav className="navbar w-full px-4 max-w-7xl mx-auto flex justify-center items-center">
+        <nav className="navbar px-4 max-w-[1440px] w-11/12 mx-auto flex justify-center items-center">
           {/* Navbar Start (Logo & Mobile Menu) */}
           <div className="navbar-start">
             <div

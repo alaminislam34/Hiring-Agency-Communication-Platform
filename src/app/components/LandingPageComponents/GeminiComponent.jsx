@@ -1,13 +1,8 @@
 "use client";
 
 import { generativeText } from "@/app/utils/gemini";
-import { Send } from "lucide-react";
-import { Smile } from "lucide-react";
-import { Plus } from "lucide-react";
-import Image from "next/image";
+import { Send, Smile, Plus, HelpCircle, X } from "lucide-react"; // Imported X for a professional close icon
 import { useEffect, useRef, useState } from "react";
-import { BsCaretDown, BsCaretUp } from "react-icons/bs";
-import { GrClose } from "react-icons/gr";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import { RiRobot3Line } from "react-icons/ri";
 
@@ -31,6 +26,43 @@ const customQA = [
   },
 ];
 
+// --- New Modular Components for UI/UX ---
+
+const ChatBubble = ({ message }) => (
+  <div
+    className={`max-w-[85%] p-3 text-sm rounded-xl shadow-md ${
+      message.sender === "user"
+        ? "bg-teal-600 text-white ml-auto rounded-br-none" // User: Teal background, White text
+        : "bg-white text-gray-800 mr-auto border border-gray-200 rounded-tl-none" // AI: White background, Border
+    }`}
+  >
+    <p className="leading-relaxed">{message.text}</p>
+  </div>
+);
+
+const QuickHelp = ({ customQA, onCustomClick }) => (
+  <div className="p-3 mb-4 bg-white border border-teal-200 rounded-lg shadow-sm">
+    <p className="font-medium text-teal-700 flex items-center gap-1 mb-2">
+      <HelpCircle className="w-4 h-4" /> Quick Help
+    </p>
+    <div className="flex flex-wrap gap-2">
+      {customQA.map((item, index) => (
+        <button
+          key={index}
+          type="button"
+          onClick={() => onCustomClick(item)}
+          className="px-3 py-1 text-xs md:text-sm text-teal-700 bg-teal-100 rounded-full hover:bg-teal-200 transition duration-150 active:scale-95"
+          title={item.hint}
+        >
+          {item.question}
+        </button>
+      ))}
+    </div>
+  </div>
+);
+
+// --- Main Component ---
+
 export default function GeminiComponent() {
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState([]);
@@ -39,7 +71,7 @@ export default function GeminiComponent() {
   const [showQ, setShowQ] = useState(false);
   const bottomRef = useRef(null);
 
-  // Load chat history
+  // Load chat history (NO CHANGE)
   useEffect(() => {
     const storedMessages = localStorage.getItem("jobhive_chat_history");
     if (storedMessages) {
@@ -47,144 +79,170 @@ export default function GeminiComponent() {
     }
   }, []);
 
-  // Save to localStorage
+  // Save to localStorage (NO CHANGE)
   useEffect(() => {
     localStorage.setItem("jobhive_chat_history", JSON.stringify(messages));
   }, [messages]);
 
-  // Scroll to bottom
+  // Scroll to bottom (NO CHANGE)
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Handle generation logic (NO CHANGE - added setShowQ(false) for UX)
   const handleGenerate = async (e) => {
     e.preventDefault();
-    if (!prompt.trim()) return;
+    const trimmedPrompt = prompt.trim(); // Use trimmed prompt
+    if (!trimmedPrompt) return;
 
-    const userMessage = { text: prompt, sender: "user" };
+    const userMessage = { text: trimmedPrompt, sender: "user" };
     setMessages((prev) => [...prev, userMessage]);
     setPrompt("");
     setLoading(true);
+    setShowQ(false); // Hide quick help on message send
 
-    const result = await generativeText(prompt);
-    const aiMessage = { text: result, sender: "ai" };
-
-    setMessages((prev) => [...prev, aiMessage]);
-    setLoading(false);
+    try {
+        const result = await generativeText(trimmedPrompt);
+        const aiMessage = { text: result, sender: "ai" };
+        setMessages((prev) => [...prev, aiMessage]);
+    } catch (error) {
+        // Handle error gracefully
+        console.error("Error generating text:", error);
+        setMessages(prev => [...prev, {text: "Sorry, I encountered an error processing your request.", sender: "ai"}]); 
+    } finally {
+        setLoading(false);
+    }
   };
 
+  // Handle Quick Help click (NO CHANGE)
   const handleCustomClick = (item) => {
     setMessages((prev) => [
       ...prev,
       { text: item.question, sender: "user" },
       { text: item.answer, sender: "ai" },
     ]);
+    setShowQ(false); // Hide quick help after click
+  };
+  
+  // Toggle Chat with Initial Quick Help check
+  const toggleChat = () => {
+    const newState = !open;
+    setOpen(newState);
+    // Show Quick Help when opening the chat if there are no messages
+    if (newState && messages.length === 0) {
+        setShowQ(true);
+    }
+    // If closing, hide quick help
+    if (!newState) {
+        setShowQ(false);
+    }
   };
 
   return (
     <>
       {/* Chat Modal */}
-      <div className={`fixed bottom-2 right-2 md:right-5 z-[60] m-0`}>
+      <div className={`fixed bottom-4 right-4 md:right-8 z-[60]`}>
         {/* Floating Button */}
         <div className="flex items-center justify-end">
           <button
-            onClick={() => setOpen(!open)}
-            className="w-12 h-10 mb-4 rounded-xl bg-teal-200 btn text-teal-600 text-xl border-none"
+            onClick={toggleChat}
+            className="w-14 h-14 mb-4 rounded-full bg-teal-600 text-white text-2xl shadow-xl hover:bg-teal-700 transition duration-300 ease-in-out transform hover:scale-105 active:scale-100"
+            aria-label={open ? "Close chat widget" : "Open chat widget"}
           >
-            {open ? <GrClose /> : <IoChatbubbleEllipsesSharp />}
+            {open ? (
+              <X className="w-6 h-6 mx-auto" />
+            ) : (
+              <IoChatbubbleEllipsesSharp className="mx-auto" />
+            )}
           </button>
         </div>
+
+        {/* Chat Window */}
         <div
           className={`${
             open
-              ? "flex w-[300px] md:w-[400px] h-[400px] md:h-[650px] opacity-100 pointer-events-auto"
-              : "w-0 h-0 opacity-0 pointer-events-none"
-          } duration-500 border overflow-hidden rounded border-teal-200 bg-white shadow-xl flex-col relative`}
+              ? "flex w-[320px] md:w-[420px] h-[500px] md:h-[650px] opacity-100 translate-y-0"
+              : "w-0 h-0 opacity-0 translate-y-10 pointer-events-none"
+          } duration-300 shadow-2xl border border-gray-100 bg-white rounded-xl flex-col relative overflow-hidden`}
         >
-          <div className="relative">
-            {/* Title */}
-            <h2 className="text-xl font-semibold text-center text-teal-700 bg-gradient-to-tr from-teal-200 via-teal-300 to-teal-300 py-3 flex items-center justify-center gap-2 z-10 relative">
-              <RiRobot3Line className="text-2xl" /> JobHive Gemini AI
-            </h2>
-          </div>
-          {/* Messages */}
-          <div className="flex-1 relative">
-            <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full">
-              <Image
-                src={"/assistant.png"}
-                alt="Bot image"
-                height={400}
-                width={300}
-                className="h-[150] w-auto mx-auto"
-              />
+          {/* Title Header */}
+          <div className="bg-teal-600 text-white p-4 flex items-center justify-between shadow-md">
+            <div className="flex items-center gap-2">
+              <RiRobot3Line className="text-2xl" />
+              <h2 className="text-lg font-semibold">JobHive AI Assistant</h2>
             </div>
-            <div className="overflow-y-auto space-y-3 p-4 z-20 shadow-inner absolute top-0 left-0 w-full h-full">
+            <button
+              onClick={toggleChat}
+              className="text-white hover:text-teal-200 transition"
+              title="Close chat"
+              aria-label="Close chat window"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Messages Container */}
+          <div className="flex-1 relative overflow-y-auto p-4 bg-gray-50">
+            {/* Quick Help component */}
+            {showQ && (
+                <QuickHelp customQA={customQA} onCustomClick={handleCustomClick} />
+            )}
+            
+            {/* Message Bubbles */}
+            <div className="space-y-3">
               {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`py-1 md:py-1.5 px-2 text-sm max-w-5/6 w-auto shadow-2xl  ${
-                    msg.sender === "user"
-                      ? "bg-transparent/80 backdrop-blur-3xl border border-gray-300 ml-auto text-right rounded-t-xl rounded-bl-xl"
-                      : "bg-transparent/80 backdrop-blur-3xl border border-gray-300 mr-auto text-left rounded-t-xl rounded-br-xl"
-                  }`}
-                >
-                  {msg.text}
-                </div>
+                <ChatBubble key={index} message={msg} />
               ))}
 
               {/* Loading bubble */}
               {loading && (
-                <div className="py-1 px-2 flex items-center justify-center w-12 bg-gradient-to-l from-teal-400 via-teal-400 to-teal-500 mr-auto text-left rounded-t-xl rounded-br-xl ">
-                  <span className="loading loading-dots loading-sm"></span>
+                // Replaced with a cleaner, standard-looking loading indicator
+                <div className="py-2 px-4 flex items-center w-16 bg-white border border-gray-200 mr-auto rounded-xl rounded-tl-none shadow-sm">
+                  {/* NOTE: You need a loading dots CSS utility for this class */}
+                  <span className="loading loading-dots loading-sm text-teal-500"></span> 
                 </div>
               )}
               <div ref={bottomRef}></div>
             </div>
           </div>
 
-          {/* Chat Input Area */}
+          {/* Chat Input Area - Cleaned up gradients and buttons */}
           <form
             onSubmit={handleGenerate}
-            className="flex items-center gap-3 bg-gradient-to-r from-teal-100 via-teal-200 to-teal-300 p-3 shadow-inner"
+            className="flex items-center gap-2 bg-white p-3 border-t border-gray-200"
           >
-            {/* Left action buttons */}
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                className="p-2 bg-white rounded-full shadow-sm hover:shadow-md hover:bg-teal-50 active:scale-95 transition"
-                title="Add new"
-              >
-                <Plus className="text-teal-600 w-5 h-5" />
-              </button>
-              <button
-                type="button"
-                className="p-2 bg-white rounded-full shadow-sm hover:shadow-md hover:bg-teal-50 active:scale-95 transition"
-                title="Insert emoji"
-              >
-                <Smile className="text-teal-600 w-5 h-5" />
-              </button>
+            {/* Left action button: Toggle Quick Help */}
+            <div className="flex items-center gap-1">
+                <button
+                    type="button"
+                    onClick={() => setShowQ(!showQ)}
+                    className="p-2 bg-white rounded-full shadow-sm text-teal-600 hover:bg-teal-50 active:scale-95 transition"
+                    title="Toggle Quick Help"
+                    aria-label={showQ ? "Hide Quick Help Suggestions" : "Show Quick Help Suggestions"}
+                >
+                    <HelpCircle className="w-5 h-5" />
+                </button>
             </div>
-
             {/* Input box */}
             <div className="flex-1 relative">
               <input
                 type="text"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Ask me anything..."
+                placeholder="Ask your question..."
                 disabled={loading}
-                className="w-full bg-white border border-gray-300 text-gray-800 rounded-full px-4 py-2 pl-4 focus:ring-2 focus:ring-teal-400 focus:border-transparent outline-none transition"
+                className="w-full bg-gray-100 border border-gray-300 text-gray-800 rounded-full px-4 py-2 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none transition"
               />
             </div>
 
             {/* Send button */}
             <button
               type="submit"
-              disabled={loading}
-              className={`flex items-center justify-center p-3 rounded-full transition shadow-sm ${
-                loading
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-teal-500 hover:bg-teal-600 active:scale-95 text-white"
+              disabled={loading || !prompt.trim()}
+              className={`flex items-center justify-center p-3 rounded-full transition shadow-md ${
+                loading || !prompt.trim()
+                  ? "bg-gray-300 cursor-not-allowed text-gray-500"
+                  : "bg-teal-600 hover:bg-teal-700 active:scale-95 text-white"
               }`}
               title="Send message"
             >

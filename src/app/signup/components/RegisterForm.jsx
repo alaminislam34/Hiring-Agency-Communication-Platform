@@ -1,22 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { ThreeDots } from "react-loader-spinner";
-import { register } from "@/app/actions/auth/registerUser";
-import { signIn } from "next-auth/react";
-import { useAppContext } from "@/Providers/AppProviders";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = ({ setIsSignUp }) => {
-  const { isVerified } = useAppContext();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [role, setRole] = useState("jobSeeker");
-  const [user, setUser] = useState({});
   const [isAvailable, setIsAvailable] = useState(true);
   const [usernameChecking, setUsernameChecking] = useState(false);
+  const router = useRouter();
 
   const {
     register: formRegister,
@@ -26,7 +24,7 @@ const RegisterForm = ({ setIsSignUp }) => {
     formState: { errors },
   } = useForm();
 
-  // username checking function
+  // ✅ Check if username is available
   const checkUsername = async (value) => {
     if (!value) {
       setIsAvailable(true);
@@ -37,7 +35,6 @@ const RegisterForm = ({ setIsSignUp }) => {
       const res = await axios.get("/api/checkUsername", {
         params: { username: value },
       });
-
       if (res.data.available) {
         setIsAvailable(true);
         clearErrors("username");
@@ -55,34 +52,77 @@ const RegisterForm = ({ setIsSignUp }) => {
     }
   };
 
+  // ✅ Register user + auto-login
   const onSubmit = async (data) => {
     if (!isAvailable) return;
     setLoading(true);
+
     try {
       const payload = { ...data, role };
-      const res = await register(payload);
-      if (res.insertedId) {
-        setUser({ email: data.email, password: data.password });
+
+      // 1️⃣ Register
+      const registerRes = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const registerData = await registerRes.json();
+
+      if (registerRes.status === 201) {
         Swal.fire({
           icon: "success",
-          title: "Success",
-          text: "Please check your email to verify your account",
+          title: "Registered!",
+          text: "Account created successfully",
           showConfirmButton: false,
           timer: 1500,
           width: 300,
           background: "#D5F5F6",
-          animation: true,
         });
+
+        // 2️⃣ Auto-login after successful registration
+        const loginRes = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+          }),
+        });
+
+        const loginData = await loginRes.json();
+
+        if (loginRes.ok && loginData.token) {
+          // 3️⃣ Save token and user info
+          localStorage.setItem("token", loginData.token);
+          localStorage.setItem("user", JSON.stringify(loginData.user));
+
+          Swal.fire({
+            icon: "success",
+            title: "Welcome!",
+            text: "Login successful",
+            showConfirmButton: false,
+            timer: 1200,
+            width: 300,
+            background: "#D5F5F6",
+          });
+
+          // 4️⃣ Redirect
+          router.push("/");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Login Failed",
+            text: loginData.message || "Something went wrong",
+          });
+        }
       } else {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "This email is already registered",
+          text: registerData.message || "This email is already registered",
           showConfirmButton: true,
-          timer: 1500,
           width: 300,
           background: "#D5F5F6",
-          animation: true,
         });
       }
     } catch (err) {
@@ -92,19 +132,6 @@ const RegisterForm = ({ setIsSignUp }) => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (isVerified && user.email) {
-      (async () => {
-        await signIn("credentials", {
-          email: user.email,
-          password: user.password,
-          redirect: false,
-          callbackUrl: "/",
-        });
-      })();
-    }
-  }, [isVerified, user.email, user.password]);
 
   return (
     <div className="w-full">
@@ -135,46 +162,34 @@ const RegisterForm = ({ setIsSignUp }) => {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* First Name and Last Name */}
+        {/* First & Last Name */}
         <div className="flex flex-col md:flex-row gap-4">
-          {/* First Name */}
           <label className="flex flex-col gap-2 w-full">
             <span className="text-gray-500 text-sm">First Name</span>
             <input
-              {...formRegister("firstName", {
-                required: "First Name is required",
-              })}
+              {...formRegister("firstName", { required: "First name is required" })}
               className="py-2 px-4 rounded-md border border-teal-400 focus:outline-teal-600 bg-teal-50"
             />
-            {errors.firstName && (
-              <small className="text-red-500">{errors.firstName.message}</small>
-            )}
+            {errors.firstName && <small className="text-red-500">{errors.firstName.message}</small>}
           </label>
-          {/* Last Name */}
+
           <label className="flex flex-col gap-2 w-full">
             <span className="text-gray-500 text-sm">Last Name</span>
             <input
-              {...formRegister("lastName", {
-                required: "Last Name is required",
-              })}
+              {...formRegister("lastName", { required: "Last name is required" })}
               className="py-2 px-4 rounded-md border border-teal-400 focus:outline-teal-600 bg-teal-50"
             />
-            {errors.lastName && (
-              <small className="text-red-500">{errors.lastName.message}</small>
-            )}
+            {errors.lastName && <small className="text-red-500">{errors.lastName.message}</small>}
           </label>
         </div>
 
-        {/* Username and Email */}
+        {/* Username & Email */}
         <div className="flex flex-col md:flex-row gap-4">
-          {/* Username */}
           <label className="flex flex-col gap-2 w-full relative">
             <span className="text-gray-500 text-sm">Username</span>
             <input
               onChange={(e) => checkUsername(e.target.value)}
-              {...formRegister("username", {
-                required: "Username is required",
-              })}
+              {...formRegister("username", { required: "Username is required" })}
               className={`py-2 px-4 rounded-md border ${
                 isAvailable ? "border-teal-400" : "border-red-400"
               } focus:outline-teal-600 bg-teal-50`}
@@ -184,11 +199,9 @@ const RegisterForm = ({ setIsSignUp }) => {
                 Checking...
               </small>
             )}
-            {errors.username && (
-              <small className="text-red-500">{errors.username.message}</small>
-            )}
+            {errors.username && <small className="text-red-500">{errors.username.message}</small>}
           </label>
-          {/* Email */}
+
           <label className="flex flex-col gap-2 w-full">
             <span className="text-gray-500 text-sm">Email</span>
             <input
@@ -201,22 +214,18 @@ const RegisterForm = ({ setIsSignUp }) => {
               })}
               className="py-2 px-4 rounded-md border border-teal-400 focus:outline-teal-600 bg-teal-50"
             />
-            {errors.email && (
-              <small className="text-red-500">{errors.email.message}</small>
-            )}
+            {errors.email && <small className="text-red-500">{errors.email.message}</small>}
           </label>
         </div>
 
-        {/* Phone Number */}
+        {/* Phone */}
         <label className="flex flex-col gap-2">
           <span className="text-gray-500 text-sm">Phone Number</span>
           <input
             {...formRegister("phone", { required: "Phone number is required" })}
             className="py-2 px-4 rounded-md border border-teal-400 focus:outline-teal-600 bg-teal-50"
           />
-          {errors.phone && (
-            <small className="text-red-500">{errors.phone.message}</small>
-          )}
+          {errors.phone && <small className="text-red-500">{errors.phone.message}</small>}
         </label>
 
         {/* Password */}
@@ -227,17 +236,11 @@ const RegisterForm = ({ setIsSignUp }) => {
               type={showPassword ? "text" : "password"}
               {...formRegister("password", {
                 required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Must be at least 8 characters",
-                },
+                minLength: { value: 8, message: "At least 8 characters" },
                 validate: {
-                  hasUppercase: (value) =>
-                    /[A-Z]/.test(value) || "Must contain an uppercase letter",
-                  hasLowercase: (value) =>
-                    /[a-z]/.test(value) || "Must contain a lowercase letter",
-                  hasNumber: (value) =>
-                    /[0-9]/.test(value) || "Must contain a number",
+                  hasUppercase: (v) => /[A-Z]/.test(v) || "Must have uppercase",
+                  hasLowercase: (v) => /[a-z]/.test(v) || "Must have lowercase",
+                  hasNumber: (v) => /[0-9]/.test(v) || "Must have a number",
                 },
               })}
               className="py-2 px-4 rounded-md border border-teal-400 focus:outline-teal-600 bg-teal-50 w-full pr-10"
@@ -250,12 +253,10 @@ const RegisterForm = ({ setIsSignUp }) => {
               {showPassword ? <LuEye /> : <LuEyeClosed />}
             </button>
           </div>
-          {errors.password && (
-            <small className="text-red-500">{errors.password.message}</small>
-          )}
+          {errors.password && <small className="text-red-500">{errors.password.message}</small>}
         </label>
 
-        {/* Terms and Conditions */}
+        {/* Terms */}
         <label className="flex gap-2 items-center text-gray-500 text-sm">
           <input
             type="checkbox"
@@ -263,18 +264,16 @@ const RegisterForm = ({ setIsSignUp }) => {
           />
           Accept the Terms and Privacy Policy
         </label>
-        {errors.terms && (
-          <small className="text-red-500">{errors.terms.message}</small>
-        )}
+        {errors.terms && <small className="text-red-500">{errors.terms.message}</small>}
 
-        {/* Submit Button */}
+        {/* Submit */}
         <button
           type="submit"
           disabled={!isAvailable || loading}
           className={`py-2 w-full rounded-md ${
             !isAvailable || loading
               ? "bg-gray-400 cursor-not-allowed"
-              : "bg-teal-600 hover:bg-teal-700 cursor-pointer text-white"
+              : "bg-teal-600 hover:bg-teal-700 text-white"
           }`}
         >
           {loading ? (

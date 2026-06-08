@@ -5,7 +5,8 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { createContext, useState, useContext, useEffect } from "react";
-import { io } from "socket.io-client";
+import { socket } from "@/lib/socket";
+import { useNotifications } from "@/Providers/NotificationContext";
 import Swal from "sweetalert2";
 
 // AppContext for global state management
@@ -24,7 +25,7 @@ export const AppProvider = ({ children }) => {
   const [fullName, setFullName] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [roomID, setRoomID] = useState("");
-  const [notificationCount, setNotificationCount] = useState(0);
+  const { notificationCount, setNotificationCount, clearNotifications } = useNotifications();
 
   useEffect(() => {
     const stored = localStorage.getItem("bookmark");
@@ -38,8 +39,7 @@ export const AppProvider = ({ children }) => {
     }
   }, [bookmark]);
 
-  // Mark notifications as seen
-  const markNotificationsAsSeen = () => setNotificationCount(0);
+  const markNotificationsAsSeen = () => clearNotifications();
 
   // Fetch current user
   const fetchUser = async () => {
@@ -222,31 +222,26 @@ export const AppProvider = ({ children }) => {
     return Math.round(completion) || 0; // always return a valid number
   };
 
-  // Socket connection with session check
+  // Register user with socket server when session is available
   useEffect(() => {
-    if (!session) return;
+    if (!session?.user?.email) return;
 
-    const socket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL);
-    socket.connect();
+    if (!socket.connected) socket.connect();
 
-    socket.on("connect", () => {
-      console.log("Connected to Socket.IO server");
-    });
-
-    socket.on("newJobPosted", (notification) => {
-      console.log("📢 New Job Notification:", notification);
-      setNotificationCount((prev) => prev + 1);
-    });
-
-    if (session?.user?.email) {
+    const handleConnect = () => {
       socket.emit("registerUser", session.user.email);
+    };
+
+    if (socket.connected) {
+      socket.emit("registerUser", session.user.email);
+    } else {
+      socket.on("connect", handleConnect);
     }
 
-    // Cleanup on socket disconnect
     return () => {
-      socket.disconnect();
+      socket.off("connect", handleConnect);
     };
-  }, [session]);
+  }, [session?.user?.email]);
 
   const pathname = usePathname();
   const isDashboard =

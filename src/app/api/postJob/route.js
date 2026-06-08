@@ -60,7 +60,7 @@ export const POST = async (req) => {
     const jobsCollection = await getCollection(collection.jobsCollection);
     const result = await jobsCollection.insertOne(data);
 
-    await axios.post("http://localhost:3002/api/emit-job-post", {
+    await axios.post(`${process.env.NEXT_PUBLIC_EXPRESS_API_URL}/api/emit-job-post`, {
       title: data.title,
       industry: data.industry,
     });

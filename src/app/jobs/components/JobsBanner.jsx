@@ -30,7 +30,7 @@ const JobsBanner = ({
   ];
 
   return (
-    <section className="relative bg-[#f9fbfd] rounded-3xl p-8 md:p-12 overflow-hidden">
+    <section className="relative rounded-3xl p-8 md:p-12 overflow-hidden">
       {/* Content */}
       <div className="text-center max-w-3xl mx-auto relative z-10">
         <h1 className="text-xl md:text-2xl font-semibold text-gray-700 mb-2">

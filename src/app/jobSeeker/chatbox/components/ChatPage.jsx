@@ -1,150 +1,122 @@
-// "use client";
-
-// import { useState } from "react";
-// import Chat from "./chat";
-// import { LuUser } from "react-icons/lu";
-// import { Video } from "lucide-react";
-// import { Phone } from "lucide-react";
-
-// const fakeUsers = [
-//   { id: "1", name: "John Doe" },
-//   { id: "2", name: "Jane Smith" },
-//   { id: "3", name: "Michael Lee" },
-//   { id: "4", name: "Emily Clark" },
-//   { id: "5", name: "Robert Fox" },
-//   { id: "6", name: "Robert Fox" },
-//   { id: "7", name: "Robert Fox" },
-//   { id: "8", name: "Robert Fox" },
-//   { id: "9", name: "Robert Fox" },
-//   { id: "10", name: "Robert Fox" },
-//   { id: "11", name: "Robert Fox" },
-// ];
-
-// export default function ChatPage() {
-//   const [roomId, setRoomId] = useState("");
-//   const [userType, setUserType] = useState("jobSeeker");
-
-//   return (
-//     <div className="flex h-full rounded-xl overflow-hidden border border-teal-500">
-//       {/* Sidebar */}
-//       <div className="w-1/3 max-w-xs">
-//         <div className="py-3 px-4 border-b bg-gradient-to-br from-teal-500 to-teal-400 text-white">
-//           <h2 className="text-lg md:text-xl font-bold">Chats with</h2>
-//         </div>
-//         <ul className="  overflow-y-auto h-[440px]">
-//           {fakeUsers.map((user) => (
-//             <li
-//               key={user.id}
-//               className={`p-4 cursor-pointer transition duration-200 ${
-//                 roomId === user.id ? "bg-teal-100" : "hover:bg-gray-100"
-//               }`}
-//               onClick={() => setRoomId(user.id)}
-//             >
-//               <div className="font-medium text-gray-900">{user.name}</div>
-//               <div className="text-sm text-gray-500">Click to chat</div>
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-
-//       {/* Chat Area */}
-//       <div className="flex-1 flex flex-col">
-//         {/* Topbar */}
-//         <div className="flex items-center justify-between py-2.5 px-4 bg-gradient-to-bl from-teal-500 to-teal-400 text-white">
-//           <h1 className="text-lg font-semibold">
-//             {roomId ? (
-//               <div className="flex items-center gap-2">
-//                 <LuUser className="w-8 h-8 rounded-full border" /> `${roomId}`
-//               </div>
-//             ) : (
-//               "Select a user to start chatting"
-//             )}
-//           </h1>
-
-//           <div className="space-x-2">
-//             <button
-//               className={`px-3 py-1 rounded ${
-//                 userType === "jobSeeker"
-//                   ? "bg-white text-teal-600"
-//                   : "bg-teal-500"
-//               }`}
-//               onClick={() => setUserType("jobSeeker")}
-//             >
-//               Job Seeker
-//             </button>
-//             <button
-//               className={`px-3 py-1 rounded ${
-//                 userType === "employer"
-//                   ? "bg-white text-teal-600"
-//                   : "bg-teal-500"
-//               }`}
-//               onClick={() => setUserType("employer")}
-//             >
-//               Employer
-//             </button>
-//           </div>
-//           <div className="space-x-2">
-//             <button className="btn bg-teal-50 btn-sm">
-//               <Video className="" size={15} />
-//             </button>
-//             <button className="btn bg-teal-50 btn-sm">
-//               <Phone className="" size={15} />
-//             </button>
-//           </div>
-//         </div>
-
-//         {/* Chat Body */}
-//         <div className="flex-1 overflow-y-auto flex items-center justify-center">
-//           {roomId ? (
-//             <div className="w-full h-full flex flex-col">
-//               <div className="flex-1 overflow-y-auto">
-//                 <Chat roomId={roomId} userType={userType} />
-//               </div>
-//             </div>
-//           ) : (
-//             <div className="text-gray-500 text-center">
-//               <p className="text-xl">Welcome to the chat app 👋</p>
-//               <p className="text-sm">
-//                 Select a user from the left to start chatting.
-//               </p>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { useEffect, useState } from "react";
-import { socket } from "@/lib/socket";
+import { useAppContext } from "@/Providers/AppProviders";
 import Chat from "./chat";
+import axios from "axios";
+import { LuUser } from "react-icons/lu";
+import { MessageSquare } from "lucide-react";
 
-export default function ChatPage({ roomId, userType }) {
-  const [joined, setJoined] = useState(false);
+export default function ChatPage() {
+  const { currentUser } = useAppContext();
+  const [conversations, setConversations] = useState([]);
+  const [selectedConv, setSelectedConv] = useState(null);
+  const [loadingConvs, setLoadingConvs] = useState(true);
 
   useEffect(() => {
-    if (!roomId) return;
+    if (!currentUser?.email) return;
 
-    socket.emit("joinRoom", roomId);
-    setJoined(true);
+    axios
+      .get(`/api/conversations?email=${currentUser.email}`)
+      .then((res) => setConversations(res.data))
+      .finally(() => setLoadingConvs(false));
+  }, [currentUser?.email]);
 
-    return () => {
-      socket.emit("leaveRoom", roomId);
-      setJoined(false);
-    };
-  }, [roomId]);
+  const getDisplayName = (email) => {
+    if (!email) return "Unknown";
+    return email.split("@")[0];
+  };
 
-  if (!joined) {
-    return (
-      <div className="text-center text-gray-500 mt-6">Joining room...</div>
-    );
-  }
+  const formatTime = (ts) => {
+    if (!ts) return "";
+    return new Date(ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <Chat roomId={roomId} userType={userType} />
+    <div className="flex h-[520px] rounded-xl overflow-hidden border border-teal-500">
+      {/* Sidebar: conversation list */}
+      <div className="w-1/3 max-w-xs border-r flex flex-col">
+        <div className="py-3 px-4 border-b bg-gradient-to-br from-teal-500 to-teal-400 text-white">
+          <h2 className="text-lg font-bold flex items-center gap-2">
+            <MessageSquare size={18} /> Messages
+          </h2>
+        </div>
+
+        <ul className="overflow-y-auto flex-1">
+          {loadingConvs ? (
+            <li className="p-4 text-gray-400 text-sm text-center">Loading...</li>
+          ) : conversations.length === 0 ? (
+            <li className="p-4 text-gray-400 text-sm text-center">No conversations yet</li>
+          ) : (
+            conversations.map((conv) => (
+              <li
+                key={conv.roomId}
+                className={`p-3 cursor-pointer border-b transition duration-150 ${
+                  selectedConv?.roomId === conv.roomId
+                    ? "bg-teal-50 border-l-4 border-l-teal-500"
+                    : "hover:bg-gray-50"
+                }`}
+                onClick={() => setSelectedConv(conv)}
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
+                    <LuUser className="text-teal-600" size={16} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium text-gray-900 text-sm truncate">
+                        {getDisplayName(conv.otherEmail)}
+                      </span>
+                      <span className="text-[10px] text-gray-400 ml-1 flex-shrink-0">
+                        {formatTime(conv.lastMessage?.timestamp)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center mt-0.5">
+                      <p className="text-xs text-gray-500 truncate">
+                        {conv.lastMessage?.text ?? ""}
+                      </p>
+                      {conv.unreadCount > 0 && (
+                        <span className="ml-1 flex-shrink-0 bg-teal-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                          {conv.unreadCount}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
+
+      {/* Chat panel */}
+      <div className="flex-1 flex flex-col">
+        {selectedConv ? (
+          <>
+            <div className="py-2.5 px-4 bg-gradient-to-bl from-teal-500 to-teal-400 text-white flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-teal-200 flex items-center justify-center">
+                <LuUser className="text-teal-700" size={16} />
+              </div>
+              <span className="font-semibold">{getDisplayName(selectedConv.otherEmail)}</span>
+              <span className="text-xs opacity-75">{selectedConv.otherEmail}</span>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <Chat
+                roomId={selectedConv.roomId}
+                senderEmail={currentUser?.email}
+                receiverEmail={selectedConv.otherEmail}
+              />
+            </div>
+          </>
+        ) : (
+          <div className="flex-1 flex items-center justify-center text-gray-400">
+            <div className="text-center">
+              <MessageSquare size={48} className="mx-auto mb-3 opacity-30" />
+              <p className="text-lg">Select a conversation to start chatting</p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

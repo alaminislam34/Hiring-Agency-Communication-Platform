@@ -1,72 +1,94 @@
 import { collection, getCollection } from "@/lib/mongodb";
+import { authOptions } from "@/lib/authOptions";
+import { getServerSession } from "next-auth";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
+import axios from "axios";
 
 // POST — Create a new interview
 export async function POST(request) {
   try {
-    const body = await request.json();
-    const { title, dateTime, interviewer, candidateName, roomId } = body;
+    const session = await getServerSession(authOptions);
+    const employerEmail = session?.user?.email;
 
-    if (!title || !dateTime || !candidateName || !roomId) {
-      return new Response(
-        JSON.stringify({ error: "Missing required fields" }),
-        {
-          status: 400,
-        }
-      );
+    if (!employerEmail) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const interviewsCollection = await getCollection(
-      collection.interviewsCollection
-    );
+    const body = await request.json();
+    const { title, dateTime, candidateName, candidateEmail, roomId } = body;
+
+    if (!title || !dateTime || !candidateName) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    const interviewsCollection = await getCollection(collection.interviewsCollection);
+
+    const autoRoomId =
+      roomId ||
+      (candidateEmail
+        ? [employerEmail, candidateEmail].sort().join("_")
+        : undefined);
 
     const newInterview = {
       title,
       dateTime,
-      interviewer: interviewer || "Not specified",
+      employerEmail,
       candidateName,
-      roomId,
+      candidateEmail: candidateEmail || null,
+      roomId: autoRoomId || null,
       createdAt: new Date(),
     };
 
     const result = await interviewsCollection.insertOne(newInterview);
+    const savedInterview = { ...newInterview, _id: result.insertedId };
 
-    return new NextResponse(
-      JSON.stringify({
-        message: "Interview scheduled!",
-        id: result.insertedId,
-      }),
+    // Emit socket notifications to employer + candidate via Express backend
+    if (process.env.NEXT_PUBLIC_EXPRESS_API_URL && candidateEmail) {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_EXPRESS_API_URL}/api/emit-schedule`, {
+          employerEmail,
+          candidateEmail,
+          interview: savedInterview,
+        })
+        .catch((err) => console.error("Schedule socket emit error:", err.message));
+    }
+
+    return NextResponse.json(
+      { message: "Interview scheduled!", id: result.insertedId },
       { status: 201 }
     );
   } catch (error) {
     console.error("POST Error:", error);
-    return new NextResponse(
-      JSON.stringify({ error: "Internal server error" }),
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
-// GET — Fetch all interviews
-export async function GET() {
+// GET — Fetch interviews filtered by employer session or candidateEmail query param
+export async function GET(request) {
   try {
-    const interviewsCollection = await getCollection(
-      collection.interviewsCollection
-    );
-    const interviews = await interviewsCollection.find().toArray();
+    const session = await getServerSession(authOptions);
+    const { searchParams } = new URL(request.url);
+    const candidateEmail = searchParams.get("candidateEmail");
 
-    return new Response(JSON.stringify(interviews), { status: 200 });
+    const interviewsCollection = await getCollection(collection.interviewsCollection);
+
+    let query = {};
+    if (candidateEmail) {
+      query.candidateEmail = candidateEmail;
+    } else if (session?.user?.email) {
+      query.employerEmail = session.user.email;
+    }
+
+    const interviews = await interviewsCollection
+      .find(query)
+      .sort({ createdAt: -1 })
+      .toArray();
+
+    return NextResponse.json(interviews);
   } catch (error) {
     console.error("GET Error:", error);
-    return new Response(
-      JSON.stringify({ error: "Failed to fetch interviews" }),
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json({ error: "Failed to fetch interviews" }, { status: 500 });
   }
 }
 
@@ -77,40 +99,26 @@ export async function PUT(request) {
     const { id, ...updateData } = body;
 
     if (!id) {
-      return new Response(
-        JSON.stringify({ error: "ID is required for update" }),
-        {
-          status: 400,
-        }
-      );
+      return NextResponse.json({ error: "ID is required for update" }, { status: 400 });
     }
 
-    const interviewsCollection = await getCollection(
-      collection.interviewsCollection
-    );
-
+    const interviewsCollection = await getCollection(collection.interviewsCollection);
     const result = await interviewsCollection.updateOne(
       { _id: new ObjectId(id) },
       { $set: updateData }
     );
 
     if (result.modifiedCount === 0) {
-      return new Response(
-        JSON.stringify({ error: "Interview not found or nothing to update" }),
-        {
-          status: 404,
-        }
+      return NextResponse.json(
+        { error: "Interview not found or nothing to update" },
+        { status: 404 }
       );
     }
 
-    return new Response(JSON.stringify({ message: "Interview updated!" }), {
-      status: 200,
-    });
+    return NextResponse.json({ message: "Interview updated!" });
   } catch (error) {
     console.error("PUT Error:", error);
-    return new Response(JSON.stringify({ error: "Internal server error" }), {
-      status: 500,
-    });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
@@ -121,34 +129,19 @@ export async function DELETE(request) {
     const { id } = body;
 
     if (!id) {
-      return new Response(
-        JSON.stringify({ error: "ID is required for deletion" }),
-        {
-          status: 400,
-        }
-      );
+      return NextResponse.json({ error: "ID is required for deletion" }, { status: 400 });
     }
 
-    const interviewsCollection = await getCollection(
-      collection.interviewsCollection
-    );
-    const result = await interviewsCollection.deleteOne({
-      _id: new ObjectId(id),
-    });
+    const interviewsCollection = await getCollection(collection.interviewsCollection);
+    const result = await interviewsCollection.deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
-      return new Response(JSON.stringify({ error: "Interview not found" }), {
-        status: 404,
-      });
+      return NextResponse.json({ error: "Interview not found" }, { status: 404 });
     }
 
-    return new Response(JSON.stringify({ message: "Interview deleted!" }), {
-      status: 200,
-    });
+    return NextResponse.json({ message: "Interview deleted!" });
   } catch (error) {
     console.error("DELETE Error:", error);
-    return new Response(JSON.stringify({ error: "Internal server error" }), {
-      status: 500,
-    });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

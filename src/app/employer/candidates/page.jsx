@@ -5,11 +5,16 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { MessageSquare } from "lucide-react";
 import { sendEmailToCandidates } from "@/lib/sendEmailToCandidates"; // Ensure this function handles job description
+
+const generateRoomId = (a, b) => [a, b].sort().join("_");
 
 const Candidates = () => {
   const { currentUser, jobs } = useAppContext();
+  const router = useRouter();
   const [myCandidates, setCandidates] = useState([]);
   const [selectedCandidates, setSelectedCandidates] = useState([]);
 
@@ -145,6 +150,7 @@ const Candidates = () => {
                   <th>Deadline</th>
                   <th>Status</th>
                   <th>Resume</th>
+                  <th>Chat</th>
                 </tr>
               </thead>
               <tbody>
@@ -185,6 +191,18 @@ const Candidates = () => {
                         >
                           View
                         </a>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() =>
+                            router.push(
+                              `/chat/${generateRoomId(currentUser.email, user.candidateEmail)}`
+                            )
+                          }
+                          className="btn btn-xs bg-teal-50 text-teal-700 border border-teal-300 hover:bg-teal-100 flex items-center gap-1"
+                        >
+                          <MessageSquare size={12} /> Chat
+                        </button>
                       </td>
                     </tr>
                   );

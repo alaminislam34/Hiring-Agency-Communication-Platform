@@ -1,7 +1,7 @@
 "use client";
 
-import { generativeText } from "@/app/utils/gemini";
-import { Send, Smile, Plus, HelpCircle, X } from "lucide-react"; // Imported X for a professional close icon
+import axios from "axios";
+import { Send, HelpCircle, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import { RiRobot3Line } from "react-icons/ri";
@@ -102,13 +102,12 @@ export default function GeminiComponent() {
     setShowQ(false); // Hide quick help on message send
 
     try {
-        const result = await generativeText(trimmedPrompt);
-        const aiMessage = { text: result, sender: "ai" };
+        const res = await axios.post("/api/ai/chat", { prompt: trimmedPrompt });
+        const aiMessage = { text: res.data.text, sender: "ai" };
         setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
-        // Handle error gracefully
         console.error("Error generating text:", error);
-        setMessages(prev => [...prev, {text: "Sorry, I encountered an error processing your request.", sender: "ai"}]); 
+        setMessages(prev => [...prev, { text: "Sorry, I encountered an error processing your request.", sender: "ai" }]);
     } finally {
         setLoading(false);
     }

@@ -152,7 +152,7 @@ export async function POST(req) {
       employer: postedBy,
     });
 
-    const response = await axios.post("http://localhost:3002/api/emit-apply", {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_EXPRESS_API_URL}/api/emit-apply`, {
       jobId,
       title,
       applicantName: candidateName,
